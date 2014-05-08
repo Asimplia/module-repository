@@ -15,8 +15,12 @@
         return this;
     };
 
-    List.prototype.toArray = function () {
-        return this.entities;
+    List.prototype.toArray = function (objectFactory) {
+        var array = [];
+        this.entities.forEach(function (entity) {
+            array.push(objectFactory(entity));
+        });
+        return array;
     };
     return List;
 })();

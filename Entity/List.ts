@@ -17,7 +17,11 @@ class List<Entity extends IEntity> {
 		return this;
 	}
 
-	toArray() {
-		return this.entities;
+	toArray(objectFactory: (entity: Entity) => any) {
+		var array = [];
+		this.entities.forEach((entity: Entity) => {
+			array.push(objectFactory(entity));
+		});
+		return array;
 	}
 }

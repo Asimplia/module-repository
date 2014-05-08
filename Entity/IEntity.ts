@@ -2,5 +2,7 @@
 export = IEntity;
 interface IEntity {
 	
-	// fromObject(object: any): IEntity;
+	// static fromObject(object: any): IEntity;
+	// static toObject(entity: IEntity): any;
+	// toObject(): any;
 }
