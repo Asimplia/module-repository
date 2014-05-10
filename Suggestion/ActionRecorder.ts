@@ -13,7 +13,7 @@ class ActionRecorder {
 		this.ActionModel = require('./ActionModel');
 	}
 
-	insertOrUpdate(suggestionAction: SuggestionAction, callback: (e: Error, action?: SuggestionAction) => void) {
+	insertOrUpdate(suggestionAction: SuggestionAction, callback: (e: Error, action?: SuggestionAction) => void): void {
 
 		this.ActionModel.findOne({ id: suggestionAction.Id }, (e, actionObject: mongoose.Document) => {
 			if (e) {
@@ -29,6 +29,12 @@ class ActionRecorder {
 				return;
 			}
 			this.update(actionObject, suggestionAction, callback);
+		});
+	}
+
+	remove(id: number, callback: (e: Error) => void): void {
+		this.ActionModel.findOneAndRemove({ id: id }, (e: Error) => {
+			callback(e);
 		});
 	}
 

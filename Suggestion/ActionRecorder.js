@@ -24,6 +24,12 @@ var ActionRecorder = (function () {
         });
     };
 
+    ActionRecorder.prototype.remove = function (id, callback) {
+        this.ActionModel.findOneAndRemove({ id: id }, function (e) {
+            callback(e);
+        });
+    };
+
     ActionRecorder.prototype.update = function (actionObject, suggestionAction, callback) {
         var action = suggestionAction.toObject();
         actionObject.set('name', action.name);
@@ -53,4 +59,3 @@ var ActionRecorder = (function () {
     return ActionRecorder;
 })();
 module.exports = ActionRecorder;
-//# sourceMappingURL=ActionRecorder.js.map

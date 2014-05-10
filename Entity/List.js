@@ -4,6 +4,9 @@
     }
     List.prototype.pushArray = function (items, entityFactory) {
         var _this = this;
+        if (!items) {
+            return this;
+        }
         items.forEach(function (item) {
             _this.entities.push(entityFactory(item));
         });

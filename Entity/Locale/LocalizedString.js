@@ -1,5 +1,8 @@
 ﻿var LocalizedString = (function () {
     function LocalizedString(langsObject) {
+        if (!langsObject) {
+            return;
+        }
         this.en = langsObject.en;
         this.cs = langsObject.cs;
     }

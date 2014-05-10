@@ -6,6 +6,9 @@ class List<Entity extends IEntity> {
 	private entities: Entity[] = [];
 
 	pushArray(items: any[], entityFactory: (o: any) => Entity) {
+		if (!items) {
+			return this;
+		}
 		items.forEach((item) => {
 			this.entities.push(entityFactory(item));
 		});
