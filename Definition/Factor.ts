@@ -1,5 +1,0 @@
-﻿
-export = Factor;
-var Factor = {
-	
-};

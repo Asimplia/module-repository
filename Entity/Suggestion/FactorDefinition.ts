@@ -1,6 +1,6 @@
 ﻿
 import IEntity = require('../IEntity');
-import Factor = require('../Factor');
+import Factor = require('../Factor/Factor');
 import FactorValue = require('./FactorValue');
 
 export = FactorDefinition;

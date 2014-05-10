@@ -1,4 +1,4 @@
-﻿var Factor = require('../Factor');
+﻿var Factor = require('../Factor/Factor');
 
 var FactorDefinition = {
     value: String,
