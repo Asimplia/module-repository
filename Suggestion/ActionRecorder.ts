@@ -14,7 +14,6 @@ class ActionRecorder {
 	}
 
 	insertOrUpdate(suggestionAction: SuggestionAction, callback: (e: Error, action?: SuggestionAction) => void): void {
-
 		this.ActionModel.findOne({ id: suggestionAction.Id }, (e, actionObject: mongoose.Document) => {
 			if (e) {
 				callback(e);
