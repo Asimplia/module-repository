@@ -20,7 +20,7 @@ class FactorLoader {
 			}
 			var list = new List<Factor>();
 			list.pushArray(factors, Factor.fromObject);
-			callback(e, list);
+			callback(null, list);
 		});
 	}
 }

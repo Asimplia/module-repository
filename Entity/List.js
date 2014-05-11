@@ -8,7 +8,11 @@
             return this;
         }
         items.forEach(function (item) {
-            _this.entities.push(entityFactory(item));
+            try  {
+                _this.entities.push(entityFactory(item));
+            } catch (e) {
+                console.warn('Entity was deleted from List becouse error happened during create entity', item, e);
+            }
         });
         return this;
     };
@@ -21,7 +25,11 @@
     List.prototype.toArray = function (objectFactory) {
         var array = [];
         this.entities.forEach(function (entity) {
-            array.push(objectFactory(entity));
+            try  {
+                array.push(objectFactory(entity));
+            } catch (e) {
+                console.warn('Entity was deleted from array becouse error happened during create object', entity, e);
+            }
         });
         return array;
     };

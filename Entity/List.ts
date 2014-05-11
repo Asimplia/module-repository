@@ -4,13 +4,17 @@ import IEntity = require('./IEntity');
 export = List;
 class List<Entity extends IEntity> {
 	private entities: Entity[] = [];
-
+	
 	pushArray(items: any[], entityFactory: (o: any) => Entity) {
 		if (!items) {
 			return this;
 		}
 		items.forEach((item) => {
-			this.entities.push(entityFactory(item));
+			try {
+				this.entities.push(entityFactory(item));
+			} catch (e) {
+				console.warn('Entity was deleted from List becouse error happened during create entity', item, e);
+			}
 		});
 		return this;
 	}
@@ -23,7 +27,11 @@ class List<Entity extends IEntity> {
 	toArray(objectFactory: (entity: Entity) => any) {
 		var array = [];
 		this.entities.forEach((entity: Entity) => {
-			array.push(objectFactory(entity));
+			try {
+				array.push(objectFactory(entity));
+			} catch (e) {
+				console.warn('Entity was deleted from array becouse error happened during create object', entity, e);
+			}
 		});
 		return array;
 	}

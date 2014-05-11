@@ -2,6 +2,9 @@
 export = Factor;
 class Factor {
 
+	set Id(value) { this.id = value; }
+	get Id() { return this.id; }
+
 	constructor(
 		private id: number,
 		private name: string,

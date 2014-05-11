@@ -49,6 +49,10 @@ var FactorDefinition = (function () {
             factor: entity.factor ? entity.factor.toObject() : null
         };
     };
+
+    FactorDefinition.prototype.toObject = function () {
+        return FactorDefinition.toObject(this);
+    };
     return FactorDefinition;
 })();
 module.exports = FactorDefinition;

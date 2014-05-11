@@ -34,4 +34,8 @@ class FactorDefinition implements IEntity {
 			factor: entity.factor ? entity.factor.toObject() : null
 		};
 	}
+
+	toObject() {
+		return FactorDefinition.toObject(this);
+	}
 }

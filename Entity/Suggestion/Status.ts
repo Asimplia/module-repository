@@ -15,4 +15,19 @@ class Status implements IEntity {
 	static fromObject(o: any): Status {
 		return new Status(o.dateCreated, o.dateValidTo, o.state, o.dateNextRemind, o.priorityValue, o.priorityType);
 	}
+
+	static toObject(entity: Status) {
+		return {
+			dateCreated: entity.dateCreated,
+			dateValidTo: entity.dateValidTo,
+			state: entity.state,
+			dateNextRemind: entity.dateNextRemind,
+			priorityValue: entity.priorityValue,
+			priorityType: entity.priorityType
+		};
+	}
+
+	toObject() {
+		return Status.toObject(this);
+	}
 }

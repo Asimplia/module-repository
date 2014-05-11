@@ -13,7 +13,7 @@ var FactorLoader = (function () {
             }
             var list = new List();
             list.pushArray(factors, Factor.fromObject);
-            callback(e, list);
+            callback(null, list);
         });
     };
     return FactorLoader;

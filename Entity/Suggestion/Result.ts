@@ -30,4 +30,21 @@ class Result implements IEntity {
 			new List<Graph>().pushArray(o.graphs, Graph.fromObject)
 		);
 	}
+
+	static toObject(entity: Result) {
+		return {
+			id: entity.id,
+			title: entity.title,
+			shortTitle: entity.shortTitle,
+			label: entity.label,
+			text: entity.text,
+			activeStatus: entity.activeStatus ? entity.activeStatus.toObject() : null,
+			statuses: entity.statusList.toArray(Status.toObject),
+			graphs: entity.graphList.toArray(Graph.toObject)
+		};
+	}
+
+	toObject() {
+		return Result.toObject(this);
+	}
 }

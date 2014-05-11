@@ -6,7 +6,17 @@
     Graph.fromObject = function (object) {
         return new Graph(object.type, object.data);
     };
+
+    Graph.toObject = function (entity) {
+        return {
+            type: entity.type,
+            data: entity.data
+        };
+    };
+
+    Graph.prototype.toObject = function () {
+        return Graph.toObject(this);
+    };
     return Graph;
 })();
 module.exports = Graph;
-//# sourceMappingURL=Graph.js.map
