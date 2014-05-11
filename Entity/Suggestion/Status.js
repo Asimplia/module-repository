@@ -10,7 +10,21 @@
     Status.fromObject = function (o) {
         return new Status(o.dateCreated, o.dateValidTo, o.state, o.dateNextRemind, o.priorityValue, o.priorityType);
     };
+
+    Status.toObject = function (entity) {
+        return {
+            dateCreated: entity.dateCreated,
+            dateValidTo: entity.dateValidTo,
+            state: entity.state,
+            dateNextRemind: entity.dateNextRemind,
+            priorityValue: entity.priorityValue,
+            priorityType: entity.priorityType
+        };
+    };
+
+    Status.prototype.toObject = function () {
+        return Status.toObject(this);
+    };
     return Status;
 })();
 module.exports = Status;
-//# sourceMappingURL=Status.js.map
