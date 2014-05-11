@@ -13,6 +13,7 @@ export = Action;
 class Action implements IEntity {
 
 	get Id() { return this.id; }
+	set Id(value) { this.id = value; }
 	get Name() { return this.name; }
 	set Name(value) { this.name = value; }
 	get Text() { return this.text; }
