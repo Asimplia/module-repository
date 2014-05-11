@@ -7,6 +7,7 @@ import FactorDefinition = require('./FactorDefinition');
 import IEntity = require('../IEntity');
 import ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
 import _ = require('underscore');
+import ArrayHelper = require('../../../Util/ArrayHelper');
 
 export = Action;
 class Action implements IEntity {
@@ -39,7 +40,7 @@ class Action implements IEntity {
 			new LocalizedString(o.text),
 			Action.createSectionEnum(o.section),
 			new List<FactorDefinition>().pushArray(o.factorDefinitions, FactorDefinition.fromObject),
-			_.map(o.placeholders, (placeholder: string) => { return Action.createPlaceholderEnum(placeholder); })
+			ArrayHelper.mapFilterNulls(o.placeholders, (placeholder: string) => { return Action.createPlaceholderEnum(placeholder); })
 		);
 	}
 
@@ -50,7 +51,7 @@ class Action implements IEntity {
 			text: entity.text,
 			section: SectionEnum[entity.section],
 			factorDefinitions: entity.factorDefinitionList.toArray(FactorDefinition.toObject),
-			placeholders: _.map(entity.placeholders, (placeholder: ActionPlaceholderEnum) => { return ActionPlaceholderEnum[placeholder]; })
+			placeholders: ArrayHelper.mapFilterNulls(entity.placeholders, (placeholder: ActionPlaceholderEnum) => { return ActionPlaceholderEnum[placeholder]; })
 		};
 	}
 

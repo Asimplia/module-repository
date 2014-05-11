@@ -1,4 +1,6 @@
-﻿var Factor = (function () {
+﻿var ArrayHelper = require('../../../Util/ArrayHelper');
+
+var Factor = (function () {
     function Factor(id, name, description, section, weight, values) {
         this.id = id;
         this.name = name;
@@ -29,7 +31,9 @@
             description: entity.description,
             section: entity.section,
             weight: entity.weight,
-            values: entity.values
+            values: ArrayHelper.mapFilterEmptys(entity.values, function (value) {
+                return value;
+            })
         };
     };
 

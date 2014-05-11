@@ -5,7 +5,8 @@ var List = require('../List');
 var FactorDefinition = require('./FactorDefinition');
 
 var ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
-var _ = require('underscore');
+
+var ArrayHelper = require('../../../Util/ArrayHelper');
 
 var Action = (function () {
     function Action(id, name, text, section, factorDefinitionList, placeholders) {
@@ -75,7 +76,7 @@ var Action = (function () {
     });
 
     Action.fromObject = function (o /*ISuggestionActionObject*/ ) {
-        return new Action(o.id, new LocalizedString(o.name), new LocalizedString(o.text), Action.createSectionEnum(o.section), new List().pushArray(o.factorDefinitions, FactorDefinition.fromObject), _.map(o.placeholders, function (placeholder) {
+        return new Action(o.id, new LocalizedString(o.name), new LocalizedString(o.text), Action.createSectionEnum(o.section), new List().pushArray(o.factorDefinitions, FactorDefinition.fromObject), ArrayHelper.mapFilterNulls(o.placeholders, function (placeholder) {
             return Action.createPlaceholderEnum(placeholder);
         }));
     };
@@ -87,7 +88,7 @@ var Action = (function () {
             text: entity.text,
             section: SectionEnum[entity.section],
             factorDefinitions: entity.factorDefinitionList.toArray(FactorDefinition.toObject),
-            placeholders: _.map(entity.placeholders, function (placeholder) {
+            placeholders: ArrayHelper.mapFilterNulls(entity.placeholders, function (placeholder) {
                 return ActionPlaceholderEnum[placeholder];
             })
         };

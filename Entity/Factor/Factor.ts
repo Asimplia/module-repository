@@ -1,4 +1,6 @@
 ﻿
+import ArrayHelper = require('../../../Util/ArrayHelper');
+
 export = Factor;
 class Factor {
 
@@ -32,7 +34,7 @@ class Factor {
 			description: entity.description,
 			section: entity.section,
 			weight: entity.weight,
-			values: entity.values
+			values: ArrayHelper.mapFilterEmptys(entity.values, (value) => { return value; })
 		};
 	}
 
