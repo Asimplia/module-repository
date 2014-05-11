@@ -107,8 +107,10 @@ var Action = (function () {
                 return 1 /* CUSTOMER */;
             case SectionEnum[0 /* PRODUCT */]:
                 return 0 /* PRODUCT */;
+            case SectionEnum[2 /* CHANNEL */]:
+                return 2 /* CHANNEL */;
         }
-        return 2 /* UNKNOWN */;
+        return 3 /* UNKNOWN */;
     };
 
     Action.createPlaceholderEnum = function (placeholder) {

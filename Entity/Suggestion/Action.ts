@@ -66,6 +66,8 @@ class Action implements IEntity {
 				return SectionEnum.CUSTOMER;
 			case SectionEnum[SectionEnum.PRODUCT]:
 				return SectionEnum.PRODUCT;
+			case SectionEnum[SectionEnum.CHANNEL]:
+				return SectionEnum.CHANNEL;
 		}
 		return SectionEnum.UNKNOWN;
 	}
