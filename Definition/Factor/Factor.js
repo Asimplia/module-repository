@@ -4,7 +4,7 @@
     description: String,
     section: String,
     weight: Number,
-    type: String
+    factorType: String
 };
 module.exports = Factor;
 //# sourceMappingURL=Factor.js.map

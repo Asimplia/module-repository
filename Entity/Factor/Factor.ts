@@ -15,7 +15,7 @@ class Factor {
 		private description: string,
 		private section: SectionEnum,
 		private weight: number,
-		private type: FactorTypeEnum
+		private factorType: FactorTypeEnum
 	) { }
 
 	static fromObject(o: any/*FactorObject*/): Factor {
@@ -25,7 +25,7 @@ class Factor {
 			o.description,
 			Factor.createSectionEnum(o.section),
 			o.weight,
-			Factor.createTypeEnum(o.type)
+			Factor.createTypeEnum(o.factorType)
 		);
 	}
 
@@ -36,7 +36,7 @@ class Factor {
 			description: entity.description,
 			section: SectionEnum[entity.section],
 			weight: entity.weight,
-			type: FactorTypeEnum[entity.type]
+			factorType: FactorTypeEnum[entity.factorType]
 		};
 	}
 

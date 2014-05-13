@@ -2,13 +2,13 @@
 var SectionEnum = require('../Section/SectionEnum');
 
 var Factor = (function () {
-    function Factor(id, name, description, section, weight, type) {
+    function Factor(id, name, description, section, weight, factorType) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.section = section;
         this.weight = weight;
-        this.type = type;
+        this.factorType = factorType;
     }
     Object.defineProperty(Factor.prototype, "Id", {
         get: function () {
@@ -22,7 +22,7 @@ var Factor = (function () {
     });
 
     Factor.fromObject = function (o /*FactorObject*/ ) {
-        return new Factor(o.id, o.name, o.description, Factor.createSectionEnum(o.section), o.weight, Factor.createTypeEnum(o.type));
+        return new Factor(o.id, o.name, o.description, Factor.createSectionEnum(o.section), o.weight, Factor.createTypeEnum(o.factorType));
     };
 
     Factor.toObject = function (entity) {
@@ -32,7 +32,7 @@ var Factor = (function () {
             description: entity.description,
             section: SectionEnum[entity.section],
             weight: entity.weight,
-            type: FactorTypeEnum[entity.type]
+            factorType: FactorTypeEnum[entity.factorType]
         };
     };
 
@@ -52,14 +52,14 @@ var Factor = (function () {
 
     Factor.createSectionEnum = function (section) {
         switch (section) {
-            case SectionEnum[1 /* CUSTOMER */]:
-                return 1 /* CUSTOMER */;
-            case SectionEnum[0 /* PRODUCT */]:
-                return 0 /* PRODUCT */;
-            case SectionEnum[2 /* CHANNEL */]:
-                return 2 /* CHANNEL */;
+            case SectionEnum[2 /* CUSTOMER */]:
+                return 2 /* CUSTOMER */;
+            case SectionEnum[1 /* PRODUCT */]:
+                return 1 /* PRODUCT */;
+            case SectionEnum[3 /* CHANNEL */]:
+                return 3 /* CHANNEL */;
         }
-        return 3 /* UNKNOWN */;
+        return 0 /* UNKNOWN */;
     };
     return Factor;
 })();
