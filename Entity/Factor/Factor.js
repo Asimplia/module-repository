@@ -1,16 +1,14 @@
-﻿var ArrayHelper = require('../../../Util/ArrayHelper');
-var FactorTypeEnum = require('./FactorTypeEnum');
+﻿var FactorTypeEnum = require('./FactorTypeEnum');
 var SectionEnum = require('../Section/SectionEnum');
 
 var Factor = (function () {
-    function Factor(id, name, description, section, weight, type, values) {
+    function Factor(id, name, description, section, weight, type) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.section = section;
         this.weight = weight;
         this.type = type;
-        this.values = values;
     }
     Object.defineProperty(Factor.prototype, "Id", {
         get: function () {
@@ -24,7 +22,7 @@ var Factor = (function () {
     });
 
     Factor.fromObject = function (o /*FactorObject*/ ) {
-        return new Factor(o.id, o.name, o.description, Factor.createSectionEnum(o.section), o.weight, Factor.createTypeEnum(o.type), o.values);
+        return new Factor(o.id, o.name, o.description, Factor.createSectionEnum(o.section), o.weight, Factor.createTypeEnum(o.type));
     };
 
     Factor.toObject = function (entity) {
@@ -34,10 +32,7 @@ var Factor = (function () {
             description: entity.description,
             section: SectionEnum[entity.section],
             weight: entity.weight,
-            type: FactorTypeEnum[entity.type],
-            values: ArrayHelper.mapFilterEmptys(entity.values, function (value) {
-                return value;
-            })
+            type: FactorTypeEnum[entity.type]
         };
     };
 

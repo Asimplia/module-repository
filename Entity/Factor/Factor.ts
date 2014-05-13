@@ -15,8 +15,7 @@ class Factor {
 		private description: string,
 		private section: SectionEnum,
 		private weight: number,
-		private type: FactorTypeEnum,
-		private values: string[]
+		private type: FactorTypeEnum
 	) { }
 
 	static fromObject(o: any/*FactorObject*/): Factor {
@@ -26,8 +25,7 @@ class Factor {
 			o.description,
 			Factor.createSectionEnum(o.section),
 			o.weight,
-			Factor.createTypeEnum(o.type),
-			o.values
+			Factor.createTypeEnum(o.type)
 		);
 	}
 
@@ -38,8 +36,7 @@ class Factor {
 			description: entity.description,
 			section: SectionEnum[entity.section],
 			weight: entity.weight,
-			type: FactorTypeEnum[entity.type],
-			values: ArrayHelper.mapFilterEmptys(entity.values, (value) => { return value; })
+			type: FactorTypeEnum[entity.type]
 		};
 	}
 
