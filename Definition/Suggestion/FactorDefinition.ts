@@ -5,5 +5,6 @@ export = FactorDefinition;
 var FactorDefinition = {
 	value: String,
 	weight: Number,
-	factor: Factor
+	factor: Factor,
+	reverse: Boolean
 };
