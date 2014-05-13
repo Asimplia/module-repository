@@ -4,6 +4,7 @@
     description: String,
     section: String,
     weight: Number,
+    type: String,
     values: [String]
 };
 module.exports = Factor;

@@ -1,6 +1,6 @@
 ﻿/// <reference path="../../../typings/underscore/underscore.d.ts" />
 var LocalizedString = require('../Locale/LocalizedString');
-var SectionEnum = require('../SectionEnum');
+var SectionEnum = require('../Section/SectionEnum');
 var List = require('../List');
 var FactorDefinition = require('./FactorDefinition');
 

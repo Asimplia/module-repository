@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/underscore/underscore.d.ts" />
 
 import LocalizedString = require('../Locale/LocalizedString');
-import SectionEnum = require('../SectionEnum');
+import SectionEnum = require('../Section/SectionEnum');
 import List = require('../List');
 import FactorDefinition = require('./FactorDefinition');
 import IEntity = require('../IEntity');
