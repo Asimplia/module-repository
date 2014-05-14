@@ -5,6 +5,7 @@ import ResultTypeEnum = require('./ResultTypeEnum');
 import ResultModel = require('./ResultModel');
 import mongoose = require('mongoose');
 import util = require('util');
+import moment = require('moment');
 
 export = ResultLoader;
 class ResultLoader {
@@ -15,8 +16,8 @@ class ResultLoader {
 		this.ResultModel = require('./ResultModel');
 	}
 
-	getById(id: number, callback: (e: Error, suggestion?: SuggestionResult) => void) {
-		this.ResultModel.findOne({ id: id }, (e, suggestion: mongoose.Document) => {
+	getById(clientId: number, id: number, callback: (e: Error, suggestion?: SuggestionResult) => void) {
+		this.ResultModel.findOne({ id: id, clientId: clientId }, (e, suggestion: mongoose.Document) => {
 			if (e) {
 				return callback(e);
 			}
@@ -27,8 +28,9 @@ class ResultLoader {
 		});
 	}
 
-	getListByType(type: ResultTypeEnum, callback: (e: Error, suggestion?: List<SuggestionResult>) => void): void {
+	getListByType(clientId: number, type: ResultTypeEnum, callback: (e: Error, suggestion?: List<SuggestionResult>) => void): void {
 		var conditions = this.getConditionsByType(type);
+		conditions.clientId = clientId;
 		this.ResultModel.find(conditions, (e, suggestions: mongoose.Document[]) => {
 			if (e) {
 				return callback(e);
@@ -40,6 +42,30 @@ class ResultLoader {
 	}
 
 	private getConditionsByType(type: ResultTypeEnum) {
-		return {}; // @TODO
+		var conditions: any = {};
+		var now = moment().toDate();
+		switch (type) {
+			case ResultTypeEnum.ACTUAL:
+				conditions.activeStatus = {
+					dateValidTo: {
+						$gt: now
+					}
+				};
+				break;
+			case ResultTypeEnum.PAST:
+				conditions.activeStatus = {
+					dateValidTo: {
+						$lt: now
+					},
+					state: 'USED'
+				};
+			case ResultTypeEnum.NOT_USED:
+				conditions.activeStatus = {
+					dateValidTo: {
+						$lt: now
+					}
+				};
+		}
+		return conditions;
 	}
 }

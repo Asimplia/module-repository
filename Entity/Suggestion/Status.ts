@@ -6,7 +6,7 @@ class Status implements IEntity {
 	constructor(
 		private dateCreated: Date,
 		private dateValidTo: Date,
-		private state: string, // used, declined, remider
+		private state: string, // USED, DECLINED, REMINDER
 		private dateNextRemind: Date,
 		private priorityValue: number, // define number of coins 1-5
 		private priorityType: string // define color of coins - green/red

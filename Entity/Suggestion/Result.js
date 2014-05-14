@@ -4,7 +4,7 @@ var Status = require('./Status');
 var Graph = require('./Graph');
 
 var Result = (function () {
-    function Result(id, title, shortTitle, label, text, activeStatus, statusList, graphList) {
+    function Result(id, title, shortTitle, label, text, activeStatus, statusList, graphList, clientId) {
         this.id = id;
         this.title = title;
         this.shortTitle = shortTitle;
@@ -13,9 +13,10 @@ var Result = (function () {
         this.activeStatus = activeStatus;
         this.statusList = statusList;
         this.graphList = graphList;
+        this.clientId = clientId;
     }
     Result.fromObject = function (o /*ISuggestionResultObject*/ ) {
-        return new Result(o.id, new LocalizedString(o.title), new LocalizedString(o.shortTitle), new LocalizedString(o.label), new LocalizedString(o.text), Status.fromObject(o.activeStatus), new List().pushArray(o.statuses, Status.fromObject), new List().pushArray(o.graphs, Graph.fromObject));
+        return new Result(o.id, new LocalizedString(o.title), new LocalizedString(o.shortTitle), new LocalizedString(o.label), new LocalizedString(o.text), Status.fromObject(o.activeStatus), new List().pushArray(o.statuses, Status.fromObject), new List().pushArray(o.graphs, Graph.fromObject), o.clientId);
     };
 
     Result.toObject = function (entity) {
@@ -27,7 +28,8 @@ var Result = (function () {
             text: entity.text,
             activeStatus: entity.activeStatus ? entity.activeStatus.toObject() : null,
             statuses: entity.statusList.toArray(Status.toObject),
-            graphs: entity.graphList.toArray(Graph.toObject)
+            graphs: entity.graphList.toArray(Graph.toObject),
+            clientId: entity.clientId
         };
     };
 

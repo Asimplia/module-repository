@@ -15,7 +15,8 @@ class Result implements IEntity {
 		private text: LocalizedString,
 		private activeStatus: Status,
 		private statusList: List<Status>,
-		private graphList: List<Graph>
+		private graphList: List<Graph>,
+		private clientId: number
 	) { }
 
 	static fromObject(o: any/*ISuggestionResultObject*/): Result {
@@ -27,7 +28,8 @@ class Result implements IEntity {
 			new LocalizedString(o.text),
 			Status.fromObject(o.activeStatus),
 			new List<Status>().pushArray(o.statuses, Status.fromObject),
-			new List<Graph>().pushArray(o.graphs, Graph.fromObject)
+			new List<Graph>().pushArray(o.graphs, Graph.fromObject),
+			o.clientId
 		);
 	}
 
@@ -40,7 +42,8 @@ class Result implements IEntity {
 			text: entity.text,
 			activeStatus: entity.activeStatus ? entity.activeStatus.toObject() : null,
 			statuses: entity.statusList.toArray(Status.toObject),
-			graphs: entity.graphList.toArray(Graph.toObject)
+			graphs: entity.graphList.toArray(Graph.toObject),
+			clientId: entity.clientId
 		};
 	}
 

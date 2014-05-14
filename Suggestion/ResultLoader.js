@@ -1,14 +1,16 @@
 ﻿var SuggestionResult = require('../Entity/Suggestion/Result');
 var List = require('../Entity/List');
+var ResultTypeEnum = require('./ResultTypeEnum');
 
 var util = require('util');
+var moment = require('moment');
 
 var ResultLoader = (function () {
     function ResultLoader() {
         this.ResultModel = require('./ResultModel');
     }
-    ResultLoader.prototype.getById = function (id, callback) {
-        this.ResultModel.findOne({ id: id }, function (e, suggestion) {
+    ResultLoader.prototype.getById = function (clientId, id, callback) {
+        this.ResultModel.findOne({ id: id, clientId: clientId }, function (e, suggestion) {
             if (e) {
                 return callback(e);
             }
@@ -19,8 +21,9 @@ var ResultLoader = (function () {
         });
     };
 
-    ResultLoader.prototype.getListByType = function (type, callback) {
+    ResultLoader.prototype.getListByType = function (clientId, type, callback) {
         var conditions = this.getConditionsByType(type);
+        conditions.clientId = clientId;
         this.ResultModel.find(conditions, function (e, suggestions) {
             if (e) {
                 return callback(e);
@@ -32,7 +35,31 @@ var ResultLoader = (function () {
     };
 
     ResultLoader.prototype.getConditionsByType = function (type) {
-        return {};
+        var conditions = {};
+        var now = moment().toDate();
+        switch (type) {
+            case 1 /* ACTUAL */:
+                conditions.activeStatus = {
+                    dateValidTo: {
+                        $gt: now
+                    }
+                };
+                break;
+            case 2 /* PAST */:
+                conditions.activeStatus = {
+                    dateValidTo: {
+                        $lt: now
+                    },
+                    state: 'USED'
+                };
+            case 0 /* NOT_USED */:
+                conditions.activeStatus = {
+                    dateValidTo: {
+                        $lt: now
+                    }
+                };
+        }
+        return conditions;
     };
     return ResultLoader;
 })();

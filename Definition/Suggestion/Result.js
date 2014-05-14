@@ -10,6 +10,7 @@ var Result = {
     text: LocalizedString,
     activeStatus: Status,
     statuses: [Status],
-    graphs: [Graph]
+    graphs: [Graph],
+    clientId: Number
 };
 module.exports = Result;
