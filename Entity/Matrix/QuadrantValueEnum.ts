@@ -5,5 +5,9 @@ enum QuadrantValueEnum {
 	RIGHT_TOP, // 1
 	LEFT_TOP, // 2
 	RIGHT_BOTTOM, // 3
-	LEFT_BOTTOM // 4
+	LEFT_BOTTOM, // 4
+	LEFT,
+	RIGHT,
+	TOP,
+	BOTTOM
 }
