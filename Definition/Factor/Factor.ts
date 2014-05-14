@@ -6,5 +6,5 @@ var Factor = {
 	description: String,
 	section: String,
 	weight: Number,
-	values: [String]
+	factorType: String
 };

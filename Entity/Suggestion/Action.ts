@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../../typings/underscore/underscore.d.ts" />
 
 import LocalizedString = require('../Locale/LocalizedString');
-import SectionEnum = require('../SectionEnum');
+import SectionEnum = require('../Section/SectionEnum');
 import List = require('../List');
 import FactorDefinition = require('./FactorDefinition');
 import IEntity = require('../IEntity');
@@ -66,6 +66,8 @@ class Action implements IEntity {
 				return SectionEnum.CUSTOMER;
 			case SectionEnum[SectionEnum.PRODUCT]:
 				return SectionEnum.PRODUCT;
+			case SectionEnum[SectionEnum.CHANNEL]:
+				return SectionEnum.CHANNEL;
 		}
 		return SectionEnum.UNKNOWN;
 	}
@@ -78,6 +80,18 @@ class Action implements IEntity {
 				return ActionPlaceholderEnum.DISCOUNT_VALUE;
 			case ActionPlaceholderEnum[ActionPlaceholderEnum.COMMERCIAL_CHANELS]:
 				return ActionPlaceholderEnum.COMMERCIAL_CHANELS;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_PRICE]:
+				return ActionPlaceholderEnum.PRODUCT_PRICE;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRICE_CHANGE]:
+				return ActionPlaceholderEnum.PRICE_CHANGE;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_PACKAGE_OPTION]:
+				return ActionPlaceholderEnum.PRODUCT_PACKAGE_OPTION;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_SKU]:
+				return ActionPlaceholderEnum.PRODUCT_SKU;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_STOCKING_TIME]:
+				return ActionPlaceholderEnum.PRODUCT_STOCKING_TIME;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.CUSTOMERS_FOR_PRODUCT]:
+				return ActionPlaceholderEnum.CUSTOMERS_FOR_PRODUCT;
 		}
 		return null;
 	}

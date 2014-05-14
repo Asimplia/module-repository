@@ -12,18 +12,22 @@ class FactorDefinition implements IEntity {
 	set Weight(value) { this.weight = value; }
 	get Factor() { return this.factor; }
 	set Factor(value) { this.factor = value; }
+	get Reverse() { return this.reverse; }
+	set Reverse(value) { this.reverse = value; }
 
 	constructor(
 		private value: FactorValue,
 		private weight: number,
-		private factor: Factor
+		private factor: Factor,
+		private reverse: boolean
 	) { }
 
 	static fromObject(o: any/*FactorDefinitionObject*/): FactorDefinition {
 		return new FactorDefinition(
 			new FactorValue(o.value),
 			o.weight,
-			Factor.fromObject(o.factor)
+			Factor.fromObject(o.factor),
+			o.reverse
 		);
 	}
 
@@ -31,7 +35,8 @@ class FactorDefinition implements IEntity {
 		return {
 			value: entity.value ? entity.value.toString() : null,
 			weight: entity.weight,
-			factor: entity.factor ? entity.factor.toObject() : null
+			factor: entity.factor ? entity.factor.toObject() : null,
+			reverse: entity.reverse
 		};
 	}
 

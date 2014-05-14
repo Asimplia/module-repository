@@ -1,6 +1,6 @@
 ﻿/// <reference path="../../../typings/underscore/underscore.d.ts" />
 var LocalizedString = require('../Locale/LocalizedString');
-var SectionEnum = require('../SectionEnum');
+var SectionEnum = require('../Section/SectionEnum');
 var List = require('../List');
 var FactorDefinition = require('./FactorDefinition');
 
@@ -103,12 +103,14 @@ var Action = (function () {
 
     Action.createSectionEnum = function (section) {
         switch (section) {
-            case SectionEnum[1 /* CUSTOMER */]:
-                return 1 /* CUSTOMER */;
-            case SectionEnum[0 /* PRODUCT */]:
-                return 0 /* PRODUCT */;
+            case SectionEnum[2 /* CUSTOMER */]:
+                return 2 /* CUSTOMER */;
+            case SectionEnum[1 /* PRODUCT */]:
+                return 1 /* PRODUCT */;
+            case SectionEnum[3 /* CHANNEL */]:
+                return 3 /* CHANNEL */;
         }
-        return 2 /* UNKNOWN */;
+        return 0 /* UNKNOWN */;
     };
 
     Action.createPlaceholderEnum = function (placeholder) {
@@ -119,6 +121,18 @@ var Action = (function () {
                 return 1 /* DISCOUNT_VALUE */;
             case ActionPlaceholderEnum[2 /* COMMERCIAL_CHANELS */]:
                 return 2 /* COMMERCIAL_CHANELS */;
+            case ActionPlaceholderEnum[3 /* PRODUCT_PRICE */]:
+                return 3 /* PRODUCT_PRICE */;
+            case ActionPlaceholderEnum[4 /* PRICE_CHANGE */]:
+                return 4 /* PRICE_CHANGE */;
+            case ActionPlaceholderEnum[5 /* PRODUCT_PACKAGE_OPTION */]:
+                return 5 /* PRODUCT_PACKAGE_OPTION */;
+            case ActionPlaceholderEnum[6 /* PRODUCT_SKU */]:
+                return 6 /* PRODUCT_SKU */;
+            case ActionPlaceholderEnum[7 /* PRODUCT_STOCKING_TIME */]:
+                return 7 /* PRODUCT_STOCKING_TIME */;
+            case ActionPlaceholderEnum[8 /* CUSTOMERS_FOR_PRODUCT */]:
+                return 8 /* CUSTOMERS_FOR_PRODUCT */;
         }
         return null;
     };

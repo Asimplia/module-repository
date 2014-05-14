@@ -3,7 +3,8 @@
 var FactorDefinition = {
     value: String,
     weight: Number,
-    factor: Factor
+    factor: Factor,
+    reverse: Boolean
 };
 module.exports = FactorDefinition;
 //# sourceMappingURL=FactorDefinition.js.map

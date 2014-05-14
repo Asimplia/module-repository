@@ -1,7 +1,8 @@
 ﻿
 export = SectionEnum;
 enum SectionEnum {
+	UNKNOWN,
 	PRODUCT,
 	CUSTOMER,
-	UNKNOWN
+	CHANNEL
 }

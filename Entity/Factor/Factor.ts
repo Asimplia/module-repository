@@ -1,5 +1,7 @@
 ﻿
 import ArrayHelper = require('../../../Util/ArrayHelper');
+import FactorTypeEnum = require('./FactorTypeEnum');
+import SectionEnum = require('../Section/SectionEnum');
 
 export = Factor;
 class Factor {
@@ -11,9 +13,9 @@ class Factor {
 		private id: number,
 		private name: string,
 		private description: string,
-		private section: string,
+		private section: SectionEnum,
 		private weight: number,
-		private values: string[]
+		private factorType: FactorTypeEnum
 	) { }
 
 	static fromObject(o: any/*FactorObject*/): Factor {
@@ -21,9 +23,9 @@ class Factor {
 			o.id,
 			o.name,
 			o.description,
-			o.section,
+			Factor.createSectionEnum(o.section),
 			o.weight,
-			o.values
+			Factor.createTypeEnum(o.factorType)
 		);
 	}
 
@@ -32,13 +34,35 @@ class Factor {
 			id: entity.id,
 			name: entity.name,
 			description: entity.description,
-			section: entity.section,
+			section: SectionEnum[entity.section],
 			weight: entity.weight,
-			values: ArrayHelper.mapFilterEmptys(entity.values, (value) => { return value; })
+			factorType: FactorTypeEnum[entity.factorType]
 		};
 	}
 
 	toObject() {
 		return Factor.toObject(this);
+	}
+
+	static createTypeEnum(type: string): FactorTypeEnum {
+		switch (type) {
+			case FactorTypeEnum[FactorTypeEnum.QUADRANT]:
+				return FactorTypeEnum.QUADRANT;
+			case FactorTypeEnum[FactorTypeEnum.SHIFT]:
+				return FactorTypeEnum.SHIFT;
+		}
+		return null;
+	}
+
+	static createSectionEnum(section: string) {
+		switch (section) {
+			case SectionEnum[SectionEnum.CUSTOMER]:
+				return SectionEnum.CUSTOMER;
+			case SectionEnum[SectionEnum.PRODUCT]:
+				return SectionEnum.PRODUCT;
+			case SectionEnum[SectionEnum.CHANNEL]:
+				return SectionEnum.CHANNEL;
+		}
+		return SectionEnum.UNKNOWN;
 	}
 }
