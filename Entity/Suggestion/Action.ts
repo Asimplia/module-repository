@@ -92,6 +92,8 @@ class Action implements IEntity {
 				return ActionPlaceholderEnum.PRODUCT_STOCKING_TIME;
 			case ActionPlaceholderEnum[ActionPlaceholderEnum.CUSTOMERS_FOR_PRODUCT]:
 				return ActionPlaceholderEnum.CUSTOMERS_FOR_PRODUCT;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_MARGIN_RATE]:
+				return ActionPlaceholderEnum.PRODUCT_MARGIN_RATE;
 		}
 		return null;
 	}

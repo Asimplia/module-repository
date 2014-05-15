@@ -9,5 +9,6 @@
     ActionPlaceholderEnum[ActionPlaceholderEnum["PRODUCT_SKU"] = 6] = "PRODUCT_SKU";
     ActionPlaceholderEnum[ActionPlaceholderEnum["PRODUCT_STOCKING_TIME"] = 7] = "PRODUCT_STOCKING_TIME";
     ActionPlaceholderEnum[ActionPlaceholderEnum["CUSTOMERS_FOR_PRODUCT"] = 8] = "CUSTOMERS_FOR_PRODUCT";
+    ActionPlaceholderEnum[ActionPlaceholderEnum["PRODUCT_MARGIN_RATE"] = 9] = "PRODUCT_MARGIN_RATE";
 })(ActionPlaceholderEnum || (ActionPlaceholderEnum = {}));
 module.exports = ActionPlaceholderEnum;

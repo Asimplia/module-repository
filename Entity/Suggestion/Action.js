@@ -133,10 +133,11 @@ var Action = (function () {
                 return 7 /* PRODUCT_STOCKING_TIME */;
             case ActionPlaceholderEnum[8 /* CUSTOMERS_FOR_PRODUCT */]:
                 return 8 /* CUSTOMERS_FOR_PRODUCT */;
+            case ActionPlaceholderEnum[9 /* PRODUCT_MARGIN_RATE */]:
+                return 9 /* PRODUCT_MARGIN_RATE */;
         }
         return null;
     };
     return Action;
 })();
 module.exports = Action;
-//# sourceMappingURL=Action.js.map
