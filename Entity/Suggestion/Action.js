@@ -7,15 +7,18 @@ var FactorDefinition = require('./FactorDefinition');
 var ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
 
 var ArrayHelper = require('../../../Util/ArrayHelper');
+var PriorityTypeEnum = require('./PriorityTypeEnum');
 
 var Action = (function () {
-    function Action(id, name, text, section, factorDefinitionList, placeholders) {
+    function Action(id, name, shortName, text, section, factorDefinitionList, placeholders, priorityType) {
         this.id = id;
         this.name = name;
+        this.shortName = shortName;
         this.text = text;
         this.section = section;
         this.factorDefinitionList = factorDefinitionList;
         this.placeholders = placeholders;
+        this.priorityType = priorityType;
     }
     Object.defineProperty(Action.prototype, "Id", {
         get: function () {
@@ -79,21 +82,23 @@ var Action = (function () {
     });
 
     Action.fromObject = function (o /*ISuggestionActionObject*/ ) {
-        return new Action(o.id, new LocalizedString(o.name), new LocalizedString(o.text), Action.createSectionEnum(o.section), new List().pushArray(o.factorDefinitions, FactorDefinition.fromObject), ArrayHelper.mapFilterNulls(o.placeholders, function (placeholder) {
+        return new Action(o.id, new LocalizedString(o.name), new LocalizedString(o.shortName), new LocalizedString(o.text), Action.createSectionEnum(o.section), new List().pushArray(o.factorDefinitions, FactorDefinition.fromObject), ArrayHelper.mapFilterNulls(o.placeholders, function (placeholder) {
             return Action.createPlaceholderEnum(placeholder);
-        }));
+        }), Action.createPriorityTypeEnum(o.priorityType));
     };
 
     Action.toObject = function (entity) {
         return {
             id: entity.id,
             name: entity.name,
+            shortName: entity.shortName,
             text: entity.text,
             section: SectionEnum[entity.section],
             factorDefinitions: entity.factorDefinitionList.toArray(FactorDefinition.toObject),
             placeholders: ArrayHelper.mapFilterNulls(entity.placeholders, function (placeholder) {
                 return ActionPlaceholderEnum[placeholder];
-            })
+            }),
+            priorityType: PriorityTypeEnum[entity.priorityType]
         };
     };
 
@@ -109,6 +114,16 @@ var Action = (function () {
                 return 1 /* PRODUCT */;
             case SectionEnum[3 /* CHANNEL */]:
                 return 3 /* CHANNEL */;
+        }
+        return 0 /* UNKNOWN */;
+    };
+
+    Action.createPriorityTypeEnum = function (priorityType) {
+        switch (priorityType) {
+            case PriorityTypeEnum[1 /* RED */]:
+                return 1 /* RED */;
+            case PriorityTypeEnum[2 /* GREEN */]:
+                return 2 /* GREEN */;
         }
         return 0 /* UNKNOWN */;
     };
@@ -141,3 +156,4 @@ var Action = (function () {
     return Action;
 })();
 module.exports = Action;
+//# sourceMappingURL=Action.js.map

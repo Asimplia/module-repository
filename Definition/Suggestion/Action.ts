@@ -6,8 +6,10 @@ export = Action;
 var Action = {
 	id: Number,
 	name: LocalizedString,
+	shortName: LocalizedString,
 	text: LocalizedString,
 	section: String,
 	factorDefinitions: [FactorDefinition],
-	placeholders: [String]
+	placeholders: [String],
+	priorityType: String
 };

@@ -8,6 +8,7 @@ import IEntity = require('../IEntity');
 import ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
 import _ = require('underscore');
 import ArrayHelper = require('../../../Util/ArrayHelper');
+import PriorityTypeEnum = require('./PriorityTypeEnum');
 
 export = Action;
 class Action implements IEntity {
@@ -28,20 +29,24 @@ class Action implements IEntity {
 	constructor(
 		private id: Number,
 		private name: LocalizedString,
+		private shortName: LocalizedString,
 		private text: LocalizedString,
 		private section: SectionEnum,
 		private factorDefinitionList: List<FactorDefinition>,
-		private placeholders: ActionPlaceholderEnum[]
+		private placeholders: ActionPlaceholderEnum[],
+		private priorityType: PriorityTypeEnum
 	) { }
 
 	static fromObject(o: any/*ISuggestionActionObject*/): Action {
 		return new Action(
 			o.id,
 			new LocalizedString(o.name),
+			new LocalizedString(o.shortName),
 			new LocalizedString(o.text),
 			Action.createSectionEnum(o.section),
 			new List<FactorDefinition>().pushArray(o.factorDefinitions, FactorDefinition.fromObject),
-			ArrayHelper.mapFilterNulls(o.placeholders, (placeholder: string) => { return Action.createPlaceholderEnum(placeholder); })
+			ArrayHelper.mapFilterNulls(o.placeholders, (placeholder: string) => { return Action.createPlaceholderEnum(placeholder); }),
+			Action.createPriorityTypeEnum(o.priorityType)
 		);
 	}
 
@@ -49,10 +54,12 @@ class Action implements IEntity {
 		return {
 			id: entity.id,
 			name: entity.name,
+			shortName: entity.shortName,
 			text: entity.text,
 			section: SectionEnum[entity.section],
 			factorDefinitions: entity.factorDefinitionList.toArray(FactorDefinition.toObject),
-			placeholders: ArrayHelper.mapFilterNulls(entity.placeholders, (placeholder: ActionPlaceholderEnum) => { return ActionPlaceholderEnum[placeholder]; })
+			placeholders: ArrayHelper.mapFilterNulls(entity.placeholders, (placeholder: ActionPlaceholderEnum) => { return ActionPlaceholderEnum[placeholder]; }),
+			priorityType: PriorityTypeEnum[entity.priorityType]
 		};
 	}
 
@@ -70,6 +77,16 @@ class Action implements IEntity {
 				return SectionEnum.CHANNEL;
 		}
 		return SectionEnum.UNKNOWN;
+	}
+
+	static createPriorityTypeEnum(priorityType: string) {
+		switch (priorityType) {
+			case PriorityTypeEnum[PriorityTypeEnum.RED]:
+				return PriorityTypeEnum.RED;
+			case PriorityTypeEnum[PriorityTypeEnum.GREEN]:
+				return PriorityTypeEnum.GREEN;
+		}
+		return PriorityTypeEnum.UNKNOWN;
 	}
 
 	static createPlaceholderEnum(placeholder: string) {
