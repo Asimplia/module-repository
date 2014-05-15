@@ -6,7 +6,7 @@ var FactorDefinition = require('./FactorDefinition');
 
 var ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
 
-var ArrayHelper = require('../../../Util/ArrayHelper');
+var ArrayHelper = require('../../modules/Util/ArrayHelper');
 var PriorityTypeEnum = require('./PriorityTypeEnum');
 
 var Action = (function () {

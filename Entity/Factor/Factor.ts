@@ -1,5 +1,5 @@
 ﻿
-import ArrayHelper = require('../../../Util/ArrayHelper');
+import ArrayHelper = require('../../modules/Util/ArrayHelper');
 import FactorTypeEnum = require('./FactorTypeEnum');
 import SectionEnum = require('../Section/SectionEnum');
 

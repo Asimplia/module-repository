@@ -1,4 +1,4 @@
-﻿
+﻿/// <reference path="../typings/moment/moment.d.ts" />
 import SuggestionResult = require('../Entity/Suggestion/Result');
 import List = require('../Entity/List');
 import ResultTypeEnum = require('./ResultTypeEnum');

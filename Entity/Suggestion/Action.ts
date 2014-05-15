@@ -7,7 +7,7 @@ import FactorDefinition = require('./FactorDefinition');
 import IEntity = require('../IEntity');
 import ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
 import _ = require('underscore');
-import ArrayHelper = require('../../../Util/ArrayHelper');
+import ArrayHelper = require('../../modules/Util/ArrayHelper');
 import PriorityTypeEnum = require('./PriorityTypeEnum');
 
 export = Action;
