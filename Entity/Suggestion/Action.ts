@@ -1,12 +1,10 @@
-﻿/// <reference path="../../../typings/underscore/underscore.d.ts" />
-
+﻿
 import LocalizedString = require('../Locale/LocalizedString');
 import SectionEnum = require('../Section/SectionEnum');
 import List = require('../List');
 import FactorDefinition = require('./FactorDefinition');
 import IEntity = require('../IEntity');
 import ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
-import _ = require('underscore');
 import ArrayHelper = require('../../modules/Util/ArrayHelper');
 import PriorityTypeEnum = require('./PriorityTypeEnum');
 

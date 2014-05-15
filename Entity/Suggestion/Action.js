@@ -1,11 +1,9 @@
-﻿/// <reference path="../../../typings/underscore/underscore.d.ts" />
-var LocalizedString = require('../Locale/LocalizedString');
+﻿var LocalizedString = require('../Locale/LocalizedString');
 var SectionEnum = require('../Section/SectionEnum');
 var List = require('../List');
 var FactorDefinition = require('./FactorDefinition');
 
 var ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
-
 var ArrayHelper = require('../../modules/Util/ArrayHelper');
 var PriorityTypeEnum = require('./PriorityTypeEnum');
 
@@ -156,4 +154,3 @@ var Action = (function () {
     return Action;
 })();
 module.exports = Action;
-//# sourceMappingURL=Action.js.map
