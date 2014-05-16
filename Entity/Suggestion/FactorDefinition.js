@@ -68,3 +68,4 @@ var FactorDefinition = (function () {
     return FactorDefinition;
 })();
 module.exports = FactorDefinition;
+//# sourceMappingURL=FactorDefinition.js.map

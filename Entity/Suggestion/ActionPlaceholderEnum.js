@@ -12,3 +12,4 @@
     ActionPlaceholderEnum[ActionPlaceholderEnum["PRODUCT_MARGIN_RATE"] = 9] = "PRODUCT_MARGIN_RATE";
 })(ActionPlaceholderEnum || (ActionPlaceholderEnum = {}));
 module.exports = ActionPlaceholderEnum;
+//# sourceMappingURL=ActionPlaceholderEnum.js.map
