@@ -11,7 +11,9 @@ var ResultLoader = (function () {
         this.ResultModel = require('./ResultModel');
     }
     ResultLoader.prototype.getById = function (clientId, id, callback) {
-        this.ResultModel.findOne({ id: id, clientId: clientId }, function (e, suggestion) {
+        var conditions = { id: id };
+        conditions = this.condClient(conditions, clientId);
+        this.ResultModel.findOne(conditions, function (e, suggestion) {
             if (e) {
                 return callback(e);
             }
@@ -24,7 +26,7 @@ var ResultLoader = (function () {
 
     ResultLoader.prototype.getListByType = function (clientId, type, callback) {
         var conditions = this.getConditionsByType(type);
-        conditions.clientId = clientId;
+        conditions = this.condClient(conditions, clientId);
         this.ResultModel.find(conditions, function (e, suggestions) {
             if (e) {
                 return callback(e);
@@ -32,6 +34,17 @@ var ResultLoader = (function () {
             var list = new List();
             list.pushArray(suggestions, SuggestionResult.fromObject);
             callback(e, list);
+        });
+    };
+
+    ResultLoader.prototype.getCountByType = function (clientId, type, callback) {
+        var conditions = this.getConditionsByType(type);
+        conditions = this.condClient(conditions, clientId);
+        this.ResultModel.count(conditions, function (e, count) {
+            if (e) {
+                return callback(e);
+            }
+            callback(e, count);
         });
     };
 
@@ -59,6 +72,14 @@ var ResultLoader = (function () {
                         $lt: now
                     }
                 };
+            case 3 /* ALL */:
+        }
+        return conditions;
+    };
+
+    ResultLoader.prototype.condClient = function (conditions, clientId) {
+        if (clientId !== null) {
+            conditions.clientId = clientId;
         }
         return conditions;
     };

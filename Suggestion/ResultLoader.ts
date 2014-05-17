@@ -17,7 +17,9 @@ class ResultLoader {
 	}
 
 	getById(clientId: number, id: number, callback: (e: Error, suggestion?: SuggestionResult) => void) {
-		this.ResultModel.findOne({ id: id, clientId: clientId }, (e, suggestion: mongoose.Document) => {
+		var conditions = { id: id };
+		conditions = this.condClient(conditions, clientId);
+		this.ResultModel.findOne(conditions, (e, suggestion: mongoose.Document) => {
 			if (e) {
 				return callback(e);
 			}
@@ -30,7 +32,7 @@ class ResultLoader {
 
 	getListByType(clientId: number, type: ResultTypeEnum, callback: (e: Error, suggestion?: List<SuggestionResult>) => void): void {
 		var conditions = this.getConditionsByType(type);
-		conditions.clientId = clientId;
+		conditions = this.condClient(conditions, clientId);
 		this.ResultModel.find(conditions, (e, suggestions: mongoose.Document[]) => {
 			if (e) {
 				return callback(e);
@@ -38,6 +40,17 @@ class ResultLoader {
 			var list = new List<SuggestionResult>();
 			list.pushArray(suggestions, SuggestionResult.fromObject);
 			callback(e, list);
+		});
+	}
+
+	getCountByType(clientId: number, type: ResultTypeEnum, callback: (e: Error, count?: number) => void): void {
+		var conditions = this.getConditionsByType(type);
+		conditions = this.condClient(conditions, clientId);
+		this.ResultModel.count(conditions, (e, count: number) => {
+			if (e) {
+				return callback(e);
+			}
+			callback(e, count);
 		});
 	}
 
@@ -65,6 +78,14 @@ class ResultLoader {
 						$lt: now
 					}
 				};
+			case ResultTypeEnum.ALL:
+		}
+		return conditions;
+	}
+
+	private condClient(conditions: any, clientId: number) {
+		if (clientId !== null) {
+			conditions.clientId = clientId;
 		}
 		return conditions;
 	}
