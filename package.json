@@ -1,5 +1,5 @@
 {
-  "name": "module-repository",
+  "name": "asimplia-repository",
   "version": "0.0.0",
   "description": "Repository",
   "main": "",
@@ -11,6 +11,7 @@
     "mongoose": "^3.8.8",
     "underscore": "^1.6.0",
     "moment": "^2.6.0",
-    "util": "^0.10.3"
+    "util": "^0.10.3",
+    "asimplia-util": "git+ssh://git@github.com:Asimplia/module-util.git"
   }
 }
