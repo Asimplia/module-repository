@@ -14,11 +14,5 @@
     "asimplia-util": "git+ssh://git@github.com:Asimplia/module-util.git"
   },
   "readme": "﻿# Repository\r\n\r\nmodule for work with data in repository\r\n",
-  "readmeFilename": "README.md",
-  "_id": "asimplia-repository@0.0.0",
-  "dist": {
-    "shasum": "2df7e5bc4173721080604c7ee4f1bc893082a894"
-  },
-  "_resolved": "git+ssh://git@github.com:Asimplia/module-repository.git#e50ee5c8355d9a91615977553c9357e05b21b565",
-  "_from": "asimplia-repository@git+ssh://git@github.com:Asimplia/module-repository.git"
+  "readmeFilename": "README.md"
 }
