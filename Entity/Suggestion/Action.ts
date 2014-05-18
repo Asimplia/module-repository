@@ -110,6 +110,12 @@ class Action implements IEntity {
 				return ActionPlaceholderEnum.CUSTOMERS_FOR_PRODUCT;
 			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_MARGIN_RATE]:
 				return ActionPlaceholderEnum.PRODUCT_MARGIN_RATE;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_CONVERSION_RATE]:
+				return ActionPlaceholderEnum.PRODUCT_CONVERSION_RATE;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.CATEGORY_NAME]:
+				return ActionPlaceholderEnum.CATEGORY_NAME;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.CATEGORY_CHANGE_IN_SALE]:
+				return ActionPlaceholderEnum.CATEGORY_CHANGE_IN_SALE;
 		}
 		return null;
 	}

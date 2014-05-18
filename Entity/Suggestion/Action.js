@@ -150,9 +150,16 @@ var Action = (function () {
                 return 8 /* CUSTOMERS_FOR_PRODUCT */;
             case ActionPlaceholderEnum[9 /* PRODUCT_MARGIN_RATE */]:
                 return 9 /* PRODUCT_MARGIN_RATE */;
+            case ActionPlaceholderEnum[10 /* PRODUCT_CONVERSION_RATE */]:
+                return 10 /* PRODUCT_CONVERSION_RATE */;
+            case ActionPlaceholderEnum[11 /* CATEGORY_NAME */]:
+                return 11 /* CATEGORY_NAME */;
+            case ActionPlaceholderEnum[12 /* CATEGORY_CHANGE_IN_SALE */]:
+                return 12 /* CATEGORY_CHANGE_IN_SALE */;
         }
         return null;
     };
     return Action;
 })();
 module.exports = Action;
+//# sourceMappingURL=Action.js.map

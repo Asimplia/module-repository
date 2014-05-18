@@ -10,5 +10,9 @@
     ActionPlaceholderEnum[ActionPlaceholderEnum["PRODUCT_STOCKING_TIME"] = 7] = "PRODUCT_STOCKING_TIME";
     ActionPlaceholderEnum[ActionPlaceholderEnum["CUSTOMERS_FOR_PRODUCT"] = 8] = "CUSTOMERS_FOR_PRODUCT";
     ActionPlaceholderEnum[ActionPlaceholderEnum["PRODUCT_MARGIN_RATE"] = 9] = "PRODUCT_MARGIN_RATE";
+    ActionPlaceholderEnum[ActionPlaceholderEnum["PRODUCT_CONVERSION_RATE"] = 10] = "PRODUCT_CONVERSION_RATE";
+    ActionPlaceholderEnum[ActionPlaceholderEnum["CATEGORY_NAME"] = 11] = "CATEGORY_NAME";
+    ActionPlaceholderEnum[ActionPlaceholderEnum["CATEGORY_CHANGE_IN_SALE"] = 12] = "CATEGORY_CHANGE_IN_SALE";
 })(ActionPlaceholderEnum || (ActionPlaceholderEnum = {}));
 module.exports = ActionPlaceholderEnum;
+//# sourceMappingURL=ActionPlaceholderEnum.js.map
