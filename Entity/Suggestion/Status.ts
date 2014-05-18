@@ -3,6 +3,20 @@ import IEntity = require('../IEntity');
 
 export = Status;
 class Status implements IEntity {
+
+	get DateCreated() { return this.dateCreated; }
+	set DateCreated(value: Date) { this.dateCreated = value; }
+	get DateValidTo() { return this.dateCreated; }
+	set DateValidTo(value: Date) { this.dateCreated = value; }
+	get State() { return this.state; }
+	set State(value: string) { this.state = value; }
+	get DateNextRemind() { return this.dateNextRemind; }
+	set DateNextRemind(value: Date) { this.dateNextRemind = value; }
+	get PriorityValue() { return this.priorityValue; }
+	set PriorityValue(value: number) { this.priorityValue = value; }
+	get PriorityType() { return this.priorityType; }
+	set PriorityType(value: string) { this.priorityType = value; }
+
 	constructor(
 		private dateCreated: Date,
 		private dateValidTo: Date,
