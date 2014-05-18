@@ -4,6 +4,8 @@ var SuggestionResult = require('../Entity/Suggestion/Result');
 var List = require('../Entity/List');
 var ResultTypeEnum = require('./ResultTypeEnum');
 
+var ResultStateEnum = require('../Entity/Suggestion/ResultStateEnum');
+
 var util = require('util');
 var moment = require('moment');
 
@@ -57,19 +59,32 @@ var ResultLoader = (function () {
                 conditions['activeStatus.dateValidTo'] = {
                     $gt: now
                 };
+                conditions['activeStatus.dateNextRemind'] = {
+                    $lt: now
+                };
+                break;
+            case 4 /* REMIND */:
+                conditions['activeStatus.dateValidTo'] = {
+                    $gt: now
+                };
+                conditions['activeStatus.dateNextRemind'] = {
+                    $gt: now
+                };
                 break;
             case 2 /* PAST */:
                 conditions['activeStatus.dateValidTo'] = {
                     $lt: now
                 };
-                conditions['activeStatus.state'] = 'USED';
+                conditions['activeStatus.state'] = {
+                    $in: [ResultStateEnum[1 /* USED */], ResultStateEnum[2 /* READY_TO_APPLY */]]
+                };
                 break;
             case 0 /* NOT_USED */:
                 conditions['activeStatus.dateValidTo'] = {
                     $lt: now
                 };
                 conditions['activeStatus.state'] = {
-                    $ne: 'USED'
+                    $nin: [ResultStateEnum[1 /* USED */], ResultStateEnum[2 /* READY_TO_APPLY */]]
                 };
                 break;
             case 3 /* ALL */:
@@ -87,3 +102,4 @@ var ResultLoader = (function () {
     return ResultLoader;
 })();
 module.exports = ResultLoader;
+//# sourceMappingURL=ResultLoader.js.map

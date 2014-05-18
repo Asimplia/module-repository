@@ -23,5 +23,6 @@ var r = AsimpliaRepository.Entity.Suggestion.Graph;
 var s = AsimpliaRepository.Entity.Suggestion.PriorityTypeEnum;
 var t = AsimpliaRepository.Entity.Suggestion.Result;
 var u = AsimpliaRepository.Entity.Suggestion.Status;
+var j = AsimpliaRepository.Entity.Suggestion.ResultStateEnum;
 var w = AsimpliaRepository.Factor.FactorLoader;
 var x = AsimpliaRepository.Factor.FactorRecorder;

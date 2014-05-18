@@ -14,4 +14,6 @@ var Result = require('./Result');
 exports.Result = Result;
 var Status = require('./Status');
 exports.Status = Status;
+var ResultStateEnum = require('./ResultStateEnum');
+exports.ResultStateEnum = ResultStateEnum;
 //# sourceMappingURL=index.js.map

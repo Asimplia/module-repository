@@ -5,6 +5,7 @@ import SuggestionResult = require('../Entity/Suggestion/Result');
 import List = require('../Entity/List');
 import ResultTypeEnum = require('./ResultTypeEnum');
 import ResultModel = require('./ResultModel');
+import ResultStateEnum = require('../Entity/Suggestion/ResultStateEnum');
 import mongoose = require('mongoose');
 import util = require('util');
 import moment = require('moment');
@@ -64,19 +65,32 @@ class ResultLoader {
 				conditions['activeStatus.dateValidTo'] = {
 					$gt: now
 				};
+				conditions['activeStatus.dateNextRemind'] = {
+					$lt: now
+				};
+				break;
+			case ResultTypeEnum.REMIND:
+				conditions['activeStatus.dateValidTo'] = {
+					$gt: now
+				};
+				conditions['activeStatus.dateNextRemind'] = {
+					$gt: now
+				};
 				break;
 			case ResultTypeEnum.PAST:
 				conditions['activeStatus.dateValidTo'] = {
 					$lt: now
 				};
-				conditions['activeStatus.state'] = 'USED';
+				conditions['activeStatus.state'] = {
+					$in: [ResultStateEnum[ResultStateEnum.USED], ResultStateEnum[ResultStateEnum.READY_TO_APPLY]]
+				};
 				break;
 			case ResultTypeEnum.NOT_USED:
 				conditions['activeStatus.dateValidTo'] = {
 					$lt: now
 				};
 				conditions['activeStatus.state'] = {
-					$ne: 'USED'
+					$nin: [ResultStateEnum[ResultStateEnum.USED], ResultStateEnum[ResultStateEnum.READY_TO_APPLY]]
 				};
 				break;
 			case ResultTypeEnum.ALL:

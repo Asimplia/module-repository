@@ -7,3 +7,4 @@ export import Graph = require('./Graph');
 export import PriorityTypeEnum = require('./PriorityTypeEnum');
 export import Result = require('./Result');
 export import Status = require('./Status');
+export import ResultStateEnum = require('./ResultStateEnum');
