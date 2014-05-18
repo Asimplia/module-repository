@@ -8,7 +8,7 @@
                 callback(e);
                 return;
             }
-            callback(null, entityFactory(entityDocument));
+            callback(null, entity);
         });
     };
 
@@ -24,3 +24,4 @@
     return AbstractRecorder;
 })();
 module.exports = AbstractRecorder;
+//# sourceMappingURL=AbstractRecorder.js.map
