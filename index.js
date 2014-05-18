@@ -1,16 +1,11 @@
 ﻿function connect(dsn) {
     require('mongoose').connect(dsn);
 }
-
+exports.connect = connect;
 var Suggestion = require('./Suggestion/index');
+exports.Suggestion = Suggestion;
 var Factor = require('./Factor/index');
+exports.Factor = Factor;
 var Entity = require('./Entity/index');
-
-var AsimpliaRepository = {
-    connect: connect,
-    Suggestion: Suggestion,
-    Factor: Factor,
-    Entity: Entity
-};
-module.exports = AsimpliaRepository;
+exports.Entity = Entity;
 //# sourceMappingURL=index.js.map

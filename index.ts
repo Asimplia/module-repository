@@ -1,18 +1,7 @@
 ﻿
-function connect(dsn: string) {
+export function connect(dsn: string) {
 	require('mongoose').connect(dsn);
 }
-
-import Suggestion = require('./Suggestion/index');
-import Factor = require('./Factor/index');
-import Entity = require('./Entity/index');
-import IEntity = Entity.IEntity;
-import List = Entity.List;
-
-export = AsimpliaRepository;
-var AsimpliaRepository = {
-	connect: connect,
-	Suggestion: Suggestion,
-	Factor: Factor,
-	Entity: Entity
-};
+export import Suggestion = require('./Suggestion/index');
+export import Factor = require('./Factor/index');
+export import Entity = require('./Entity/index');

@@ -1,19 +1,8 @@
 ﻿
-import IEntity = require('./IEntity');
-import List = require('./List');
-import Factor = require('./Factor/index');
-import Locale = require('./Locale/index');
-import Matrix = require('./Matrix/index');
-import Section = require('./Section/index');
-import Suggestion = require('./Suggestion/index');
-
-export = Entity;
-var Entity = {
-	IEntity: IEntity,
-	List: List,
-	Factor: Factor,
-	Locale: Locale,
-	Matrix: Matrix,
-	Section: Section,
-	Suggestion: Suggestion
-};
+export import IEntity = require('./IEntity');
+export import List = require('./List');
+export import Factor = require('./Factor/index');
+export import Locale = require('./Locale/index');
+export import Matrix = require('./Matrix/index');
+export import Section = require('./Section/index');
+export import Suggestion = require('./Suggestion/index');
