@@ -6,4 +6,3 @@
     SectionEnum[SectionEnum["CHANNEL"] = 3] = "CHANNEL";
 })(SectionEnum || (SectionEnum = {}));
 module.exports = SectionEnum;
-//# sourceMappingURL=SectionEnum.js.map

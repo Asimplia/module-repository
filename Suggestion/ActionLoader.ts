@@ -1,4 +1,4 @@
-﻿/// <refernce path="../../typings/mongoose/mongoose.d.ts" />
+﻿/// <refernce path="../typings/mongoose/mongoose.d.ts" />
 
 import SuggestionAction = require('../Entity/Suggestion/Action');
 import List = require('../Entity/List');

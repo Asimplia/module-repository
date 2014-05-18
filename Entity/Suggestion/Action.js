@@ -1,10 +1,12 @@
-﻿var LocalizedString = require('../Locale/LocalizedString');
+﻿/// <reference path="../../../../node_modules/asimplia-util/index.node.d.ts" />
+var LocalizedString = require('../Locale/LocalizedString');
 var SectionEnum = require('../Section/SectionEnum');
 var List = require('../List');
 var FactorDefinition = require('./FactorDefinition');
 
 var ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
-var ArrayHelper = require('../../modules/Util/ArrayHelper');
+var AsimpliaUtil = require('asimplia-util');
+var ArrayHelper = AsimpliaUtil.ArrayHelper;
 var PriorityTypeEnum = require('./PriorityTypeEnum');
 
 var Action = (function () {

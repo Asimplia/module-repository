@@ -1,4 +1,4 @@
-﻿/// <refernce path="../../typings/mongoose/mongoose.d.ts" />
+﻿/// <refernce path="../typings/mongoose/mongoose.d.ts" />
 var SuggestionAction = require('../Entity/Suggestion/Action');
 var List = require('../Entity/List');
 
@@ -19,4 +19,3 @@ var ActionLoader = (function () {
     return ActionLoader;
 })();
 module.exports = ActionLoader;
-//# sourceMappingURL=ActionLoader.js.map

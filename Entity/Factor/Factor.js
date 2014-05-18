@@ -64,4 +64,3 @@ var Factor = (function () {
     return Factor;
 })();
 module.exports = Factor;
-//# sourceMappingURL=Factor.js.map

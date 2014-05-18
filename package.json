@@ -1,17 +1,18 @@
 {
   "name": "asimplia-repository",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Repository",
   "main": "",
   "author": {
-    "name": "misak113",
-    "email": ""
+    "name": "misak113"
   },
   "dependencies": {
     "mongoose": "^3.8.8",
     "underscore": "^1.6.0",
     "moment": "^2.6.0",
     "util": "^0.10.3",
-    "asimplia-util": "git+ssh://git@github.com:Asimplia/module-util.git"
-  }
+    "asimplia-util": "git+https://github.com/Asimplia/module-util.git"
+  },
+  "readme": "﻿# Repository\r\n\r\nmodule for work with data in repository\r\n",
+  "readmeFilename": "README.md"
 }

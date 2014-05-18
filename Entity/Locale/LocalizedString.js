@@ -9,4 +9,3 @@
     return LocalizedString;
 })();
 module.exports = LocalizedString;
-//# sourceMappingURL=LocalizedString.js.map

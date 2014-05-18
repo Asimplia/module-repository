@@ -40,4 +40,3 @@ var FactorRecorder = (function (_super) {
     return FactorRecorder;
 })(AbstractRecorder);
 module.exports = FactorRecorder;
-//# sourceMappingURL=FactorRecorder.js.map
