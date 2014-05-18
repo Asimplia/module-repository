@@ -1,4 +1,6 @@
-﻿/// <reference path="../typings/moment/moment.d.ts" />
+﻿/// <reference path="../../../typings/moment/moment.d.ts" />
+/// <reference path="../../../typings/mongoose/mongoose.d.ts" />
+
 import SuggestionResult = require('../Entity/Suggestion/Result');
 import List = require('../Entity/List');
 import ResultTypeEnum = require('./ResultTypeEnum');
@@ -59,26 +61,26 @@ class ResultLoader {
 		var now = moment().toDate();
 		switch (type) {
 			case ResultTypeEnum.ACTUAL:
-				conditions.activeStatus = {
-					dateValidTo: {
-						$gt: now
-					}
+				conditions['activeStatus.dateValidTo'] = {
+					$gt: now
 				};
 				break;
 			case ResultTypeEnum.PAST:
-				conditions.activeStatus = {
-					dateValidTo: {
-						$lt: now
-					},
-					state: 'USED'
+				conditions['activeStatus.dateValidTo'] = {
+					$lt: now
 				};
+				conditions['activeStatus.state'] = 'USED';
+				break;
 			case ResultTypeEnum.NOT_USED:
-				conditions.activeStatus = {
-					dateValidTo: {
-						$lt: now
-					}
+				conditions['activeStatus.dateValidTo'] = {
+					$lt: now
 				};
+				conditions['activeStatus.state'] = {
+					$ne: 'USED'
+				};
+				break;
 			case ResultTypeEnum.ALL:
+				break;
 		}
 		return conditions;
 	}

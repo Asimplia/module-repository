@@ -1,4 +1,5 @@
-﻿/// <reference path="../typings/moment/moment.d.ts" />
+﻿/// <reference path="../../../typings/moment/moment.d.ts" />
+/// <reference path="../../../typings/mongoose/mongoose.d.ts" />
 var SuggestionResult = require('../Entity/Suggestion/Result');
 var List = require('../Entity/List');
 var ResultTypeEnum = require('./ResultTypeEnum');
@@ -53,26 +54,26 @@ var ResultLoader = (function () {
         var now = moment().toDate();
         switch (type) {
             case 1 /* ACTUAL */:
-                conditions.activeStatus = {
-                    dateValidTo: {
-                        $gt: now
-                    }
+                conditions['activeStatus.dateValidTo'] = {
+                    $gt: now
                 };
                 break;
             case 2 /* PAST */:
-                conditions.activeStatus = {
-                    dateValidTo: {
-                        $lt: now
-                    },
-                    state: 'USED'
+                conditions['activeStatus.dateValidTo'] = {
+                    $lt: now
                 };
+                conditions['activeStatus.state'] = 'USED';
+                break;
             case 0 /* NOT_USED */:
-                conditions.activeStatus = {
-                    dateValidTo: {
-                        $lt: now
-                    }
+                conditions['activeStatus.dateValidTo'] = {
+                    $lt: now
                 };
+                conditions['activeStatus.state'] = {
+                    $ne: 'USED'
+                };
+                break;
             case 3 /* ALL */:
+                break;
         }
         return conditions;
     };
