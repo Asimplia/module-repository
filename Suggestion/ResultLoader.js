@@ -102,4 +102,3 @@ var ResultLoader = (function () {
     return ResultLoader;
 })();
 module.exports = ResultLoader;
-//# sourceMappingURL=ResultLoader.js.map

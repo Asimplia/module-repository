@@ -8,4 +8,3 @@
     ResultStateEnum[ResultStateEnum["DECLINED"] = 5] = "DECLINED";
 })(ResultStateEnum || (ResultStateEnum = {}));
 module.exports = ResultStateEnum;
-//# sourceMappingURL=ResultStateEnum.js.map

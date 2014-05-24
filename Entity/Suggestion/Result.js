@@ -131,4 +131,3 @@ var Result = (function () {
     return Result;
 })();
 module.exports = Result;
-//# sourceMappingURL=Result.js.map

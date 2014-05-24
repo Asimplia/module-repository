@@ -1,17 +1,12 @@
 ﻿var List = require('./List');
+exports.List = List;
 var Factor = require('./Factor/index');
+exports.Factor = Factor;
 var Locale = require('./Locale/index');
+exports.Locale = Locale;
 var Matrix = require('./Matrix/index');
+exports.Matrix = Matrix;
 var Section = require('./Section/index');
+exports.Section = Section;
 var Suggestion = require('./Suggestion/index');
-
-var Entity = {
-    List: List,
-    Factor: Factor,
-    Locale: Locale,
-    Matrix: Matrix,
-    Section: Section,
-    Suggestion: Suggestion
-};
-module.exports = Entity;
-//# sourceMappingURL=index.js.map
+exports.Suggestion = Suggestion;

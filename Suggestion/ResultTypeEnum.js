@@ -7,4 +7,3 @@
     ResultTypeEnum[ResultTypeEnum["REMIND"] = 4] = "REMIND";
 })(ResultTypeEnum || (ResultTypeEnum = {}));
 module.exports = ResultTypeEnum;
-//# sourceMappingURL=ResultTypeEnum.js.map

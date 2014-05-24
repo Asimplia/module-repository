@@ -15,4 +15,3 @@
     ActionPlaceholderEnum[ActionPlaceholderEnum["CATEGORY_CHANGE_IN_SALE"] = 12] = "CATEGORY_CHANGE_IN_SALE";
 })(ActionPlaceholderEnum || (ActionPlaceholderEnum = {}));
 module.exports = ActionPlaceholderEnum;
-//# sourceMappingURL=ActionPlaceholderEnum.js.map

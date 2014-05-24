@@ -24,4 +24,3 @@
     return AbstractRecorder;
 })();
 module.exports = AbstractRecorder;
-//# sourceMappingURL=AbstractRecorder.js.map

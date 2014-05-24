@@ -109,4 +109,3 @@ var Status = (function () {
     return Status;
 })();
 module.exports = Status;
-//# sourceMappingURL=Status.js.map

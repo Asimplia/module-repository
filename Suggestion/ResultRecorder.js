@@ -35,4 +35,3 @@ var ActionRecorder = (function (_super) {
     return ActionRecorder;
 })(AbstractRecorder);
 module.exports = ActionRecorder;
-//# sourceMappingURL=ResultRecorder.js.map
