@@ -12,7 +12,7 @@ class AbstractRecorder {
 				callback(e);
 				return;
 			}
-			callback(null, entityFactory(entityDocument));
+			callback(null, entity);
 		});
 	}
 

@@ -7,8 +7,31 @@ import IEntity = require('../IEntity');
 
 export = Result;
 class Result implements IEntity {
+
+	get Id() { return this.id; }
+	set Id(value: number) { this.id = value; }
+	get Title() { return this.title; }
+	set Title(value: LocalizedString) { this.title = value; }
+	get ShortTitle() { return this.shortTitle; }
+	set ShortTitle(value: LocalizedString) { this.shortTitle = value; }
+	get Label() { return this.label; }
+	set Label(value: LocalizedString) { this.label = value; }
+	get Text() { return this.text; }
+	set Text(value: LocalizedString) { this.text = value; }
+	get ActiveStatus() { return this.activeStatus; }
+	set ActiveStatus(value: Status) {
+		this.statusList.push(value);
+		this.activeStatus = value;
+	}
+	get StatusList() { return this.statusList; }
+	set StatusList(value: List<Status>) { this.statusList = value; }
+	get GraphList() { return this.graphList; }
+	set GraphList(value: List<Graph>) { this.graphList = value; }
+	get ClientId() { return this.clientId; }
+	set ClientId(value: number) { this.clientId = value; }
+
 	constructor(
-		private id: Number,
+		private id: number,
 		private title: LocalizedString,
 		private shortTitle: LocalizedString,
 		private label: LocalizedString,

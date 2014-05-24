@@ -1,10 +1,12 @@
-﻿var LocalizedString = require('../Locale/LocalizedString');
+﻿/// <reference path="../../../../node_modules/asimplia-util/index.node.d.ts" />
+var LocalizedString = require('../Locale/LocalizedString');
 var SectionEnum = require('../Section/SectionEnum');
 var List = require('../List');
 var FactorDefinition = require('./FactorDefinition');
 
 var ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
-var ArrayHelper = require('../../modules/Util/ArrayHelper');
+var AsimpliaUtil = require('asimplia-util');
+var ArrayHelper = AsimpliaUtil.ArrayHelper;
 var PriorityTypeEnum = require('./PriorityTypeEnum');
 
 var Action = (function () {
@@ -148,9 +150,16 @@ var Action = (function () {
                 return 8 /* CUSTOMERS_FOR_PRODUCT */;
             case ActionPlaceholderEnum[9 /* PRODUCT_MARGIN_RATE */]:
                 return 9 /* PRODUCT_MARGIN_RATE */;
+            case ActionPlaceholderEnum[10 /* PRODUCT_CONVERSION_RATE */]:
+                return 10 /* PRODUCT_CONVERSION_RATE */;
+            case ActionPlaceholderEnum[11 /* CATEGORY_NAME */]:
+                return 11 /* CATEGORY_NAME */;
+            case ActionPlaceholderEnum[12 /* CATEGORY_CHANGE_IN_SALE */]:
+                return 12 /* CATEGORY_CHANGE_IN_SALE */;
         }
         return null;
     };
     return Action;
 })();
 module.exports = Action;
+//# sourceMappingURL=Action.js.map

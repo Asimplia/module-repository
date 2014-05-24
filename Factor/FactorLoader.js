@@ -19,4 +19,3 @@ var FactorLoader = (function () {
     return FactorLoader;
 })();
 module.exports = FactorLoader;
-//# sourceMappingURL=FactorLoader.js.map

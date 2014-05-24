@@ -1,7 +1,10 @@
-﻿/// <reference path="../typings/moment/moment.d.ts" />
+﻿/// <reference path="../../../typings/moment/moment.d.ts" />
+/// <reference path="../../../typings/mongoose/mongoose.d.ts" />
 var SuggestionResult = require('../Entity/Suggestion/Result');
 var List = require('../Entity/List');
 var ResultTypeEnum = require('./ResultTypeEnum');
+
+var ResultStateEnum = require('../Entity/Suggestion/ResultStateEnum');
 
 var util = require('util');
 var moment = require('moment');
@@ -53,26 +56,39 @@ var ResultLoader = (function () {
         var now = moment().toDate();
         switch (type) {
             case 1 /* ACTUAL */:
-                conditions.activeStatus = {
-                    dateValidTo: {
-                        $gt: now
-                    }
+                conditions['activeStatus.dateValidTo'] = {
+                    $gt: now
+                };
+                conditions['activeStatus.dateNextRemind'] = {
+                    $lt: now
+                };
+                break;
+            case 4 /* REMIND */:
+                conditions['activeStatus.dateValidTo'] = {
+                    $gt: now
+                };
+                conditions['activeStatus.dateNextRemind'] = {
+                    $gt: now
                 };
                 break;
             case 2 /* PAST */:
-                conditions.activeStatus = {
-                    dateValidTo: {
-                        $lt: now
-                    },
-                    state: 'USED'
+                conditions['activeStatus.dateValidTo'] = {
+                    $lt: now
                 };
+                conditions['activeStatus.state'] = {
+                    $in: [ResultStateEnum[1 /* USED */], ResultStateEnum[2 /* READY_TO_APPLY */]]
+                };
+                break;
             case 0 /* NOT_USED */:
-                conditions.activeStatus = {
-                    dateValidTo: {
-                        $lt: now
-                    }
+                conditions['activeStatus.dateValidTo'] = {
+                    $lt: now
                 };
+                conditions['activeStatus.state'] = {
+                    $nin: [ResultStateEnum[1 /* USED */], ResultStateEnum[2 /* READY_TO_APPLY */]]
+                };
+                break;
             case 3 /* ALL */:
+                break;
         }
         return conditions;
     };
@@ -86,3 +102,4 @@ var ResultLoader = (function () {
     return ResultLoader;
 })();
 module.exports = ResultLoader;
+//# sourceMappingURL=ResultLoader.js.map

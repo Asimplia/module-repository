@@ -1,11 +1,12 @@
-﻿
+﻿/// <reference path="../../../../node_modules/asimplia-util/index.node.d.ts" />
 import LocalizedString = require('../Locale/LocalizedString');
 import SectionEnum = require('../Section/SectionEnum');
 import List = require('../List');
 import FactorDefinition = require('./FactorDefinition');
 import IEntity = require('../IEntity');
 import ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
-import ArrayHelper = require('../../modules/Util/ArrayHelper');
+import AsimpliaUtil = require('asimplia-util');
+import ArrayHelper = AsimpliaUtil.ArrayHelper;
 import PriorityTypeEnum = require('./PriorityTypeEnum');
 
 export = Action;
@@ -109,6 +110,12 @@ class Action implements IEntity {
 				return ActionPlaceholderEnum.CUSTOMERS_FOR_PRODUCT;
 			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_MARGIN_RATE]:
 				return ActionPlaceholderEnum.PRODUCT_MARGIN_RATE;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_CONVERSION_RATE]:
+				return ActionPlaceholderEnum.PRODUCT_CONVERSION_RATE;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.CATEGORY_NAME]:
+				return ActionPlaceholderEnum.CATEGORY_NAME;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.CATEGORY_CHANGE_IN_SALE]:
+				return ActionPlaceholderEnum.CATEGORY_CHANGE_IN_SALE;
 		}
 		return null;
 	}
