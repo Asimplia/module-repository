@@ -11,7 +11,8 @@
     "underscore": "^1.6.0",
     "moment": "^2.6.0",
     "util": "^0.10.3",
-    "asimplia-util": "git+https://github.com/Asimplia/module-util.git"
+    "asimplia-util": "git+https://github.com/Asimplia/module-util.git",
+    "mssql": "^0.5.3"
   },
   "readme": "﻿# Repository\r\n\r\nmodule for work with data in repository\r\n",
   "readmeFilename": "README.md"
