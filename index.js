@@ -21,9 +21,3 @@ function connectMSSQL(connectionString) {
 }
 exports.connectMSSQL = connectMSSQL;
 exports.mssqlConnection;
-var Suggestion = require('./Suggestion/index');
-exports.Suggestion = Suggestion;
-var Factor = require('./Factor/index');
-exports.Factor = Factor;
-var Entity = require('./Entity/index');
-exports.Entity = Entity;
