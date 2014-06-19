@@ -10,8 +10,8 @@ var Product = require('../EShop/Product');
 
 var MatrixProduct = (function (_super) {
     __extends(MatrixProduct, _super);
-    function MatrixProduct(type, description, product, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, group, dateValid) {
-        _super.call(this, type, description);
+    function MatrixProduct(id, type, description, product, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, group, dateValid) {
+        _super.call(this, id, type, description);
         this.product = product;
         this.scoreAbsolute = scoreAbsolute;
         this.scoreRelative = scoreRelative;
@@ -24,7 +24,7 @@ var MatrixProduct = (function (_super) {
         this.dateValid = dateValid;
     }
     MatrixProduct.fromRow = function (o) {
-        return new MatrixProduct(o.MatrixType, o.Description, new Product(o.ProductID, o.EShopID, o.ProductName, o.FixPrice, o.FlagInShop), o.MatrixScoreAbs, o.MatrixScoreRel, o.MatrixScoreWei, o.MatrixChangeAbs, o.MatrixChangeRel, o.MatrixChangeWei, o.MatrixPrediction, o.MatrixGroup, moment(o.DateValid).toDate());
+        return new MatrixProduct(o.MatrixID, o.MatrixType, o.Description, new Product(o.ProductID, o.EShopID, o.ProductName, o.FixPrice, o.FlagInShop), o.MatrixScoreAbs, o.MatrixScoreRel, o.MatrixScoreWei, o.MatrixChangeAbs, o.MatrixChangeRel, o.MatrixChangeWei, o.MatrixPrediction, o.MatrixGroup, moment(o.DateValid).toDate());
     };
 
     MatrixProduct.toObject = function (entity) {

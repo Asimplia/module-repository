@@ -1,8 +1,16 @@
 ﻿var Record = (function () {
-    function Record(type, description) {
+    function Record(id, type, description) {
+        this.id = id;
         this.type = type;
         this.description = description;
     }
+    Object.defineProperty(Record.prototype, "Id", {
+        get: function () {
+            return this.id;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Record.prototype, "Type", {
         get: function () {
             return this.type;

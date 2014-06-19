@@ -6,6 +6,11 @@ import MatrixProduct = require('./MatrixProduct');
 export = Signal;
 class Signal implements IEntity {
 
+	get Id(): number { return this.id; }
+	set Id(value: number) { this.id = value; }
+	get Record(): Record { return this.record; }
+	get DateCreated(): Date { return this.dateCreated; }
+
 	constructor(
 		private id: number,
 		private record: Record,
@@ -26,7 +31,7 @@ class Signal implements IEntity {
 
 	static createRecordFromRow(o: any): Record {
 		switch (o.MatrixType) {
-			case 'PRO':
+			case 'MP1':
 				return MatrixProduct.fromRow(o);
 			default:
 				throw new Error('Not implemented');

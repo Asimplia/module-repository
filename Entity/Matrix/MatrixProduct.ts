@@ -8,6 +8,7 @@ export = MatrixProduct;
 class MatrixProduct extends Record {
 
 	constructor(
+		id: number,
 		type: string,
 		description: string,
 		private product: Product,
@@ -21,11 +22,12 @@ class MatrixProduct extends Record {
 		private group: number,
 		private dateValid: Date
 		) {
-		super(type, description);
+		super(id, type, description);
 	}
-
+	
 	static fromRow(o: any): MatrixProduct {
 		return new MatrixProduct(
+			o.MatrixID,
 			o.MatrixType,
 			o.Description,
 			new Product(o.ProductID, o.EShopID, o.ProductName, o.FixPrice, o.FlagInShop),

@@ -1,6 +1,12 @@
-﻿var List = (function () {
-    function List() {
+﻿var each = require('each');
+var _ = require('underscore');
+
+var List = (function () {
+    function List(items, entityFactory) {
         this.entities = [];
+        if (typeof items !== 'undefined', typeof entityFactory !== 'undefined') {
+            this.pushArray(items, entityFactory);
+        }
     }
     List.prototype.pushArray = function (items, entityFactory) {
         var _this = this;
@@ -32,6 +38,22 @@
             }
         });
         return array;
+    };
+
+    List.prototype.filter = function (cb) {
+        return new List(_.filter(this.entities, cb), this.returnValue);
+    };
+
+    List.prototype.map = function (cb) {
+        return new List(_.map(this.entities, cb), this.returnValue);
+    };
+
+    List.prototype.createEach = function () {
+        return each(this.entities);
+    };
+
+    List.prototype.returnValue = function (entity) {
+        return entity;
     };
     return List;
 })();

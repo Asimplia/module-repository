@@ -1,10 +1,18 @@
 ﻿
+var each = require('each');
+import _ = require('underscore');
 import IEntity = require('./IEntity');
 
 export = List;
 class List<Entity extends IEntity> {
 	private entities: Entity[] = [];
-	
+
+	constructor(items?: Entity[], entityFactory?: (o: any) => Entity) {
+		if (typeof items !== 'undefined', typeof entityFactory !== 'undefined') {
+			this.pushArray(items, entityFactory);
+		}
+	}
+
 	pushArray(items: any[], entityFactory: (o: any) => Entity) {
 		if (!items) {
 			return this;
@@ -34,5 +42,21 @@ class List<Entity extends IEntity> {
 			}
 		});
 		return array;
+	}
+
+	filter(cb: (entity: Entity) => boolean) {
+		return new List<Entity>(_.filter(this.entities, cb), this.returnValue);
+	}
+
+	map(cb: (entity: Entity) => any) {
+		return new List<any>(_.map(this.entities, cb), this.returnValue);
+	}
+
+	createEach() {
+		return each(this.entities);
+	}
+
+	private returnValue(entity: Entity) {
+		return entity;
 	}
 }

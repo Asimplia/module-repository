@@ -1,15 +1,22 @@
 ﻿var AsimpliaRepository = require('../index');
+var List = require('../Entity/List');
+
+var MatrixProduct = require('../Entity/Matrix/MatrixProduct');
 
 var RecordLoader = (function () {
     function RecordLoader() {
     }
     RecordLoader.prototype.getListByEShopId = function (eShopId, callback) {
-        AsimpliaRepository.mssqlConnection.query("SELECT * FROM CMatrix", function (e, recordset) {
+        AsimpliaRepository.mssqlConnection.query('SELECT * FROM MatrixProduct WHERE EShopID = ?', [eShopId], function (e, recordset) {
             if (e) {
-                console.error(e);
                 return callback(e);
             }
-            console.dir(recordset);
+            var list = new List();
+            recordset.forEach(function (row) {
+                var record = MatrixProduct.fromRow(row);
+                list.push(record);
+            });
+            callback(null, list);
         });
     };
     return RecordLoader;

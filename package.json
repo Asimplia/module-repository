@@ -12,8 +12,8 @@
     "moment": "^2.6.0",
     "util": "^0.10.3",
     "asimplia-util": "git+https://github.com/Asimplia/module-util.git",
-    "mssql": "^0.5.3",
-	"node-sqlserver": "*"
+    "node-sqlserver": "*",
+    "each": "^0.4.9"
   },
   "readme": "﻿# Repository\r\n\r\nmodule for work with data in repository\r\n",
   "readmeFilename": "README.md"
