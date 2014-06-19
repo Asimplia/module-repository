@@ -23,6 +23,13 @@
         enumerable: true,
         configurable: true
     });
+
+    Record.prototype.toObject = function () {
+        return {
+            type: this.Type,
+            description: this.Description
+        };
+    };
     return Record;
 })();
 module.exports = Record;

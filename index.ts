@@ -1,6 +1,5 @@
 ﻿
-import AsimpliaUtil = require('asimplia-util');
-var mssql = require('mssql');
+var sql = require('node-sqlserver');
 
 /** @depreceted */
 export function connect(dsn: string) {
@@ -10,12 +9,12 @@ export function connectMongoDB(dsn: string) {
 	require('mongoose').connect(dsn);
 }
 export function connectMSSQL(connectionString: string) {
-	var config = AsimpliaUtil.SQLServer.parseConnectionString(connectionString);
-	mssqlConnection = new mssql.Connection(config);
-	mssqlConnection.connect((e) => {
+	sql.open(connectionString, (e, connection) => {
 		if (e) {
 			throw e;
 		}
+		console.log('connected MSSQL');
+		mssqlConnection = connection;
 	});
 }
 export var mssqlConnection;

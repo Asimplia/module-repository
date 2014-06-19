@@ -5,7 +5,7 @@ import moment = require('moment');
 import Product = require('../EShop/Product');
 
 export = MatrixProduct;
-class MatrixProduct extends Record implements IEntity {
+class MatrixProduct extends Record {
 
 	constructor(
 		type: string,

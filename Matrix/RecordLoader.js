@@ -2,9 +2,15 @@
 
 var RecordLoader = (function () {
     function RecordLoader() {
-        this.connection = AsimpliaRepository.mssqlConnection;
     }
-    RecordLoader.prototype.getByClientId = function () {
+    RecordLoader.prototype.getListByEShopId = function (eShopId, callback) {
+        AsimpliaRepository.mssqlConnection.query("SELECT * FROM CMatrix", function (e, recordset) {
+            if (e) {
+                console.error(e);
+                return callback(e);
+            }
+            console.dir(recordset);
+        });
     };
     return RecordLoader;
 })();
