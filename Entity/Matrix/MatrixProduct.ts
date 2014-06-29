@@ -3,6 +3,7 @@ import IEntity = require('../IEntity');
 import Record = require('./Record');
 import moment = require('moment');
 import Product = require('../EShop/Product');
+import QuadrantValueEnum = require('./QuadrantValueEnum');
 
 export = MatrixProduct;
 class MatrixProduct extends Record {
@@ -12,17 +13,27 @@ class MatrixProduct extends Record {
 		type: string,
 		description: string,
 		private product: Product,
-		private scoreAbsolute: number,
-		private scoreRelative: number,
-		private scoreWeight: number,
-		private changeAbsolute: number,
-		private changeRelative: number,
-		private changeWeight: number,
-		private prediction: number,
-		private group: number,
-		private dateValid: Date
+		scoreAbsolute: number,
+		scoreRelative: number,
+		scoreWeight: number,
+		changeAbsolute: number,
+		changeRelative: number,
+		changeWeight: number,
+		prediction: number,
+		group: number,
+		quadrant: QuadrantValueEnum,
+		dateValid: Date,
+		inputValueX: number,
+		inputValueY: number,
+		changeValueX: number,
+		changeValueY: number
 		) {
-		super(id, type, description);
+		super(
+			id, type, description, scoreAbsolute, scoreRelative,
+			scoreWeight, changeAbsolute, changeRelative, changeWeight,
+			prediction, group, quadrant, dateValid,
+			inputValueX, inputValueY, changeValueX, changeValueY
+			);
 	}
 	
 	static fromRow(o: any): MatrixProduct {
@@ -39,7 +50,12 @@ class MatrixProduct extends Record {
 			o.MatrixChangeWei,
 			o.MatrixPrediction,
 			o.MatrixGroup,
-			moment(o.DateValid).toDate()
+			Record.createQuadrantValueEnum(o.MatrixQuadrant),
+			moment(o.DateValid).toDate(),
+			o.InputValueX,
+			o.InputValueY,
+			o.ChangeValueX,
+			o.ChangeValueY
 			);
 	}
 
@@ -48,18 +64,19 @@ class MatrixProduct extends Record {
 			type: entity.Type,
 			description: entity.Description,
 			product: entity.product.toObject(),
-			scoreAbsolute: entity.scoreAbsolute,
+			/*scoreAbsolute: entity.scoreAbsolute,
 			scoreRelative: entity.scoreRelative,
 			scoreWeight: entity.scoreWeight,
 			changeAbsolute: entity.changeAbsolute,
 			changeRelative: entity.changeRelative,
 			changeWeight: entity.changeWeight,
 			prediction: entity.prediction,
-			dateValid: moment(entity.dateValid).format()
+			dateValid: moment(entity.dateValid).format()*/
 		};
 	}
 
 	toObject(): any {
 		return MatrixProduct.toObject(this);
 	}
+
 }

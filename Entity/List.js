@@ -44,6 +44,10 @@ var List = (function () {
         return new List(_.filter(this.entities, cb), this.returnValue);
     };
 
+    List.prototype.find = function (cb) {
+        return _.find(this.entities, cb);
+    };
+
     List.prototype.map = function (cb) {
         return new List(_.map(this.entities, cb), this.returnValue);
     };
