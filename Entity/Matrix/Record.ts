@@ -40,9 +40,7 @@ class Record implements IEntity {
 	}
 
 	getChange() {
-		var x = this.inputValueX - this.changeValueX;
-		var y = this.inputValueX - this.changeValueY;
-		return Math.sqrt(x*x + y*y)
+		return this.changeWeight;
 	}
 
 	static createQuadrantValueEnum(quadrant: string) {

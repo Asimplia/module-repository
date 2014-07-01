@@ -7,4 +7,3 @@ var FactorDefinition = {
     reverse: Boolean
 };
 module.exports = FactorDefinition;
-//# sourceMappingURL=FactorDefinition.js.map

@@ -63,9 +63,7 @@ var Record = (function () {
     };
 
     Record.prototype.getChange = function () {
-        var x = this.inputValueX - this.changeValueX;
-        var y = this.inputValueX - this.changeValueY;
-        return Math.sqrt(x * x + y * y);
+        return this.changeWeight;
     };
 
     Record.createQuadrantValueEnum = function (quadrant) {

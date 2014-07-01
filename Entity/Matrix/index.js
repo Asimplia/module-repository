@@ -4,3 +4,5 @@ var Signal = require('./Signal');
 exports.Signal = Signal;
 var Record = require('./Record');
 exports.Record = Record;
+var MatrixProduct = require('./MatrixProduct');
+exports.MatrixProduct = MatrixProduct;

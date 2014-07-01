@@ -7,4 +7,3 @@
     factorType: String
 };
 module.exports = Factor;
-//# sourceMappingURL=Factor.js.map

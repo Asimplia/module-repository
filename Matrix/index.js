@@ -2,5 +2,7 @@
 exports.RecordLoader = RecordLoader;
 var SignalRecorder = require('./SignalRecorder');
 exports.SignalRecorder = SignalRecorder;
-var SignalTresholdLoader = require('./SignalTresholdLoader');
-exports.SignalTresholdLoader = SignalTresholdLoader;
+var SignalLoader = require('./SignalLoader');
+exports.SignalLoader = SignalLoader;
+var SignalThresholdLoader = require('./SignalThresholdLoader');
+exports.SignalThresholdLoader = SignalThresholdLoader;

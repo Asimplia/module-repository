@@ -5,7 +5,7 @@ import SectionEnum = require('../Section/SectionEnum');
 export = Factor;
 class Factor {
 
-	set Id(value) { this.id = value; }
+	set Id(value: number) { this.id = value; }
 	get Id() { return this.id; }
 
 	constructor(

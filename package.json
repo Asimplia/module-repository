@@ -2,7 +2,7 @@
   "name": "asimplia-repository",
   "version": "0.0.7",
   "description": "Repository",
-  "main": "",
+  "main": "./index.js",
   "author": {
     "name": "misak113"
   },
@@ -16,5 +16,9 @@
     "each": "^0.4.9"
   },
   "readme": "﻿# Repository\r\n\r\nmodule for work with data in repository\r\n",
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-ts": "^1.11.3"
+  }
 }
