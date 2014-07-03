@@ -7,7 +7,7 @@ var RecordLoader = (function () {
     function RecordLoader() {
     }
     RecordLoader.prototype.getListByEShopId = function (eShopId, callback) {
-        AsimpliaRepository.mssqlConnection.query('SELECT * FROM MatrixProduct WHERE EShopID = ?', [eShopId], function (e, recordset) {
+        AsimpliaRepository.mssqlConnection.query('SELECT * FROM Matrix JOIN MatrixProduct USING (MatrixID) WHERE EShopID = ?', [eShopId], function (e, recordset) {
             if (e) {
                 return callback(e);
             }
