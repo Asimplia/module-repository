@@ -1,6 +1,7 @@
 ﻿
 import IEntity = require('../IEntity');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
+import Product = require('../EShop/Product');
 
 export = Record;
 class Record implements IEntity {
@@ -11,6 +12,8 @@ class Record implements IEntity {
 	get Description(): string { return this.description; }
 	set Description(value: string) { this.description = value; }
 	get Quadrant(): QuadrantValueEnum { return this.quadrant; }
+	get ChangeAbsolute(): number { return this.changeAbsolute; }
+	get Product(): Product { return null; } // TODO
 
 	constructor(
 		private id,
@@ -53,6 +56,14 @@ class Record implements IEntity {
 				return QuadrantValueEnum.RIGHT_BOTTOM;
 			case QuadrantValueEnum[QuadrantValueEnum.LEFT_BOTTOM]:
 				return QuadrantValueEnum.LEFT_BOTTOM;
+			case QuadrantValueEnum[QuadrantValueEnum.RIGHT]:
+				return QuadrantValueEnum.RIGHT;
+			case QuadrantValueEnum[QuadrantValueEnum.LEFT]:
+				return QuadrantValueEnum.LEFT;
+			case QuadrantValueEnum[QuadrantValueEnum.BOTTOM]:
+				return QuadrantValueEnum.BOTTOM;
+			case QuadrantValueEnum[QuadrantValueEnum.TOP]:
+				return QuadrantValueEnum.TOP;
 		}
 		return QuadrantValueEnum.UNKNOWN;
 	}

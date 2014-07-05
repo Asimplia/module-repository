@@ -40,6 +40,16 @@ var Action = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Action.prototype, "ShortName", {
+        get: function () {
+            return this.shortName;
+        },
+        set: function (value) {
+            this.shortName = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Action.prototype, "Text", {
         get: function () {
             return this.text;

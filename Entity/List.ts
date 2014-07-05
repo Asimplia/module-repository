@@ -1,4 +1,4 @@
-﻿
+﻿/// <reference path="../../../typings/underscore/underscore.d.ts" />
 var each = require('each');
 import _ = require('underscore');
 import IEntity = require('./IEntity');
@@ -54,6 +54,15 @@ class List<Entity extends IEntity> {
 
 	map(cb: (entity: Entity) => any) {
 		return new List<any>(_.map(this.entities, cb), this.returnValue);
+	}
+
+	all(cb: (entity: Entity) => boolean): boolean {
+		return _.all(this.entities, cb);
+	}
+
+	forEach(cb: (entity: Entity) => any) {
+		this.entities.forEach(cb);
+		return this;
 	}
 
 	createEach() {

@@ -1,4 +1,5 @@
-﻿var each = require('each');
+﻿/// <reference path="../../../typings/underscore/underscore.d.ts" />
+var each = require('each');
 var _ = require('underscore');
 
 var List = (function () {
@@ -50,6 +51,15 @@ var List = (function () {
 
     List.prototype.map = function (cb) {
         return new List(_.map(this.entities, cb), this.returnValue);
+    };
+
+    List.prototype.all = function (cb) {
+        return _.all(this.entities, cb);
+    };
+
+    List.prototype.forEach = function (cb) {
+        this.entities.forEach(cb);
+        return this;
     };
 
     List.prototype.createEach = function () {

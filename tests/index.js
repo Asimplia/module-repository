@@ -1,4 +1,5 @@
 ﻿/// <reference path="../index.node.d.ts" />
+/// <reference path="../../../typings/node/node.d.ts" />
 var AsimpliaRepository = require('asimplia-repository');
 
 // loading for force compile TS

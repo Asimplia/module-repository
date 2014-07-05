@@ -4,6 +4,8 @@ import IEntity = require('../IEntity');
 export = Product;
 class Product implements IEntity {
 
+	get Name(): string { return this.name; }
+
 	constructor(
 		private id: number,
 		private eShopId: number,

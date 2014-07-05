@@ -54,6 +54,20 @@ var Record = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Record.prototype, "ChangeAbsolute", {
+        get: function () {
+            return this.changeAbsolute;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Record.prototype, "Product", {
+        get: function () {
+            return null;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     Record.prototype.toObject = function () {
         return {
@@ -76,6 +90,14 @@ var Record = (function () {
                 return 3 /* RIGHT_BOTTOM */;
             case QuadrantValueEnum[4 /* LEFT_BOTTOM */]:
                 return 4 /* LEFT_BOTTOM */;
+            case QuadrantValueEnum[6 /* RIGHT */]:
+                return 6 /* RIGHT */;
+            case QuadrantValueEnum[5 /* LEFT */]:
+                return 5 /* LEFT */;
+            case QuadrantValueEnum[8 /* BOTTOM */]:
+                return 8 /* BOTTOM */;
+            case QuadrantValueEnum[7 /* TOP */]:
+                return 7 /* TOP */;
         }
         return 0 /* UNKNOWN */;
     };

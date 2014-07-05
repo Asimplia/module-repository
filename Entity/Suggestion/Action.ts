@@ -16,6 +16,8 @@ class Action implements IEntity {
 	set Id(value) { this.id = value; }
 	get Name() { return this.name; }
 	set Name(value) { this.name = value; }
+	get ShortName() { return this.shortName; }
+	set ShortName(value) { this.shortName = value; }
 	get Text() { return this.text; }
 	set Text(value) { this.text = value; }
 	get Section() { return this.section; }
