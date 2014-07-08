@@ -14,10 +14,16 @@
     "asimplia-util": "git+https://github.com/Asimplia/module-util.git",
     "each": "^0.4.9"
   },
+  "scripts": {
+    "postinstall": "cp -r ./build_modules/node-sqlserver/ ./node_modules/node-sqlserver/"
+  },
   "readme": "﻿# Repository\r\n\r\nmodule for work with data in repository\r\n",
   "readmeFilename": "README.md",
   "devDependencies": {
     "grunt": "^0.4.5",
-    "grunt-ts": "^1.11.3"
+    "grunt-ts": "^1.11.3",
+    "node-sqlserver": "*",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-watch": "^0.6.1"
   }
 }
