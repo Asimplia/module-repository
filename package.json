@@ -12,7 +12,6 @@
     "moment": "^2.6.0",
     "util": "^0.10.3",
     "asimplia-util": "git+https://github.com/Asimplia/module-util.git",
-    "node-sqlserver": "*",
     "each": "^0.4.9"
   },
   "readme": "﻿# Repository\r\n\r\nmodule for work with data in repository\r\n",
