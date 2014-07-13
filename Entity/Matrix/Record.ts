@@ -13,6 +13,18 @@ class Record implements IEntity {
 	set Description(value: string) { this.description = value; }
 	get Quadrant(): QuadrantValueEnum { return this.quadrant; }
 	get ChangeAbsolute(): number { return this.changeAbsolute; }
+	get ChangeRelative(): number { return this.changeRelative; }
+	get ChangeWeight(): number { return this.changeWeight; }
+	get ScoreAbsolute(): number { return this.scoreAbsolute; }
+	get ScoreRelative(): number { return this.scoreRelative; }
+	get ScoreWeight(): number { return this.scoreWeight; }
+	get Prediction(): number { return this.prediction; }
+	get InputValueX(): number { return this.inputValueX; }
+	get InputValueY(): number { return this.inputValueY; }
+	get ChangeValueX(): number { return this.changeValueX; }
+	get ChangeValueY(): number { return this.changeValueY; }
+	get Tangens(): number { return this.tangens; }
+	get ChangeTangens(): number { return this.changeTangens; }
 	get Product(): Product { return null; } // TODO
 
 	constructor(
@@ -32,7 +44,9 @@ class Record implements IEntity {
 		private inputValueX: number,
 		private inputValueY: number,
 		private changeValueX: number,
-		private changeValueY: number
+		private changeValueY: number,
+		private tangens: number,
+		private changeTangens: number
 		) { }
 
 	toObject(): any {

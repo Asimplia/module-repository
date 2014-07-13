@@ -26,13 +26,16 @@ class MatrixProduct extends Record {
 		inputValueX: number,
 		inputValueY: number,
 		changeValueX: number,
-		changeValueY: number
+		changeValueY: number,
+		tangens: number,
+		changeTangens: number
 		) {
 		super(
 			id, type, description, scoreAbsolute, scoreRelative,
 			scoreWeight, changeAbsolute, changeRelative, changeWeight,
 			prediction, group, quadrant, dateValid,
-			inputValueX, inputValueY, changeValueX, changeValueY
+			inputValueX, inputValueY, changeValueX, changeValueY,
+			tangens, changeTangens
 			);
 	}
 	
@@ -55,7 +58,9 @@ class MatrixProduct extends Record {
 			o.InputValueX,
 			o.InputValueY,
 			o.ChangeValueX,
-			o.ChangeValueY
+			o.ChangeValueY,
+			o.Tan,
+			o.ChangeTan
 			);
 	}
 
@@ -63,7 +68,7 @@ class MatrixProduct extends Record {
 		return {
 			type: entity.Type,
 			description: entity.Description,
-			product: entity.product.toObject(),
+			product: entity.product.toObject()
 			/*scoreAbsolute: entity.scoreAbsolute,
 			scoreRelative: entity.scoreRelative,
 			scoreWeight: entity.scoreWeight,
