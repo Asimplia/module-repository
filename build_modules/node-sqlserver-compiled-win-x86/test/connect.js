@@ -1,8 +1,8 @@
 //---------------------------------------------------------------------------------------------------------------------------------
-// File: sqlserver.native.js
-// Contents: javascript which loads the native part of the Microsoft Driver for Node.js for SQL Server
+// File: connect.js
+// Contents: test suite for connections
 // 
-// Copyright Microsoft Corporation and contributors
+// Copyright Microsoft Corporation
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,15 +17,22 @@
 // limitations under the License.
 //---------------------------------------------------------------------------------------------------------------------------------
 
-try {
-    module.exports = require('./sqlserver.node');        
-}
-catch (e) {
-    try {
-	    module.exports = require('../build/Release/sqlserver.node');
-    }
-    catch (e) {
-        console.error('Native sqlserver module not found. Did you remember to run node-gyp configure build?');
-        throw e;
-    }
-}
+var sql = require('../');
+var assert = require( 'assert' );
+var config = require( './test-config' );
+
+suite( 'open', function() {
+
+    test('trusted connection to a server', function( done ) {
+
+        sql.open(config.conn_str, 
+                  function( err, conn ) {
+
+                      assert.ifError( err );
+                      assert( typeof conn == 'object');
+
+                      done();
+                  });
+    });
+});
+
