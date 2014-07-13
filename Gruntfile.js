@@ -4,11 +4,11 @@ module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
-        ts: {
+        typescript: {
             // A specific target
             build: {
-                src: tsFiles,
-                outDir: '',               
+                src: ["tests/index.ts"],
+                dest: '',
                 options: {     
                     // 'es3' (default) | 'es5'
                     target: 'es5',
@@ -20,7 +20,7 @@ module.exports = function(grunt) {
                     declaration: false,
                     // true (default) | false
                     removeComments: false
-                },
+                }
             }
         },
         copy: {
@@ -44,16 +44,16 @@ module.exports = function(grunt) {
                     debug: false,
                     debounceDelay: 100
                 }
-            },
+            }
         }
     });
 
-    grunt.loadNpmTasks('grunt-ts');
+    grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('default', [
-        'ts:build', 'copy', 'watch'
+        'typescript:build', 'copy', 'watch'
     ]);
 
 };

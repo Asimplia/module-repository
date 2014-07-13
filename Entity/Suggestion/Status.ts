@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../../typings/moment/moment.d.ts" />
+﻿/// <reference path="../../typings/moment/moment.d.ts" />
 
 import IEntity = require('../IEntity');
 import ResultStateEnum = require('./ResultStateEnum');

@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../../node_modules/asimplia-util/index.node.d.ts" />
+﻿/// <reference path="../../node_modules/asimplia-util/index.node.d.ts" />
 var LocalizedString = require('../Locale/LocalizedString');
 var SectionEnum = require('../Section/SectionEnum');
 var List = require('../List');

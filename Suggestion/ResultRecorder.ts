@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../typings/mongoose/mongoose.d.ts" />
+﻿/// <reference path="../typings/mongoose/mongoose.d.ts" />
 
 import AbstractRecorder = require('../AbstractRecorder');
 import Result = require('../Entity/Suggestion/Result');

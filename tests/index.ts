@@ -1,5 +1,5 @@
 ﻿/// <reference path="../index.node.d.ts" />
-/// <reference path="../../../typings/node/node.d.ts" />
+/// <reference path="../typings/node/node.d.ts" />
 
 import AsimpliaRepository = require('asimplia-repository');
 
