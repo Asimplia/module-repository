@@ -30,7 +30,7 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: 'node_modules/node-sqlserver/',
                         src: ['**'], 
-                        dest: 'build_modules/node-sqlserver-compiled-win-x86/'
+                        dest: 'build_modules/node-sqlserver/'
                     }
                 ]
             }

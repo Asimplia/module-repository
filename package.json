@@ -1,6 +1,6 @@
 {
   "name": "asimplia-repository",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Repository",
   "main": "./index.js",
   "author": {
@@ -15,7 +15,7 @@
     "each": "^0.4.9"
   },
   "scripts": {
-    "postinstall": "cp -r ./build_modules/node-sqlserver/ ./node_modules/node-sqlserver/"
+    "postinstall": "cp -r ./build_modules/node-sqlserver-compiled-win-x86/ ./node_modules/node-sqlserver/"
   },
   "readme": "﻿# Repository\r\n\r\nmodule for work with data in repository\r\n",
   "readmeFilename": "README.md",
