@@ -7,3 +7,4 @@ export = FactorModel;
 
 var schema = new Schema(Definition);
 var FactorModel = mongoose.model('Factor', schema);
+

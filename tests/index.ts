@@ -30,4 +30,4 @@ var x = AsimpliaRepository.Factor.FactorRecorder;
 var y = AsimpliaRepository.Matrix.RecordLoader;
 var z = AsimpliaRepository.Matrix.SignalRecorder;
 var a1 = AsimpliaRepository.Matrix.SignalLoader;
-
+var a2 = require('../Definition/Factor/Factor');

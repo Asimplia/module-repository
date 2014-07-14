@@ -42,7 +42,8 @@ class Factor {
 			description: entity.description,
 			section: SectionEnum[entity.section],
 			weight: entity.weight,
-			factorType: FactorTypeEnum[entity.factorType]
+			factorType: FactorTypeEnum[entity.factorType],
+			column: ColumnEnum[entity.column]
 		};
 	}
 
@@ -147,3 +148,4 @@ class Factor {
 	}
 
 }
+
