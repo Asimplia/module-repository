@@ -10,12 +10,12 @@ var Product = require('../EShop/Product');
 
 var MatrixProduct = (function (_super) {
     __extends(MatrixProduct, _super);
-    function MatrixProduct(id, type, description, product, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, group, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY) {
-        _super.call(this, id, type, description, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, group, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY);
+    function MatrixProduct(id, type, description, product, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, group, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens) {
+        _super.call(this, id, type, description, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, group, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens);
         this.product = product;
     }
     MatrixProduct.fromRow = function (o) {
-        return new MatrixProduct(o.MatrixID, o.MatrixType, o.Description, new Product(o.ProductID, o.EShopID, o.ProductName, o.FixPrice, o.FlagInShop), o.MatrixScoreAbs, o.MatrixScoreRel, o.MatrixScoreWei, o.MatrixChangeAbs, o.MatrixChangeRel, o.MatrixChangeWei, o.MatrixPrediction, o.MatrixGroup, Record.createQuadrantValueEnum(o.MatrixQuadrant), moment(o.DateValid).toDate(), o.InputValueX, o.InputValueY, o.ChangeValueX, o.ChangeValueY);
+        return new MatrixProduct(o.MatrixID, o.MatrixType, o.Description, new Product(o.ProductID, o.EShopID, o.ProductName, o.FixPrice, o.FlagInShop), o.MatrixScoreAbs, o.MatrixScoreRel, o.MatrixScoreWei, o.MatrixChangeAbs, o.MatrixChangeRel, o.MatrixChangeWei, o.MatrixPrediction, o.MatrixGroup, Record.createQuadrantValueEnum(o.MatrixQuadrant), moment(o.DateValid).toDate(), o.InputValueX, o.InputValueY, o.ChangeValueX, o.ChangeValueY, o.Tan, o.ChangeTan);
     };
 
     MatrixProduct.toObject = function (entity) {

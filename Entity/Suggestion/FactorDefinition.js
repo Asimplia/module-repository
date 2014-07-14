@@ -49,7 +49,7 @@ var FactorDefinition = (function () {
         configurable: true
     });
 
-    FactorDefinition.fromObject = function (o /*FactorDefinitionObject*/ ) {
+    FactorDefinition.fromObject = function (o) {
         return new FactorDefinition(new FactorValue(o.value), o.weight, Factor.fromObject(o.factor), o.reverse);
     };
 

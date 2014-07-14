@@ -1,7 +1,7 @@
 ﻿var QuadrantValueEnum = require('./QuadrantValueEnum');
 
 var Record = (function () {
-    function Record(id, type, description, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, group, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY) {
+    function Record(id, type, description, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, group, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens) {
         this.id = id;
         this.type = type;
         this.description = description;
@@ -19,6 +19,8 @@ var Record = (function () {
         this.inputValueY = inputValueY;
         this.changeValueX = changeValueX;
         this.changeValueY = changeValueY;
+        this.tangens = tangens;
+        this.changeTangens = changeTangens;
     }
     Object.defineProperty(Record.prototype, "Id", {
         get: function () {
@@ -57,6 +59,90 @@ var Record = (function () {
     Object.defineProperty(Record.prototype, "ChangeAbsolute", {
         get: function () {
             return this.changeAbsolute;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Record.prototype, "ChangeRelative", {
+        get: function () {
+            return this.changeRelative;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Record.prototype, "ChangeWeight", {
+        get: function () {
+            return this.changeWeight;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Record.prototype, "ScoreAbsolute", {
+        get: function () {
+            return this.scoreAbsolute;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Record.prototype, "ScoreRelative", {
+        get: function () {
+            return this.scoreRelative;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Record.prototype, "ScoreWeight", {
+        get: function () {
+            return this.scoreWeight;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Record.prototype, "Prediction", {
+        get: function () {
+            return this.prediction;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Record.prototype, "InputValueX", {
+        get: function () {
+            return this.inputValueX;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Record.prototype, "InputValueY", {
+        get: function () {
+            return this.inputValueY;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Record.prototype, "ChangeValueX", {
+        get: function () {
+            return this.changeValueX;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Record.prototype, "ChangeValueY", {
+        get: function () {
+            return this.changeValueY;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Record.prototype, "Tangens", {
+        get: function () {
+            return this.tangens;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Record.prototype, "ChangeTangens", {
+        get: function () {
+            return this.changeTangens;
         },
         enumerable: true,
         configurable: true

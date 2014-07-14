@@ -1,6 +1,4 @@
-﻿/// <reference path="../typings/moment/moment.d.ts" />
-/// <reference path="../typings/mongoose/mongoose.d.ts" />
-var SuggestionResult = require('../Entity/Suggestion/Result');
+﻿var SuggestionResult = require('../Entity/Suggestion/Result');
 var List = require('../Entity/List');
 var ResultTypeEnum = require('./ResultTypeEnum');
 

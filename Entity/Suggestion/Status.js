@@ -1,5 +1,4 @@
-﻿/// <reference path="../../typings/moment/moment.d.ts" />
-var ResultStateEnum = require('./ResultStateEnum');
+﻿var ResultStateEnum = require('./ResultStateEnum');
 var moment = require('moment');
 
 var Status = (function () {

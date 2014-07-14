@@ -2,7 +2,22 @@
 (function (SectionEnum) {
     SectionEnum[SectionEnum["UNKNOWN"] = 0] = "UNKNOWN";
     SectionEnum[SectionEnum["PRODUCT"] = 1] = "PRODUCT";
-    SectionEnum[SectionEnum["CUSTOMER"] = 2] = "CUSTOMER";
-    SectionEnum[SectionEnum["CHANNEL"] = 3] = "CHANNEL";
+    SectionEnum[SectionEnum["MP1"] = 2] = "MP1";
+    SectionEnum[SectionEnum["MP2"] = 3] = "MP2";
+    SectionEnum[SectionEnum["MP3"] = 4] = "MP3";
+    SectionEnum[SectionEnum["MP4"] = 5] = "MP4";
+    SectionEnum[SectionEnum["MP5"] = 6] = "MP5";
+    SectionEnum[SectionEnum["MP6"] = 7] = "MP6";
+    SectionEnum[SectionEnum["MP7"] = 8] = "MP7";
+    SectionEnum[SectionEnum["MP8"] = 9] = "MP8";
+    SectionEnum[SectionEnum["MP9"] = 10] = "MP9";
+    SectionEnum[SectionEnum["MP10"] = 11] = "MP10";
+    SectionEnum[SectionEnum["CUSTOMER"] = 12] = "CUSTOMER";
+    SectionEnum[SectionEnum["MC1"] = 13] = "MC1";
+    SectionEnum[SectionEnum["MC2"] = 14] = "MC2";
+    SectionEnum[SectionEnum["MC3"] = 15] = "MC3";
+    SectionEnum[SectionEnum["CHANNEL"] = 16] = "CHANNEL";
+    SectionEnum[SectionEnum["MM1"] = 17] = "MM1";
+    SectionEnum[SectionEnum["MM2"] = 18] = "MM2";
 })(SectionEnum || (SectionEnum = {}));
 module.exports = SectionEnum;

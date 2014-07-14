@@ -12,5 +12,7 @@ var ColumnEnum;
     ColumnEnum[ColumnEnum["INPUT_VALUE_Y"] = 9] = "INPUT_VALUE_Y";
     ColumnEnum[ColumnEnum["CHANGE_VALUE_X"] = 10] = "CHANGE_VALUE_X";
     ColumnEnum[ColumnEnum["CHANGE_VALUE_Y"] = 11] = "CHANGE_VALUE_Y";
+    ColumnEnum[ColumnEnum["TANGENS"] = 12] = "TANGENS";
+    ColumnEnum[ColumnEnum["CHANGE_TANGENS"] = 13] = "CHANGE_TANGENS";
 })(ColumnEnum || (ColumnEnum = {}));
 module.exports = ColumnEnum;

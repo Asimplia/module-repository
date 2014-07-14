@@ -1,5 +1,4 @@
-﻿/// <reference path="../typings/underscore/underscore.d.ts" />
-var each = require('each');
+﻿var each = require('each');
 var _ = require('underscore');
 
 var List = (function () {
