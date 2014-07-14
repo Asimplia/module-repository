@@ -5,9 +5,13 @@ var MatrixProduct = require('../Entity/Matrix/MatrixProduct');
 
 var RecordLoader = (function () {
     function RecordLoader() {
+        var _this = this;
+        AsimpliaRepository.getConnection(function (connection) {
+            _this.connection = connection;
+        });
     }
     RecordLoader.prototype.getListByEShopId = function (eShopId, callback) {
-        AsimpliaRepository.mssqlConnection.query('SELECT * FROM Matrix JOIN MatrixProduct USING (MatrixID) WHERE EShopID = ?', [eShopId], function (e, recordset) {
+        this.connection.query('SELECT * FROM Matrix JOIN MatrixProduct USING (MatrixID) WHERE EShopID = ?', [eShopId], function (e, recordset) {
             if (e) {
                 return callback(e);
             }

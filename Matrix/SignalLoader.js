@@ -4,9 +4,13 @@ var List = require('../Entity/List');
 
 var SignalLoader = (function () {
     function SignalLoader() {
+        var _this = this;
+        AsimpliaRepository.getConnection(function (connection) {
+            _this.connection = connection;
+        });
     }
     SignalLoader.prototype.getListByEShopId = function (eShopId, callback) {
-        AsimpliaRepository.mssqlConnection.query('SELECT * FROM Signal JOIN MatrixProduct USING (MatrixID) WHERE EShopID = ?', [
+        this.connection.query('SELECT * FROM Signal JOIN MatrixProduct USING (MatrixID) WHERE EShopID = ?', [
             eShopId
         ], function (e, recordset) {
             if (e) {

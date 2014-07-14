@@ -1,23 +1,40 @@
-﻿
-var sql = require('node-sqlserver');
+﻿/// <reference path="typings/mongoose/mongoose.d.ts" />
+import mongoose = require('mongoose');
+var pg = require('pg');
 
 /** @depreceted */
 export function connect(dsn: string) {
 	connectMongoDB(dsn);
 }
 export function connectMongoDB(dsn: string) {
-	require('mongoose').connect(dsn);
-}
-export function connectMSSQL(connectionString: string) {
-	sql.open(connectionString, (e, connection) => {
+	mongoose.connect(dsn, (e) => {
 		if (e) {
 			throw e;
 		}
-		console.log('connected MSSQL');
-		mssqlConnection = connection;
+		console.log('Connected MongoDB');
 	});
 }
-export var mssqlConnection;
+
+var connectionListeners = [];
+export function connectPostgres(connectionString: string) {
+	var schema = 'datamart'; // TODO
+	var client = new pg.Client(connectionString);
+	client.connect(() => {
+		console.log('Connected Postgres');
+		pgClient = client;
+		connectionListeners.forEach((callback) => {
+			callback(pgClient);
+		});
+	});
+	client.query('SET search_path TO '+schema+';');
+}
+export function getConnection(callback: (connection) => void) {
+	connectionListeners.push(callback);
+	if (pgClient) {
+		callback(pgClient);
+	}
+}
+export var pgClient;
 export import Suggestion = require('./Suggestion/index');
 export import Factor = require('./Factor/index');
 export import Entity = require('./Entity/index');

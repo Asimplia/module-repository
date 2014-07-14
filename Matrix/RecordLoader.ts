@@ -9,8 +9,14 @@ class RecordLoader {
 
 	private connection;
 
+	constructor() {
+		AsimpliaRepository.getConnection((connection) => {
+			this.connection = connection;
+		});
+	}
+
 	getListByEShopId(eShopId: number, callback: (e: Error, recordList?: List<Record>) => void) {
-		AsimpliaRepository.mssqlConnection.query('SELECT * FROM Matrix JOIN MatrixProduct USING (MatrixID) WHERE EShopID = ?', [eShopId], (e, recordset) => {
+		this.connection.query('SELECT * FROM Matrix JOIN MatrixProduct USING (MatrixID) WHERE EShopID = ?', [eShopId], (e, recordset) => {
 			if (e) {
 				return callback(e);
 			}

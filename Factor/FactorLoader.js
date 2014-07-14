@@ -1,5 +1,4 @@
-﻿/// <refernce path="../../typings/mongoose/mongoose.d.ts" />
-var Factor = require('../Entity/Factor/Factor');
+﻿var Factor = require('../Entity/Factor/Factor');
 var List = require('../Entity/List');
 
 var FactorLoader = (function () {

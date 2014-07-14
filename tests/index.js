@@ -1,8 +1,5 @@
-﻿/// <reference path="../index.node.d.ts" />
-/// <reference path="../typings/node/node.d.ts" />
-var AsimpliaRepository = require('asimplia-repository');
+﻿var AsimpliaRepository = require("asimplia-repository");
 
-// loading for force compile TS
 var a = AsimpliaRepository.Suggestion.ActionLoader;
 var b = AsimpliaRepository.Suggestion.ActionRecorder;
 var c = AsimpliaRepository.Suggestion.ResultLoader;

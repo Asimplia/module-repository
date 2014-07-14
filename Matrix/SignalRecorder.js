@@ -3,11 +3,15 @@ var AsimpliaRepository = require('../index');
 
 var SignalRecorder = (function () {
     function SignalRecorder() {
+        var _this = this;
+        AsimpliaRepository.getConnection(function (connection) {
+            _this.connection = connection;
+        });
     }
     SignalRecorder.prototype.insertList = function (signalList, callback) {
         var _this = this;
         signalList.createEach().on('item', function (signal, i, next) {
-            AsimpliaRepository.mssqlConnection.query('INSERT INTO Signal (MatrixID, DateCreated) VALUES (?, ?)', [
+            _this.connection.query('INSERT INTO Signal (MatrixID, DateCreated) VALUES (?, ?)', [
                 signal.Record.Id, moment(signal.DateCreated).format('YYYY-MM-DD HH:mm:SS')
             ], function (e, res) {
                 if (e) {
@@ -30,7 +34,7 @@ var SignalRecorder = (function () {
     };
 
     SignalRecorder.prototype.getLastInsertedId = function (callback) {
-        AsimpliaRepository.mssqlConnection.query('SELECT SCOPE_IDENTITY() AS ID', function (e, res) {
+        this.connection.query('SELECT SCOPE_IDENTITY() AS ID', function (e, res) {
             if (e) {
                 return callback(e);
             }

@@ -7,8 +7,16 @@ import List = require('../Entity/List');
 export = SignalLoader;
 class SignalLoader {
 
+	private connection;
+
+	constructor() {
+		AsimpliaRepository.getConnection((connection) => {
+			this.connection = connection;
+		});
+	}
+
 	getListByEShopId(eShopId: number, callback: (e: Error, signalList?: List<Signal>) => void) {
-		AsimpliaRepository.mssqlConnection.query('SELECT * FROM Signal JOIN MatrixProduct USING (MatrixID) WHERE EShopID = ?', [
+		this.connection.query('SELECT * FROM Signal JOIN MatrixProduct USING (MatrixID) WHERE EShopID = ?', [
 			eShopId
 		], (e, recordset) => {
 			if (e) {

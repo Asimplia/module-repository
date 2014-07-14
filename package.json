@@ -12,7 +12,8 @@
     "moment": "^2.6.0",
     "util": "^0.10.3",
     "asimplia-util": "git+https://github.com/Asimplia/module-util.git",
-    "each": "^0.4.9"
+    "each": "^0.4.9",
+    "pg": "^3.4.0"
   },
   "scripts": {
     "postinstall": "cp -r ./build_modules/node-sqlserver-compiled-win-x86/ ./node_modules/node-sqlserver/"
@@ -24,6 +25,8 @@
     "node-sqlserver": "*",
     "grunt-contrib-copy": "^0.5.0",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-typescript": "~0.3.8"
+    "grunt-typescript": "~0.3.8",
+    "grunt-cli": "^0.1.13",
+    "tsd": "^0.5.7"
   }
 }

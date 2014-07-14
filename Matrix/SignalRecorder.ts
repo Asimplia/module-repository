@@ -7,9 +7,17 @@ import List = require('../Entity/List');
 export = SignalRecorder;
 class SignalRecorder {
 
+	private connection;
+
+	constructor() {
+		AsimpliaRepository.getConnection((connection) => {
+			this.connection = connection;
+		});
+	}
+
 	insertList(signalList: List<Signal>, callback: (e: Error, signalList?: List<Signal>) => void): void {
 		signalList.createEach().on('item', (signal: Signal, i: number, next: (e?: Error) => void) => {
-			AsimpliaRepository.mssqlConnection.query('INSERT INTO Signal (MatrixID, DateCreated) VALUES (?, ?)', [
+			this.connection.query('INSERT INTO Signal (MatrixID, DateCreated) VALUES (?, ?)', [
 				signal.Record.Id, moment(signal.DateCreated).format('YYYY-MM-DD HH:mm:SS')
 			], (e, res) => {
 				if (e) {
@@ -32,7 +40,7 @@ class SignalRecorder {
 	}
 
 	getLastInsertedId(callback: (e: Error, id?: number) => void) {
-		AsimpliaRepository.mssqlConnection.query('SELECT SCOPE_IDENTITY() AS ID', (e: Error, res) => {
+		this.connection.query('SELECT SCOPE_IDENTITY() AS ID', (e: Error, res) => {
 			if (e) {
 				return callback(e);
 			}

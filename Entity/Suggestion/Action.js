@@ -1,12 +1,10 @@
-﻿/// <reference path="../../node_modules/asimplia-util/index.node.d.ts" />
-var LocalizedString = require('../Locale/LocalizedString');
+﻿var LocalizedString = require('../Locale/LocalizedString');
 var SectionEnum = require('../Section/SectionEnum');
 var List = require('../List');
 var FactorDefinition = require('./FactorDefinition');
 
 var ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
 var AsimpliaUtil = require('asimplia-util');
-var ArrayHelper = AsimpliaUtil.ArrayHelper;
 var PriorityTypeEnum = require('./PriorityTypeEnum');
 
 var Action = (function () {
@@ -91,8 +89,8 @@ var Action = (function () {
         configurable: true
     });
 
-    Action.fromObject = function (o /*ISuggestionActionObject*/ ) {
-        return new Action(o.id, new LocalizedString(o.name), new LocalizedString(o.shortName), new LocalizedString(o.text), Action.createSectionEnum(o.section), new List().pushArray(o.factorDefinitions, FactorDefinition.fromObject), ArrayHelper.mapFilterNulls(o.placeholders, function (placeholder) {
+    Action.fromObject = function (o) {
+        return new Action(o.id, new LocalizedString(o.name), new LocalizedString(o.shortName), new LocalizedString(o.text), Action.createSectionEnum(o.section), new List().pushArray(o.factorDefinitions, FactorDefinition.fromObject), AsimpliaUtil.ArrayHelper.mapFilterNulls(o.placeholders, function (placeholder) {
             return Action.createPlaceholderEnum(placeholder);
         }), Action.createPriorityTypeEnum(o.priorityType));
     };
@@ -105,7 +103,7 @@ var Action = (function () {
             text: entity.text,
             section: SectionEnum[entity.section],
             factorDefinitions: entity.factorDefinitionList.toArray(FactorDefinition.toObject),
-            placeholders: ArrayHelper.mapFilterNulls(entity.placeholders, function (placeholder) {
+            placeholders: AsimpliaUtil.ArrayHelper.mapFilterNulls(entity.placeholders, function (placeholder) {
                 return ActionPlaceholderEnum[placeholder];
             }),
             priorityType: PriorityTypeEnum[entity.priorityType]
@@ -118,12 +116,12 @@ var Action = (function () {
 
     Action.createSectionEnum = function (section) {
         switch (section) {
-            case SectionEnum[2 /* CUSTOMER */]:
-                return 2 /* CUSTOMER */;
+            case SectionEnum[12 /* CUSTOMER */]:
+                return 12 /* CUSTOMER */;
             case SectionEnum[1 /* PRODUCT */]:
                 return 1 /* PRODUCT */;
-            case SectionEnum[3 /* CHANNEL */]:
-                return 3 /* CHANNEL */;
+            case SectionEnum[16 /* CHANNEL */]:
+                return 16 /* CHANNEL */;
         }
         return 0 /* UNKNOWN */;
     };
