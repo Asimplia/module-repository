@@ -13,5 +13,6 @@
     ActionPlaceholderEnum[ActionPlaceholderEnum["PRODUCT_CONVERSION_RATE"] = 10] = "PRODUCT_CONVERSION_RATE";
     ActionPlaceholderEnum[ActionPlaceholderEnum["CATEGORY_NAME"] = 11] = "CATEGORY_NAME";
     ActionPlaceholderEnum[ActionPlaceholderEnum["CATEGORY_CHANGE_IN_SALE"] = 12] = "CATEGORY_CHANGE_IN_SALE";
+    ActionPlaceholderEnum[ActionPlaceholderEnum["BENEFITS"] = 13] = "BENEFITS";
 })(ActionPlaceholderEnum || (ActionPlaceholderEnum = {}));
 module.exports = ActionPlaceholderEnum;

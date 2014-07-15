@@ -117,6 +117,8 @@ class Action implements IEntity {
 				return ActionPlaceholderEnum.CATEGORY_NAME;
 			case ActionPlaceholderEnum[ActionPlaceholderEnum.CATEGORY_CHANGE_IN_SALE]:
 				return ActionPlaceholderEnum.CATEGORY_CHANGE_IN_SALE;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.BENEFITS]:
+				return ActionPlaceholderEnum.BENEFITS;
 		}
 		return null;
 	}

@@ -164,6 +164,8 @@ var Action = (function () {
                 return 11 /* CATEGORY_NAME */;
             case ActionPlaceholderEnum[12 /* CATEGORY_CHANGE_IN_SALE */]:
                 return 12 /* CATEGORY_CHANGE_IN_SALE */;
+            case ActionPlaceholderEnum[13 /* BENEFITS */]:
+                return 13 /* BENEFITS */;
         }
         return null;
     };
