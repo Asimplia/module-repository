@@ -11,12 +11,12 @@ var RecordLoader = (function () {
         });
     }
     RecordLoader.prototype.getListByEShopId = function (eShopId, callback) {
-        this.connection.query('SELECT * FROM Matrix JOIN MatrixProduct USING (MatrixID) WHERE EShopID = ?', [eShopId], function (e, recordset) {
+        this.connection.query('SELECT * FROM analytical.matrix WHERE eshopid = $1', [eShopId], function (e, result) {
             if (e) {
                 return callback(e);
             }
             var list = new List();
-            recordset.forEach(function (row) {
+            result.rows.forEach(function (row) {
                 var record = MatrixProduct.fromRow(row);
                 list.push(record);
             });

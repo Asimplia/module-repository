@@ -17,20 +17,16 @@ class SignalRecorder {
 
 	insertList(signalList: List<Signal>, callback: (e: Error, signalList?: List<Signal>) => void): void {
 		signalList.createEach().on('item', (signal: Signal, i: number, next: (e?: Error) => void) => {
-			this.connection.query('INSERT INTO Signal (MatrixID, DateCreated) VALUES (?, ?)', [
-				signal.Record.Id, moment(signal.DateCreated).format('YYYY-MM-DD HH:mm:SS')
+			this.connection.query('INSERT INTO analytical.signal (matrixid, datecreated) VALUES ($1, $2::timestamp) RETURNING signalid', [
+				signal.Record.Id, moment(signal.DateCreated).format('YYYY-MM-DD HH:mm:ss')
 			], (e, res) => {
 				if (e) {
 					console.log(e);
 					return next(e);
 				}
-				this.getLastInsertedId((e: Error, id) => {
-					if (e) {
-						return next(e);
-					}
-					signal.Id = id;
-					next();
-				});
+				console.log(res);
+				signal.Id = res.id;
+				next();
 			});
 		}).on('error', (e: Error) => {
 			callback(e);
@@ -39,12 +35,4 @@ class SignalRecorder {
 		}).parallel(10);
 	}
 
-	getLastInsertedId(callback: (e: Error, id?: number) => void) {
-		this.connection.query('SELECT SCOPE_IDENTITY() AS ID', (e: Error, res) => {
-			if (e) {
-				return callback(e);
-			}
-			callback(null, res.pop()['ID']);
-		});
-	}
 }

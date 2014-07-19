@@ -4,8 +4,11 @@ var List = require('../Entity/List');
 var SignalThresholdLoader = (function () {
     function SignalThresholdLoader() {
         this.thresholds = new List([
+            new SignalThreshold('MP1', 'Produktová marže', 3, 5, 5, 11, 1, 2, 3, 4, 'Má vysokou marži a prodává se hodně', 'Má vysokou marži a prodává se málo', 'Má nízkou marži a prodává se hodně', 'Má nízkou marži a prodává se málo'),
             new SignalThreshold('MP2', 'Produktová marže', 3, 5, 5, 11, 1, 2, 3, 4, 'Má vysokou marži a prodává se hodně', 'Má vysokou marži a prodává se málo', 'Má nízkou marži a prodává se hodně', 'Má nízkou marži a prodává se málo')
-        ]);
+        ], function (e) {
+            return e;
+        });
     }
     SignalThresholdLoader.prototype.getByMatrixType = function (type) {
         return this.thresholds.find(function (threshold) {

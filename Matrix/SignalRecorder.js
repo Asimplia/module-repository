@@ -11,20 +11,16 @@ var SignalRecorder = (function () {
     SignalRecorder.prototype.insertList = function (signalList, callback) {
         var _this = this;
         signalList.createEach().on('item', function (signal, i, next) {
-            _this.connection.query('INSERT INTO Signal (MatrixID, DateCreated) VALUES (?, ?)', [
-                signal.Record.Id, moment(signal.DateCreated).format('YYYY-MM-DD HH:mm:SS')
+            _this.connection.query('INSERT INTO analytical.signal (matrixid, datecreated) VALUES ($1, $2::timestamp) RETURNING signalid', [
+                signal.Record.Id, moment(signal.DateCreated).format('YYYY-MM-DD HH:mm:ss')
             ], function (e, res) {
                 if (e) {
                     console.log(e);
                     return next(e);
                 }
-                _this.getLastInsertedId(function (e, id) {
-                    if (e) {
-                        return next(e);
-                    }
-                    signal.Id = id;
-                    next();
-                });
+                console.log(res);
+                signal.Id = res.id;
+                next();
             });
         }).on('error', function (e) {
             callback(e);

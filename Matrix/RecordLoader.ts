@@ -16,16 +16,16 @@ class RecordLoader {
 	}
 
 	getListByEShopId(eShopId: number, callback: (e: Error, recordList?: List<Record>) => void) {
-		this.connection.query('SELECT * FROM Matrix JOIN MatrixProduct USING (MatrixID) WHERE EShopID = ?', [eShopId], (e, recordset) => {
-			if (e) {
-				return callback(e);
-			}
-			var list = new List<Record>();
-			recordset.forEach((row) => {
-				var record = MatrixProduct.fromRow(row);
-				list.push(record);
-			});
-			callback(null, list);
+		this.connection.query('SELECT * FROM analytical.matrix WHERE eshopid = $1', [eShopId], (e, result) => {
+				if (e) {
+					return callback(e);
+				}
+				var list = new List<Record>();
+				result.rows.forEach((row) => {
+					var record = MatrixProduct.fromRow(row);
+					list.push(record);
+				});
+				callback(null, list);
 		});
 	}
 }

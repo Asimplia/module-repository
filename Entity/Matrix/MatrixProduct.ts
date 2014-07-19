@@ -41,26 +41,26 @@ class MatrixProduct extends Record {
 	
 	static fromRow(o: any): MatrixProduct {
 		return new MatrixProduct(
-			o.MatrixID,
-			o.MatrixType,
-			o.Description,
+			o.matrixid,
+			o.matrixtype,
+			o.description,
 			new Product(o.ProductID, o.EShopID, o.ProductName, o.FixPrice, o.FlagInShop),
-			o.MatrixScoreAbs,
-			o.MatrixScoreRel,
-			o.MatrixScoreWei,
-			o.MatrixChangeAbs,
-			o.MatrixChangeRel,
-			o.MatrixChangeWei,
-			o.MatrixPrediction,
-			o.MatrixGroup,
-			Record.createQuadrantValueEnum(o.MatrixQuadrant),
-			moment(o.DateValid).toDate(),
-			o.InputValueX,
-			o.InputValueY,
-			o.ChangeValueX,
-			o.ChangeValueY,
-			o.Tan,
-			o.ChangeTan
+			parseInt(o.matrixscoreabs),
+			parseInt(o.matrixscorerel),
+			parseInt(o.matrixscorewei),
+			parseInt(o.matrixchangeabs),
+			parseInt(o.matrixchangerel),
+			parseInt(o.matrixchangewei),
+			o.matrixprediction,
+			parseInt(o.matrixgroup),
+			Record.createQuadrantValueEnum(o.matrixquadrant),
+			moment(o.datevalid).toDate(),
+			o.inputvaluex,
+			o.inputvaluey,
+			o.changevaluex,
+			o.changevaluey,
+			o.tan,
+			o.changetan
 			);
 	}
 

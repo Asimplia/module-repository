@@ -8,7 +8,10 @@ class List<Entity extends IEntity> {
 	private entities: Entity[] = [];
 
 	constructor(items?: Entity[], entityFactory?: (o: any) => Entity) {
-		if (typeof items !== 'undefined', typeof entityFactory !== 'undefined') {
+		if (typeof items !== 'undefined') {
+			if (typeof entityFactory === 'undefined') {
+				throw new Error('You must specify entityFactory if items in constructor');
+			}
 			this.pushArray(items, entityFactory);
 		}
 	}
