@@ -19,5 +19,6 @@
     SectionEnum[SectionEnum["CHANNEL"] = 16] = "CHANNEL";
     SectionEnum[SectionEnum["MM1"] = 17] = "MM1";
     SectionEnum[SectionEnum["MM2"] = 18] = "MM2";
+    SectionEnum[SectionEnum["MM3"] = 19] = "MM3";
 })(SectionEnum || (SectionEnum = {}));
 module.exports = SectionEnum;

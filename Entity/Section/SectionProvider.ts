@@ -41,6 +41,8 @@ class SectionProvider {
 				return SectionEnum.MM1;
 			case SectionEnum[SectionEnum.MM2]:
 				return SectionEnum.MM2;
+			case SectionEnum[SectionEnum.MM3]:
+				return SectionEnum.MM3;
 		}
 		return SectionEnum.UNKNOWN;
 	}
@@ -79,6 +81,7 @@ class SectionProvider {
 			case SectionEnum.CHANNEL:
 			case SectionEnum.MM1:
 			case SectionEnum.MM2:
+			case SectionEnum.MM3:
 				return true;
 		}
 		return false;

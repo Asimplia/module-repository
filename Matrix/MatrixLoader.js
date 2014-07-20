@@ -40,7 +40,7 @@ var MatrixLoader = (function () {
         } else if (SectionProvider.isChannel(section)) {
             matrix = MatrixProduct.fromRow(row);
         } else {
-            throw new Error('Not implemented');
+            throw new Error('Not implemented "' + row[Matrix.COLUMN_TYPE] + '"');
         }
         return matrix;
     };

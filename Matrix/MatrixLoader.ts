@@ -48,7 +48,7 @@ class MatrixLoader {
 		if (SectionProvider.isChannel(section)) {
 			matrix = MatrixProduct.fromRow(row); // TODO
 		} else {
-			throw new Error('Not implemented');
+			throw new Error('Not implemented "'+row[Matrix.COLUMN_TYPE]+'"');
 		}
 		return matrix;
 	}

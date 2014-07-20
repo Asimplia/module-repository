@@ -19,5 +19,6 @@ enum SectionEnum {
 	MC3,
 	CHANNEL,
 	MM1,
-	MM2
+	MM2,
+	MM3
 }

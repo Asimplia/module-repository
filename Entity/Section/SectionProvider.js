@@ -41,6 +41,8 @@ var SectionProvider = (function () {
                 return 17 /* MM1 */;
             case SectionEnum[18 /* MM2 */]:
                 return 18 /* MM2 */;
+            case SectionEnum[19 /* MM3 */]:
+                return 19 /* MM3 */;
         }
         return 0 /* UNKNOWN */;
     };
@@ -79,6 +81,7 @@ var SectionProvider = (function () {
             case 16 /* CHANNEL */:
             case 17 /* MM1 */:
             case 18 /* MM2 */:
+            case 19 /* MM3 */:
                 return true;
         }
         return false;
