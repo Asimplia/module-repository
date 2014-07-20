@@ -1,6 +1,6 @@
 ﻿var FactorTypeEnum = require('./FactorTypeEnum');
 var SectionEnum = require('../Section/SectionEnum');
-var SectionProvider = require('../Section/SectionProvider');
+var SectionFactory = require('../Section/SectionFactory');
 var ColumnEnum = require('../Matrix/ColumnEnum');
 var ShiftValueEnum = require('../Factor/ShiftValueEnum');
 
@@ -43,7 +43,7 @@ var Factor = (function () {
     });
 
     Factor.fromObject = function (o) {
-        return new Factor(o.id, o.name, o.description, SectionProvider.createSectionEnum(o.section), o.weight, Factor.createTypeEnum(o.factorType), Factor.createColumnEnum(o.column));
+        return new Factor(o.id, o.name, o.description, SectionFactory.createSectionEnum(o.section), o.weight, Factor.createTypeEnum(o.factorType), Factor.createColumnEnum(o.column));
     };
 
     Factor.toObject = function (entity) {

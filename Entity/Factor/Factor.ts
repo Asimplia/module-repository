@@ -1,7 +1,7 @@
 ﻿
 import FactorTypeEnum = require('./FactorTypeEnum');
 import SectionEnum = require('../Section/SectionEnum');
-import SectionProvider = require('../Section/SectionProvider');
+import SectionFactory = require('../Section/SectionFactory');
 import ColumnEnum = require('../Matrix/ColumnEnum');
 import ShiftValueEnum = require('../Factor/ShiftValueEnum');
 
@@ -29,7 +29,7 @@ class Factor {
 			o.id,
 			o.name,
 			o.description,
-			SectionProvider.createSectionEnum(o.section),
+			SectionFactory.createSectionEnum(o.section),
 			o.weight,
 			Factor.createTypeEnum(o.factorType),
 			Factor.createColumnEnum(o.column)

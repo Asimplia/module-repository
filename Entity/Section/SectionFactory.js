@@ -1,9 +1,9 @@
 var SectionEnum = require('./SectionEnum');
 
-var SectionProvider = (function () {
-    function SectionProvider() {
+var SectionFactory = (function () {
+    function SectionFactory() {
     }
-    SectionProvider.createSectionEnum = function (section) {
+    SectionFactory.createSectionEnum = function (section) {
         switch (section) {
             case SectionEnum[12 /* CUSTOMER */]:
                 return 12 /* CUSTOMER */;
@@ -47,7 +47,7 @@ var SectionProvider = (function () {
         return 0 /* UNKNOWN */;
     };
 
-    SectionProvider.isProduct = function (section) {
+    SectionFactory.isProduct = function (section) {
         switch (section) {
             case 1 /* PRODUCT */:
             case 2 /* MP1 */:
@@ -65,7 +65,7 @@ var SectionProvider = (function () {
         return false;
     };
 
-    SectionProvider.isCustomer = function (section) {
+    SectionFactory.isCustomer = function (section) {
         switch (section) {
             case 12 /* CUSTOMER */:
             case 13 /* MC1 */:
@@ -76,7 +76,7 @@ var SectionProvider = (function () {
         return false;
     };
 
-    SectionProvider.isChannel = function (section) {
+    SectionFactory.isChannel = function (section) {
         switch (section) {
             case 16 /* CHANNEL */:
             case 17 /* MM1 */:
@@ -86,6 +86,6 @@ var SectionProvider = (function () {
         }
         return false;
     };
-    return SectionProvider;
+    return SectionFactory;
 })();
-module.exports = SectionProvider;
+module.exports = SectionFactory;

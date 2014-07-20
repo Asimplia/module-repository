@@ -3,21 +3,21 @@ import Matrix = require('./Matrix');
 import MatrixProduct = require('./MatrixProduct');
 import MatrixCustomer = require('./MatrixCustomer');
 import MatrixChannel = require('./MatrixChannel');
-import SectionProvider = require('../../Entity/Section/SectionProvider');
+import SectionFactory = require('../../Entity/Section/SectionFactory');
 
 export = MatrixFactory;
 class MatrixFactory {
 
 	static createMatrixFromRow(row: any): Matrix {
-		var section = SectionProvider.createSectionEnum(row[Matrix.COLUMN_TYPE]);
+		var section = SectionFactory.createSectionEnum(row[Matrix.COLUMN_TYPE]);
 		var matrix;
-		if (SectionProvider.isProduct(section)) {
+		if (SectionFactory.isProduct(section)) {
 			matrix = MatrixProduct.fromRow(row);
 		} else
-		if (SectionProvider.isCustomer(section)) {
+		if (SectionFactory.isCustomer(section)) {
 			matrix = MatrixCustomer.fromRow(row);
 		} else
-		if (SectionProvider.isChannel(section)) {
+		if (SectionFactory.isChannel(section)) {
 			matrix = MatrixChannel.fromRow(row);
 		} else {
 			throw new Error('Not implemented');

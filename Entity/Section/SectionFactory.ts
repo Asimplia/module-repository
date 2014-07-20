@@ -1,7 +1,7 @@
 import SectionEnum = require('./SectionEnum');
 
-export = SectionProvider;
-class SectionProvider {
+export = SectionFactory;
+class SectionFactory {
 
 	static createSectionEnum(section: string) {
 		switch (section) {
