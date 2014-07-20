@@ -32,6 +32,8 @@ class Matrix implements IEntity {
 	public static COLUMN_ORDER_ID = 'orderid';
 
 	get Id(): number { return this.id; }
+	get EShopId(): number { return this.eShopId; }
+	get LoadId(): number { return this.loadId; }
 	get Type(): string { return this.type; }
 	set Type(value: string) { this.type = value; }
 	get Quadrant(): QuadrantValueEnum { return this.quadrant; }

@@ -28,6 +28,12 @@ var SignalRecorder = (function () {
             callback(null, signalList);
         }).parallel(10);
     };
+
+    SignalRecorder.prototype.insert = function (signal, callback) {
+    };
+
+    SignalRecorder.prototype.update = function (signal, callback) {
+    };
     return SignalRecorder;
 })();
 module.exports = SignalRecorder;

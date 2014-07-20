@@ -1,6 +1,7 @@
 ﻿
 export import QuadrantValueEnum = require('./QuadrantValueEnum');
 export import Signal = require('./Signal');
+export import Situation = require('./Situation');
 export import Matrix = require('./Matrix');
 export import MatrixProduct = require('./MatrixProduct');
 export import MatrixCustomer = require('./MatrixCustomer');

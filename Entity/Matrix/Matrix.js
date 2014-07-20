@@ -27,6 +27,20 @@
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Matrix.prototype, "EShopId", {
+        get: function () {
+            return this.eShopId;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Matrix.prototype, "LoadId", {
+        get: function () {
+            return this.loadId;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Matrix.prototype, "Type", {
         get: function () {
             return this.type;

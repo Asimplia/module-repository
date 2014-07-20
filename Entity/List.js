@@ -51,6 +51,10 @@ var List = (function () {
         return _.find(this.entities, cb);
     };
 
+    List.prototype.any = function (cb) {
+        return _.any(this.entities, cb);
+    };
+
     List.prototype.map = function (cb) {
         return new List(_.map(this.entities, cb), this.returnValue);
     };

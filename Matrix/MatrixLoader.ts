@@ -35,4 +35,8 @@ class MatrixLoader {
 		});
 	}
 
+	getListByEShopIdAndProductIdForLoad(eShopId: number, productId: number, loadId: number, callback:(e:Error, recordList?:List<Matrix>) => void) {
+
+	}
+
 }

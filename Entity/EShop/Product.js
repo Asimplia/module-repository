@@ -6,6 +6,13 @@
         this.fixPrice = fixPrice;
         this.inEshop = inEshop;
     }
+    Object.defineProperty(Product.prototype, "Id", {
+        get: function () {
+            return this.id;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Product.prototype, "Name", {
         get: function () {
             return this.name;

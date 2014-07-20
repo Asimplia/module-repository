@@ -28,6 +28,9 @@ var MatrixLoader = (function () {
             callback(null, list);
         });
     };
+
+    MatrixLoader.prototype.getListByEShopIdAndProductIdForLoad = function (eShopId, productId, loadId, callback) {
+    };
     return MatrixLoader;
 })();
 module.exports = MatrixLoader;

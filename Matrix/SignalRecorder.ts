@@ -35,4 +35,11 @@ class SignalRecorder {
 		}).parallel(10);
 	}
 
+	insert(signal: Signal, callback: (e: Error, signal?: Signal) => void) {
+
+	}
+
+	update(signal: Signal, callback: (e: Error, signal?: Signal) => void) {
+
+	}
 }

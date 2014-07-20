@@ -55,6 +55,10 @@ class List<Entity extends IEntity> {
 		return _.find(this.entities, cb);
 	}
 
+	any(cb: (entity: Entity) => boolean): boolean {
+		return _.any(this.entities, cb);
+	}
+
 	map(cb: (entity: Entity) => any) {
 		return new List<any>(_.map(this.entities, cb), this.returnValue);
 	}

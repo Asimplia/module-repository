@@ -2,6 +2,8 @@
 exports.QuadrantValueEnum = QuadrantValueEnum;
 var Signal = require('./Signal');
 exports.Signal = Signal;
+var Situation = require('./Situation');
+exports.Situation = Situation;
 var Matrix = require('./Matrix');
 exports.Matrix = Matrix;
 var MatrixProduct = require('./MatrixProduct');
