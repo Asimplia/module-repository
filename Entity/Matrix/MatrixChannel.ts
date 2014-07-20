@@ -6,10 +6,10 @@ import Product = require('../EShop/Product');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 import QuadrantValueFactory = require('./QuadrantValueFactory');
 
-export = MatrixProduct;
-class MatrixProduct extends Matrix {
+export = MatrixChannel;
+class MatrixChannel extends Matrix {
 
-	get Product(): Product { return this.product; }
+	get Channel(): any/*Channel*/ { return this.channel; }
 
 	constructor(
 		id: number,
@@ -31,7 +31,7 @@ class MatrixProduct extends Matrix {
 		changeValueY: number,
 		tangens: number,
 		changeTangens: number,
-		private product: Product
+		private channel: any/*Channel*/
 	) {
 		super(
 			id, eShopId, type, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight,
@@ -39,8 +39,8 @@ class MatrixProduct extends Matrix {
 		);
 	}
 
-	static fromRow(o: any): MatrixProduct {
-		return new MatrixProduct(
+	static fromRow(o: any): MatrixChannel {
+		return new MatrixChannel(
 			o[Matrix.COLUMN_MATRIX_ID],
 			o[Matrix.COLUMN_E_SHOP_ID],
 			o[Matrix.COLUMN_TYPE],
@@ -60,7 +60,7 @@ class MatrixProduct extends Matrix {
 			o[Matrix.COLUMN_CHANGE_VALUE_Y],
 			o[Matrix.COLUMN_TANGENS],
 			o[Matrix.COLUMN_CHANGE_TANGENS],
-			new Product(null, null, null, null, null)
+			null
 		);
 	}
 

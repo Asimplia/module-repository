@@ -2,9 +2,8 @@
 import List = require('../Entity/List');
 import Matrix = require('../Entity/Matrix/Matrix');
 import Signal = require('../Entity/Matrix/Signal');
-import MatrixProduct = require('../Entity/Matrix/MatrixProduct');
 import Factor = require('../Entity/Factor/Factor');
-import SectionProvider = require('../Entity/Section/SectionProvider');
+import MatrixFactory = require('../Entity/Matrix/MatrixFactory');
 
 export = MatrixLoader;
 class MatrixLoader {
@@ -29,27 +28,11 @@ class MatrixLoader {
 			}
 			var list = new List<Matrix>();
 			result.rows.forEach((row) => {
-				var record = MatrixLoader.createMatrixFromRow(row);
+				var record = MatrixFactory.createMatrixFromRow(row);
 				list.push(record);
 			});
 			callback(null, list);
 		});
 	}
 
-	static createMatrixFromRow(row: any): Matrix {
-		var section = SectionProvider.createSectionEnum(row[Matrix.COLUMN_TYPE]);
-		var matrix;
-		if (SectionProvider.isProduct(section)) {
-			matrix = MatrixProduct.fromRow(row);
-		} else
-		if (SectionProvider.isCustomer(section)) {
-			matrix = MatrixProduct.fromRow(row); // TODO
-		} else
-		if (SectionProvider.isChannel(section)) {
-			matrix = MatrixProduct.fromRow(row); // TODO
-		} else {
-			throw new Error('Not implemented "'+row[Matrix.COLUMN_TYPE]+'"');
-		}
-		return matrix;
-	}
 }

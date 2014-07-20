@@ -1,8 +1,8 @@
 
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 
-export = QuadrantValueProvider;
-class QuadrantValueProvider {
+export = QuadrantValueFactory;
+class QuadrantValueFactory {
 
 	public static createQuadrantValueEnum(quadrant: any) {
 		switch (quadrant) {

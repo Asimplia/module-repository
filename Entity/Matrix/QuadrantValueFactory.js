@@ -1,9 +1,9 @@
 var QuadrantValueEnum = require('./QuadrantValueEnum');
 
-var QuadrantValueProvider = (function () {
-    function QuadrantValueProvider() {
+var QuadrantValueFactory = (function () {
+    function QuadrantValueFactory() {
     }
-    QuadrantValueProvider.createQuadrantValueEnum = function (quadrant) {
+    QuadrantValueFactory.createQuadrantValueEnum = function (quadrant) {
         switch (quadrant) {
             case QuadrantValueEnum[1 /* RIGHT_TOP */]:
             case 1 /* RIGHT_TOP */:
@@ -32,6 +32,6 @@ var QuadrantValueProvider = (function () {
         }
         return 0 /* UNKNOWN */;
     };
-    return QuadrantValueProvider;
+    return QuadrantValueFactory;
 })();
-module.exports = QuadrantValueProvider;
+module.exports = QuadrantValueFactory;

@@ -1,8 +1,7 @@
 ﻿
 import IEntity = require('../IEntity');
 import Matrix = require('./Matrix');
-import MatrixProduct = require('./MatrixProduct');
-import SectionProvider = require('../../Entity/Section/SectionProvider');
+import MatrixFactory = require('./MatrixFactory');
 
 export = Signal;
 class Signal implements IEntity {
@@ -24,25 +23,8 @@ class Signal implements IEntity {
 		) { }
 
 	static fromRow(o: any): Signal {
-		var matrix = this.createMatrixFromRow(o);
+		var matrix = MatrixFactory.createMatrixFromRow(o);
 		return new Signal(o[Signal.COLUMN_SIGNAL_ID], matrix, o[Signal.COLUMN_DATE_CREATED]);
-	}
-
-	static createMatrixFromRow(row: any): Matrix {
-		var section = SectionProvider.createSectionEnum(row[Matrix.COLUMN_TYPE]);
-		var matrix;
-		if (SectionProvider.isProduct(section)) {
-			matrix = MatrixProduct.fromRow(row);
-		} else
-		if (SectionProvider.isCustomer(section)) {
-			matrix = MatrixProduct.fromRow(row); // TODO
-		} else
-		if (SectionProvider.isChannel(section)) {
-			matrix = MatrixProduct.fromRow(row); // TODO
-		} else {
-			throw new Error('Not implemented');
-		}
-		return matrix;
 	}
 
 	static toObject(entity: Signal): any {

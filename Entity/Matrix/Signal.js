@@ -1,6 +1,4 @@
-﻿var Matrix = require('./Matrix');
-var MatrixProduct = require('./MatrixProduct');
-var SectionProvider = require('../../Entity/Section/SectionProvider');
+﻿var MatrixFactory = require('./MatrixFactory');
 
 var Signal = (function () {
     function Signal(id, matrix, dateCreated) {
@@ -34,23 +32,8 @@ var Signal = (function () {
     });
 
     Signal.fromRow = function (o) {
-        var matrix = this.createMatrixFromRow(o);
+        var matrix = MatrixFactory.createMatrixFromRow(o);
         return new Signal(o[Signal.COLUMN_SIGNAL_ID], matrix, o[Signal.COLUMN_DATE_CREATED]);
-    };
-
-    Signal.createMatrixFromRow = function (row) {
-        var section = SectionProvider.createSectionEnum(row[Matrix.COLUMN_TYPE]);
-        var matrix;
-        if (SectionProvider.isProduct(section)) {
-            matrix = MatrixProduct.fromRow(row);
-        } else if (SectionProvider.isCustomer(section)) {
-            matrix = MatrixProduct.fromRow(row);
-        } else if (SectionProvider.isChannel(section)) {
-            matrix = MatrixProduct.fromRow(row);
-        } else {
-            throw new Error('Not implemented');
-        }
-        return matrix;
     };
 
     Signal.toObject = function (entity) {

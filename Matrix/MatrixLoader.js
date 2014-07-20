@@ -2,9 +2,8 @@
 var List = require('../Entity/List');
 var Matrix = require('../Entity/Matrix/Matrix');
 var Signal = require('../Entity/Matrix/Signal');
-var MatrixProduct = require('../Entity/Matrix/MatrixProduct');
 
-var SectionProvider = require('../Entity/Section/SectionProvider');
+var MatrixFactory = require('../Entity/Matrix/MatrixFactory');
 
 var MatrixLoader = (function () {
     function MatrixLoader() {
@@ -23,26 +22,11 @@ var MatrixLoader = (function () {
             }
             var list = new List();
             result.rows.forEach(function (row) {
-                var record = MatrixLoader.createMatrixFromRow(row);
+                var record = MatrixFactory.createMatrixFromRow(row);
                 list.push(record);
             });
             callback(null, list);
         });
-    };
-
-    MatrixLoader.createMatrixFromRow = function (row) {
-        var section = SectionProvider.createSectionEnum(row[Matrix.COLUMN_TYPE]);
-        var matrix;
-        if (SectionProvider.isProduct(section)) {
-            matrix = MatrixProduct.fromRow(row);
-        } else if (SectionProvider.isCustomer(section)) {
-            matrix = MatrixProduct.fromRow(row);
-        } else if (SectionProvider.isChannel(section)) {
-            matrix = MatrixProduct.fromRow(row);
-        } else {
-            throw new Error('Not implemented "' + row[Matrix.COLUMN_TYPE] + '"');
-        }
-        return matrix;
     };
     return MatrixLoader;
 })();
