@@ -1,5 +1,6 @@
 ﻿var FactorTypeEnum = require('./FactorTypeEnum');
 var SectionEnum = require('../Section/SectionEnum');
+var SectionProvider = require('../Section/SectionProvider');
 var ColumnEnum = require('../Matrix/ColumnEnum');
 var ShiftValueEnum = require('../Factor/ShiftValueEnum');
 
@@ -42,7 +43,7 @@ var Factor = (function () {
     });
 
     Factor.fromObject = function (o) {
-        return new Factor(o.id, o.name, o.description, Factor.createSectionEnum(o.section), o.weight, Factor.createTypeEnum(o.factorType), Factor.createColumnEnum(o.column));
+        return new Factor(o.id, o.name, o.description, SectionProvider.createSectionEnum(o.section), o.weight, Factor.createTypeEnum(o.factorType), Factor.createColumnEnum(o.column));
     };
 
     Factor.toObject = function (entity) {
@@ -69,48 +70,6 @@ var Factor = (function () {
                 return 1 /* SHIFT */;
         }
         return null;
-    };
-
-    Factor.createSectionEnum = function (section) {
-        switch (section) {
-            case SectionEnum[12 /* CUSTOMER */]:
-                return 12 /* CUSTOMER */;
-            case SectionEnum[13 /* MC1 */]:
-                return 13 /* MC1 */;
-            case SectionEnum[14 /* MC2 */]:
-                return 14 /* MC2 */;
-            case SectionEnum[15 /* MC3 */]:
-                return 15 /* MC3 */;
-            case SectionEnum[1 /* PRODUCT */]:
-                return 1 /* PRODUCT */;
-            case SectionEnum[2 /* MP1 */]:
-                return 2 /* MP1 */;
-            case SectionEnum[3 /* MP2 */]:
-                return 3 /* MP2 */;
-            case SectionEnum[4 /* MP3 */]:
-                return 4 /* MP3 */;
-            case SectionEnum[5 /* MP4 */]:
-                return 5 /* MP4 */;
-            case SectionEnum[6 /* MP5 */]:
-                return 6 /* MP5 */;
-            case SectionEnum[7 /* MP6 */]:
-                return 7 /* MP6 */;
-            case SectionEnum[8 /* MP7 */]:
-                return 8 /* MP7 */;
-            case SectionEnum[9 /* MP8 */]:
-                return 9 /* MP8 */;
-            case SectionEnum[10 /* MP9 */]:
-                return 10 /* MP9 */;
-            case SectionEnum[11 /* MP10 */]:
-                return 11 /* MP10 */;
-            case SectionEnum[16 /* CHANNEL */]:
-                return 16 /* CHANNEL */;
-            case SectionEnum[17 /* MM1 */]:
-                return 17 /* MM1 */;
-            case SectionEnum[18 /* MM2 */]:
-                return 18 /* MM2 */;
-        }
-        return 0 /* UNKNOWN */;
     };
 
     Factor.createColumnEnum = function (column) {

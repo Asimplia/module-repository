@@ -1,5 +1,6 @@
 ﻿var moment = require('moment');
 var AsimpliaRepository = require('../index');
+var Signal = require('../Entity/Matrix/Signal');
 
 var SignalRecorder = (function () {
     function SignalRecorder() {
@@ -11,15 +12,14 @@ var SignalRecorder = (function () {
     SignalRecorder.prototype.insertList = function (signalList, callback) {
         var _this = this;
         signalList.createEach().on('item', function (signal, i, next) {
-            _this.connection.query('INSERT INTO analytical.signal (matrixid, datecreated) VALUES ($1, $2::timestamp) RETURNING signalid', [
-                signal.Record.Id, moment(signal.DateCreated).format('YYYY-MM-DD HH:mm:ss')
+            _this.connection.query('INSERT INTO analytical.' + Signal.TABLE_NAME + ' (' + Signal.COLUMN_MATRIX_ID + ', ' + Signal.COLUMN_DATE_CREATED + ') ' + 'VALUES ($1, $2::timestamp) RETURNING ' + Signal.COLUMN_SIGNAL_ID, [
+                signal.Matrix.Id, moment(signal.DateCreated).format('YYYY-MM-DD HH:mm:ss')
             ], function (e, res) {
                 if (e) {
                     console.log(e);
                     return next(e);
                 }
-                console.log(res);
-                signal.Id = res.id;
+                signal.Id = res.rows[0][Signal.COLUMN_SIGNAL_ID];
                 next();
             });
         }).on('error', function (e) {
@@ -27,15 +27,6 @@ var SignalRecorder = (function () {
         }).on('end', function () {
             callback(null, signalList);
         }).parallel(10);
-    };
-
-    SignalRecorder.prototype.getLastInsertedId = function (callback) {
-        this.connection.query('SELECT SCOPE_IDENTITY() AS ID', function (e, res) {
-            if (e) {
-                return callback(e);
-            }
-            callback(null, res.pop()['ID']);
-        });
     };
     return SignalRecorder;
 })();

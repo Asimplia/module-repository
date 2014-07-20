@@ -1,6 +1,6 @@
 ﻿
 import IEntity = require('../IEntity');
-import Record = require('./Record');
+import Matrix = require('./Matrix');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 
 export = SignalThreshold;
@@ -39,9 +39,10 @@ class SignalThreshold implements IEntity {
 			case QuadrantValueEnum.RIGHT_BOTTOM: return this.thresholdValueQ3;
 			case QuadrantValueEnum.LEFT_BOTTOM: return this.thresholdValueQ4;
 		}
+		throw new Error('Specified quadrant not supported');
 	}
 
-	isSignalInQuadrant(record: Record): boolean {
+	isSignalInQuadrant(record: Matrix): boolean {
 		var thresholdValue = this.getThresholdValue(record.Quadrant);
 		var change = record.getChange();
 		return change >= thresholdValue;

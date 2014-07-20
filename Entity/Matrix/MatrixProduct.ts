@@ -1,18 +1,21 @@
 ﻿
 import IEntity = require('../IEntity');
-import Record = require('./Record');
+import Matrix = require('./Matrix');
 import moment = require('moment');
 import Product = require('../EShop/Product');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
+import QuadrantValueProvider = require('./QuadrantValueProvider');
 
 export = MatrixProduct;
-class MatrixProduct extends Record {
+class MatrixProduct extends Matrix {
+
+	get Product(): Product { return this.product; }
 
 	constructor(
 		id: number,
+		eShopId: number,
 		type: string,
-		description: string,
-		private product: Product,
+		loadId: number,
 		scoreAbsolute: number,
 		scoreRelative: number,
 		scoreWeight: number,
@@ -20,7 +23,6 @@ class MatrixProduct extends Record {
 		changeRelative: number,
 		changeWeight: number,
 		prediction: number,
-		group: number,
 		quadrant: QuadrantValueEnum,
 		dateValid: Date,
 		inputValueX: number,
@@ -28,60 +30,38 @@ class MatrixProduct extends Record {
 		changeValueX: number,
 		changeValueY: number,
 		tangens: number,
-		changeTangens: number
-		) {
+		changeTangens: number,
+		private product: Product
+	) {
 		super(
-			id, type, description, scoreAbsolute, scoreRelative,
-			scoreWeight, changeAbsolute, changeRelative, changeWeight,
-			prediction, group, quadrant, dateValid,
-			inputValueX, inputValueY, changeValueX, changeValueY,
-			tangens, changeTangens
-			);
+			id, eShopId, type, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight,
+			prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens
+		);
 	}
-	
+
 	static fromRow(o: any): MatrixProduct {
 		return new MatrixProduct(
-			o.matrixid,
-			o.matrixtype,
-			o.description,
-			new Product(o.ProductID, o.EShopID, o.ProductName, o.FixPrice, o.FlagInShop),
-			parseInt(o.matrixscoreabs),
-			parseInt(o.matrixscorerel),
-			parseInt(o.matrixscorewei),
-			parseInt(o.matrixchangeabs),
-			parseInt(o.matrixchangerel),
-			parseInt(o.matrixchangewei),
-			o.matrixprediction,
-			parseInt(o.matrixgroup),
-			Record.createQuadrantValueEnum(o.matrixquadrant),
-			moment(o.datevalid).toDate(),
-			o.inputvaluex,
-			o.inputvaluey,
-			o.changevaluex,
-			o.changevaluey,
-			o.tan,
-			o.changetan
-			);
-	}
-
-	static toObject(entity: MatrixProduct): any {
-		return {
-			type: entity.Type,
-			description: entity.Description,
-			product: entity.product.toObject()
-			/*scoreAbsolute: entity.scoreAbsolute,
-			scoreRelative: entity.scoreRelative,
-			scoreWeight: entity.scoreWeight,
-			changeAbsolute: entity.changeAbsolute,
-			changeRelative: entity.changeRelative,
-			changeWeight: entity.changeWeight,
-			prediction: entity.prediction,
-			dateValid: moment(entity.dateValid).format()*/
-		};
-	}
-
-	toObject(): any {
-		return MatrixProduct.toObject(this);
+			o[Matrix.COLUMN_MATRIX_ID],
+			o[Matrix.COLUMN_E_SHOP_ID],
+			o[Matrix.COLUMN_TYPE],
+			o[Matrix.COLUMN_LOAD_ID],
+			o[Matrix.COLUMN_SCORE_ABSOLUTE],
+			o[Matrix.COLUMN_SCORE_RELATIVE],
+			o[Matrix.COLUMN_SCORE_WEIGHT],
+			o[Matrix.COLUMN_CHANGE_ABSOLUTE],
+			o[Matrix.COLUMN_CHANGE_RELATIVE],
+			o[Matrix.COLUMN_CHANGE_WEIGHT],
+			o[Matrix.COLUMN_PREDICTION],
+			QuadrantValueProvider.createQuadrantValueEnum(o[Matrix.COLUMN_QUADRANT]),
+			moment(o[Matrix.COLUMN_DATE_VALID]).toDate(),
+			o[Matrix.COLUMN_INPUT_VALUE_X],
+			o[Matrix.COLUMN_INPUT_VALUE_Y],
+			o[Matrix.COLUMN_CHANGE_VALUE_X],
+			o[Matrix.COLUMN_CHANGE_VALUE_Y],
+			o[Matrix.COLUMN_TANGENS],
+			o[Matrix.COLUMN_CHANGE_TANGENS],
+			new Product(null, null, null, null, null)
+		);
 	}
 
 }

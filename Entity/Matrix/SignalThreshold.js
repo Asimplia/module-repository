@@ -47,6 +47,7 @@ var SignalThreshold = (function () {
             case 4 /* LEFT_BOTTOM */:
                 return this.thresholdValueQ4;
         }
+        throw new Error('Specified quadrant not supported');
     };
 
     SignalThreshold.prototype.isSignalInQuadrant = function (record) {

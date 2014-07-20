@@ -3,14 +3,37 @@ import IEntity = require('../IEntity');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 import Product = require('../EShop/Product');
 
-export = Record;
-class Record implements IEntity {
+export = Matrix;
+class Matrix implements IEntity {
+
+	public static TABLE_NAME = 'matrix';
+	public static COLUMN_MATRIX_ID = 'matrixid';
+	public static COLUMN_E_SHOP_ID = 'eshopid';
+	public static COLUMN_TYPE = 'matrixtype';
+	public static COLUMN_LOAD_ID = 'loadid';
+	public static COLUMN_SCORE_ABSOLUTE = 'matrixscoreabs';
+	public static COLUMN_SCORE_RELATIVE = 'matrixscorerel';
+	public static COLUMN_SCORE_WEIGHT = 'matrixscorewei';
+	public static COLUMN_CHANGE_ABSOLUTE = 'matrixchangeabs';
+	public static COLUMN_CHANGE_RELATIVE = 'matrixchangerel';
+	public static COLUMN_CHANGE_WEIGHT = 'matrixchangewei';
+	public static COLUMN_PREDICTION = 'matrixprediction';
+	public static COLUMN_QUADRANT = 'matrixquadrant';
+	public static COLUMN_DATE_VALID = 'datevalid';
+	public static COLUMN_INPUT_VALUE_X = 'inputvaluex';
+	public static COLUMN_INPUT_VALUE_Y = 'inputvaluey';
+	public static COLUMN_CHANGE_VALUE_X = 'changevaluex';
+	public static COLUMN_CHANGE_VALUE_Y = 'changevaluey';
+	public static COLUMN_TANGENS = 'tan';
+	public static COLUMN_CHANGE_TANGENS = 'changeTan';
+	public static COLUMN_PRODUCT_ID = 'productid';
+	public static COLUMN_CUSTOMER_ID = 'customerid';
+	public static COLUMN_CHANNEL_ID = 'channelid';
+	public static COLUMN_ORDER_ID = 'orderid';
 
 	get Id(): number { return this.id; }
 	get Type(): string { return this.type; }
 	set Type(value: string) { this.type = value; }
-	get Description(): string { return this.description; }
-	set Description(value: string) { this.description = value; }
 	get Quadrant(): QuadrantValueEnum { return this.quadrant; }
 	get ChangeAbsolute(): number { return this.changeAbsolute; }
 	get ChangeRelative(): number { return this.changeRelative; }
@@ -25,12 +48,12 @@ class Record implements IEntity {
 	get ChangeValueY(): number { return this.changeValueY; }
 	get Tangens(): number { return this.tangens; }
 	get ChangeTangens(): number { return this.changeTangens; }
-	get Product(): Product { return null; } // TODO
 
 	constructor(
-		private id,
+		private id: number,
+		private eShopId: number,
 		private type: string,
-		private description: string,
+		private loadId: number,
 		private scoreAbsolute: number,
 		private scoreRelative: number,
 		private scoreWeight: number,
@@ -38,7 +61,6 @@ class Record implements IEntity {
 		private changeRelative: number,
 		private changeWeight: number,
 		private prediction: number,
-		private group: number,
 		private quadrant: QuadrantValueEnum,
 		private dateValid: Date,
 		private inputValueX: number,
@@ -47,46 +69,23 @@ class Record implements IEntity {
 		private changeValueY: number,
 		private tangens: number,
 		private changeTangens: number
-		) { }
+	) {	}
+
+	static toObject(entity: Matrix): any {
+		return {
+			id: entity.id,
+			eShopId: entity.eShopId,
+			type: entity.type
+			// TODO
+		};
+	}
 
 	toObject(): any {
-		return {
-			type: this.Type,
-			description: this.Description
-		};
+		return Matrix.toObject(this);
 	}
 
 	getChange() {
 		return this.changeWeight;
 	}
 
-	static createQuadrantValueEnum(quadrant: any) {
-		switch (quadrant) {
-			case QuadrantValueEnum[QuadrantValueEnum.RIGHT_TOP]:
-			case QuadrantValueEnum.RIGHT_TOP:
-				return QuadrantValueEnum.RIGHT_TOP;
-			case QuadrantValueEnum[QuadrantValueEnum.LEFT_TOP]:
-			case QuadrantValueEnum.LEFT_TOP:
-				return QuadrantValueEnum.LEFT_TOP;
-			case QuadrantValueEnum[QuadrantValueEnum.RIGHT_BOTTOM]:
-			case QuadrantValueEnum.RIGHT_BOTTOM:
-				return QuadrantValueEnum.RIGHT_BOTTOM;
-			case QuadrantValueEnum[QuadrantValueEnum.LEFT_BOTTOM]:
-			case QuadrantValueEnum.LEFT_BOTTOM:
-				return QuadrantValueEnum.LEFT_BOTTOM;
-			case QuadrantValueEnum[QuadrantValueEnum.RIGHT]:
-			case QuadrantValueEnum.RIGHT:
-				return QuadrantValueEnum.RIGHT;
-			case QuadrantValueEnum[QuadrantValueEnum.LEFT]:
-			case QuadrantValueEnum.LEFT:
-				return QuadrantValueEnum.LEFT;
-			case QuadrantValueEnum[QuadrantValueEnum.BOTTOM]:
-			case QuadrantValueEnum.BOTTOM:
-				return QuadrantValueEnum.BOTTOM;
-			case QuadrantValueEnum[QuadrantValueEnum.TOP]:
-			case QuadrantValueEnum.TOP:
-				return QuadrantValueEnum.TOP;
-		}
-		return QuadrantValueEnum.UNKNOWN;
-	}
 }

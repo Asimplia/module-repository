@@ -17,15 +17,15 @@ class SignalRecorder {
 
 	insertList(signalList: List<Signal>, callback: (e: Error, signalList?: List<Signal>) => void): void {
 		signalList.createEach().on('item', (signal: Signal, i: number, next: (e?: Error) => void) => {
-			this.connection.query('INSERT INTO analytical.signal (matrixid, datecreated) VALUES ($1, $2::timestamp) RETURNING signalid', [
-				signal.Record.Id, moment(signal.DateCreated).format('YYYY-MM-DD HH:mm:ss')
+			this.connection.query('INSERT INTO analytical.'+Signal.TABLE_NAME+' ('+Signal.COLUMN_MATRIX_ID+', '+Signal.COLUMN_DATE_CREATED+') '
+				+'VALUES ($1, $2::timestamp) RETURNING '+Signal.COLUMN_SIGNAL_ID, [
+				signal.Matrix.Id, moment(signal.DateCreated).format('YYYY-MM-DD HH:mm:ss')
 			], (e, res) => {
 				if (e) {
 					console.log(e);
 					return next(e);
 				}
-				console.log(res);
-				signal.Id = res.id;
+				signal.Id = res.rows[0][Signal.COLUMN_SIGNAL_ID];
 				next();
 			});
 		}).on('error', (e: Error) => {
