@@ -11,7 +11,7 @@ var SignalLoader = (function () {
         });
     }
     SignalLoader.prototype.getListByEShopId = function (eShopId, callback) {
-        this.connection.query('SELECT * FROM ' + Signal.TABLE_NAME + ' JOIN ' + Matrix.TABLE_NAME + ' USING (' + Signal.COLUMN_MATRIX_ID + ') ' + 'WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1', [
+        this.connection.query('SELECT * FROM analytical.' + Signal.TABLE_NAME + ' JOIN analytical.' + Matrix.TABLE_NAME + ' USING (' + Signal.COLUMN_MATRIX_ID + ') ' + 'WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1', [
             eShopId
         ], function (e, recordset) {
             if (e) {
