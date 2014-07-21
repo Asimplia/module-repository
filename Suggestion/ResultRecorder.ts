@@ -26,7 +26,7 @@ class ActionRecorder extends AbstractRecorder {
 				this.getNextId(this.ResultModel, (id) => {
 					result.Id = id;
 					this.update(resultDocument, Result.fromObject, result, callback);
-				})
+				});
 				return;
 			}
 			this.update(resultDocument, Result.fromObject, result, callback);
