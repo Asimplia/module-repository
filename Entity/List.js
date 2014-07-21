@@ -13,6 +13,11 @@ var List = (function () {
     }
     List.prototype.pushArray = function (items, entityFactory) {
         var _this = this;
+        if (typeof entityFactory === 'undefined') {
+            entityFactory = function (entity) {
+                return entity;
+            };
+        }
         if (!items) {
             return this;
         }
@@ -32,6 +37,11 @@ var List = (function () {
     };
 
     List.prototype.toArray = function (objectFactory) {
+        if (typeof objectFactory === 'undefined') {
+            objectFactory = function (entity) {
+                return entity;
+            };
+        }
         var array = [];
         this.entities.forEach(function (entity) {
             try  {

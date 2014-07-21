@@ -16,7 +16,10 @@ class List<Entity extends IEntity> {
 		}
 	}
 
-	pushArray(items: any[], entityFactory: (o: any) => Entity) {
+	pushArray(items: any[], entityFactory?: (o: any) => Entity) {
+		if (typeof entityFactory === 'undefined') {
+			entityFactory = (entity: Entity) => { return entity; };
+		}
 		if (!items) {
 			return this;
 		}
@@ -35,7 +38,10 @@ class List<Entity extends IEntity> {
 		return this;
 	}
 
-	toArray(objectFactory: (entity: Entity) => any) {
+	toArray(objectFactory?: (entity: Entity) => any) {
+		if (typeof objectFactory === 'undefined') {
+			objectFactory = (entity: Entity) => { return entity; };
+		}
 		var array = [];
 		this.entities.forEach((entity: Entity) => {
 			try {
