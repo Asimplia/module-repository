@@ -60,7 +60,7 @@ class MatrixProduct extends Matrix {
 			o[Matrix.COLUMN_CHANGE_VALUE_Y],
 			o[Matrix.COLUMN_TANGENS],
 			o[Matrix.COLUMN_CHANGE_TANGENS],
-			new Product(null, null, null, null, null)
+			new Product(o[Matrix.COLUMN_PRODUCT_ID], o[Matrix.COLUMN_E_SHOP_ID], null, null, null)
 		);
 	}
 

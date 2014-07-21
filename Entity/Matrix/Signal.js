@@ -1,4 +1,5 @@
 ﻿var MatrixFactory = require('./MatrixFactory');
+var moment = require('moment');
 
 var Signal = (function () {
     function Signal(id, matrix, dateCreated, situationId) {
@@ -35,6 +36,9 @@ var Signal = (function () {
         get: function () {
             return this.situationId;
         },
+        set: function (value) {
+            this.situationId = value;
+        },
         enumerable: true,
         configurable: true
     });
@@ -45,6 +49,12 @@ var Signal = (function () {
     };
 
     Signal.toObject = function (entity) {
+        return {
+            id: entity.id,
+            matrix: entity.Matrix.toObject(),
+            dateCreated: moment(entity.dateCreated).format('YYYY-MM-DD HH:mm:ss'),
+            situationId: entity.situationId
+        };
     };
 
     Signal.prototype.toObject = function () {

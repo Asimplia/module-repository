@@ -2,6 +2,7 @@
 import IEntity = require('../IEntity');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 import Product = require('../EShop/Product');
+import moment = require('moment');
 
 export = Matrix;
 class Matrix implements IEntity {
@@ -77,8 +78,23 @@ class Matrix implements IEntity {
 		return {
 			id: entity.id,
 			eShopId: entity.eShopId,
-			type: entity.type
-			// TODO
+			type: entity.type,
+			loadId: entity.loadId,
+			scoreAbsolute: entity.scoreAbsolute,
+			scoreRelative: entity.scoreRelative,
+			scoreWeight: entity.scoreWeight,
+			changeAbsolute: entity.changeAbsolute,
+			changeRelative: entity.changeRelative,
+			changeWeight: entity.scoreWeight,
+			prediction: entity.prediction,
+			quadrant: QuadrantValueEnum[entity.quadrant],
+			dateValid: entity.dateValid ? moment(entity.dateValid).format('YYYY-MM-DD HH:mm:ss') : null,
+			inputValueX: entity.inputValueX,
+			inputValueY: entity.inputValueY,
+			changeValueX: entity.changeValueX,
+			changeValueY: entity.changeValueY,
+			tangens: entity.tangens,
+			changeTangens: entity.changeTangens
 		};
 	}
 

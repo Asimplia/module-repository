@@ -13,12 +13,31 @@ var SignalLoader = (function () {
     SignalLoader.prototype.getListByEShopId = function (eShopId, callback) {
         this.connection.query('SELECT * FROM analytical.' + Signal.TABLE_NAME + ' JOIN analytical.' + Matrix.TABLE_NAME + ' USING (' + Signal.COLUMN_MATRIX_ID + ') ' + 'WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1', [
             eShopId
-        ], function (e, recordset) {
+        ], function (e, result) {
             if (e) {
-                return callback(e);
+                callback(e);
+                return;
             }
             var list = new List();
-            recordset.forEach(function (row) {
+            result.rows.forEach(function (row) {
+                var signal = Signal.fromRow(row);
+                list.push(signal);
+            });
+            callback(null, list);
+        });
+    };
+
+    SignalLoader.prototype.getListWithoutSituation = function (eShopId, callback) {
+        this.connection.query('SELECT * FROM analytical.' + Signal.TABLE_NAME + ' JOIN analytical.' + Matrix.TABLE_NAME + ' USING (' + Signal.COLUMN_MATRIX_ID + ') ' + 'WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 AND ' + Signal.COLUMN_SITUATION_ID + ' IS NULL', [
+            eShopId
+        ], function (e, result) {
+            if (e) {
+                console.log(e);
+                callback(e);
+                return;
+            }
+            var list = new List();
+            result.rows.forEach(function (row) {
                 var signal = Signal.fromRow(row);
                 list.push(signal);
             });

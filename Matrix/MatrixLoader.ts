@@ -16,27 +16,67 @@ class MatrixLoader {
 		});
 	}
 
-	getListByEShopId(eShopId:number, callback:(e:Error, recordList?:List<Matrix>) => void) {
+	getListByEShopId(eShopId:number, callback: (e: Error, recordList?: List<Matrix>) => void) {
 		this.connection.query(
 			'SELECT * FROM analytical.'+Matrix.TABLE_NAME+' LEFT JOIN analytical.'+Signal.TABLE_NAME+' USING ('+Matrix.COLUMN_MATRIX_ID+') '
 				+'WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 AND '+Signal.COLUMN_SIGNAL_ID+' IS NULL', [
 			eShopId
 		], (e, result) => {
-			if (e) {
-				console.log(e);
-				return callback(e);
-			}
-			var list = new List<Matrix>();
-			result.rows.forEach((row) => {
-				var record = MatrixFactory.createMatrixFromRow(row);
-				list.push(record);
-			});
-			callback(null, list);
+			this.createListByResult(e, result, callback);
 		});
 	}
 
 	getListByEShopIdAndProductIdForLoad(eShopId: number, productId: number, loadId: number, callback:(e:Error, recordList?:List<Matrix>) => void) {
+		this.connection.query(
+			'SELECT * FROM analytical.'+Matrix.TABLE_NAME+' LEFT JOIN analytical.'+Signal.TABLE_NAME+' USING ('+Matrix.COLUMN_MATRIX_ID+') '
+				+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+				+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 '
+				+' AND '+Matrix.COLUMN_PRODUCT_ID+' = $3 '
+				+' AND '+Signal.COLUMN_SIGNAL_ID+' IS NULL ', [
+				eShopId, loadId, productId
+			], (e, result) => {
+				this.createListByResult(e, result, callback);
+			});
+	}
 
+	getListByEShopIdAndCustomerIdForLoad(eShopId: number, customerId: number, loadId: number, callback:(e:Error, recordList?:List<Matrix>) => void) {
+		this.connection.query(
+			'SELECT * FROM analytical.'+Matrix.TABLE_NAME+' LEFT JOIN analytical.'+Signal.TABLE_NAME+' USING ('+Matrix.COLUMN_MATRIX_ID+') '
+				+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+				+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 '
+				+' AND '+Matrix.COLUMN_CUSTOMER_ID+' = $3 '
+				+' AND '+Signal.COLUMN_SIGNAL_ID+' IS NULL ', [
+				eShopId, loadId, customerId
+			], (e, result) => {
+				this.createListByResult(e, result, callback);
+			});
+	}
+
+	getListByEShopIdAndChannelIdForLoad(eShopId: number, channelId: number, loadId: number, callback:(e:Error, recordList?:List<Matrix>) => void) {
+		this.connection.query(
+			'SELECT * FROM analytical.'+Matrix.TABLE_NAME+' LEFT JOIN analytical.'+Signal.TABLE_NAME+' USING ('+Matrix.COLUMN_MATRIX_ID+') '
+				+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+				+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 '
+				+' AND '+Matrix.COLUMN_CHANNEL_ID+' = $3 '
+				+' AND '+Signal.COLUMN_SIGNAL_ID+' IS NULL ', [
+				eShopId, loadId, channelId
+			], (e, result) => {
+				this.createListByResult(e, result, callback);
+			});
+	}
+
+	private createListByResult(e: Error, result: any, callback: (e: Error, recordList?: List<Matrix>) => void) {
+		if (e) {
+			console.log(e);
+			callback(e);
+			return;
+		}
+		var list = new List<Matrix>();
+		result.rows.forEach((row) => {
+			var record = MatrixFactory.createMatrixFromRow(row);
+			list.push(record);
+		});
+		callback(null, list);
 	}
 
 }

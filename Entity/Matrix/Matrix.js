@@ -1,4 +1,8 @@
-﻿var Matrix = (function () {
+﻿var QuadrantValueEnum = require('./QuadrantValueEnum');
+
+var moment = require('moment');
+
+var Matrix = (function () {
     function Matrix(id, eShopId, type, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens) {
         this.id = id;
         this.eShopId = eShopId;
@@ -154,7 +158,23 @@
         return {
             id: entity.id,
             eShopId: entity.eShopId,
-            type: entity.type
+            type: entity.type,
+            loadId: entity.loadId,
+            scoreAbsolute: entity.scoreAbsolute,
+            scoreRelative: entity.scoreRelative,
+            scoreWeight: entity.scoreWeight,
+            changeAbsolute: entity.changeAbsolute,
+            changeRelative: entity.changeRelative,
+            changeWeight: entity.scoreWeight,
+            prediction: entity.prediction,
+            quadrant: QuadrantValueEnum[entity.quadrant],
+            dateValid: entity.dateValid ? moment(entity.dateValid).format('YYYY-MM-DD HH:mm:ss') : null,
+            inputValueX: entity.inputValueX,
+            inputValueY: entity.inputValueY,
+            changeValueX: entity.changeValueX,
+            changeValueY: entity.changeValueY,
+            tangens: entity.tangens,
+            changeTangens: entity.changeTangens
         };
     };
 

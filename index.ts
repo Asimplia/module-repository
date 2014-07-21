@@ -28,7 +28,7 @@ export function connectPostgres(connectionString: string) {
 	});
 	client.query('SET search_path TO '+schema+';');
 }
-export function getConnection(callback: (connection) => void) {
+export function getConnection(callback: (connection: any) => void) {
 	connectionListeners.push(callback);
 	if (pgClient) {
 		callback(pgClient);

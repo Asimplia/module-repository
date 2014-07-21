@@ -2,14 +2,14 @@
 import IEntity = require('../IEntity');
 import Matrix = require('./Matrix');
 import moment = require('moment');
-import Product = require('../EShop/Product');
+import Channel = require('../EShop/Channel');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 import QuadrantValueFactory = require('./QuadrantValueFactory');
 
 export = MatrixChannel;
 class MatrixChannel extends Matrix {
 
-	get Channel(): any/*Channel*/ { return this.channel; }
+	get Channel(): Channel { return this.channel; }
 
 	constructor(
 		id: number,
@@ -31,7 +31,7 @@ class MatrixChannel extends Matrix {
 		changeValueY: number,
 		tangens: number,
 		changeTangens: number,
-		private channel: any/*Channel*/
+		private channel: Channel
 	) {
 		super(
 			id, eShopId, type, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight,
@@ -60,7 +60,7 @@ class MatrixChannel extends Matrix {
 			o[Matrix.COLUMN_CHANGE_VALUE_Y],
 			o[Matrix.COLUMN_TANGENS],
 			o[Matrix.COLUMN_CHANGE_TANGENS],
-			null
+			new Channel(o[Matrix.COLUMN_CHANNEL_ID], o[Matrix.COLUMN_E_SHOP_ID])
 		);
 	}
 

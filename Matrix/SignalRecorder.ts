@@ -17,17 +17,7 @@ class SignalRecorder {
 
 	insertList(signalList: List<Signal>, callback: (e: Error, signalList?: List<Signal>) => void): void {
 		signalList.createEach().on('item', (signal: Signal, i: number, next: (e?: Error) => void) => {
-			this.connection.query('INSERT INTO analytical.'+Signal.TABLE_NAME+' ('+Signal.COLUMN_MATRIX_ID+', '+Signal.COLUMN_DATE_CREATED+') '
-				+'VALUES ($1, $2::timestamp) RETURNING '+Signal.COLUMN_SIGNAL_ID, [
-				signal.Matrix.Id, moment(signal.DateCreated).format('YYYY-MM-DD HH:mm:ss')
-			], (e, res) => {
-				if (e) {
-					console.log(e);
-					return next(e);
-				}
-				signal.Id = res.rows[0][Signal.COLUMN_SIGNAL_ID];
-				next();
-			});
+			this.insert(signal, next)
 		}).on('error', (e: Error) => {
 			callback(e);
 		}).on('end', () => {
@@ -36,10 +26,39 @@ class SignalRecorder {
 	}
 
 	insert(signal: Signal, callback: (e: Error, signal?: Signal) => void) {
-
+		this.connection.query('INSERT INTO analytical.'+Signal.TABLE_NAME+' ('+Signal.COLUMN_MATRIX_ID+', '+Signal.COLUMN_DATE_CREATED+', '+Signal.COLUMN_SITUATION_ID+')'
+			+' VALUES ($1, $2::timestamp, $3) RETURNING '+Signal.COLUMN_SIGNAL_ID, [
+			signal.Matrix.Id,
+			moment(signal.DateCreated).format('YYYY-MM-DD HH:mm:ss'),
+			signal.SituationId
+		], (e, res) => {
+			if (e) {
+				console.log(e);
+				callback(e);
+				return;
+			}
+			signal.Id = res.rows[0][Signal.COLUMN_SIGNAL_ID];
+			callback(null, signal);
+		});
 	}
 
 	update(signal: Signal, callback: (e: Error, signal?: Signal) => void) {
-
+		this.connection.query('UPDATE analytical.'+Signal.TABLE_NAME
+			+' SET '+Signal.COLUMN_MATRIX_ID+' = $1'
+			+', '+Signal.COLUMN_DATE_CREATED+' = $2::timestamp'
+			+', '+Signal.COLUMN_SITUATION_ID+' = $3'
+			+' WHERE '+Signal.COLUMN_SIGNAL_ID+' = $4', [
+			signal.Matrix.Id,
+			moment(signal.DateCreated).format('YYYY-MM-DD HH:mm:ss'),
+			signal.SituationId,
+			signal.Id
+		], (e, res) => {
+			if (e) {
+				console.log(e);
+				callback(e);
+				return;
+			}
+			callback(null, signal);
+		});
 	}
 }

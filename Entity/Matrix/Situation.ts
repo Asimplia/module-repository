@@ -6,18 +6,30 @@ import Signal = require('./Signal');
 export = Situation;
 class Situation implements IEntity {
 
-	get Id() { return this.id; }
+	public static TABLE_NAME = 'situation';
+	public static COLUMN_SITUATION_ID = 'situationid';
+	public static COLUMN_DATE_CREATED = 'datecreated';
+
+	get Id(): number { return this.id; }
+	set Id(id: number) { this.id = id; }
+	get DateCreated() { return this.dateCreated; }
 	get SignalList() { return this.signalList; }
 
 	constructor(
 		private id,
-		private signalList: List<Signal>
+		private signalList: List<Signal>,
+		private dateCreated: Date
 	) {	}
 
-	toObject() {
+	static toObject(entity: Situation) {
 		return {
-			id: this.id,
-			signals: this.signalList.toArray(Signal.toObject)
+			id: entity.id,
+			dateCreated: entity.dateCreated,
+			signals: entity.signalList.toArray(Signal.toObject)
 		};
+	}
+
+	toObject() {
+		return Situation.toObject(this);
 	}
 }

@@ -2,14 +2,14 @@
 import IEntity = require('../IEntity');
 import Matrix = require('./Matrix');
 import moment = require('moment');
-import Product = require('../EShop/Product');
+import Customer = require('../EShop/Customer');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 import QuadrantValueFactory = require('./QuadrantValueFactory');
 
 export = MatrixCustomer;
 class MatrixCustomer extends Matrix {
 
-	get Customer(): any/*Customer*/ { return this.customer; }
+	get Customer(): Customer { return this.customer; }
 
 	constructor(
 		id: number,
@@ -31,7 +31,7 @@ class MatrixCustomer extends Matrix {
 		changeValueY: number,
 		tangens: number,
 		changeTangens: number,
-		private customer: any/*Customer*/
+		private customer: Customer
 	) {
 		super(
 			id, eShopId, type, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight,
@@ -60,7 +60,7 @@ class MatrixCustomer extends Matrix {
 			o[Matrix.COLUMN_CHANGE_VALUE_Y],
 			o[Matrix.COLUMN_TANGENS],
 			o[Matrix.COLUMN_CHANGE_TANGENS],
-			null
+			new Customer(o[Matrix.COLUMN_CUSTOMER_ID], o[Matrix.COLUMN_E_SHOP_ID])
 		);
 	}
 

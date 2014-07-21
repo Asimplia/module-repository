@@ -2,6 +2,7 @@
 import IEntity = require('../IEntity');
 import Matrix = require('./Matrix');
 import MatrixFactory = require('./MatrixFactory');
+import moment = require('moment');
 
 export = Signal;
 class Signal implements IEntity {
@@ -17,6 +18,7 @@ class Signal implements IEntity {
 	get Matrix(): Matrix { return this.matrix; }
 	get DateCreated(): Date { return this.dateCreated; }
 	get SituationId(): number { return this.situationId; }
+	set SituationId(value: number) { this.situationId = value; }
 
 	constructor(
 		private id: number,
@@ -31,7 +33,12 @@ class Signal implements IEntity {
 	}
 
 	static toObject(entity: Signal): any {
-
+		return {
+			id: entity.id,
+			matrix: entity.Matrix.toObject(),
+			dateCreated: moment(entity.dateCreated).format('YYYY-MM-DD HH:mm:ss'),
+			situationId: entity.situationId
+		};
 	}
 
 	toObject(): any {
