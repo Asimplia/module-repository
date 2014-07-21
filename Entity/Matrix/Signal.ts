@@ -3,9 +3,6 @@ import IEntity = require('../IEntity');
 import Matrix = require('./Matrix');
 import MatrixFactory = require('./MatrixFactory');
 import moment = require('moment');
-import MatrixProduct = require('./MatrixProduct')
-import MatrixCustomer = require('./MatrixCustomer')
-import MatrixChannel = require('./MatrixChannel')
 
 export = Signal;
 class Signal implements IEntity {
@@ -48,16 +45,4 @@ class Signal implements IEntity {
 		return Signal.toObject(this);
 	}
 
-	isCorresponding(signal: Signal) {
-		if (this.Matrix instanceof MatrixProduct && signal.Matrix instanceof MatrixProduct) {
-			return (<MatrixProduct> this.Matrix).Product.Id == (<MatrixProduct> signal.Matrix).Product.Id;
-		}
-		if (this.Matrix instanceof MatrixCustomer && signal.Matrix instanceof MatrixCustomer) {
-			return (<MatrixCustomer> this.Matrix).Customer.Id == (<MatrixCustomer> signal.Matrix).Customer.Id;
-		}
-		if (this.Matrix instanceof MatrixChannel && signal.Matrix instanceof MatrixChannel) {
-			return (<MatrixChannel> this.Matrix).Channel.Id == (<MatrixChannel> signal.Matrix).Channel.Id;
-		}
-		return false;
-	}
 }

@@ -27,6 +27,13 @@ var MatrixCustomer = (function (_super) {
     MatrixCustomer.fromRow = function (o) {
         return new MatrixCustomer(o[Matrix.COLUMN_MATRIX_ID], o[Matrix.COLUMN_E_SHOP_ID], o[Matrix.COLUMN_TYPE], o[Matrix.COLUMN_LOAD_ID], o[Matrix.COLUMN_SCORE_ABSOLUTE], o[Matrix.COLUMN_SCORE_RELATIVE], o[Matrix.COLUMN_SCORE_WEIGHT], o[Matrix.COLUMN_CHANGE_ABSOLUTE], o[Matrix.COLUMN_CHANGE_RELATIVE], o[Matrix.COLUMN_CHANGE_WEIGHT], o[Matrix.COLUMN_PREDICTION], QuadrantValueFactory.createQuadrantValueEnum(o[Matrix.COLUMN_QUADRANT]), moment(o[Matrix.COLUMN_DATE_VALID]).toDate(), o[Matrix.COLUMN_INPUT_VALUE_X], o[Matrix.COLUMN_INPUT_VALUE_Y], o[Matrix.COLUMN_CHANGE_VALUE_X], o[Matrix.COLUMN_CHANGE_VALUE_Y], o[Matrix.COLUMN_TANGENS], o[Matrix.COLUMN_CHANGE_TANGENS], new Customer(o[Matrix.COLUMN_CUSTOMER_ID], o[Matrix.COLUMN_E_SHOP_ID]));
     };
+
+    MatrixCustomer.prototype.isCorresponding = function (matrix) {
+        if (matrix instanceof MatrixCustomer) {
+            return this.Customer.Id == matrix.Customer.Id;
+        }
+        return false;
+    };
     return MatrixCustomer;
 })(Matrix);
 module.exports = MatrixCustomer;

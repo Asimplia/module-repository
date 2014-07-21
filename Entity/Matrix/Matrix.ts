@@ -3,6 +3,9 @@ import IEntity = require('../IEntity');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 import Product = require('../EShop/Product');
 import moment = require('moment');
+import MatrixProduct = require('./MatrixProduct')
+import MatrixCustomer = require('./MatrixCustomer')
+import MatrixChannel = require('./MatrixChannel')
 
 export = Matrix;
 class Matrix implements IEntity {
@@ -106,4 +109,7 @@ class Matrix implements IEntity {
 		return this.changeWeight;
 	}
 
+	isCorresponding(matrix: Matrix): boolean {
+		throw new Error('Implement this abstract method');
+	}
 }

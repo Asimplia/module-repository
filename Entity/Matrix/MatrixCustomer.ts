@@ -64,4 +64,11 @@ class MatrixCustomer extends Matrix {
 		);
 	}
 
+	isCorresponding(matrix: Matrix) {
+		if (matrix instanceof MatrixCustomer) {
+			return this.Customer.Id == (<MatrixCustomer> matrix).Customer.Id;
+		}
+		return false;
+	}
+
 }

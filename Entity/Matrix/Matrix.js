@@ -185,6 +185,10 @@ var Matrix = (function () {
     Matrix.prototype.getChange = function () {
         return this.changeWeight;
     };
+
+    Matrix.prototype.isCorresponding = function (matrix) {
+        throw new Error('Implement this abstract method');
+    };
     Matrix.TABLE_NAME = 'matrix';
     Matrix.COLUMN_MATRIX_ID = 'matrixid';
     Matrix.COLUMN_E_SHOP_ID = 'eshopid';

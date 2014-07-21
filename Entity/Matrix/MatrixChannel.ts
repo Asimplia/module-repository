@@ -64,4 +64,11 @@ class MatrixChannel extends Matrix {
 		);
 	}
 
+	isCorresponding(matrix: Matrix) {
+		if (matrix instanceof MatrixChannel) {
+			return this.Channel.Id == (<MatrixChannel> matrix).Channel.Id;
+		}
+		return false;
+	}
+
 }

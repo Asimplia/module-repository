@@ -64,4 +64,10 @@ class MatrixProduct extends Matrix {
 		);
 	}
 
+	isCorresponding(matrix: Matrix) {
+		if (matrix instanceof MatrixProduct) {
+			return this.Product.Id == (<MatrixProduct> matrix).Product.Id;
+		}
+		return false;
+	}
 }
