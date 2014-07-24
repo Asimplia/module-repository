@@ -17,7 +17,7 @@ export function connectMongoDB(dsn: string) {
 
 var connectionListeners = [];
 export function connectPostgres(connectionString: string) {
-	var schema = 'datamart'; // TODO
+	var schema = 'public'; // TODO
 	var client = new pg.Client(connectionString);
 	client.connect(() => {
 		console.log('Connected Postgres');
