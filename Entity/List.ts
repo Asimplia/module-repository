@@ -69,6 +69,17 @@ class List<Entity extends IEntity> {
 		return new List<any>(_.map(this.entities, cb), this.returnValue);
 	}
 
+	max(cb: (entity: Entity) => number) {
+		return _.max(this.entities, cb);
+	}
+
+	getListByMax(cb: (entity: Entity) => number): List<Entity> {
+		var maxEntity = this.max(cb);
+		return this.filter((entity: Entity) => {
+			return cb(entity) == cb(maxEntity);
+		});
+	}
+
 	all(cb: (entity: Entity) => boolean): boolean {
 		return _.all(this.entities, cb);
 	}
@@ -76,6 +87,10 @@ class List<Entity extends IEntity> {
 	forEach(cb: (entity: Entity) => any) {
 		this.entities.forEach(cb);
 		return this;
+	}
+
+	count(): number {
+		return this.entities.length;
 	}
 
 	createEach() {

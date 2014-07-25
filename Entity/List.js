@@ -69,6 +69,17 @@ var List = (function () {
         return new List(_.map(this.entities, cb), this.returnValue);
     };
 
+    List.prototype.max = function (cb) {
+        return _.max(this.entities, cb);
+    };
+
+    List.prototype.getListByMax = function (cb) {
+        var maxEntity = this.max(cb);
+        return this.filter(function (entity) {
+            return cb(entity) == cb(maxEntity);
+        });
+    };
+
     List.prototype.all = function (cb) {
         return _.all(this.entities, cb);
     };
@@ -76,6 +87,10 @@ var List = (function () {
     List.prototype.forEach = function (cb) {
         this.entities.forEach(cb);
         return this;
+    };
+
+    List.prototype.count = function () {
+        return this.entities.length;
     };
 
     List.prototype.createEach = function () {
