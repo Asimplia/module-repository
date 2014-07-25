@@ -1,5 +1,7 @@
 ﻿var QuadrantValueEnum = require('./QuadrantValueEnum');
 exports.QuadrantValueEnum = QuadrantValueEnum;
+var QuadrantValueFactory = require('./QuadrantValueFactory');
+exports.QuadrantValueFactory = QuadrantValueFactory;
 var Signal = require('./Signal');
 exports.Signal = Signal;
 var Situation = require('./Situation');
