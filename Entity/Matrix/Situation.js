@@ -30,6 +30,13 @@ var Situation = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Situation.prototype, "EShopId", {
+        get: function () {
+            return this.signalList.first().Matrix.EShopId;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     Situation.toObject = function (entity) {
         return {

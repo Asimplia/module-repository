@@ -93,6 +93,10 @@ class List<Entity extends IEntity> {
 		return this.entities.length;
 	}
 
+	first(): Entity {
+		return this.entities[0];
+	}
+
 	createEach() {
 		return each(this.entities);
 	}

@@ -14,6 +14,9 @@ class Situation implements IEntity {
 	set Id(id: number) { this.id = id; }
 	get DateCreated() { return this.dateCreated; }
 	get SignalList() { return this.signalList; }
+	get EShopId() {
+		return this.signalList.first().Matrix.EShopId;
+	}
 
 	constructor(
 		private id,
