@@ -8,7 +8,7 @@ var MatrixFactory = (function () {
     function MatrixFactory() {
     }
     MatrixFactory.createMatrixFromRow = function (row) {
-        var section = SectionFactory.createSectionEnum(row[Matrix.COLUMN_TYPE]);
+        var section = SectionFactory.createSectionEnum(row[Matrix.COLUMN_SECTION]);
         var matrix;
         if (SectionFactory.isProduct(section)) {
             matrix = MatrixProduct.fromRow(row);

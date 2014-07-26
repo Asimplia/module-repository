@@ -13,6 +13,7 @@ class Factor {
 	set FactorType(value: FactorTypeEnum) { this.factorType = value; }
 	get FactorType() { return this.factorType; }
 	get Column() { return this.column; }
+	get Section() { return this.section; }
 
 	constructor(
 		private id: number,

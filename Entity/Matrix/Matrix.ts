@@ -6,6 +6,7 @@ import moment = require('moment');
 import MatrixProduct = require('./MatrixProduct')
 import MatrixCustomer = require('./MatrixCustomer')
 import MatrixChannel = require('./MatrixChannel')
+import SectionEnum = require('../Section/SectionEnum');
 
 export = Matrix;
 class Matrix implements IEntity {
@@ -13,7 +14,7 @@ class Matrix implements IEntity {
 	public static TABLE_NAME = 'matrix';
 	public static COLUMN_MATRIX_ID = 'matrixid';
 	public static COLUMN_E_SHOP_ID = 'eshopid';
-	public static COLUMN_TYPE = 'matrixtype';
+	public static COLUMN_SECTION = 'matrixtype';
 	public static COLUMN_LOAD_ID = 'loadid';
 	public static COLUMN_SCORE_ABSOLUTE = 'matrixscoreabs';
 	public static COLUMN_SCORE_RELATIVE = 'matrixscorerel';
@@ -38,8 +39,8 @@ class Matrix implements IEntity {
 	get Id(): number { return this.id; }
 	get EShopId(): number { return this.eShopId; }
 	get LoadId(): number { return this.loadId; }
-	get Type(): string { return this.type; }
-	set Type(value: string) { this.type = value; }
+	get Section(): SectionEnum { return this.section; }
+	set Section(value: SectionEnum) { this.section = value; }
 	get Quadrant(): QuadrantValueEnum { return this.quadrant; }
 	get ChangeAbsolute(): number { return this.changeAbsolute; }
 	get ChangeRelative(): number { return this.changeRelative; }
@@ -58,7 +59,7 @@ class Matrix implements IEntity {
 	constructor(
 		private id: number,
 		private eShopId: number,
-		private type: string,
+		private section: SectionEnum,
 		private loadId: number,
 		private scoreAbsolute: number,
 		private scoreRelative: number,
@@ -81,7 +82,7 @@ class Matrix implements IEntity {
 		return {
 			id: entity.id,
 			eShopId: entity.eShopId,
-			type: entity.type,
+			section: entity.section,
 			loadId: entity.loadId,
 			scoreAbsolute: entity.scoreAbsolute,
 			scoreRelative: entity.scoreRelative,

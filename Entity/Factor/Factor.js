@@ -41,6 +41,13 @@ var Factor = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Factor.prototype, "Section", {
+        get: function () {
+            return this.section;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     Factor.fromObject = function (o) {
         return new Factor(o.id, o.name, o.description, SectionFactory.createSectionEnum(o.section), o.weight, Factor.createTypeEnum(o.factorType), Factor.createColumnEnum(o.column));

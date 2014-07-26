@@ -3,10 +3,10 @@
 var moment = require('moment');
 
 var Matrix = (function () {
-    function Matrix(id, eShopId, type, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens) {
+    function Matrix(id, eShopId, section, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens) {
         this.id = id;
         this.eShopId = eShopId;
-        this.type = type;
+        this.section = section;
         this.loadId = loadId;
         this.scoreAbsolute = scoreAbsolute;
         this.scoreRelative = scoreRelative;
@@ -45,12 +45,12 @@ var Matrix = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Matrix.prototype, "Type", {
+    Object.defineProperty(Matrix.prototype, "Section", {
         get: function () {
-            return this.type;
+            return this.section;
         },
         set: function (value) {
-            this.type = value;
+            this.section = value;
         },
         enumerable: true,
         configurable: true
@@ -158,7 +158,7 @@ var Matrix = (function () {
         return {
             id: entity.id,
             eShopId: entity.eShopId,
-            type: entity.type,
+            section: entity.section,
             loadId: entity.loadId,
             scoreAbsolute: entity.scoreAbsolute,
             scoreRelative: entity.scoreRelative,
@@ -192,7 +192,7 @@ var Matrix = (function () {
     Matrix.TABLE_NAME = 'matrix';
     Matrix.COLUMN_MATRIX_ID = 'matrixid';
     Matrix.COLUMN_E_SHOP_ID = 'eshopid';
-    Matrix.COLUMN_TYPE = 'matrixtype';
+    Matrix.COLUMN_SECTION = 'matrixtype';
     Matrix.COLUMN_LOAD_ID = 'loadid';
     Matrix.COLUMN_SCORE_ABSOLUTE = 'matrixscoreabs';
     Matrix.COLUMN_SCORE_RELATIVE = 'matrixscorerel';

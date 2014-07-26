@@ -5,6 +5,8 @@ import moment = require('moment');
 import Channel = require('../EShop/Channel');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 import QuadrantValueFactory = require('./QuadrantValueFactory');
+import SectionEnum = require('../Section/SectionEnum');
+import SectionFactory = require('../Section/SectionFactory');
 
 export = MatrixChannel;
 class MatrixChannel extends Matrix {
@@ -14,7 +16,7 @@ class MatrixChannel extends Matrix {
 	constructor(
 		id: number,
 		eShopId: number,
-		type: string,
+		section: SectionEnum,
 		loadId: number,
 		scoreAbsolute: number,
 		scoreRelative: number,
@@ -34,7 +36,7 @@ class MatrixChannel extends Matrix {
 		private channel: Channel
 	) {
 		super(
-			id, eShopId, type, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight,
+			id, eShopId, section, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight,
 			prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens
 		);
 	}
@@ -43,7 +45,7 @@ class MatrixChannel extends Matrix {
 		return new MatrixChannel(
 			o[Matrix.COLUMN_MATRIX_ID],
 			o[Matrix.COLUMN_E_SHOP_ID],
-			o[Matrix.COLUMN_TYPE],
+			o[Matrix.COLUMN_SECTION],
 			o[Matrix.COLUMN_LOAD_ID],
 			o[Matrix.COLUMN_SCORE_ABSOLUTE],
 			o[Matrix.COLUMN_SCORE_RELATIVE],
