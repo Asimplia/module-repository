@@ -25,6 +25,7 @@ class Action implements IEntity {
 	set FactorDefinitionList(value) { this.factorDefinitionList = value; }
 	get Placeholders() { return this.placeholders; }
 	set Placeholders(value) { this.placeholders = value; }
+	get PriorityType() { return this.priorityType; }
 
 	constructor(
 		private id: Number,

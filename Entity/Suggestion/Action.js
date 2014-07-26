@@ -88,6 +88,13 @@ var Action = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Action.prototype, "PriorityType", {
+        get: function () {
+            return this.priorityType;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     Action.fromObject = function (o) {
         return new Action(o.id, new LocalizedString(o.name), new LocalizedString(o.shortName), new LocalizedString(o.text), Action.createSectionEnum(o.section), new List().pushArray(o.factorDefinitions, FactorDefinition.fromObject), AsimpliaUtil.ArrayHelper.mapFilterNulls(o.placeholders, function (placeholder) {
