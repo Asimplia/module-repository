@@ -27,8 +27,8 @@ class Result implements IEntity {
 	set StatusList(value: List<Status>) { this.statusList = value; }
 	get GraphList() { return this.graphList; }
 	set GraphList(value: List<Graph>) { this.graphList = value; }
-	get ClientId() { return this.clientId; }
-	set ClientId(value: number) { this.clientId = value; }
+	get EShopId() { return this.eShopId; }
+	set EShopId(value: number) { this.eShopId = value; }
 
 	constructor(
 		private id: number,
@@ -39,7 +39,7 @@ class Result implements IEntity {
 		private activeStatus: Status,
 		private statusList: List<Status>,
 		private graphList: List<Graph>,
-		private clientId: number
+		private eShopId: number
 	) { }
 
 	static fromObject(o: any/*ISuggestionResultObject*/): Result {
@@ -52,7 +52,7 @@ class Result implements IEntity {
 			Status.fromObject(o.activeStatus),
 			new List<Status>().pushArray(o.statuses, Status.fromObject),
 			new List<Graph>().pushArray(o.graphs, Graph.fromObject),
-			o.clientId
+			o.eShopId
 		);
 	}
 
@@ -66,7 +66,7 @@ class Result implements IEntity {
 			activeStatus: entity.activeStatus ? entity.activeStatus.toObject() : null,
 			statuses: entity.statusList.toArray(Status.toObject),
 			graphs: entity.graphList.toArray(Graph.toObject),
-			clientId: entity.clientId
+			eShopId: entity.eShopId
 		};
 	}
 
