@@ -1,4 +1,6 @@
+
 import SectionEnum = require('./SectionEnum');
+import LocalizedString = require('../Locale/LocalizedString');
 
 export = SectionFactory;
 class SectionFactory {
@@ -85,5 +87,18 @@ class SectionFactory {
 				return true;
 		}
 		return false;
+	}
+
+	static getLabel(section: SectionEnum): LocalizedString {
+		switch (true) {
+			case SectionFactory.isProduct(section):
+				return new LocalizedString({cs: 'Produkt', en: 'Product'});
+			case SectionFactory.isCustomer(section):
+				return new LocalizedString({cs: 'Zákazník', en: 'Customer'});
+			case SectionFactory.isChannel(section):
+				return new LocalizedString({cs: 'Kanál', en: 'Channel'});
+			default:
+				return null;
+		}
 	}
 }

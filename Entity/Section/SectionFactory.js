@@ -1,4 +1,5 @@
 var SectionEnum = require('./SectionEnum');
+var LocalizedString = require('../Locale/LocalizedString');
 
 var SectionFactory = (function () {
     function SectionFactory() {
@@ -85,6 +86,19 @@ var SectionFactory = (function () {
                 return true;
         }
         return false;
+    };
+
+    SectionFactory.getLabel = function (section) {
+        switch (true) {
+            case SectionFactory.isProduct(section):
+                return new LocalizedString({ cs: 'Produkt', en: 'Product' });
+            case SectionFactory.isCustomer(section):
+                return new LocalizedString({ cs: 'Zákazník', en: 'Customer' });
+            case SectionFactory.isChannel(section):
+                return new LocalizedString({ cs: 'Kanál', en: 'Channel' });
+            default:
+                return null;
+        }
     };
     return SectionFactory;
 })();

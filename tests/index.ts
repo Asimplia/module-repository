@@ -23,6 +23,7 @@ var l5 = AsimpliaRepository.Entity.Matrix.Signal;
 var l6 = AsimpliaRepository.Entity.Matrix.Situation;
 var l7 = AsimpliaRepository.Entity.Matrix.QuadrantValueFactory;
 var m = AsimpliaRepository.Entity.Section.SectionEnum;
+var m1 = AsimpliaRepository.Entity.Section.SectionFactory;
 var n = AsimpliaRepository.Entity.Suggestion.Action;
 var o = AsimpliaRepository.Entity.Suggestion.ActionPlaceholderEnum;
 var p = AsimpliaRepository.Entity.Suggestion.FactorDefinition;
