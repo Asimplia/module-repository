@@ -11,4 +11,3 @@
     QuadrantValueEnum[QuadrantValueEnum["BOTTOM"] = 8] = "BOTTOM";
 })(QuadrantValueEnum || (QuadrantValueEnum = {}));
 module.exports = QuadrantValueEnum;
-//# sourceMappingURL=QuadrantValueEnum.js.map

@@ -4,7 +4,7 @@ var List = require('../List');
 var FactorDefinition = require('./FactorDefinition');
 
 var ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
-var ArrayHelper = require('../../modules/Util/ArrayHelper');
+var AsimpliaUtil = require('asimplia-util');
 var PriorityTypeEnum = require('./PriorityTypeEnum');
 
 var Action = (function () {
@@ -34,6 +34,16 @@ var Action = (function () {
         },
         set: function (value) {
             this.name = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Action.prototype, "ShortName", {
+        get: function () {
+            return this.shortName;
+        },
+        set: function (value) {
+            this.shortName = value;
         },
         enumerable: true,
         configurable: true
@@ -78,9 +88,16 @@ var Action = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Action.prototype, "PriorityType", {
+        get: function () {
+            return this.priorityType;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
-    Action.fromObject = function (o /*ISuggestionActionObject*/ ) {
-        return new Action(o.id, new LocalizedString(o.name), new LocalizedString(o.shortName), new LocalizedString(o.text), Action.createSectionEnum(o.section), new List().pushArray(o.factorDefinitions, FactorDefinition.fromObject), ArrayHelper.mapFilterNulls(o.placeholders, function (placeholder) {
+    Action.fromObject = function (o) {
+        return new Action(o.id, new LocalizedString(o.name), new LocalizedString(o.shortName), new LocalizedString(o.text), Action.createSectionEnum(o.section), new List().pushArray(o.factorDefinitions, FactorDefinition.fromObject), AsimpliaUtil.ArrayHelper.mapFilterNulls(o.placeholders, function (placeholder) {
             return Action.createPlaceholderEnum(placeholder);
         }), Action.createPriorityTypeEnum(o.priorityType));
     };
@@ -93,7 +110,7 @@ var Action = (function () {
             text: entity.text,
             section: SectionEnum[entity.section],
             factorDefinitions: entity.factorDefinitionList.toArray(FactorDefinition.toObject),
-            placeholders: ArrayHelper.mapFilterNulls(entity.placeholders, function (placeholder) {
+            placeholders: AsimpliaUtil.ArrayHelper.mapFilterNulls(entity.placeholders, function (placeholder) {
                 return ActionPlaceholderEnum[placeholder];
             }),
             priorityType: PriorityTypeEnum[entity.priorityType]
@@ -106,12 +123,12 @@ var Action = (function () {
 
     Action.createSectionEnum = function (section) {
         switch (section) {
-            case SectionEnum[2 /* CUSTOMER */]:
-                return 2 /* CUSTOMER */;
+            case SectionEnum[12 /* CUSTOMER */]:
+                return 12 /* CUSTOMER */;
             case SectionEnum[1 /* PRODUCT */]:
                 return 1 /* PRODUCT */;
-            case SectionEnum[3 /* CHANNEL */]:
-                return 3 /* CHANNEL */;
+            case SectionEnum[16 /* CHANNEL */]:
+                return 16 /* CHANNEL */;
         }
         return 0 /* UNKNOWN */;
     };
@@ -148,6 +165,14 @@ var Action = (function () {
                 return 8 /* CUSTOMERS_FOR_PRODUCT */;
             case ActionPlaceholderEnum[9 /* PRODUCT_MARGIN_RATE */]:
                 return 9 /* PRODUCT_MARGIN_RATE */;
+            case ActionPlaceholderEnum[10 /* PRODUCT_CONVERSION_RATE */]:
+                return 10 /* PRODUCT_CONVERSION_RATE */;
+            case ActionPlaceholderEnum[11 /* CATEGORY_NAME */]:
+                return 11 /* CATEGORY_NAME */;
+            case ActionPlaceholderEnum[12 /* CATEGORY_CHANGE_IN_SALE */]:
+                return 12 /* CATEGORY_CHANGE_IN_SALE */;
+            case ActionPlaceholderEnum[13 /* BENEFITS */]:
+                return 13 /* BENEFITS */;
         }
         return null;
     };

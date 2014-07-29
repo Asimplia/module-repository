@@ -12,4 +12,3 @@ var Action = {
     priorityType: String
 };
 module.exports = Action;
-//# sourceMappingURL=Action.js.map

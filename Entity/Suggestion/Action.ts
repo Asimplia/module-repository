@@ -1,11 +1,11 @@
-﻿
+﻿// / <reference path="../../node_modules/asimplia-util/index.node.d.ts" />
 import LocalizedString = require('../Locale/LocalizedString');
 import SectionEnum = require('../Section/SectionEnum');
 import List = require('../List');
 import FactorDefinition = require('./FactorDefinition');
 import IEntity = require('../IEntity');
 import ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
-import ArrayHelper = require('../../modules/Util/ArrayHelper');
+var AsimpliaUtil = require('asimplia-util');
 import PriorityTypeEnum = require('./PriorityTypeEnum');
 
 export = Action;
@@ -15,6 +15,8 @@ class Action implements IEntity {
 	set Id(value) { this.id = value; }
 	get Name() { return this.name; }
 	set Name(value) { this.name = value; }
+	get ShortName() { return this.shortName; }
+	set ShortName(value) { this.shortName = value; }
 	get Text() { return this.text; }
 	set Text(value) { this.text = value; }
 	get Section() { return this.section; }
@@ -23,6 +25,7 @@ class Action implements IEntity {
 	set FactorDefinitionList(value) { this.factorDefinitionList = value; }
 	get Placeholders() { return this.placeholders; }
 	set Placeholders(value) { this.placeholders = value; }
+	get PriorityType() { return this.priorityType; }
 
 	constructor(
 		private id: Number,
@@ -43,7 +46,7 @@ class Action implements IEntity {
 			new LocalizedString(o.text),
 			Action.createSectionEnum(o.section),
 			new List<FactorDefinition>().pushArray(o.factorDefinitions, FactorDefinition.fromObject),
-			ArrayHelper.mapFilterNulls(o.placeholders, (placeholder: string) => { return Action.createPlaceholderEnum(placeholder); }),
+			AsimpliaUtil.ArrayHelper.mapFilterNulls(o.placeholders, (placeholder: string) => { return Action.createPlaceholderEnum(placeholder); }),
 			Action.createPriorityTypeEnum(o.priorityType)
 		);
 	}
@@ -56,7 +59,7 @@ class Action implements IEntity {
 			text: entity.text,
 			section: SectionEnum[entity.section],
 			factorDefinitions: entity.factorDefinitionList.toArray(FactorDefinition.toObject),
-			placeholders: ArrayHelper.mapFilterNulls(entity.placeholders, (placeholder: ActionPlaceholderEnum) => { return ActionPlaceholderEnum[placeholder]; }),
+			placeholders: AsimpliaUtil.ArrayHelper.mapFilterNulls(entity.placeholders, (placeholder: ActionPlaceholderEnum) => { return ActionPlaceholderEnum[placeholder]; }),
 			priorityType: PriorityTypeEnum[entity.priorityType]
 		};
 	}
@@ -109,6 +112,14 @@ class Action implements IEntity {
 				return ActionPlaceholderEnum.CUSTOMERS_FOR_PRODUCT;
 			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_MARGIN_RATE]:
 				return ActionPlaceholderEnum.PRODUCT_MARGIN_RATE;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_CONVERSION_RATE]:
+				return ActionPlaceholderEnum.PRODUCT_CONVERSION_RATE;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.CATEGORY_NAME]:
+				return ActionPlaceholderEnum.CATEGORY_NAME;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.CATEGORY_CHANGE_IN_SALE]:
+				return ActionPlaceholderEnum.CATEGORY_CHANGE_IN_SALE;
+			case ActionPlaceholderEnum[ActionPlaceholderEnum.BENEFITS]:
+				return ActionPlaceholderEnum.BENEFITS;
 		}
 		return null;
 	}

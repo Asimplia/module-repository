@@ -4,5 +4,6 @@ enum ResultTypeEnum {
 	NOT_USED,
 	ACTUAL,
 	PAST,
-	ALL
+	ALL,
+	REMIND
 }

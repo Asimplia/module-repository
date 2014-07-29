@@ -1,5 +1,4 @@
-﻿/// <refernce path="../../typings/mongoose/mongoose.d.ts" />
-var Factor = require('../Entity/Factor/Factor');
+﻿var Factor = require('../Entity/Factor/Factor');
 var List = require('../Entity/List');
 
 var FactorLoader = (function () {
@@ -19,4 +18,3 @@ var FactorLoader = (function () {
     return FactorLoader;
 })();
 module.exports = FactorLoader;
-//# sourceMappingURL=FactorLoader.js.map

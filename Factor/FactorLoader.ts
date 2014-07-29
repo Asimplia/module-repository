@@ -1,4 +1,4 @@
-﻿/// <refernce path="../../typings/mongoose/mongoose.d.ts" />
+﻿/// <reference path="../typings/mongoose/mongoose.d.ts" />
 
 import Factor = require('../Entity/Factor/Factor');
 import List = require('../Entity/List');

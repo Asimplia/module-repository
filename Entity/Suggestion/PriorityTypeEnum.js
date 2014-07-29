@@ -5,4 +5,3 @@
     PriorityTypeEnum[PriorityTypeEnum["GREEN"] = 2] = "GREEN";
 })(PriorityTypeEnum || (PriorityTypeEnum = {}));
 module.exports = PriorityTypeEnum;
-//# sourceMappingURL=PriorityTypeEnum.js.map

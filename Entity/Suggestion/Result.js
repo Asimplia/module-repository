@@ -4,7 +4,7 @@ var Status = require('./Status');
 var Graph = require('./Graph');
 
 var Result = (function () {
-    function Result(id, title, shortTitle, label, text, activeStatus, statusList, graphList, clientId) {
+    function Result(id, title, shortTitle, label, text, activeStatus, statusList, graphList, eShopId) {
         this.id = id;
         this.title = title;
         this.shortTitle = shortTitle;
@@ -13,10 +13,102 @@ var Result = (function () {
         this.activeStatus = activeStatus;
         this.statusList = statusList;
         this.graphList = graphList;
-        this.clientId = clientId;
+        this.eShopId = eShopId;
     }
-    Result.fromObject = function (o /*ISuggestionResultObject*/ ) {
-        return new Result(o.id, new LocalizedString(o.title), new LocalizedString(o.shortTitle), new LocalizedString(o.label), new LocalizedString(o.text), Status.fromObject(o.activeStatus), new List().pushArray(o.statuses, Status.fromObject), new List().pushArray(o.graphs, Graph.fromObject), o.clientId);
+    Object.defineProperty(Result.prototype, "Id", {
+        get: function () {
+            return this.id;
+        },
+        set: function (value) {
+            this.id = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Result.prototype, "Title", {
+        get: function () {
+            return this.title;
+        },
+        set: function (value) {
+            this.title = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Result.prototype, "ShortTitle", {
+        get: function () {
+            return this.shortTitle;
+        },
+        set: function (value) {
+            this.shortTitle = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Result.prototype, "Label", {
+        get: function () {
+            return this.label;
+        },
+        set: function (value) {
+            this.label = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Result.prototype, "Text", {
+        get: function () {
+            return this.text;
+        },
+        set: function (value) {
+            this.text = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Result.prototype, "ActiveStatus", {
+        get: function () {
+            return this.activeStatus;
+        },
+        set: function (value) {
+            this.statusList.push(value);
+            this.activeStatus = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Result.prototype, "StatusList", {
+        get: function () {
+            return this.statusList;
+        },
+        set: function (value) {
+            this.statusList = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Result.prototype, "GraphList", {
+        get: function () {
+            return this.graphList;
+        },
+        set: function (value) {
+            this.graphList = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Result.prototype, "EShopId", {
+        get: function () {
+            return this.eShopId;
+        },
+        set: function (value) {
+            this.eShopId = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+
+    Result.fromObject = function (o) {
+        return new Result(o.id, new LocalizedString(o.title), new LocalizedString(o.shortTitle), new LocalizedString(o.label), new LocalizedString(o.text), Status.fromObject(o.activeStatus), new List().pushArray(o.statuses, Status.fromObject), new List().pushArray(o.graphs, Graph.fromObject), o.eShopId);
     };
 
     Result.toObject = function (entity) {
@@ -29,7 +121,7 @@ var Result = (function () {
             activeStatus: entity.activeStatus ? entity.activeStatus.toObject() : null,
             statuses: entity.statusList.toArray(Status.toObject),
             graphs: entity.graphList.toArray(Graph.toObject),
-            clientId: entity.clientId
+            eShopId: entity.eShopId
         };
     };
 

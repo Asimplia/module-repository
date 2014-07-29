@@ -5,4 +5,3 @@
     ShiftValueEnum[ShiftValueEnum["RISE"] = 2] = "RISE";
 })(ShiftValueEnum || (ShiftValueEnum = {}));
 module.exports = ShiftValueEnum;
-//# sourceMappingURL=ShiftValueEnum.js.map

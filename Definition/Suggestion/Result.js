@@ -11,6 +11,6 @@ var Result = {
     activeStatus: Status,
     statuses: [Status],
     graphs: [Graph],
-    clientId: Number
+    eShopId: Number
 };
 module.exports = Result;

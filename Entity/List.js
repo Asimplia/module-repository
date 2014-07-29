@@ -1,9 +1,23 @@
-﻿var List = (function () {
-    function List() {
+﻿var each = require('each');
+var _ = require('underscore');
+
+var List = (function () {
+    function List(items, entityFactory) {
         this.entities = [];
+        if (typeof items !== 'undefined') {
+            if (typeof entityFactory === 'undefined') {
+                throw new Error('You must specify entityFactory if items in constructor');
+            }
+            this.pushArray(items, entityFactory);
+        }
     }
     List.prototype.pushArray = function (items, entityFactory) {
         var _this = this;
+        if (typeof entityFactory === 'undefined') {
+            entityFactory = function (entity) {
+                return entity;
+            };
+        }
         if (!items) {
             return this;
         }
@@ -23,6 +37,11 @@
     };
 
     List.prototype.toArray = function (objectFactory) {
+        if (typeof objectFactory === 'undefined') {
+            objectFactory = function (entity) {
+                return entity;
+            };
+        }
         var array = [];
         this.entities.forEach(function (entity) {
             try  {
@@ -33,7 +52,62 @@
         });
         return array;
     };
+
+    List.prototype.filter = function (cb) {
+        return new List(_.filter(this.entities, cb), this.returnValue);
+    };
+
+    List.prototype.find = function (cb) {
+        return _.find(this.entities, cb);
+    };
+
+    List.prototype.any = function (cb) {
+        return _.any(this.entities, cb);
+    };
+
+    List.prototype.map = function (cb) {
+        return new List(_.map(this.entities, cb), this.returnValue);
+    };
+
+    List.prototype.max = function (cb) {
+        return _.max(this.entities, cb);
+    };
+
+    List.prototype.getListByMax = function (cb) {
+        var maxEntity = this.max(cb);
+        return this.filter(function (entity) {
+            return cb(entity) == cb(maxEntity);
+        });
+    };
+
+    List.prototype.all = function (cb) {
+        return _.all(this.entities, cb);
+    };
+
+    List.prototype.forEach = function (cb) {
+        this.entities.forEach(cb);
+        return this;
+    };
+
+    List.prototype.count = function () {
+        return this.entities.length;
+    };
+
+    List.prototype.isEmpty = function () {
+        return this.count() == 0;
+    };
+
+    List.prototype.first = function () {
+        return this.entities[0];
+    };
+
+    List.prototype.createEach = function () {
+        return each(this.entities);
+    };
+
+    List.prototype.returnValue = function (entity) {
+        return entity;
+    };
     return List;
 })();
 module.exports = List;
-//# sourceMappingURL=List.js.map

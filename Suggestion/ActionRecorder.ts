@@ -1,4 +1,4 @@
-﻿/// <refernce path="../../typings/mongoose/mongoose.d.ts" />
+﻿/// <reference path="../typings/mongoose/mongoose.d.ts" />
 
 import AbstractRecorder = require('../AbstractRecorder');
 import SuggestionAction = require('../Entity/Suggestion/Action');
@@ -26,7 +26,7 @@ class ActionRecorder extends AbstractRecorder {
 				this.getNextId(this.ActionModel, (id) => {
 					suggestionAction.Id = id;
 					this.update(actionDocument, SuggestionAction.fromObject, suggestionAction, callback);
-				})
+				});
 				return;
 			}
 			this.update(actionDocument, SuggestionAction.fromObject, suggestionAction, callback);
