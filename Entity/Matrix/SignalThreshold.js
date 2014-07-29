@@ -1,4 +1,6 @@
 ﻿var QuadrantValueEnum = require('./QuadrantValueEnum');
+var SectionEnum = require('../Section/SectionEnum');
+var SectionFactory = require('../Section/SectionFactory');
 
 var SignalThreshold = (function () {
     function SignalThreshold(section, name, thresholdValueQ1, thresholdValueQ2, thresholdValueQ3, thresholdValueQ4, priorityQ1, priorityQ2, priorityQ3, priorityQ4, descriptionQ1, descriptionQ2, descriptionQ3, descriptionQ4) {
@@ -32,8 +34,33 @@ var SignalThreshold = (function () {
         configurable: true
     });
 
+    SignalThreshold.fromObject = function (o) {
+        return new SignalThreshold(SectionFactory.createSectionEnum(o.section), o.name, o.thresholdValue.q1, o.thresholdValue.q2, o.thresholdValue.q3, o.thresholdValue.q4, o.priority.q1, o.priority.q2, o.priority.q3, o.priority.q4, o.description.q1, o.description.q2, o.description.q3, o.description.q4);
+    };
+
     SignalThreshold.prototype.toObject = function () {
-        return {};
+        return {
+            section: SectionEnum[this.section],
+            name: this.name,
+            thresholdValue: {
+                q1: this.thresholdValueQ1,
+                q2: this.thresholdValueQ2,
+                q3: this.thresholdValueQ3,
+                q4: this.thresholdValueQ4
+            },
+            priority: {
+                q1: this.priorityQ1,
+                q2: this.priorityQ2,
+                q3: this.priorityQ3,
+                q4: this.priorityQ4
+            },
+            description: {
+                q1: this.descriptionQ1,
+                q2: this.descriptionQ2,
+                q3: this.descriptionQ3,
+                q4: this.descriptionQ4
+            }
+        };
     };
 
     SignalThreshold.prototype.getThresholdValue = function (quadrant) {

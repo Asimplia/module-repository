@@ -45,7 +45,7 @@ class MatrixChannel extends Matrix {
 		return new MatrixChannel(
 			o[Matrix.COLUMN_MATRIX_ID],
 			o[Matrix.COLUMN_E_SHOP_ID],
-			o[Matrix.COLUMN_SECTION],
+			SectionFactory.createSectionEnum(o[Matrix.COLUMN_SECTION]),
 			o[Matrix.COLUMN_LOAD_ID],
 			o[Matrix.COLUMN_SCORE_ABSOLUTE],
 			o[Matrix.COLUMN_SCORE_RELATIVE],

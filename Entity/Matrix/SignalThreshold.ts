@@ -3,6 +3,7 @@ import IEntity = require('../IEntity');
 import Matrix = require('./Matrix');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 import SectionEnum = require('../Section/SectionEnum');
+import SectionFactory = require('../Section/SectionFactory');
 
 export = SignalThreshold;
 class SignalThreshold implements IEntity {
@@ -27,9 +28,47 @@ class SignalThreshold implements IEntity {
 		private descriptionQ4: string
 		) { }
 
+	static fromObject(o: any) {
+		return new SignalThreshold(
+			SectionFactory.createSectionEnum(o.section),
+			o.name,
+			o.thresholdValue.q1,
+			o.thresholdValue.q2,
+			o.thresholdValue.q3,
+			o.thresholdValue.q4,
+			o.priority.q1,
+			o.priority.q2,
+			o.priority.q3,
+			o.priority.q4,
+			o.description.q1,
+			o.description.q2,
+			o.description.q3,
+			o.description.q4
+		);
+	}
+
 	toObject() {
 		return {
-
+			section: SectionEnum[this.section],
+			name: this.name,
+			thresholdValue: {
+				q1: this.thresholdValueQ1,
+				q2: this.thresholdValueQ2,
+				q3: this.thresholdValueQ3,
+				q4: this.thresholdValueQ4
+			},
+			priority: {
+				q1: this.priorityQ1,
+				q2: this.priorityQ2,
+				q3: this.priorityQ3,
+				q4: this.priorityQ4
+			},
+			description: {
+				q1: this.descriptionQ1,
+				q2: this.descriptionQ2,
+				q3: this.descriptionQ3,
+				q4: this.descriptionQ4
+			}
 		};
 	}
 
