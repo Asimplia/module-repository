@@ -93,6 +93,10 @@ class List<Entity extends IEntity> {
 		return this.entities.length;
 	}
 
+	isEmpty(): boolean {
+		return this.count() == 0;
+	}
+
 	first(): Entity {
 		return this.entities[0];
 	}

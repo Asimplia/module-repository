@@ -93,6 +93,10 @@ var List = (function () {
         return this.entities.length;
     };
 
+    List.prototype.isEmpty = function () {
+        return this.count() == 0;
+    };
+
     List.prototype.first = function () {
         return this.entities[0];
     };
