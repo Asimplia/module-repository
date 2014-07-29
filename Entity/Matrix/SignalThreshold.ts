@@ -2,15 +2,16 @@
 import IEntity = require('../IEntity');
 import Matrix = require('./Matrix');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
+import SectionEnum = require('../Section/SectionEnum');
 
 export = SignalThreshold;
 class SignalThreshold implements IEntity {
 
-	get Type(): string { return this.type; }
+	get Section(): SectionEnum { return this.section; }
 	get Name(): string { return this.name; }
 
 	constructor(
-		private type: string,
+		private section: SectionEnum,
 		private name: string,
 		private thresholdValueQ1: number,
 		private thresholdValueQ2: number,

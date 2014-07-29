@@ -1,8 +1,8 @@
 ﻿var QuadrantValueEnum = require('./QuadrantValueEnum');
 
 var SignalThreshold = (function () {
-    function SignalThreshold(type, name, thresholdValueQ1, thresholdValueQ2, thresholdValueQ3, thresholdValueQ4, priorityQ1, priorityQ2, priorityQ3, priorityQ4, descriptionQ1, descriptionQ2, descriptionQ3, descriptionQ4) {
-        this.type = type;
+    function SignalThreshold(section, name, thresholdValueQ1, thresholdValueQ2, thresholdValueQ3, thresholdValueQ4, priorityQ1, priorityQ2, priorityQ3, priorityQ4, descriptionQ1, descriptionQ2, descriptionQ3, descriptionQ4) {
+        this.section = section;
         this.name = name;
         this.thresholdValueQ1 = thresholdValueQ1;
         this.thresholdValueQ2 = thresholdValueQ2;
@@ -17,9 +17,9 @@ var SignalThreshold = (function () {
         this.descriptionQ3 = descriptionQ3;
         this.descriptionQ4 = descriptionQ4;
     }
-    Object.defineProperty(SignalThreshold.prototype, "Type", {
+    Object.defineProperty(SignalThreshold.prototype, "Section", {
         get: function () {
-            return this.type;
+            return this.section;
         },
         enumerable: true,
         configurable: true
