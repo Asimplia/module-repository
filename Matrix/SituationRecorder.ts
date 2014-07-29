@@ -16,9 +16,10 @@ class SituationRecorder {
 	}
 
 	insert(situation: Situation, callback: (e: Error, situation?: Situation) => void) {
-		this.connection.query('INSERT INTO analytical.'+Situation.TABLE_NAME+' ('+Situation.COLUMN_DATE_CREATED+')'
-			+' VALUES ($1::timestamp) RETURNING '+Situation.COLUMN_SITUATION_ID, [
-			moment(situation.DateCreated).format('YYYY-MM-DD HH:mm:ss')
+		this.connection.query('INSERT INTO analytical.'+Situation.TABLE_NAME+' ('+Situation.COLUMN_DATE_CREATED+', '+Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED+')'
+			+' VALUES ($1::timestamp, $2) RETURNING '+Situation.COLUMN_SITUATION_ID, [
+			moment(situation.DateCreated).format('YYYY-MM-DD HH:mm:ss'),
+			situation.DateSuggestionResultCreated ? moment(situation.DateSuggestionResultCreated).format('YYYY-MM-DD HH:mm:ss') : null
 		], (e, res) => {
 			if (e) {
 				console.log(e);
@@ -26,6 +27,24 @@ class SituationRecorder {
 				return;
 			}
 			situation.Id = res.rows[0][Situation.COLUMN_SITUATION_ID];
+			callback(null, situation);
+		});
+	}
+
+	update(situation: Situation, callback: (e: Error, situation?: Situation) => void) {
+		this.connection.query('UPDATE analytical.'+Situation.TABLE_NAME
+			+' SET '+Situation.COLUMN_DATE_CREATED+' = $1::timestamp '
+			+' , '+Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED+' = $2 '
+			+' WHERE '+Situation.COLUMN_SITUATION_ID+' = $3 ', [
+			moment(situation.DateCreated).format('YYYY-MM-DD HH:mm:ss'),
+			situation.DateSuggestionResultCreated ? moment(situation.DateSuggestionResultCreated).format('YYYY-MM-DD HH:mm:ss') : null,
+			situation.Id
+		], (e, res) => {
+			if (e) {
+				console.log(e);
+				callback(e);
+				return;
+			}
 			callback(null, situation);
 		});
 	}

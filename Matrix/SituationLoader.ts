@@ -4,6 +4,7 @@ import Signal = require('../Entity/Matrix/Signal');
 import Situation = require('../Entity/Matrix/Situation');
 import Matrix = require('../Entity/Matrix/Matrix');
 import List = require('../Entity/List');
+import moment = require('moment');
 
 export = SituationLoader;
 class SituationLoader {
@@ -16,11 +17,12 @@ class SituationLoader {
 		});
 	}
 
-	getListByEShopId(eShopId: number, callback: (e: Error, situationList?: List<Situation>) => void) {
+	getListNotSuggestedByEShopId(eShopId: number, callback: (e: Error, situationList?: List<Situation>) => void) {
 		this.connection.query('SELECT * FROM analytical.'+Situation.TABLE_NAME
 			+' JOIN analytical.'+Signal.TABLE_NAME+' USING ('+Signal.COLUMN_SITUATION_ID+') '
 			+' JOIN analytical.'+Matrix.TABLE_NAME+' USING ('+Signal.COLUMN_MATRIX_ID+') '
-			+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1', [
+			+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+			+' AND '+Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED+' IS NULL', [
 			eShopId
 		], (e, result) => {
 			if (e) {
@@ -36,7 +38,8 @@ class SituationLoader {
 					situation = new Situation(
 						row[Situation.COLUMN_SITUATION_ID],
 						new List<Signal>(),
-						row[Situation.COLUMN_DATE_CREATED]
+						moment(row[Situation.COLUMN_DATE_CREATED]).toDate(),
+						row[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED] ? moment(row[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED]).toDate() : null
 					);
 					situationList.push(situation);
 				}

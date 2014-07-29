@@ -1,10 +1,11 @@
 var Signal = require('./Signal');
 
 var Situation = (function () {
-    function Situation(id, signalList, dateCreated) {
+    function Situation(id, signalList, dateCreated, dateSuggestionResultCreated) {
         this.id = id;
         this.signalList = signalList;
         this.dateCreated = dateCreated;
+        this.dateSuggestionResultCreated = dateSuggestionResultCreated;
     }
     Object.defineProperty(Situation.prototype, "Id", {
         get: function () {
@@ -30,6 +31,16 @@ var Situation = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Situation.prototype, "DateSuggestionResultCreated", {
+        get: function () {
+            return this.dateSuggestionResultCreated;
+        },
+        set: function (value) {
+            this.dateSuggestionResultCreated = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Situation.prototype, "EShopId", {
         get: function () {
             return this.signalList.first().Matrix.EShopId;
@@ -42,6 +53,7 @@ var Situation = (function () {
         return {
             id: entity.id,
             dateCreated: entity.dateCreated,
+            dateSuggestionResultCreated: entity.dateSuggestionResultCreated,
             signals: entity.signalList.toArray(Signal.toObject)
         };
     };
@@ -52,6 +64,7 @@ var Situation = (function () {
     Situation.TABLE_NAME = 'situation';
     Situation.COLUMN_SITUATION_ID = 'situationid';
     Situation.COLUMN_DATE_CREATED = 'datecreated';
+    Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED = 'datesuggestionresultcreated';
     return Situation;
 })();
 module.exports = Situation;
