@@ -1,5 +1,6 @@
 ﻿var mongoose = require('mongoose');
 var pg = require('pg');
+var neo4j = require('neo4j');
 
 function connect(dsn) {
     exports.connectMongoDB(dsn);
@@ -29,6 +30,17 @@ function connectPostgres(connectionString) {
     client.query('SET search_path TO ' + schema + ';');
 }
 exports.connectPostgres = connectPostgres;
+function connectNeo4j(dsn) {
+    var db = new neo4j.GraphDatabase(dsn);
+    db.query('MATCH (n) RETURN 1;', {}, function (e, res) {
+        if (e) {
+            throw e;
+        }
+        console.log('Connected Neo4j');
+        exports.neo4jDatabase = db;
+    });
+}
+exports.connectNeo4j = connectNeo4j;
 function getConnection(callback) {
     connectionListeners.push(callback);
     if (exports.pgClient) {
@@ -37,6 +49,7 @@ function getConnection(callback) {
 }
 exports.getConnection = getConnection;
 exports.pgClient;
+exports.neo4jDatabase;
 var Suggestion = require('./Suggestion/index');
 exports.Suggestion = Suggestion;
 var Factor = require('./Factor/index');

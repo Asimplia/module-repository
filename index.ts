@@ -1,6 +1,7 @@
 ﻿/// <reference path="typings/mongoose/mongoose.d.ts" />
 import mongoose = require('mongoose');
 var pg = require('pg');
+var neo4j = require('neo4j');
 
 /** @depreceted */
 export function connect(dsn: string) {
@@ -28,6 +29,16 @@ export function connectPostgres(connectionString: string) {
 	});
 	client.query('SET search_path TO '+schema+';');
 }
+export function connectNeo4j(dsn: string) {
+	var db = new neo4j.GraphDatabase(dsn);
+	db.query('MATCH (n) RETURN 1;', {}, (e: Error, res: any) => {
+		if (e) {
+			throw e;
+		}
+		console.log('Connected Neo4j');
+		neo4jDatabase = db;
+	});
+}
 export function getConnection(callback: (connection: any) => void) {
 	connectionListeners.push(callback);
 	if (pgClient) {
@@ -35,6 +46,7 @@ export function getConnection(callback: (connection: any) => void) {
 	}
 }
 export var pgClient;
+export var neo4jDatabase;
 export import Suggestion = require('./Suggestion/index');
 export import Factor = require('./Factor/index');
 export import Entity = require('./Entity/index');
