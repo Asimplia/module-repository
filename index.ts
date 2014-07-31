@@ -29,6 +29,7 @@ export function connectPostgres(connectionString: string) {
 	});
 	client.query('SET search_path TO '+schema+';');
 }
+var neo4jListeners = [];
 export function connectNeo4j(dsn: string) {
 	var db = new neo4j.GraphDatabase(dsn);
 	db.query('MATCH (n) RETURN 1;', {}, (e: Error, res: any) => {
@@ -37,6 +38,9 @@ export function connectNeo4j(dsn: string) {
 		}
 		console.log('Connected Neo4j');
 		neo4jDatabase = db;
+		neo4jListeners.forEach((callback) => {
+			callback(neo4jDatabase);
+		});
 	});
 }
 export function getConnection(callback: (connection: any) => void) {
@@ -45,9 +49,16 @@ export function getConnection(callback: (connection: any) => void) {
 		callback(pgClient);
 	}
 }
+export function getGraphDatabase(callback: (db: any) => void) {
+	connectionListeners.push(callback);
+	if (neo4jDatabase) {
+		callback(neo4jDatabase);
+	}
+}
 export var pgClient;
 export var neo4jDatabase;
 export import Suggestion = require('./Suggestion/index');
 export import Factor = require('./Factor/index');
 export import Entity = require('./Entity/index');
 export import Matrix = require('./Matrix/index');
+export import Placeholder = require('./Placeholder/index');
