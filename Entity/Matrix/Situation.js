@@ -73,6 +73,13 @@ var Situation = (function () {
     Situation.prototype.toObject = function () {
         return Situation.toObject(this);
     };
+
+    Situation.prototype.getMatrixProductBySection = function (section) {
+        var signal = this.signalList.find(function (signal) {
+            return signal.Matrix.Section == section;
+        });
+        return signal ? signal.Matrix : null;
+    };
     Situation.TABLE_NAME = 'situation';
     Situation.COLUMN_SITUATION_ID = 'situationid';
     Situation.COLUMN_DATE_CREATED = 'datecreated';

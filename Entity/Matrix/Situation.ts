@@ -3,6 +3,7 @@ import IEntity = require('../IEntity');
 import List = require('../List');
 import Signal = require('./Signal');
 import MatrixProduct = require('./MatrixProduct');
+import SectionEnum = require('../Section/SectionEnum')
 
 export = Situation;
 class Situation implements IEntity {
@@ -47,5 +48,12 @@ class Situation implements IEntity {
 
 	toObject() {
 		return Situation.toObject(this);
+	}
+
+	getMatrixProductBySection(section: SectionEnum) {
+		var signal = this.signalList.find((signal: Signal) => {
+			return signal.Matrix.Section == section;
+		});
+		return signal ? <MatrixProduct> signal.Matrix : null;
 	}
 }
