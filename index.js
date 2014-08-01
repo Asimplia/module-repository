@@ -33,7 +33,7 @@ exports.connectPostgres = connectPostgres;
 var neo4jListeners = [];
 function connectNeo4j(dsn) {
     var db = new neo4j.GraphDatabase(dsn);
-    db.query('MATCH (n) RETURN 1;', {}, function (e, res) {
+    db.query('RETURN 1;', {}, function (e, res) {
         if (e) {
             throw e;
         }
@@ -53,7 +53,7 @@ function getConnection(callback) {
 }
 exports.getConnection = getConnection;
 function getGraphDatabase(callback) {
-    connectionListeners.push(callback);
+    neo4jListeners.push(callback);
     if (exports.neo4jDatabase) {
         callback(exports.neo4jDatabase);
     }
@@ -69,3 +69,5 @@ var Entity = require('./Entity/index');
 exports.Entity = Entity;
 var Matrix = require('./Matrix/index');
 exports.Matrix = Matrix;
+var Placeholder = require('./Placeholder/index');
+exports.Placeholder = Placeholder;

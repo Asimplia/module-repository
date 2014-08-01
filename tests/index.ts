@@ -42,4 +42,4 @@ var z2 = AsimpliaRepository.Matrix.SituationLoader;
 var a1 = AsimpliaRepository.Matrix.SignalLoader;
 var a2 = require('../Definition/Factor/Factor');
 var a3 = require('../Matrix/SignalThresholdModel');
-var a4 = AsimpliaRepository.Placehodler.PlaceholderProductLoader;
+var a4 = AsimpliaRepository.Placeholder.PlaceholderProductLoader;

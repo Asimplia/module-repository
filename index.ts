@@ -32,7 +32,7 @@ export function connectPostgres(connectionString: string) {
 var neo4jListeners = [];
 export function connectNeo4j(dsn: string) {
 	var db = new neo4j.GraphDatabase(dsn);
-	db.query('MATCH (n) RETURN 1;', {}, (e: Error, res: any) => {
+	db.query('RETURN 1;', {}, (e: Error, res: any) => {
 		if (e) {
 			throw e;
 		}
@@ -50,7 +50,7 @@ export function getConnection(callback: (connection: any) => void) {
 	}
 }
 export function getGraphDatabase(callback: (db: any) => void) {
-	connectionListeners.push(callback);
+	neo4jListeners.push(callback);
 	if (neo4jDatabase) {
 		callback(neo4jDatabase);
 	}
