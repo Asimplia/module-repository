@@ -2,6 +2,7 @@
 import IEntity = require('../IEntity');
 import List = require('../List');
 import Signal = require('./Signal');
+import MatrixProduct = require('./MatrixProduct');
 
 export = Situation;
 class Situation implements IEntity {
@@ -19,6 +20,13 @@ class Situation implements IEntity {
 	set DateSuggestionResultCreated(value) { this.dateSuggestionResultCreated = value; }
 	get EShopId() {
 		return this.signalList.first().Matrix.EShopId;
+	}
+	get ProductId() {
+		if (!(this.signalList.first().Matrix instanceof MatrixProduct)) {
+			return null;
+		}
+		var productMatrix = <MatrixProduct> this.signalList.first().Matrix;
+		return productMatrix.Product.Id;
 	}
 
 	constructor(

@@ -1,4 +1,5 @@
 var Signal = require('./Signal');
+var MatrixProduct = require('./MatrixProduct');
 
 var Situation = (function () {
     function Situation(id, signalList, dateCreated, dateSuggestionResultCreated) {
@@ -44,6 +45,17 @@ var Situation = (function () {
     Object.defineProperty(Situation.prototype, "EShopId", {
         get: function () {
             return this.signalList.first().Matrix.EShopId;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Situation.prototype, "ProductId", {
+        get: function () {
+            if (!(this.signalList.first().Matrix instanceof MatrixProduct)) {
+                return null;
+            }
+            var productMatrix = this.signalList.first().Matrix;
+            return productMatrix.Product.Id;
         },
         enumerable: true,
         configurable: true
