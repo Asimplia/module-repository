@@ -11,9 +11,9 @@ var ResultLoader = (function () {
     function ResultLoader() {
         this.ResultModel = require('./ResultModel');
     }
-    ResultLoader.prototype.getById = function (clientId, id, callback) {
+    ResultLoader.prototype.getById = function (eShopId, id, callback) {
         var conditions = { id: id };
-        conditions = this.condClient(conditions, clientId);
+        conditions = this.condClient(conditions, eShopId);
         this.ResultModel.findOne(conditions, function (e, suggestion) {
             if (e) {
                 return callback(e);
@@ -25,10 +25,10 @@ var ResultLoader = (function () {
         });
     };
 
-    ResultLoader.prototype.getListByType = function (clientId, type, callback) {
+    ResultLoader.prototype.getListByType = function (eShopId, limit, offset, type, callback) {
         var conditions = this.getConditionsByType(type);
-        conditions = this.condClient(conditions, clientId);
-        this.ResultModel.find(conditions, function (e, suggestions) {
+        conditions = this.condClient(conditions, eShopId);
+        this.ResultModel.find(conditions).skip(offset).limit(limit).exec(function (e, suggestions) {
             if (e) {
                 return callback(e);
             }
@@ -38,9 +38,9 @@ var ResultLoader = (function () {
         });
     };
 
-    ResultLoader.prototype.getCountByType = function (clientId, type, callback) {
+    ResultLoader.prototype.getCountByType = function (eShopId, type, callback) {
         var conditions = this.getConditionsByType(type);
-        conditions = this.condClient(conditions, clientId);
+        conditions = this.condClient(conditions, eShopId);
         this.ResultModel.count(conditions, function (e, count) {
             if (e) {
                 return callback(e);
@@ -91,9 +91,9 @@ var ResultLoader = (function () {
         return conditions;
     };
 
-    ResultLoader.prototype.condClient = function (conditions, clientId) {
-        if (clientId !== null) {
-            conditions.clientId = clientId;
+    ResultLoader.prototype.condClient = function (conditions, eShopId) {
+        if (eShopId !== null) {
+            conditions.eShopId = eShopId;
         }
         return conditions;
     };

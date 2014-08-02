@@ -19,9 +19,9 @@ class ResultLoader {
 		this.ResultModel = require('./ResultModel');
 	}
 
-	getById(clientId: number, id: number, callback: (e: Error, suggestion?: SuggestionResult) => void) {
+	getById(eShopId: number, id: number, callback: (e: Error, suggestion?: SuggestionResult) => void) {
 		var conditions = { id: id };
-		conditions = this.condClient(conditions, clientId);
+		conditions = this.condClient(conditions, eShopId);
 		this.ResultModel.findOne(conditions, (e, suggestion: mongoose.Document) => {
 			if (e) {
 				return callback(e);
@@ -33,10 +33,10 @@ class ResultLoader {
 		});
 	}
 
-	getListByType(clientId: number, type: ResultTypeEnum, callback: (e: Error, suggestion?: List<SuggestionResult>) => void): void {
+	getListByType(eShopId: number, limit: number, offset: number, type: ResultTypeEnum, callback: (e: Error, suggestion?: List<SuggestionResult>) => void): void {
 		var conditions = this.getConditionsByType(type);
-		conditions = this.condClient(conditions, clientId);
-		this.ResultModel.find(conditions, (e, suggestions: mongoose.Document[]) => {
+		conditions = this.condClient(conditions, eShopId);
+		this.ResultModel.find(conditions).skip(offset).limit(limit).exec((e, suggestions: mongoose.Document[]) => {
 			if (e) {
 				return callback(e);
 			}
@@ -46,9 +46,9 @@ class ResultLoader {
 		});
 	}
 
-	getCountByType(clientId: number, type: ResultTypeEnum, callback: (e: Error, count?: number) => void): void {
+	getCountByType(eShopId: number, type: ResultTypeEnum, callback: (e: Error, count?: number) => void): void {
 		var conditions = this.getConditionsByType(type);
-		conditions = this.condClient(conditions, clientId);
+		conditions = this.condClient(conditions, eShopId);
 		this.ResultModel.count(conditions, (e, count: number) => {
 			if (e) {
 				return callback(e);
@@ -99,9 +99,9 @@ class ResultLoader {
 		return conditions;
 	}
 
-	private condClient(conditions: any, clientId: number) {
-		if (clientId !== null) {
-			conditions.clientId = clientId;
+	private condClient(conditions: any, eShopId: number) {
+		if (eShopId !== null) {
+			conditions.eShopId = eShopId;
 		}
 		return conditions;
 	}
