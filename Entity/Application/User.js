@@ -3,12 +3,13 @@ var Authenticate = require('./Authenticate');
 var AuthHash = require('./AuthHash');
 
 var User = (function () {
-    function User(id, firstName, lastName, authenticateList, authHashList) {
+    function User(id, firstName, lastName, authenticateList, authHashList, eShopId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.authenticateList = authenticateList;
         this.authHashList = authHashList;
+        this.eShopId = eShopId;
     }
     Object.defineProperty(User.prototype, "Id", {
         get: function () {
@@ -45,6 +46,13 @@ var User = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(User.prototype, "EShopId", {
+        get: function () {
+            return this.eShopId;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     User.prototype.toObject = function () {
         return User.toObject(this);
@@ -56,12 +64,13 @@ var User = (function () {
             firstName: e.firstName,
             lastName: e.lastName,
             authenticates: e.authenticateList.toArray(Authenticate.toObject),
-            authHashes: e.authHashList.toArray(AuthHash.toObject)
+            authHashes: e.authHashList.toArray(AuthHash.toObject),
+            eShopId: e.eShopId
         };
     };
 
     User.fromObject = function (o) {
-        return new User(o.id, o.firstName, o.lastName, new List(o.authenticates, Authenticate.fromObject), new List(o.authHashes, AuthHash.fromObject));
+        return new User(o.id, o.firstName, o.lastName, new List(o.authenticates, Authenticate.fromObject), new List(o.authHashes, AuthHash.fromObject), o.eShopId);
     };
     return User;
 })();

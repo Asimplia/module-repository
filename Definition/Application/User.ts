@@ -4,6 +4,7 @@ var User = {
 	id: Number,
 	firstName: String,
 	lastName: String,
+	eShopId: Number,
 	authenticates: [{
 		identity: String,
 		verification: String,
@@ -12,6 +13,7 @@ var User = {
 	}],
 	authHashes: [{
 		dateAuthenticated: Date,
-		authHash: String
+		authHash: String,
+		sessionId: String
 	}]
 };

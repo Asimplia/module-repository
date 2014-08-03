@@ -28,4 +28,18 @@ class UserLoader {
 			callback(null, User.fromObject(userObject));
 		});
 	}
+
+	getBySessionId(sessionId: string, callback: (e: Error, user?: User) => void) {
+		this.model.findOne({ "authHashes.sessionId": sessionId }, (e, userObject: mongoose.Document) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			if (!userObject) {
+				callback(null, null);
+				return;
+			}
+			callback(null, User.fromObject(userObject));
+		});
+	}
 }

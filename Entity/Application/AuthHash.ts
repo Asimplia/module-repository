@@ -7,10 +7,12 @@ class AuthHash implements IEntity {
 
 	get DateAuthenticated() { return this.dateAuthenticated; }
 	get AuthHash() { return this.authHash; }
+	get SessionId() { return this.sessionId; }
 
 	constructor(
 		private dateAuthenticated: Date,
-		private authHash: string
+		private authHash: string,
+		private sessionId: string
 	) {}
 
 	toObject() {
@@ -20,11 +22,12 @@ class AuthHash implements IEntity {
 	static toObject(e: AuthHash) {
 		return {
 			dateAuthenticated: e.dateAuthenticated,
-			authHash: e.authHash
+			authHash: e.authHash,
+			sessionId: e.sessionId
 		};
 	}
 
 	static fromObject(o: any) {
-		return new AuthHash(moment(o.dateAuthenticated).toDate(), o.authHash);
+		return new AuthHash(moment(o.dateAuthenticated).toDate(), o.authHash, o.sessionId);
 	}
 }
