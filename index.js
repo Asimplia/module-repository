@@ -71,3 +71,5 @@ var Matrix = require('./Matrix/index');
 exports.Matrix = Matrix;
 var Placeholder = require('./Placeholder/index');
 exports.Placeholder = Placeholder;
+var Application = require('./Application/index');
+exports.Application = Application;

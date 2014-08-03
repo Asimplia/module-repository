@@ -10,3 +10,5 @@ var Section = require('./Section/index');
 exports.Section = Section;
 var Suggestion = require('./Suggestion/index');
 exports.Suggestion = Suggestion;
+var Application = require('./Application/index');
+exports.Application = Application;
