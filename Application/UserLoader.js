@@ -33,6 +33,20 @@ var UserLoader = (function () {
             callback(null, User.fromObject(userObject));
         });
     };
+
+    UserLoader.prototype.getByAuthHash = function (authHash, callback) {
+        this.model.findOne({ "authHashes.authHash": authHash }, function (e, userObject) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            if (!userObject) {
+                callback(null, null);
+                return;
+            }
+            callback(null, User.fromObject(userObject));
+        });
+    };
     return UserLoader;
 })();
 module.exports = UserLoader;

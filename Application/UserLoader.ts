@@ -42,4 +42,18 @@ class UserLoader {
 			callback(null, User.fromObject(userObject));
 		});
 	}
+
+	getByAuthHash(authHash: string, callback: (e: Error, user?: User) => void) {
+		this.model.findOne({ "authHashes.authHash": authHash }, (e, userObject: mongoose.Document) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			if (!userObject) {
+				callback(null, null);
+				return;
+			}
+			callback(null, User.fromObject(userObject));
+		});
+	}
 }
