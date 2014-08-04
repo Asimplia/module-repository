@@ -24,7 +24,8 @@ class ResultLoader {
 		conditions = this.condClient(conditions, eShopId);
 		this.ResultModel.findOne(conditions, (e, suggestion: mongoose.Document) => {
 			if (e) {
-				return callback(e);
+				callback(e);
+				return
 			}
 			if (!suggestion) {
 				return callback(new Error(util.format('Suggestion id=%s was not found', [id])));
@@ -36,9 +37,10 @@ class ResultLoader {
 	getListByType(eShopId: number, limit: number, offset: number, type: ResultTypeEnum, callback: (e: Error, suggestion?: List<SuggestionResult>) => void): void {
 		var conditions = this.getConditionsByType(type);
 		conditions = this.condClient(conditions, eShopId);
-		this.ResultModel.find(conditions).skip(offset).limit(limit).exec((e, suggestions: mongoose.Document[]) => {
+		this.ResultModel.find(conditions).skip(offset).limit(limit).sort("-activeStatus.dateCreated").exec((e, suggestions: mongoose.Document[]) => {
 			if (e) {
-				return callback(e);
+				callback(e);
+				return;
 			}
 			var list = new List<SuggestionResult>();
 			list.pushArray(suggestions, SuggestionResult.fromObject);
@@ -51,7 +53,8 @@ class ResultLoader {
 		conditions = this.condClient(conditions, eShopId);
 		this.ResultModel.count(conditions, (e, count: number) => {
 			if (e) {
-				return callback(e);
+				callback(e);
+				return;
 			}
 			callback(e, count);
 		});

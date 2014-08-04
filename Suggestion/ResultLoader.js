@@ -16,7 +16,8 @@ var ResultLoader = (function () {
         conditions = this.condClient(conditions, eShopId);
         this.ResultModel.findOne(conditions, function (e, suggestion) {
             if (e) {
-                return callback(e);
+                callback(e);
+                return;
             }
             if (!suggestion) {
                 return callback(new Error(util.format('Suggestion id=%s was not found', [id])));
@@ -28,9 +29,10 @@ var ResultLoader = (function () {
     ResultLoader.prototype.getListByType = function (eShopId, limit, offset, type, callback) {
         var conditions = this.getConditionsByType(type);
         conditions = this.condClient(conditions, eShopId);
-        this.ResultModel.find(conditions).skip(offset).limit(limit).exec(function (e, suggestions) {
+        this.ResultModel.find(conditions).skip(offset).limit(limit).sort("-activeStatus.dateCreated").exec(function (e, suggestions) {
             if (e) {
-                return callback(e);
+                callback(e);
+                return;
             }
             var list = new List();
             list.pushArray(suggestions, SuggestionResult.fromObject);
@@ -43,7 +45,8 @@ var ResultLoader = (function () {
         conditions = this.condClient(conditions, eShopId);
         this.ResultModel.count(conditions, function (e, count) {
             if (e) {
-                return callback(e);
+                callback(e);
+                return;
             }
             callback(e, count);
         });
