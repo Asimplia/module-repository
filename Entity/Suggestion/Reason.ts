@@ -7,21 +7,21 @@ export = Reason;
 class Reason implements IEntity {
 
 	get Label() { return this.label; }
-	get Type() { return this.type; }
+	get ReasonType() { return this.reasonType; }
 
 	constructor(
 		private label: LocalizedString,
-		private type: ReasonTypeEnum
+		private reasonType: ReasonTypeEnum
 	) { }
 
 	static fromObject(o: any) {
-		return new Reason(new LocalizedString(o.label), Reason.createReasonTypeEnum(o.type));
+		return new Reason(new LocalizedString(o.label), Reason.createReasonTypeEnum(o.reasonType));
 	}
 
 	static toObject(e: Reason) {
 		return {
 			label: e.label,
-			type: ReasonTypeEnum[e.type]
+			reasonType: ReasonTypeEnum[e.reasonType]
 		};
 	}
 

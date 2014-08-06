@@ -2,9 +2,9 @@ var ReasonTypeEnum = require('./ReasonTypeEnum');
 var LocalizedString = require('../Locale/LocalizedString');
 
 var Reason = (function () {
-    function Reason(label, type) {
+    function Reason(label, reasonType) {
         this.label = label;
-        this.type = type;
+        this.reasonType = reasonType;
     }
     Object.defineProperty(Reason.prototype, "Label", {
         get: function () {
@@ -13,22 +13,22 @@ var Reason = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Reason.prototype, "Type", {
+    Object.defineProperty(Reason.prototype, "ReasonType", {
         get: function () {
-            return this.type;
+            return this.reasonType;
         },
         enumerable: true,
         configurable: true
     });
 
     Reason.fromObject = function (o) {
-        return new Reason(new LocalizedString(o.label), Reason.createReasonTypeEnum(o.type));
+        return new Reason(new LocalizedString(o.label), Reason.createReasonTypeEnum(o.reasonType));
     };
 
     Reason.toObject = function (e) {
         return {
             label: e.label,
-            type: ReasonTypeEnum[e.type]
+            reasonType: ReasonTypeEnum[e.reasonType]
         };
     };
 

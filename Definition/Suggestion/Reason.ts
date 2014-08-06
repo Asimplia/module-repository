@@ -1,6 +1,8 @@
 
+import LocalizedString = require('../Locale/LocalizedString');
+
 export = Reason;
 var Reason = {
-	label: String,
-	type: String
+	label: LocalizedString,
+	reasonType: String
 };
