@@ -1,11 +1,13 @@
-﻿// / <reference path="../../node_modules/asimplia-util/index.node.d.ts" />
+﻿
+/// <reference path="../../node_modules/asimplia-util/index.node.d.ts" />
+
 import LocalizedString = require('../Locale/LocalizedString');
 import SectionEnum = require('../Section/SectionEnum');
 import List = require('../List');
 import FactorDefinition = require('./FactorDefinition');
 import IEntity = require('../IEntity');
 import ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
-var AsimpliaUtil = require('asimplia-util');
+import AsimpliaUtil = require('asimplia-util');
 import PriorityTypeEnum = require('./PriorityTypeEnum');
 
 export = Action;
