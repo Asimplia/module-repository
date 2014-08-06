@@ -6,5 +6,7 @@ export import FactorValue = require('./FactorValue');
 export import Graph = require('./Graph');
 export import PriorityTypeEnum = require('./PriorityTypeEnum');
 export import Result = require('./Result');
+export import Reason = require('./Reason');
+export import ReasonTypeEnum = require('./ReasonTypeEnum');
 export import Status = require('./Status');
 export import ResultStateEnum = require('./ResultStateEnum');

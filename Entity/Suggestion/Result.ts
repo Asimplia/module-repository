@@ -4,6 +4,7 @@ import List = require('../List');
 import Status = require('./Status');
 import Graph = require('./Graph');
 import IEntity = require('../IEntity');
+import Reason = require('./Reason');
 
 export = Result;
 class Result implements IEntity {
@@ -29,6 +30,7 @@ class Result implements IEntity {
 	set GraphList(value: List<Graph>) { this.graphList = value; }
 	get EShopId() { return this.eShopId; }
 	set EShopId(value: number) { this.eShopId = value; }
+	get ReasonList() { return this.reasonList; }
 
 	constructor(
 		private id: number,
@@ -39,7 +41,8 @@ class Result implements IEntity {
 		private activeStatus: Status,
 		private statusList: List<Status>,
 		private graphList: List<Graph>,
-		private eShopId: number
+		private eShopId: number,
+		private reasonList: List<Reason>
 	) { }
 
 	static fromObject(o: any/*ISuggestionResultObject*/): Result {
@@ -52,7 +55,8 @@ class Result implements IEntity {
 			Status.fromObject(o.activeStatus),
 			new List<Status>().pushArray(o.statuses, Status.fromObject),
 			new List<Graph>().pushArray(o.graphs, Graph.fromObject),
-			o.eShopId
+			o.eShopId,
+			new List<Reason>().pushArray(o.reasons, Reason.fromObject)
 		);
 	}
 
@@ -66,7 +70,8 @@ class Result implements IEntity {
 			activeStatus: entity.activeStatus ? entity.activeStatus.toObject() : null,
 			statuses: entity.statusList.toArray(Status.toObject),
 			graphs: entity.graphList.toArray(Graph.toObject),
-			eShopId: entity.eShopId
+			eShopId: entity.eShopId,
+			reasons: entity.reasonList.toArray(Reason.toObject)
 		};
 	}
 

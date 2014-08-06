@@ -2,6 +2,7 @@
 import LocalizedString = require('../Locale/LocalizedString');
 import Status = require('./Status');
 import Graph = require('./Graph');
+import Reason = require('./Reason');
 
 export = Result;
 var Result = {
@@ -13,5 +14,6 @@ var Result = {
 	activeStatus: Status,
 	statuses: [Status],
 	graphs: [Graph],
-	eShopId: Number
+	eShopId: Number,
+	reasons: [Reason]
 };
