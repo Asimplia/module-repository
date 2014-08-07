@@ -105,6 +105,26 @@ var Status = (function () {
         }
         return 0 /* UNKNOWN */;
     };
+
+    Status.prototype.isStateUsed = function () {
+        return this.state == 1 /* USED */;
+    };
+
+    Status.prototype.isStateDeclined = function () {
+        return this.state == 5 /* DECLINED */;
+    };
+
+    Status.prototype.isStateRemindLater = function () {
+        return this.state == 3 /* REMIND_LATER */;
+    };
+
+    Status.prototype.isStateReadyToApply = function () {
+        return this.state == 2 /* READY_TO_APPLY */;
+    };
+
+    Status.prototype.isStateCreated = function () {
+        return this.state == 4 /* CREATED */;
+    };
     return Status;
 })();
 module.exports = Status;

@@ -4,6 +4,7 @@ var Status = require('./Status');
 var Graph = require('./Graph');
 
 var Reason = require('./Reason');
+var moment = require('moment');
 
 var Result = (function () {
     function Result(id, title, shortTitle, label, text, activeStatus, statusList, graphList, eShopId, reasonList) {
@@ -138,6 +139,10 @@ var Result = (function () {
 
     Result.prototype.toObject = function () {
         return Result.toObject(this);
+    };
+
+    Result.prototype.isExpired = function () {
+        return moment() > moment(this.activeStatus.DateValidTo);
     };
     return Result;
 })();

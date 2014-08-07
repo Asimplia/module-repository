@@ -41,4 +41,16 @@ class Reason implements IEntity {
 				return null;
 		}
 	}
+
+	isTypeFall() {
+		return this.reasonType == ReasonTypeEnum.FALL;
+	}
+
+	isTypeRise() {
+		return this.reasonType == ReasonTypeEnum.RISE;
+	}
+
+	isTypeStay() {
+		return this.reasonType == ReasonTypeEnum.STAY;
+	}
 }

@@ -1,10 +1,13 @@
 ﻿
+/// <reference path="../../typings/moment/moment.d.ts" />
+
 import LocalizedString = require('../Locale/LocalizedString');
 import List = require('../List');
 import Status = require('./Status');
 import Graph = require('./Graph');
 import IEntity = require('../IEntity');
 import Reason = require('./Reason');
+import moment = require('moment');
 
 export = Result;
 class Result implements IEntity {
@@ -77,5 +80,9 @@ class Result implements IEntity {
 
 	toObject() {
 		return Result.toObject(this);
+	}
+
+	isExpired() {
+		return moment() > moment(this.activeStatus.DateValidTo);
 	}
 }

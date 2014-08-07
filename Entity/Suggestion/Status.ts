@@ -70,4 +70,24 @@ class Status implements IEntity {
 		}
 		return ResultStateEnum.UNKNOWN;
 	}
+
+	isStateUsed() {
+		return this.state == ResultStateEnum.USED;
+	}
+
+	isStateDeclined() {
+		return this.state == ResultStateEnum.DECLINED;
+	}
+
+	isStateRemindLater() {
+		return this.state == ResultStateEnum.REMIND_LATER;
+	}
+
+	isStateReadyToApply() {
+		return this.state == ResultStateEnum.READY_TO_APPLY;
+	}
+
+	isStateCreated() {
+		return this.state == ResultStateEnum.CREATED;
+	}
 }

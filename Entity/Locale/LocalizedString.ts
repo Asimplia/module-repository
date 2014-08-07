@@ -16,6 +16,10 @@ class LocalizedString {
 		this.cs = langsObject.cs;
 	}
 
+	trans(lang: string) {
+		return this[lang];
+	}
+
 	contains(s: string): boolean {
 		return (this.en === null || this.en.indexOf(s) !== -1)
 			&& (this.cs === null || this.cs.indexOf(s) !== -1);

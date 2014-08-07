@@ -48,6 +48,18 @@ var Reason = (function () {
                 return null;
         }
     };
+
+    Reason.prototype.isTypeFall = function () {
+        return this.reasonType == 1 /* FALL */;
+    };
+
+    Reason.prototype.isTypeRise = function () {
+        return this.reasonType == 0 /* RISE */;
+    };
+
+    Reason.prototype.isTypeStay = function () {
+        return this.reasonType == 2 /* STAY */;
+    };
     return Reason;
 })();
 module.exports = Reason;

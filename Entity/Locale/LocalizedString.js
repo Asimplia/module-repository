@@ -21,6 +21,10 @@
         configurable: true
     });
 
+    LocalizedString.prototype.trans = function (lang) {
+        return this[lang];
+    };
+
     LocalizedString.prototype.contains = function (s) {
         return (this.en === null || this.en.indexOf(s) !== -1) && (this.cs === null || this.cs.indexOf(s) !== -1);
     };
