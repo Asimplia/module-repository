@@ -7,6 +7,8 @@ import Status = require('./Status');
 import Graph = require('./Graph');
 import IEntity = require('../IEntity');
 import Reason = require('./Reason');
+import SectionEnum = require('../Section/SectionEnum');
+import SectionFactory = require('../Section/SectionFactory');
 import moment = require('moment');
 
 export = Result;
@@ -34,6 +36,7 @@ class Result implements IEntity {
 	get EShopId() { return this.eShopId; }
 	set EShopId(value: number) { this.eShopId = value; }
 	get ReasonList() { return this.reasonList; }
+	get Section() { return this.section; }
 
 	constructor(
 		private id: number,
@@ -45,7 +48,8 @@ class Result implements IEntity {
 		private statusList: List<Status>,
 		private graphList: List<Graph>,
 		private eShopId: number,
-		private reasonList: List<Reason>
+		private reasonList: List<Reason>,
+		private section: SectionEnum
 	) { }
 
 	static fromObject(o: any/*ISuggestionResultObject*/): Result {
@@ -59,7 +63,8 @@ class Result implements IEntity {
 			new List<Status>().pushArray(o.statuses, Status.fromObject),
 			new List<Graph>().pushArray(o.graphs, Graph.fromObject),
 			o.eShopId,
-			new List<Reason>().pushArray(o.reasons, Reason.fromObject)
+			new List<Reason>().pushArray(o.reasons, Reason.fromObject),
+			SectionFactory.createSectionEnum(o.section)
 		);
 	}
 
@@ -74,7 +79,8 @@ class Result implements IEntity {
 			statuses: entity.statusList.toArray(Status.toObject),
 			graphs: entity.graphList.toArray(Graph.toObject),
 			eShopId: entity.eShopId,
-			reasons: entity.reasonList.toArray(Reason.toObject)
+			reasons: entity.reasonList.toArray(Reason.toObject),
+			section: SectionEnum[entity.section]
 		};
 	}
 
@@ -84,5 +90,17 @@ class Result implements IEntity {
 
 	isExpired() {
 		return moment() > moment(this.activeStatus.DateValidTo);
+	}
+
+	isSectionProduct() {
+		return this.section == SectionEnum.PRODUCT;
+	}
+
+	isSectionCustomer() {
+		return this.section == SectionEnum.CUSTOMER;
+	}
+
+	isSectionChannel() {
+		return this.section == SectionEnum.CHANNEL;
 	}
 }

@@ -4,10 +4,12 @@ var Status = require('./Status');
 var Graph = require('./Graph');
 
 var Reason = require('./Reason');
+var SectionEnum = require('../Section/SectionEnum');
+var SectionFactory = require('../Section/SectionFactory');
 var moment = require('moment');
 
 var Result = (function () {
-    function Result(id, title, shortTitle, label, text, activeStatus, statusList, graphList, eShopId, reasonList) {
+    function Result(id, title, shortTitle, label, text, activeStatus, statusList, graphList, eShopId, reasonList, section) {
         this.id = id;
         this.title = title;
         this.shortTitle = shortTitle;
@@ -18,6 +20,7 @@ var Result = (function () {
         this.graphList = graphList;
         this.eShopId = eShopId;
         this.reasonList = reasonList;
+        this.section = section;
     }
     Object.defineProperty(Result.prototype, "Id", {
         get: function () {
@@ -117,9 +120,16 @@ var Result = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Result.prototype, "Section", {
+        get: function () {
+            return this.section;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     Result.fromObject = function (o) {
-        return new Result(o.id, new LocalizedString(o.title), new LocalizedString(o.shortTitle), new LocalizedString(o.label), new LocalizedString(o.text), Status.fromObject(o.activeStatus), new List().pushArray(o.statuses, Status.fromObject), new List().pushArray(o.graphs, Graph.fromObject), o.eShopId, new List().pushArray(o.reasons, Reason.fromObject));
+        return new Result(o.id, new LocalizedString(o.title), new LocalizedString(o.shortTitle), new LocalizedString(o.label), new LocalizedString(o.text), Status.fromObject(o.activeStatus), new List().pushArray(o.statuses, Status.fromObject), new List().pushArray(o.graphs, Graph.fromObject), o.eShopId, new List().pushArray(o.reasons, Reason.fromObject), SectionFactory.createSectionEnum(o.section));
     };
 
     Result.toObject = function (entity) {
@@ -133,7 +143,8 @@ var Result = (function () {
             statuses: entity.statusList.toArray(Status.toObject),
             graphs: entity.graphList.toArray(Graph.toObject),
             eShopId: entity.eShopId,
-            reasons: entity.reasonList.toArray(Reason.toObject)
+            reasons: entity.reasonList.toArray(Reason.toObject),
+            section: SectionEnum[entity.section]
         };
     };
 
@@ -143,6 +154,18 @@ var Result = (function () {
 
     Result.prototype.isExpired = function () {
         return moment() > moment(this.activeStatus.DateValidTo);
+    };
+
+    Result.prototype.isSectionProduct = function () {
+        return this.section == 1 /* PRODUCT */;
+    };
+
+    Result.prototype.isSectionCustomer = function () {
+        return this.section == 12 /* CUSTOMER */;
+    };
+
+    Result.prototype.isSectionChannel = function () {
+        return this.section == 16 /* CHANNEL */;
     };
     return Result;
 })();

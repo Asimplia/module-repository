@@ -15,5 +15,6 @@ var Result = {
 	statuses: [Status],
 	graphs: [Graph],
 	eShopId: Number,
-	reasons: [Reason]
+	reasons: [Reason],
+	section: String
 };
