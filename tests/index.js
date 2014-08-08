@@ -47,3 +47,7 @@ var a7 = AsimpliaRepository.Entity.Application.User;
 var a8 = AsimpliaRepository.Entity.Application.Authenticate;
 var a9 = AsimpliaRepository.Entity.Application.AuthTypeEnum;
 var a10 = AsimpliaRepository.Entity.Application.AuthHash;
+var a11 = AsimpliaRepository.Application.EShopLoader;
+var a12 = AsimpliaRepository.Application.CompanyLoader;
+var a13 = AsimpliaRepository.Entity.Application.EShop;
+var a14 = AsimpliaRepository.Entity.Application.Company;

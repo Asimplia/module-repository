@@ -48,4 +48,8 @@ class User implements IEntity {
 			o.eShopId
 		);
 	}
+
+	getFullName() {
+		return this.firstName + ' ' + this.lastName;
+	}
 }

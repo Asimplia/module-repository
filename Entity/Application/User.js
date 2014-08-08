@@ -72,6 +72,10 @@ var User = (function () {
     User.fromObject = function (o) {
         return new User(o.id, o.firstName, o.lastName, new List(o.authenticates, Authenticate.fromObject), new List(o.authHashes, AuthHash.fromObject), o.eShopId);
     };
+
+    User.prototype.getFullName = function () {
+        return this.firstName + ' ' + this.lastName;
+    };
     return User;
 })();
 module.exports = User;
