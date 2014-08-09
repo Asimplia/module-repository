@@ -13,6 +13,7 @@ class User implements IEntity {
 	get AuthenticateList() { return this.authenticateList; }
 	get AuthHashList() { return this.authHashList; }
 	get EShopId() { return this.eShopId; }
+	get CompanyId() { return this.companyId; }
 
 	constructor(
 		private id: number,
@@ -20,7 +21,8 @@ class User implements IEntity {
 		private lastName: string,
 		private authenticateList: List<Authenticate>,
 		private authHashList: List<AuthHash>,
-		private eShopId: number
+		private eShopId: number,
+		private companyId: number
 	) {}
 
 	toObject() {
@@ -34,7 +36,8 @@ class User implements IEntity {
 			lastName: e.lastName,
 			authenticates: e.authenticateList.toArray(Authenticate.toObject),
 			authHashes: e.authHashList.toArray(AuthHash.toObject),
-			eShopId: e.eShopId
+			eShopId: e.eShopId,
+			companyId: e.companyId
 		};
 	}
 
@@ -45,7 +48,8 @@ class User implements IEntity {
 			o.lastName,
 			new List<Authenticate>(o.authenticates, Authenticate.fromObject),
 			new List<AuthHash>(o.authHashes, AuthHash.fromObject),
-			o.eShopId
+			o.eShopId,
+			o.companyId
 		);
 	}
 

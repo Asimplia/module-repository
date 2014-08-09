@@ -3,6 +3,7 @@ var User = {
     firstName: String,
     lastName: String,
     eShopId: Number,
+    companyId: Number,
     authenticates: [{
             identity: String,
             verification: String,
