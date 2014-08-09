@@ -16,5 +16,6 @@ var Result = {
 	graphs: [Graph],
 	eShopId: Number,
 	reasons: [Reason],
-	section: String
+	section: String,
+	main: Boolean
 };

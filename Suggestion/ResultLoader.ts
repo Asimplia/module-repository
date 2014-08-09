@@ -48,9 +48,37 @@ class ResultLoader {
 		});
 	}
 
+	getListByTypeIsMain(eShopId: number, limit: number, offset: number, isMain: boolean, type: ResultTypeEnum, callback: (e: Error, suggestion?: List<SuggestionResult>) => void): void {
+		var conditions = this.getConditionsByType(type);
+		conditions = this.condClient(conditions, eShopId);
+		conditions.main = isMain;
+		this.ResultModel.find(conditions).skip(offset).limit(limit).sort("-activeStatus.dateCreated").exec((e, suggestions: mongoose.Document[]) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			var list = new List<SuggestionResult>();
+			list.pushArray(suggestions, SuggestionResult.fromObject);
+			callback(e, list);
+		});
+	}
+
 	getCountByType(eShopId: number, type: ResultTypeEnum, callback: (e: Error, count?: number) => void): void {
 		var conditions = this.getConditionsByType(type);
 		conditions = this.condClient(conditions, eShopId);
+		this.ResultModel.count(conditions, (e, count: number) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(e, count);
+		});
+	}
+
+	getCountByTypeIsMain(eShopId: number, type: ResultTypeEnum, isMain: boolean, callback: (e: Error, count?: number) => void): void {
+		var conditions = this.getConditionsByType(type);
+		conditions = this.condClient(conditions, eShopId);
+		conditions.main = isMain;
 		this.ResultModel.count(conditions, (e, count: number) => {
 			if (e) {
 				callback(e);

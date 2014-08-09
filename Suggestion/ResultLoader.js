@@ -40,9 +40,37 @@ var ResultLoader = (function () {
         });
     };
 
+    ResultLoader.prototype.getListByTypeIsMain = function (eShopId, limit, offset, isMain, type, callback) {
+        var conditions = this.getConditionsByType(type);
+        conditions = this.condClient(conditions, eShopId);
+        conditions.main = isMain;
+        this.ResultModel.find(conditions).skip(offset).limit(limit).sort("-activeStatus.dateCreated").exec(function (e, suggestions) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            var list = new List();
+            list.pushArray(suggestions, SuggestionResult.fromObject);
+            callback(e, list);
+        });
+    };
+
     ResultLoader.prototype.getCountByType = function (eShopId, type, callback) {
         var conditions = this.getConditionsByType(type);
         conditions = this.condClient(conditions, eShopId);
+        this.ResultModel.count(conditions, function (e, count) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(e, count);
+        });
+    };
+
+    ResultLoader.prototype.getCountByTypeIsMain = function (eShopId, type, isMain, callback) {
+        var conditions = this.getConditionsByType(type);
+        conditions = this.condClient(conditions, eShopId);
+        conditions.main = isMain;
         this.ResultModel.count(conditions, function (e, count) {
             if (e) {
                 callback(e);

@@ -9,7 +9,7 @@ var SectionFactory = require('../Section/SectionFactory');
 var moment = require('moment');
 
 var Result = (function () {
-    function Result(id, title, shortTitle, label, text, activeStatus, statusList, graphList, eShopId, reasonList, section) {
+    function Result(id, title, shortTitle, label, text, activeStatus, statusList, graphList, eShopId, reasonList, section, main) {
         this.id = id;
         this.title = title;
         this.shortTitle = shortTitle;
@@ -21,6 +21,7 @@ var Result = (function () {
         this.eShopId = eShopId;
         this.reasonList = reasonList;
         this.section = section;
+        this.main = main;
     }
     Object.defineProperty(Result.prototype, "Id", {
         get: function () {
@@ -127,9 +128,16 @@ var Result = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Result.prototype, "Main", {
+        get: function () {
+            return this.main;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     Result.fromObject = function (o) {
-        return new Result(o.id, new LocalizedString(o.title), new LocalizedString(o.shortTitle), new LocalizedString(o.label), new LocalizedString(o.text), Status.fromObject(o.activeStatus), new List().pushArray(o.statuses, Status.fromObject), new List().pushArray(o.graphs, Graph.fromObject), o.eShopId, new List().pushArray(o.reasons, Reason.fromObject), SectionFactory.createSectionEnum(o.section));
+        return new Result(o.id, new LocalizedString(o.title), new LocalizedString(o.shortTitle), new LocalizedString(o.label), new LocalizedString(o.text), Status.fromObject(o.activeStatus), new List().pushArray(o.statuses, Status.fromObject), new List().pushArray(o.graphs, Graph.fromObject), o.eShopId, new List().pushArray(o.reasons, Reason.fromObject), SectionFactory.createSectionEnum(o.section), o.main);
     };
 
     Result.toObject = function (entity) {
@@ -144,7 +152,8 @@ var Result = (function () {
             graphs: entity.graphList.toArray(Graph.toObject),
             eShopId: entity.eShopId,
             reasons: entity.reasonList.toArray(Reason.toObject),
-            section: SectionEnum[entity.section]
+            section: SectionEnum[entity.section],
+            main: entity.main
         };
     };
 

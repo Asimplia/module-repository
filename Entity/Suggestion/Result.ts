@@ -37,6 +37,7 @@ class Result implements IEntity {
 	set EShopId(value: number) { this.eShopId = value; }
 	get ReasonList() { return this.reasonList; }
 	get Section() { return this.section; }
+	get Main() { return this.main; }
 
 	constructor(
 		private id: number,
@@ -49,7 +50,8 @@ class Result implements IEntity {
 		private graphList: List<Graph>,
 		private eShopId: number,
 		private reasonList: List<Reason>,
-		private section: SectionEnum
+		private section: SectionEnum,
+		private main: boolean
 	) { }
 
 	static fromObject(o: any/*ISuggestionResultObject*/): Result {
@@ -64,7 +66,8 @@ class Result implements IEntity {
 			new List<Graph>().pushArray(o.graphs, Graph.fromObject),
 			o.eShopId,
 			new List<Reason>().pushArray(o.reasons, Reason.fromObject),
-			SectionFactory.createSectionEnum(o.section)
+			SectionFactory.createSectionEnum(o.section),
+			o.main
 		);
 	}
 
@@ -80,7 +83,8 @@ class Result implements IEntity {
 			graphs: entity.graphList.toArray(Graph.toObject),
 			eShopId: entity.eShopId,
 			reasons: entity.reasonList.toArray(Reason.toObject),
-			section: SectionEnum[entity.section]
+			section: SectionEnum[entity.section],
+			main: entity.main
 		};
 	}
 
