@@ -1,4 +1,7 @@
 ﻿
+import Language = require('./Language');
+import LanguageEnum = require('./LanguageEnum');
+
 export = LocalizedString;
 class LocalizedString {
 
@@ -16,8 +19,15 @@ class LocalizedString {
 		this.cs = langsObject.cs;
 	}
 
-	trans(lang: string) {
-		return this[lang];
+	translate(language: Language) {
+		switch (language.Enum) {
+			case LanguageEnum.cs:
+				return this.cs;
+			case LanguageEnum.en:
+				return this.en;
+			default:
+				throw new Error('Not implemented Language');
+		}
 	}
 
 	contains(s: string): boolean {

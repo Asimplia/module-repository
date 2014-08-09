@@ -1,4 +1,6 @@
-﻿var LocalizedString = (function () {
+﻿var LanguageEnum = require('./LanguageEnum');
+
+var LocalizedString = (function () {
     function LocalizedString(langsObject) {
         if (!langsObject) {
             return;
@@ -21,8 +23,15 @@
         configurable: true
     });
 
-    LocalizedString.prototype.trans = function (lang) {
-        return this[lang];
+    LocalizedString.prototype.translate = function (language) {
+        switch (language.Enum) {
+            case 0 /* cs */:
+                return this.cs;
+            case 1 /* en */:
+                return this.en;
+            default:
+                throw new Error('Not implemented Language');
+        }
     };
 
     LocalizedString.prototype.contains = function (s) {
