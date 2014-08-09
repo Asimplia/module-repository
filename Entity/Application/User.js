@@ -78,6 +78,13 @@ var User = (function () {
         };
     };
 
+    User.prototype.toSafeObject = function () {
+        var object = this.toObject();
+        object.authenticates = null;
+        object.authHashes = null;
+        return object;
+    };
+
     User.fromObject = function (o) {
         return new User(o.id, o.firstName, o.lastName, new List(o.authenticates, Authenticate.fromObject), new List(o.authHashes, AuthHash.fromObject), o.eShopId, o.companyId);
     };

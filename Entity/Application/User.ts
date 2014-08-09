@@ -41,6 +41,13 @@ class User implements IEntity {
 		};
 	}
 
+	toSafeObject() {
+		var object = this.toObject();
+		object.authenticates = null;
+		object.authHashes = null;
+		return object;
+	}
+
 	static fromObject(o: any) {
 		return new User(
 			o.id,
