@@ -143,10 +143,10 @@ var Result = (function () {
     Result.toObject = function (entity) {
         return {
             id: entity.id,
-            title: entity.title,
-            shortTitle: entity.shortTitle,
-            label: entity.label,
-            text: entity.text,
+            title: entity.title.toObject(),
+            shortTitle: entity.shortTitle.toObject(),
+            label: entity.label.toObject(),
+            text: entity.text.toObject(),
             activeStatus: entity.activeStatus ? entity.activeStatus.toObject() : null,
             statuses: entity.statusList.toArray(Status.toObject),
             graphs: entity.graphList.toArray(Graph.toObject),
@@ -159,6 +159,10 @@ var Result = (function () {
 
     Result.prototype.toObject = function () {
         return Result.toObject(this);
+    };
+
+    Result.prototype.getMainReason = function () {
+        return this.reasonList.first();
     };
 
     Result.prototype.isExpired = function () {

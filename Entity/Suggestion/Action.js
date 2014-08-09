@@ -105,9 +105,9 @@ var Action = (function () {
     Action.toObject = function (entity) {
         return {
             id: entity.id,
-            name: entity.name,
-            shortName: entity.shortName,
-            text: entity.text,
+            name: entity.name.toObject(),
+            shortName: entity.shortName.toObject(),
+            text: entity.text.toObject(),
             section: SectionEnum[entity.section],
             factorDefinitions: entity.factorDefinitionList.toArray(FactorDefinition.toObject),
             placeholders: AsimpliaUtil.ArrayHelper.mapFilterNulls(entity.placeholders, function (placeholder) {

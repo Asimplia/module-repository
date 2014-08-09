@@ -27,7 +27,7 @@ var Reason = (function () {
 
     Reason.toObject = function (e) {
         return {
-            label: e.label,
+            label: e.label.toObject(),
             reasonType: ReasonTypeEnum[e.reasonType]
         };
     };

@@ -42,4 +42,11 @@ class LocalizedString {
 			en: en, cs: cs
 		});
 	}
+
+	toObject() {
+		return {
+			cs: this.cs,
+			en: this.en
+		};
+	}
 }

@@ -45,6 +45,13 @@ var LocalizedString = (function () {
             en: en, cs: cs
         });
     };
+
+    LocalizedString.prototype.toObject = function () {
+        return {
+            cs: this.cs,
+            en: this.en
+        };
+    };
     return LocalizedString;
 })();
 module.exports = LocalizedString;

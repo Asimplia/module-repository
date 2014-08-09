@@ -20,7 +20,7 @@ class Reason implements IEntity {
 
 	static toObject(e: Reason) {
 		return {
-			label: e.label,
+			label: e.label.toObject(),
 			reasonType: ReasonTypeEnum[e.reasonType]
 		};
 	}

@@ -74,10 +74,10 @@ class Result implements IEntity {
 	static toObject(entity: Result) {
 		return {
 			id: entity.id,
-			title: entity.title,
-			shortTitle: entity.shortTitle,
-			label: entity.label,
-			text: entity.text,
+			title: entity.title.toObject(),
+			shortTitle: entity.shortTitle.toObject(),
+			label: entity.label.toObject(),
+			text: entity.text.toObject(),
 			activeStatus: entity.activeStatus ? entity.activeStatus.toObject() : null,
 			statuses: entity.statusList.toArray(Status.toObject),
 			graphs: entity.graphList.toArray(Graph.toObject),
@@ -90,6 +90,10 @@ class Result implements IEntity {
 
 	toObject() {
 		return Result.toObject(this);
+	}
+
+	getMainReason() {
+		return this.reasonList.first();
 	}
 
 	isExpired() {
