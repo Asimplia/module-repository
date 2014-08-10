@@ -13,7 +13,7 @@ var ResultLoader = (function () {
     }
     ResultLoader.prototype.getById = function (eShopId, id, callback) {
         var conditions = { id: id };
-        conditions = this.condClient(conditions, eShopId);
+        conditions.eShopId = eShopId;
         this.ResultModel.findOne(conditions, function (e, suggestion) {
             if (e) {
                 callback(e);
@@ -28,7 +28,7 @@ var ResultLoader = (function () {
 
     ResultLoader.prototype.getListByType = function (eShopId, limit, offset, type, callback) {
         var conditions = this.getConditionsByType(type);
-        conditions = this.condClient(conditions, eShopId);
+        conditions.eShopId = eShopId;
         this.ResultModel.find(conditions).skip(offset).limit(limit).sort("-activeStatus.dateCreated").exec(function (e, suggestions) {
             if (e) {
                 callback(e);
@@ -42,7 +42,7 @@ var ResultLoader = (function () {
 
     ResultLoader.prototype.getListByTypeIsMain = function (eShopId, limit, offset, isMain, type, callback) {
         var conditions = this.getConditionsByType(type);
-        conditions = this.condClient(conditions, eShopId);
+        conditions.eShopId = eShopId;
         conditions.main = isMain;
         this.ResultModel.find(conditions).skip(offset).limit(limit).sort("-activeStatus.dateCreated").exec(function (e, suggestions) {
             if (e) {
@@ -57,7 +57,7 @@ var ResultLoader = (function () {
 
     ResultLoader.prototype.getCountByType = function (eShopId, type, callback) {
         var conditions = this.getConditionsByType(type);
-        conditions = this.condClient(conditions, eShopId);
+        conditions.eShopId = eShopId;
         this.ResultModel.count(conditions, function (e, count) {
             if (e) {
                 callback(e);
@@ -69,7 +69,7 @@ var ResultLoader = (function () {
 
     ResultLoader.prototype.getCountByTypeIsMain = function (eShopId, type, isMain, callback) {
         var conditions = this.getConditionsByType(type);
-        conditions = this.condClient(conditions, eShopId);
+        conditions.eShopId = eShopId;
         conditions.main = isMain;
         this.ResultModel.count(conditions, function (e, count) {
             if (e) {
@@ -118,13 +118,6 @@ var ResultLoader = (function () {
                 break;
             case 3 /* ALL */:
                 break;
-        }
-        return conditions;
-    };
-
-    ResultLoader.prototype.condClient = function (conditions, eShopId) {
-        if (eShopId !== null) {
-            conditions.eShopId = eShopId;
         }
         return conditions;
     };
