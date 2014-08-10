@@ -40,6 +40,14 @@ var Authenticate = (function () {
         return Authenticate.toObject(this);
     };
 
+    Authenticate.prototype.hasValidVerification = function () {
+        return this.verification.length >= 8;
+    };
+
+    Authenticate.prototype.hasValidIdentity = function () {
+        return this.identity.length >= 5;
+    };
+
     Authenticate.toObject = function (e) {
         return {
             identity: e.identity,

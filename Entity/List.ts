@@ -64,6 +64,13 @@ class List<Entity extends IEntity> {
 		return _.find(this.entities, cb);
 	}
 
+	findOneOnly(cb: (entity: Entity) => boolean): Entity {
+		if (this.filter(cb).count() > 1) {
+			throw new Error('More items found');
+		}
+		return this.find(cb);
+	}
+
 	any(cb: (entity: Entity) => boolean): boolean {
 		return _.any(this.entities, cb);
 	}

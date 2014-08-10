@@ -61,6 +61,13 @@ var List = (function () {
         return _.find(this.entities, cb);
     };
 
+    List.prototype.findOneOnly = function (cb) {
+        if (this.filter(cb).count() > 1) {
+            throw new Error('More items found');
+        }
+        return this.find(cb);
+    };
+
     List.prototype.any = function (cb) {
         return _.any(this.entities, cb);
     };

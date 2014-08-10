@@ -21,6 +21,14 @@ class Authenticate implements IEntity {
 		return Authenticate.toObject(this);
 	}
 
+	hasValidVerification() {
+		return this.verification.length >= 8;
+	}
+
+	hasValidIdentity() {
+		return this.identity.length >= 5;
+	}
+
 	static toObject(e: Authenticate) {
 		return {
 			identity: e.identity,
