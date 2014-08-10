@@ -29,8 +29,8 @@ class UserLoader {
 		});
 	}
 
-	getBySessionId(sessionId: string, callback: (e: Error, user?: User) => void) {
-		this.model.findOne({ "authHashes.sessionId": sessionId }, (e, userObject: mongoose.Document) => {
+	getActiveBySessionId(sessionId: string, callback: (e: Error, user?: User) => void) {
+		this.model.findOne({ "authHashes.sessionId": sessionId, "authHashes.active": true }, (e, userObject: mongoose.Document) => {
 			if (e) {
 				callback(e);
 				return;

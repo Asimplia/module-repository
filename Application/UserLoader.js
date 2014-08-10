@@ -20,8 +20,8 @@ var UserLoader = (function () {
         });
     };
 
-    UserLoader.prototype.getBySessionId = function (sessionId, callback) {
-        this.model.findOne({ "authHashes.sessionId": sessionId }, function (e, userObject) {
+    UserLoader.prototype.getActiveBySessionId = function (sessionId, callback) {
+        this.model.findOne({ "authHashes.sessionId": sessionId, "authHashes.active": true }, function (e, userObject) {
             if (e) {
                 callback(e);
                 return;
