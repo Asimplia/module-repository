@@ -34,8 +34,8 @@ var UserLoader = (function () {
         });
     };
 
-    UserLoader.prototype.getByAuthHash = function (authHash, callback) {
-        this.model.findOne({ "authHashes.authHash": authHash }, function (e, userObject) {
+    UserLoader.prototype.getActiveByAuthHash = function (authHash, callback) {
+        this.model.findOne({ "authHashes.authHash": authHash, "authHashes.active": true }, function (e, userObject) {
             if (e) {
                 callback(e);
                 return;

@@ -1,10 +1,11 @@
 var moment = require('moment');
 
 var AuthHash = (function () {
-    function AuthHash(dateAuthenticated, authHash, sessionId) {
+    function AuthHash(dateAuthenticated, authHash, sessionId, active) {
         this.dateAuthenticated = dateAuthenticated;
         this.authHash = authHash;
         this.sessionId = sessionId;
+        this.active = active;
     }
     Object.defineProperty(AuthHash.prototype, "DateAuthenticated", {
         get: function () {
@@ -27,6 +28,16 @@ var AuthHash = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(AuthHash.prototype, "Active", {
+        get: function () {
+            return this.active;
+        },
+        set: function (value) {
+            this.active = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     AuthHash.prototype.toObject = function () {
         return AuthHash.toObject(this);
@@ -36,12 +47,13 @@ var AuthHash = (function () {
         return {
             dateAuthenticated: e.dateAuthenticated,
             authHash: e.authHash,
-            sessionId: e.sessionId
+            sessionId: e.sessionId,
+            active: e.active
         };
     };
 
     AuthHash.fromObject = function (o) {
-        return new AuthHash(moment(o.dateAuthenticated).toDate(), o.authHash, o.sessionId);
+        return new AuthHash(moment(o.dateAuthenticated).toDate(), o.authHash, o.sessionId, o.active);
     };
     return AuthHash;
 })();

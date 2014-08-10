@@ -43,8 +43,8 @@ class UserLoader {
 		});
 	}
 
-	getByAuthHash(authHash: string, callback: (e: Error, user?: User) => void) {
-		this.model.findOne({ "authHashes.authHash": authHash }, (e, userObject: mongoose.Document) => {
+	getActiveByAuthHash(authHash: string, callback: (e: Error, user?: User) => void) {
+		this.model.findOne({ "authHashes.authHash": authHash, "authHashes.active": true }, (e, userObject: mongoose.Document) => {
 			if (e) {
 				callback(e);
 				return;

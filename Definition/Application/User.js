@@ -13,7 +13,8 @@ var User = {
     authHashes: [{
             dateAuthenticated: Date,
             authHash: String,
-            sessionId: String
+            sessionId: String,
+            active: Boolean
         }]
 };
 module.exports = User;
