@@ -79,7 +79,7 @@ class SignalThreshold implements IEntity {
 			case QuadrantValueEnum.RIGHT_BOTTOM: return this.thresholdValueQ3;
 			case QuadrantValueEnum.LEFT_BOTTOM: return this.thresholdValueQ4;
 		}
-		throw new Error('Specified quadrant not supported');
+		throw new Error('Specified quadrant '+quadrant+' not supported');
 	}
 
 	isSignalInQuadrant(record: Matrix): boolean {
