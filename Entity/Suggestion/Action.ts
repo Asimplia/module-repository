@@ -28,6 +28,7 @@ class Action implements IEntity {
 	get Placeholders() { return this.placeholders; }
 	set Placeholders(value) { this.placeholders = value; }
 	get PriorityType() { return this.priorityType; }
+	get Main() { return this.main; }
 
 	constructor(
 		private id: Number,
@@ -37,7 +38,8 @@ class Action implements IEntity {
 		private section: SectionEnum,
 		private factorDefinitionList: List<FactorDefinition>,
 		private placeholders: ActionPlaceholderEnum[],
-		private priorityType: PriorityTypeEnum
+		private priorityType: PriorityTypeEnum,
+		private main: boolean
 	) { }
 
 	static fromObject(o: any/*ISuggestionActionObject*/): Action {
@@ -49,7 +51,8 @@ class Action implements IEntity {
 			Action.createSectionEnum(o.section),
 			new List<FactorDefinition>().pushArray(o.factorDefinitions, FactorDefinition.fromObject),
 			AsimpliaUtil.ArrayHelper.mapFilterNulls(o.placeholders, (placeholder: string) => { return Action.createPlaceholderEnum(placeholder); }),
-			Action.createPriorityTypeEnum(o.priorityType)
+			Action.createPriorityTypeEnum(o.priorityType),
+			o.main
 		);
 	}
 
@@ -62,7 +65,8 @@ class Action implements IEntity {
 			section: SectionEnum[entity.section],
 			factorDefinitions: entity.factorDefinitionList.toArray(FactorDefinition.toObject),
 			placeholders: AsimpliaUtil.ArrayHelper.mapFilterNulls(entity.placeholders, (placeholder: ActionPlaceholderEnum) => { return ActionPlaceholderEnum[placeholder]; }),
-			priorityType: PriorityTypeEnum[entity.priorityType]
+			priorityType: PriorityTypeEnum[entity.priorityType],
+			main: entity.main
 		};
 	}
 

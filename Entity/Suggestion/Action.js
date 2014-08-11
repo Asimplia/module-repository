@@ -8,7 +8,7 @@ var AsimpliaUtil = require('asimplia-util');
 var PriorityTypeEnum = require('./PriorityTypeEnum');
 
 var Action = (function () {
-    function Action(id, name, shortName, text, section, factorDefinitionList, placeholders, priorityType) {
+    function Action(id, name, shortName, text, section, factorDefinitionList, placeholders, priorityType, main) {
         this.id = id;
         this.name = name;
         this.shortName = shortName;
@@ -17,6 +17,7 @@ var Action = (function () {
         this.factorDefinitionList = factorDefinitionList;
         this.placeholders = placeholders;
         this.priorityType = priorityType;
+        this.main = main;
     }
     Object.defineProperty(Action.prototype, "Id", {
         get: function () {
@@ -95,11 +96,18 @@ var Action = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Action.prototype, "Main", {
+        get: function () {
+            return this.main;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     Action.fromObject = function (o) {
         return new Action(o.id, new LocalizedString(o.name), new LocalizedString(o.shortName), new LocalizedString(o.text), Action.createSectionEnum(o.section), new List().pushArray(o.factorDefinitions, FactorDefinition.fromObject), AsimpliaUtil.ArrayHelper.mapFilterNulls(o.placeholders, function (placeholder) {
             return Action.createPlaceholderEnum(placeholder);
-        }), Action.createPriorityTypeEnum(o.priorityType));
+        }), Action.createPriorityTypeEnum(o.priorityType), o.main);
     };
 
     Action.toObject = function (entity) {
@@ -113,7 +121,8 @@ var Action = (function () {
             placeholders: AsimpliaUtil.ArrayHelper.mapFilterNulls(entity.placeholders, function (placeholder) {
                 return ActionPlaceholderEnum[placeholder];
             }),
-            priorityType: PriorityTypeEnum[entity.priorityType]
+            priorityType: PriorityTypeEnum[entity.priorityType],
+            main: entity.main
         };
     };
 

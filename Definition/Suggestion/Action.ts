@@ -11,5 +11,6 @@ var Action = {
 	section: String,
 	factorDefinitions: [FactorDefinition],
 	placeholders: [String],
-	priorityType: String
+	priorityType: String,
+	main: Boolean
 };
