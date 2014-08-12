@@ -20,7 +20,11 @@ var connectionListeners = [];
 export function connectPostgres(connectionString: string) {
 	var schema = 'public'; // TODO
 	var client = new pg.Client(connectionString);
-	client.connect(() => {
+	client.connect((e) => {
+		if (e) {
+			throw e;
+			return;
+		}
 		console.log('Connected Postgres');
 		pgClient = client;
 		connectionListeners.forEach((callback) => {
