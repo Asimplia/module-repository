@@ -10,3 +10,7 @@ var Authenticate = require('./Authenticate');
 exports.Authenticate = Authenticate;
 var AuthTypeEnum = require('./AuthTypeEnum');
 exports.AuthTypeEnum = AuthTypeEnum;
+var ServiceTypeEnum = require('./ServiceTypeEnum');
+exports.ServiceTypeEnum = ServiceTypeEnum;
+var ServiceTypeFactory = require('./ServiceTypeFactory');
+exports.ServiceTypeFactory = ServiceTypeFactory;
