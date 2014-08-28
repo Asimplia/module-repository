@@ -5,8 +5,8 @@ var LocalizedString = (function () {
         if (!langsObject) {
             return;
         }
-        this.en = langsObject.en;
-        this.cs = langsObject.cs;
+        this.en = typeof langsObject.en !== 'undefined' ? langsObject.en : null;
+        this.cs = typeof langsObject.cs !== 'undefined' ? langsObject.cs : null;
     }
     Object.defineProperty(LocalizedString.prototype, "Cs", {
         get: function () {

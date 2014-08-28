@@ -15,8 +15,8 @@ class LocalizedString {
 		if (!langsObject) {
 			return;
 		}
-		this.en = langsObject.en;
-		this.cs = langsObject.cs;
+		this.en = typeof langsObject.en !== 'undefined' ? langsObject.en : null;
+		this.cs = typeof langsObject.cs !== 'undefined' ? langsObject.cs : null;
 	}
 
 	translate(language: Language) {
