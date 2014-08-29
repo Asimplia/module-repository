@@ -6,3 +6,5 @@ var EShopLoader = require('./EShopLoader');
 exports.EShopLoader = EShopLoader;
 var CompanyLoader = require('./CompanyLoader');
 exports.CompanyLoader = CompanyLoader;
+var EShopRecorder = require('./EShopRecorder');
+exports.EShopRecorder = EShopRecorder;

@@ -14,3 +14,5 @@ var ServiceTypeEnum = require('./ServiceTypeEnum');
 exports.ServiceTypeEnum = ServiceTypeEnum;
 var ServiceTypeFactory = require('./ServiceTypeFactory');
 exports.ServiceTypeFactory = ServiceTypeFactory;
+var ServiceConnection = require('./ServiceConnection');
+exports.ServiceConnection = ServiceConnection;
