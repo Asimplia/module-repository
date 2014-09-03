@@ -19,6 +19,16 @@ var CompanyLoader = (function () {
             callback(null, Company.fromObject(object));
         });
     };
+
+    CompanyLoader.prototype.getCount = function (callback) {
+        this.model.count({}, function (e, count) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(e, count);
+        });
+    };
     return CompanyLoader;
 })();
 module.exports = CompanyLoader;

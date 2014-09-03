@@ -57,7 +57,9 @@ var ResultLoader = (function () {
 
     ResultLoader.prototype.getCountByType = function (eShopId, type, callback) {
         var conditions = this.getConditionsByType(type);
-        conditions.eShopId = eShopId;
+        if (eShopId) {
+            conditions.eShopId = eShopId;
+        }
         this.ResultModel.count(conditions, function (e, count) {
             if (e) {
                 callback(e);

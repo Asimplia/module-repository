@@ -28,4 +28,14 @@ class EShopLoader {
 			callback(null, EShop.fromObject(object));
 		});
 	}
+
+	getCount(callback: (e: Error, count?: number) => void): void {
+		this.model.count({}, (e, count: number) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(e, count);
+		});
+	}
 }

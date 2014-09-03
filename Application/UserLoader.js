@@ -47,6 +47,16 @@ var UserLoader = (function () {
             callback(null, User.fromObject(userObject));
         });
     };
+
+    UserLoader.prototype.getCount = function (callback) {
+        this.model.count({}, function (e, count) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(e, count);
+        });
+    };
     return UserLoader;
 })();
 module.exports = UserLoader;

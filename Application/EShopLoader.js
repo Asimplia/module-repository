@@ -19,6 +19,16 @@ var EShopLoader = (function () {
             callback(null, EShop.fromObject(object));
         });
     };
+
+    EShopLoader.prototype.getCount = function (callback) {
+        this.model.count({}, function (e, count) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(e, count);
+        });
+    };
     return EShopLoader;
 })();
 module.exports = EShopLoader;

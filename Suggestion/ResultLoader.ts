@@ -65,7 +65,9 @@ class ResultLoader {
 
 	getCountByType(eShopId: number, type: ResultTypeEnum, callback: (e: Error, count?: number) => void): void {
 		var conditions = this.getConditionsByType(type);
-		conditions.eShopId = eShopId;
+		if (eShopId) {
+			conditions.eShopId = eShopId;
+		}
 		this.ResultModel.count(conditions, (e, count: number) => {
 			if (e) {
 				callback(e);
