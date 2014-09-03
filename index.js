@@ -77,3 +77,5 @@ var Placeholder = require('./Placeholder/index');
 exports.Placeholder = Placeholder;
 var Application = require('./Application/index');
 exports.Application = Application;
+var Load = require('./Load/index');
+exports.Load = Load;

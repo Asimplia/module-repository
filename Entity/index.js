@@ -12,3 +12,5 @@ var Suggestion = require('./Suggestion/index');
 exports.Suggestion = Suggestion;
 var Application = require('./Application/index');
 exports.Application = Application;
+var Load = require('./Load/index');
+exports.Load = Load;

@@ -7,3 +7,4 @@ export import Matrix = require('./Matrix/index');
 export import Section = require('./Section/index');
 export import Suggestion = require('./Suggestion/index');
 export import Application = require('./Application/index');
+export import Load = require('./Load/index');
