@@ -10,9 +10,9 @@ var LoadLogLoader = (function () {
             _this.connection = connection;
         });
     }
-    LoadLogLoader.prototype.getList = function (callback) {
+    LoadLogLoader.prototype.getListByEShopId = function (eShopId, callback) {
         var _this = this;
-        this.connection.query('SELECT * FROM warehouse.' + LoadLog.TABLE_NAME + ' ', [], function (e, result) {
+        this.connection.query('SELECT * FROM warehouse.' + LoadLog.TABLE_NAME + ' WHERE ' + LoadLog.COLUMN_E_SHOP_ID + ' = $1', [eShopId], function (e, result) {
             _this.createListByResult(e, result, callback);
         });
     };

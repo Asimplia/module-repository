@@ -14,3 +14,5 @@ var Application = require('./Application/index');
 exports.Application = Application;
 var Load = require('./Load/index');
 exports.Load = Load;
+var EShop = require('./EShop/index');
+exports.EShop = EShop;

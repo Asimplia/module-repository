@@ -15,10 +15,11 @@ class LoadLogLoader {
 		});
 	}
 
-	getList(callback: (e: Error, list: List<LoadLog>) => void) {
+	getListByEShopId(eShopId: number, callback: (e: Error, list: List<LoadLog>) => void) {
 		this.connection.query(
-			'SELECT * FROM warehouse.'+LoadLog.TABLE_NAME+' ', 
-			[], 
+			'SELECT * FROM warehouse.'+LoadLog.TABLE_NAME
+			+' WHERE '+LoadLog.COLUMN_E_SHOP_ID+' = $1', 
+			[eShopId], 
 			(e, result) => {
 				this.createListByResult(e, result, callback);
 			});

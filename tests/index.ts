@@ -57,3 +57,5 @@ var a13 = AsimpliaRepository.Entity.Application.EShop;
 var a14 = AsimpliaRepository.Entity.Application.Company;
 var a15 = AsimpliaRepository.Entity.Load.LoadLog;
 var a16 = AsimpliaRepository.Load.LoadLogLoader;
+var a17 = AsimpliaRepository.Entity.EShop.EShop;
+var a18 = AsimpliaRepository.EShop.EShopLoader;

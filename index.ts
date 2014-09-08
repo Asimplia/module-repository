@@ -67,4 +67,5 @@ export import Entity = require('./Entity/index');
 export import Matrix = require('./Matrix/index');
 export import Placeholder = require('./Placeholder/index');
 export import Application = require('./Application/index');
+export import EShop = require('./EShop/index');
 export import Load = require('./Load/index');
