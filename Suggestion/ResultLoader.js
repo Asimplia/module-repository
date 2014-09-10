@@ -82,6 +82,20 @@ var ResultLoader = (function () {
         });
     };
 
+    ResultLoader.prototype.getListBySituationIdsLimited = function (situationIds, limit, offset, callback) {
+        var conditions = {};
+        conditions.situationId = { $in: situationIds };
+        this.ResultModel.find(conditions).skip(offset).limit(limit).exec(function (e, suggestions) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            var list = new List();
+            list.pushArray(suggestions, SuggestionResult.fromObject);
+            callback(e, list);
+        });
+    };
+
     ResultLoader.prototype.getConditionsByType = function (type) {
         var conditions = {};
         var now = moment().toDate();

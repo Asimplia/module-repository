@@ -17,5 +17,6 @@ var Result = {
 	eShopId: Number,
 	reasons: [Reason],
 	section: String,
-	main: Boolean
+	main: Boolean,
+	situationId: Number
 };

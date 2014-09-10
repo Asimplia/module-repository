@@ -90,6 +90,20 @@ class ResultLoader {
 		});
 	}
 
+	getListBySituationIdsLimited(situationIds: number[], limit: number, offset: number, callback: (e: Error, recordList?: List<SuggestionResult>) => void) {
+		var conditions: any = {};
+		conditions.situationId = { $in: situationIds };
+		this.ResultModel.find(conditions).skip(offset).limit(limit).exec((e, suggestions: mongoose.Document[]) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			var list = new List<SuggestionResult>();
+			list.pushArray(suggestions, SuggestionResult.fromObject);
+			callback(e, list);
+		});
+	}
+
 	private getConditionsByType(type: ResultTypeEnum) {
 		var conditions: any = {};
 		var now = moment().toDate();

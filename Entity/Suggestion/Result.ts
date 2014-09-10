@@ -38,6 +38,7 @@ class Result implements IEntity {
 	get ReasonList() { return this.reasonList; }
 	get Section() { return this.section; }
 	get Main() { return this.main; }
+	get SituationId() { return this.situationId; }
 
 	constructor(
 		private id: number,
@@ -51,7 +52,8 @@ class Result implements IEntity {
 		private eShopId: number,
 		private reasonList: List<Reason>,
 		private section: SectionEnum,
-		private main: boolean
+		private main: boolean,
+		private situationId: number
 	) { }
 
 	static fromObject(o: any/*ISuggestionResultObject*/): Result {
@@ -67,7 +69,8 @@ class Result implements IEntity {
 			o.eShopId,
 			new List<Reason>().pushArray(o.reasons, Reason.fromObject),
 			SectionFactory.createSectionEnum(o.section),
-			o.main
+			o.main,
+			o.situationId
 		);
 	}
 
@@ -84,7 +87,8 @@ class Result implements IEntity {
 			eShopId: entity.eShopId,
 			reasons: entity.reasonList.toArray(Reason.toObject),
 			section: SectionEnum[entity.section],
-			main: entity.main
+			main: entity.main,
+			situationId: entity.situationId
 		};
 	}
 
