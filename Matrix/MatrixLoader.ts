@@ -65,6 +65,18 @@ class MatrixLoader {
 			});
 	}
 
+	getListByEShopIdAndLoadIdLimited(eShopId: number, loadId: number, limit: number, offset: number, callback: (e: Error, recordList?: List<Matrix>) => void) {
+		this.connection.query(
+			'SELECT * FROM analytical.'+Matrix.TABLE_NAME+' '
+				+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+				+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 '
+				+' LIMIT $3 OFFSET $4 ', [
+			eShopId, loadId, limit, offset
+		], (e, result) => {
+			this.createListByResult(e, result, callback);
+		});
+	}
+
 	private createListByResult(e: Error, result: any, callback: (e: Error, recordList?: List<Matrix>) => void) {
 		if (e) {
 			console.log(e);

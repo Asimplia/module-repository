@@ -48,6 +48,15 @@ var MatrixLoader = (function () {
         });
     };
 
+    MatrixLoader.prototype.getListByEShopIdAndLoadIdLimited = function (eShopId, loadId, limit, offset, callback) {
+        var _this = this;
+        this.connection.query('SELECT * FROM analytical.' + Matrix.TABLE_NAME + ' ' + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' LIMIT $3 OFFSET $4 ', [
+            eShopId, loadId, limit, offset
+        ], function (e, result) {
+            _this.createListByResult(e, result, callback);
+        });
+    };
+
     MatrixLoader.prototype.createListByResult = function (e, result, callback) {
         if (e) {
             console.log(e);
