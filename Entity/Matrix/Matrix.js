@@ -2,6 +2,8 @@
 
 var moment = require('moment');
 
+var SectionEnum = require('../Section/SectionEnum');
+
 var Matrix = (function () {
     function Matrix(id, eShopId, section, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens) {
         this.id = id;
@@ -158,7 +160,7 @@ var Matrix = (function () {
         return {
             id: entity.id,
             eShopId: entity.eShopId,
-            section: entity.section,
+            section: SectionEnum[entity.section],
             loadId: entity.loadId,
             scoreAbsolute: entity.scoreAbsolute,
             scoreRelative: entity.scoreRelative,

@@ -41,6 +41,16 @@ class MatrixChannel extends Matrix {
 		);
 	}
 
+	static toObject(e: MatrixChannel): any {
+		var o = Matrix.toObject(e);
+		o.channel = e.channel.toObject();
+		return o;
+	}
+
+	toObject() {
+		return MatrixChannel.toObject(this);
+	}
+
 	static fromRow(o: any): MatrixChannel {
 		return new MatrixChannel(
 			o[Matrix.COLUMN_MATRIX_ID],

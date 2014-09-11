@@ -82,7 +82,7 @@ class Matrix implements IEntity {
 		return {
 			id: entity.id,
 			eShopId: entity.eShopId,
-			section: entity.section,
+			section: SectionEnum[entity.section],
 			loadId: entity.loadId,
 			scoreAbsolute: entity.scoreAbsolute,
 			scoreRelative: entity.scoreRelative,

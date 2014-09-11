@@ -41,6 +41,16 @@ class MatrixProduct extends Matrix {
 		);
 	}
 
+	static toObject(e: MatrixProduct): any {
+		var o = Matrix.toObject(e);
+		o.product = e.product.toObject();
+		return o;
+	}
+
+	toObject() {
+		return MatrixProduct.toObject(this);
+	}
+
 	static fromRow(o: any): MatrixProduct {
 		return new MatrixProduct(
 			o[Matrix.COLUMN_MATRIX_ID],

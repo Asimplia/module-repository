@@ -41,6 +41,16 @@ class MatrixCustomer extends Matrix {
 		);
 	}
 
+	static toObject(e: MatrixCustomer): any {
+		var o = Matrix.toObject(e);
+		o.customer = e.customer.toObject();
+		return o;
+	}
+
+	toObject() {
+		return MatrixCustomer.toObject(this);
+	}
+
 	static fromRow(o: any): MatrixCustomer {
 		return new MatrixCustomer(
 			o[Matrix.COLUMN_MATRIX_ID],
