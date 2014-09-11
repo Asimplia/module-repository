@@ -1,6 +1,7 @@
 ﻿var moment = require('moment');
 var AsimpliaRepository = require('../index');
 var Signal = require('../Entity/Matrix/Signal');
+var Matrix = require('../Entity/Matrix/Matrix');
 
 var SignalRecorder = (function () {
     function SignalRecorder() {
@@ -49,6 +50,14 @@ var SignalRecorder = (function () {
                 return;
             }
             callback(null, signal);
+        });
+    };
+
+    SignalRecorder.prototype.removeByEShopIdAndLoadId = function (eShopId, loadId, callback) {
+        this.connection.query('DELETE FROM analytical.' + Signal.TABLE_NAME + ' JOIN analytical.' + Matrix.TABLE_NAME + ' USING (' + Signal.COLUMN_MATRIX_ID + ') ' + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ', [
+            eShopId, loadId
+        ], function (e, result) {
+            callback(e);
         });
     };
     return SignalRecorder;

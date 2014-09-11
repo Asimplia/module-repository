@@ -2,6 +2,7 @@
 import moment = require('moment');
 import AsimpliaRepository = require('../index');
 import Signal = require('../Entity/Matrix/Signal');
+import Matrix = require('../Entity/Matrix/Matrix');
 import List = require('../Entity/List');
 
 export = SignalRecorder;
@@ -59,6 +60,17 @@ class SignalRecorder {
 				return;
 			}
 			callback(null, signal);
+		});
+	}
+
+	removeByEShopIdAndLoadId(eShopId: number, loadId: number, callback: (e: Error) => void) {
+		this.connection.query(
+			'DELETE FROM analytical.'+Signal.TABLE_NAME+' JOIN analytical.'+Matrix.TABLE_NAME+' USING ('+Signal.COLUMN_MATRIX_ID+') '
+				+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+				+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 ', [
+			eShopId, loadId
+		], (e, result) => {
+			callback(e);
 		});
 	}
 }

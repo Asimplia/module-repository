@@ -7,13 +7,13 @@
 var AbstractRecorder = require('../AbstractRecorder');
 var Result = require('../Entity/Suggestion/Result');
 
-var ActionRecorder = (function (_super) {
-    __extends(ActionRecorder, _super);
-    function ActionRecorder() {
+var ResultRecorder = (function (_super) {
+    __extends(ResultRecorder, _super);
+    function ResultRecorder() {
         _super.call(this);
         this.ResultModel = require('./ResultModel');
     }
-    ActionRecorder.prototype.insertOrUpdate = function (result, callback) {
+    ResultRecorder.prototype.insertOrUpdate = function (result, callback) {
         var _this = this;
         this.ResultModel.findOne({ id: result.Id }, function (e, resultDocument) {
             if (e) {
@@ -31,6 +31,14 @@ var ActionRecorder = (function (_super) {
             _this.update(resultDocument, Result.fromObject, result, callback);
         });
     };
-    return ActionRecorder;
+
+    ResultRecorder.prototype.removeBySituationIds = function (situationIds, callback) {
+        var conditions = {};
+        conditions.situationId = { $in: situationIds };
+        this.ResultModel.remove(conditions).exec(function (e) {
+            callback(e);
+        });
+    };
+    return ResultRecorder;
 })(AbstractRecorder);
-module.exports = ActionRecorder;
+module.exports = ResultRecorder;

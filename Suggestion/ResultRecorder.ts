@@ -5,8 +5,8 @@ import Result = require('../Entity/Suggestion/Result');
 import List = require('../Entity/List');
 import mongoose = require('mongoose');
 
-export = ActionRecorder;
-class ActionRecorder extends AbstractRecorder {
+export = ResultRecorder;
+class ResultRecorder extends AbstractRecorder {
 
 	private ResultModel: mongoose.Model<mongoose.Document>;
 
@@ -30,6 +30,14 @@ class ActionRecorder extends AbstractRecorder {
 				return;
 			}
 			this.update(resultDocument, Result.fromObject, result, callback);
+		});
+	}
+
+	removeBySituationIds(situationIds: number[], callback: (e: Error) => void) {
+		var conditions: any = {};
+		conditions.situationId = { $in: situationIds };
+		this.ResultModel.remove(conditions).exec((e: Error) => {
+			callback(e);
 		});
 	}
 }

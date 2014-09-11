@@ -1,5 +1,6 @@
 ﻿
 export import MatrixLoader = require('./MatrixLoader');
+export import MatrixRecorder = require('./MatrixRecorder');
 export import SignalRecorder = require('./SignalRecorder');
 export import SituationRecorder = require('./SituationRecorder');
 export import SignalLoader = require('./SignalLoader');

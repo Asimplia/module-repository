@@ -1,5 +1,7 @@
 ﻿var MatrixLoader = require('./MatrixLoader');
 exports.MatrixLoader = MatrixLoader;
+var MatrixRecorder = require('./MatrixRecorder');
+exports.MatrixRecorder = MatrixRecorder;
 var SignalRecorder = require('./SignalRecorder');
 exports.SignalRecorder = SignalRecorder;
 var SituationRecorder = require('./SituationRecorder');
