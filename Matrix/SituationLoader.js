@@ -41,7 +41,7 @@ var SituationLoader = (function () {
                 return situation.Id == row[Situation.COLUMN_SITUATION_ID];
             });
             if (!situation) {
-                situation = new Situation(row[Situation.COLUMN_SITUATION_ID], new List(), moment(row[Situation.COLUMN_DATE_CREATED]).toDate(), row[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED] ? moment(row[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED]).toDate() : null);
+                situation = new Situation(parseInt(row[Situation.COLUMN_SITUATION_ID]), new List(), moment(row[Situation.COLUMN_DATE_CREATED]).toDate(), row[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED] ? moment(row[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED]).toDate() : null);
                 situationList.push(situation);
             }
             var signal = Signal.fromRow(row);

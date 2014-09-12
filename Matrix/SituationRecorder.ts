@@ -51,17 +51,10 @@ class SituationRecorder {
 		});
 	}
 
-	removeByEShopIdAndLoadId(eShopId: number, loadId: number, callback: (e: Error) => void) {
+	removeByIds(ids: number[], callback: (e: Error) => void) {
 		var sql = 'DELETE FROM analytical.'+Situation.TABLE_NAME+' '
-			+' USING analytical.'+Signal.TABLE_NAME+' '
-			+' , analytical.'+Matrix.TABLE_NAME+' '
-			+' WHERE analytical.'+Signal.TABLE_NAME+'.'+Signal.COLUMN_SITUATION_ID+' = analytical.'+Situation.TABLE_NAME+'.'+Situation.COLUMN_SITUATION_ID+' '
-			+' AND analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_MATRIX_ID+' = analytical.'+Signal.TABLE_NAME+'.'+Signal.COLUMN_MATRIX_ID+' '
-			+' AND '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
-			+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 ';
-		this.connection.query(sql, [
-			eShopId, loadId
-		], (e, result) => {
+			+' WHERE '+Situation.COLUMN_SITUATION_ID+' IN ( '+ids.join(', ')+' ) ';
+		this.connection.query(sql, [], (e, result) => {
 			callback(e);
 		});
 	}

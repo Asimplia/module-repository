@@ -54,7 +54,7 @@ class SituationLoader {
 			});
 			if (!situation) {
 				situation = new Situation(
-					row[Situation.COLUMN_SITUATION_ID],
+					parseInt(row[Situation.COLUMN_SITUATION_ID]),
 					new List<Signal>(),
 					moment(row[Situation.COLUMN_DATE_CREATED]).toDate(),
 					row[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED] ? moment(row[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED]).toDate() : null

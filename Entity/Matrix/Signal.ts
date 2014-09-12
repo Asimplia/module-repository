@@ -29,7 +29,7 @@ class Signal implements IEntity {
 
 	static fromRow(o: any): Signal {
 		var matrix = MatrixFactory.createMatrixFromRow(o);
-		return new Signal(o[Signal.COLUMN_SIGNAL_ID], matrix, o[Signal.COLUMN_DATE_CREATED], o[Signal.COLUMN_SITUATION_ID]);
+		return new Signal(parseInt(o[Signal.COLUMN_SIGNAL_ID]), matrix, o[Signal.COLUMN_DATE_CREATED], parseInt(o[Signal.COLUMN_SITUATION_ID]));
 	}
 
 	static toObject(entity: Signal): any {

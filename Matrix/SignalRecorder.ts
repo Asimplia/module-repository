@@ -64,10 +64,11 @@ class SignalRecorder {
 	}
 
 	removeByEShopIdAndLoadId(eShopId: number, loadId: number, callback: (e: Error) => void) {
-		this.connection.query(
-			'DELETE FROM analytical.'+Signal.TABLE_NAME+' JOIN analytical.'+Matrix.TABLE_NAME+' USING ('+Signal.COLUMN_MATRIX_ID+') '
-				+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
-				+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 ', [
+		var sql = 'DELETE FROM analytical.'+Signal.TABLE_NAME+' '
+			+' USING analytical.'+Matrix.TABLE_NAME+' '
+			+' WHERE analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+			+' AND analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_LOAD_ID+' = $2 ';
+		this.connection.query(sql, [
 			eShopId, loadId
 		], (e, result) => {
 			callback(e);
