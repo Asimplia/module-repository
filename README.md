@@ -3,6 +3,10 @@
 module for work with data in repositories
 
 ## Usage
+```
+npm install git+https://github.com/Asimplia/module-repository.git --save
+```
+
 ### Javascript
 ```
 var Repository = require('asimplia-repository');
