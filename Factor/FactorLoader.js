@@ -1,9 +1,11 @@
 ﻿var Factor = require('../Entity/Factor/Factor');
 var List = require('../Entity/List');
 
+var FactorModel = require('./FactorModel');
+
 var FactorLoader = (function () {
     function FactorLoader() {
-        this.FactorModel = require('./FactorModel');
+        this.FactorModel = FactorModel;
     }
     FactorLoader.prototype.getList = function (callback) {
         this.FactorModel.find({}, null, { sort: 'id' }, function (e, factors) {

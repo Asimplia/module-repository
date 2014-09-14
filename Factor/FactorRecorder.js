@@ -7,11 +7,13 @@
 var AbstractRecorder = require('../AbstractRecorder');
 var Factor = require('../Entity/Factor/Factor');
 
+var FactorModel = require('./FactorModel');
+
 var FactorRecorder = (function (_super) {
     __extends(FactorRecorder, _super);
     function FactorRecorder() {
         _super.call(this);
-        this.FactorModel = require('./FactorModel');
+        this.FactorModel = FactorModel;
     }
     FactorRecorder.prototype.insertOrUpdate = function (factor, callback) {
         var _this = this;

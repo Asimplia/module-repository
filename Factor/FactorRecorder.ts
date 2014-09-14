@@ -3,6 +3,7 @@ import AbstractRecorder = require('../AbstractRecorder');
 import Factor = require('../Entity/Factor/Factor');
 import List = require('../Entity/List');
 import mongoose = require('mongoose');
+import FactorModel = require('./FactorModel');
 
 export = FactorRecorder;
 class FactorRecorder extends AbstractRecorder {
@@ -11,7 +12,7 @@ class FactorRecorder extends AbstractRecorder {
 
 	constructor() {
 		super();
-		this.FactorModel = require('./FactorModel');
+		this.FactorModel = FactorModel;
 	}
 
 	insertOrUpdate(factor: Factor, callback: (e: Error, action?: Factor) => void): void {

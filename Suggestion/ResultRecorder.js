@@ -7,11 +7,13 @@
 var AbstractRecorder = require('../AbstractRecorder');
 var Result = require('../Entity/Suggestion/Result');
 
+var ResultModel = require('./ResultModel');
+
 var ResultRecorder = (function (_super) {
     __extends(ResultRecorder, _super);
     function ResultRecorder() {
         _super.call(this);
-        this.ResultModel = require('./ResultModel');
+        this.ResultModel = ResultModel;
     }
     ResultRecorder.prototype.insertOrUpdate = function (result, callback) {
         var _this = this;

@@ -2,9 +2,11 @@
 
 var SectionEnum = require('../Entity/Section/SectionEnum');
 
+var SignalThresholdModel = require('./SignalThresholdModel');
+
 var SignalThresholdLoader = (function () {
     function SignalThresholdLoader() {
-        this.SignalThresholdModel = require('./SignalThresholdModel');
+        this.SignalThresholdModel = SignalThresholdModel;
     }
     SignalThresholdLoader.prototype.getByMatrixType = function (section, callback) {
         this.SignalThresholdModel.findOne({ section: SectionEnum[section] }, function (e, signalThresholdObject) {

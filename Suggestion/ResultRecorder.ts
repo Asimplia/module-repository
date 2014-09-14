@@ -4,6 +4,7 @@ import AbstractRecorder = require('../AbstractRecorder');
 import Result = require('../Entity/Suggestion/Result');
 import List = require('../Entity/List');
 import mongoose = require('mongoose');
+import ResultModel = require('./ResultModel');
 
 export = ResultRecorder;
 class ResultRecorder extends AbstractRecorder {
@@ -12,7 +13,7 @@ class ResultRecorder extends AbstractRecorder {
 
 	constructor() {
 		super();
-		this.ResultModel = require('./ResultModel');
+		this.ResultModel = ResultModel;
 	}
 
 	insertOrUpdate(result: Result, callback: (e: Error, result?: Result) => void): void {

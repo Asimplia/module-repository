@@ -4,26 +4,27 @@ import AbstractRecorder = require('../AbstractRecorder');
 import SuggestionAction = require('../Entity/Suggestion/Action');
 import List = require('../Entity/List');
 import mongoose = require('mongoose');
+import ActionModel = require('./ActionModel');
 
 export = ActionRecorder;
 class ActionRecorder extends AbstractRecorder {
 
-	private ActionModel: mongoose.Model<mongoose.Document>;
+	private model: mongoose.Model<mongoose.Document>;
 
 	constructor() {
 		super();
-		this.ActionModel = require('./ActionModel');
+		this.model = ActionModel;
 	}
 
 	insertOrUpdate(suggestionAction: SuggestionAction, callback: (e: Error, action?: SuggestionAction) => void): void {
-		this.ActionModel.findOne({ id: suggestionAction.Id }, (e, actionDocument: mongoose.Document) => {
+		this.model.findOne({ id: suggestionAction.Id }, (e, actionDocument: mongoose.Document) => {
 			if (e) {
 				callback(e);
 				return;
 			}
 			if (!actionDocument) {
-				actionDocument = new this.ActionModel({});
-				this.getNextId(this.ActionModel, (id) => {
+				actionDocument = new this.model({});
+				this.getNextId(this.model, (id) => {
 					suggestionAction.Id = id;
 					this.update(actionDocument, SuggestionAction.fromObject, suggestionAction, callback);
 				});
@@ -34,7 +35,7 @@ class ActionRecorder extends AbstractRecorder {
 	}
 
 	remove(id: number, callback: (e: Error) => void): void {
-		this.ActionModel.findOneAndRemove({ id: id }, (e: Error) => {
+		this.model.findOneAndRemove({ id: id }, (e: Error) => {
 			callback(e);
 		});
 	}

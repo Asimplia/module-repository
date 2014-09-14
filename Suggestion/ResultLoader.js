@@ -1,7 +1,7 @@
 ﻿var SuggestionResult = require('../Entity/Suggestion/Result');
 var List = require('../Entity/List');
 var ResultTypeEnum = require('./ResultTypeEnum');
-
+var ResultModel = require('./ResultModel');
 var ResultStateEnum = require('../Entity/Suggestion/ResultStateEnum');
 
 var util = require('util');
@@ -9,7 +9,7 @@ var moment = require('moment');
 
 var ResultLoader = (function () {
     function ResultLoader() {
-        this.ResultModel = require('./ResultModel');
+        this.ResultModel = ResultModel;
     }
     ResultLoader.prototype.getById = function (eShopId, id, callback) {
         var conditions = { id: id };

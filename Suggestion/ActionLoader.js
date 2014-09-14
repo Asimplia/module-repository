@@ -1,12 +1,14 @@
 ﻿var SuggestionAction = require('../Entity/Suggestion/Action');
 var List = require('../Entity/List');
 
+var ActionModel = require('./ActionModel');
+
 var ActionLoader = (function () {
     function ActionLoader() {
-        this.ActionModel = require('./ActionModel');
+        this.model = ActionModel;
     }
     ActionLoader.prototype.getList = function (callback) {
-        this.ActionModel.find({}, null, { sort: 'id' }, function (e, actions) {
+        this.model.find({}, null, { sort: 'id' }, function (e, actions) {
             if (e) {
                 return callback(e);
             }

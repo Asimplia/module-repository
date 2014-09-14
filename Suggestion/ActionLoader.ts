@@ -3,18 +3,19 @@
 import SuggestionAction = require('../Entity/Suggestion/Action');
 import List = require('../Entity/List');
 import mongoose = require('mongoose');
+import ActionModel = require('./ActionModel');
 
 export = ActionLoader;
 class ActionLoader {
 
-	private ActionModel: mongoose.Model<mongoose.Document>;
+	private model: mongoose.Model<mongoose.Document>;
 
 	constructor() {
-		this.ActionModel = require('./ActionModel');
+		this.model = ActionModel;
 	}
 
 	getList(callback: (e: Error, actionList?: List<SuggestionAction>) => void) {
-		this.ActionModel.find({}, null, { sort: 'id' }, (e, actions: mongoose.Document[]) => {
+		this.model.find({}, null, { sort: 'id' }, (e, actions: mongoose.Document[]) => {
 			if (e) {
 				return callback(e);
 			}

@@ -16,7 +16,7 @@ class ResultLoader {
 	private ResultModel: mongoose.Model<mongoose.Document>;
 
 	constructor() {
-		this.ResultModel = require('./ResultModel');
+		this.ResultModel = ResultModel;
 	}
 
 	getById(eShopId: number, id: number, callback: (e: Error, suggestion?: SuggestionResult) => void) {

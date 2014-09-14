@@ -1,5 +1,4 @@
-﻿/// <reference path="../typings/mongoose/mongoose.d.ts" />
-var mongoose = require('mongoose');
+﻿var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Definition = require('../Definition/Suggestion/Action');
 

@@ -3,6 +3,7 @@
 import Factor = require('../Entity/Factor/Factor');
 import List = require('../Entity/List');
 import mongoose = require('mongoose');
+import FactorModel = require('./FactorModel');
 
 export = FactorLoader;
 class FactorLoader {
@@ -10,7 +11,7 @@ class FactorLoader {
 	private FactorModel: mongoose.Model<mongoose.Document>;
 
 	constructor() {
-		this.FactorModel = require('./FactorModel');
+		this.FactorModel = FactorModel;
 	}
 
 	getList(callback: (e: Error, factorList?: List<Factor>) => void) {
