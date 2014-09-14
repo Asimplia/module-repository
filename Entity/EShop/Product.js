@@ -1,10 +1,10 @@
 ﻿var Product = (function () {
-    function Product(id, eShopId, name, fixPrice, inEshop) {
+    function Product(id, eShopId, name, basePrice, ean) {
         this.id = id;
         this.eShopId = eShopId;
         this.name = name;
-        this.fixPrice = fixPrice;
-        this.inEshop = inEshop;
+        this.basePrice = basePrice;
+        this.ean = ean;
     }
     Object.defineProperty(Product.prototype, "Id", {
         get: function () {
@@ -22,7 +22,7 @@
     });
 
     Product.fromRow = function (r) {
-        return new Product(r[Product.COLUMN_PRODUCT_ID], r[Product.COLUMN_E_SHOP_ID], r[Product.COLUMN_NAME], r[Product.COLUMN_FIX_PRICE], r[Product.COLUMN_IN_SHOP]);
+        return new Product(parseInt(r[Product.COLUMN_PRODUCT_ID]), parseInt(r[Product.COLUMN_E_SHOP_ID]), r[Product.COLUMN_NAME], parseInt(r[Product.COLUMN_BASE_PRICE]), r[Product.COLUMN_EAN]);
     };
 
     Product.toObject = function (entity) {
@@ -30,8 +30,8 @@
             id: entity.id,
             eShopId: entity.eShopId,
             name: entity.name,
-            fixPrice: entity.fixPrice,
-            inEshop: entity.inEshop
+            basePrice: entity.basePrice,
+            ean: entity.ean
         };
     };
 
@@ -42,8 +42,8 @@
     Product.COLUMN_E_SHOP_ID = 'eshopid';
     Product.COLUMN_PRODUCT_ID = 'productid';
     Product.COLUMN_NAME = 'productname';
-    Product.COLUMN_FIX_PRICE = 'fixprice';
-    Product.COLUMN_IN_SHOP = 'flaginshop';
+    Product.COLUMN_BASE_PRICE = 'baseprice';
+    Product.COLUMN_EAN = 'ean';
     return Product;
 })();
 module.exports = Product;

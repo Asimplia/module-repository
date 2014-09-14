@@ -52,7 +52,13 @@ var MatrixLoader = (function () {
         var _this = this;
         var filterWhere = '';
         if (filter.productIds && filter.productIds.length > 0) {
-            filterWhere += ' AND analytical.' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_PRODUCT_ID + ' IN (' + filter.productIds.join(', ') + ')';
+            filterWhere += ' AND analytical.' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_PRODUCT_ID + ' IN (' + filter.productIds.join(', ') + ') ';
+        }
+        if (filter.customerIds && filter.customerIds.length > 0) {
+            filterWhere += ' AND analytical.' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CUSTOMER_ID + ' IN (' + filter.customerIds.join(', ') + ') ';
+        }
+        if (filter.channelIds && filter.channelIds.length > 0) {
+            filterWhere += ' AND analytical.' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CHANNEL_ID + ' IN (' + filter.channelIds.join(', ') + ') ';
         }
         this.connection.query('SELECT * FROM analytical.' + Matrix.TABLE_NAME + ' ' + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + filterWhere + ' LIMIT $3 OFFSET $4 ', [
             eShopId, loadId, limit, offset

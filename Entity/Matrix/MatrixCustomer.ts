@@ -72,7 +72,7 @@ class MatrixCustomer extends Matrix {
 			o[Matrix.COLUMN_CHANGE_VALUE_Y],
 			o[Matrix.COLUMN_TANGENS],
 			o[Matrix.COLUMN_CHANGE_TANGENS],
-			new Customer(o[Matrix.COLUMN_CUSTOMER_ID], o[Matrix.COLUMN_E_SHOP_ID])
+			Customer.fromRow(o)
 		);
 	}
 

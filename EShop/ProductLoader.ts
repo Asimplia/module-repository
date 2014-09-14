@@ -16,15 +16,15 @@ class ProductLoader {
 	}
 
 	getListByEShopIdAndLoadIdInMatrixes(eShopId: number, loadId: number, callback: (e: Error, productList?: List<Product>) => void) {
-		this.connection.query(
-			'SELECT warehouse.'+Product.TABLE_NAME+'.* FROM warehouse.'+Product.TABLE_NAME+' '
+		var sql = 'SELECT warehouse.'+Product.TABLE_NAME+'.* FROM warehouse.'+Product.TABLE_NAME+' '
 			+' JOIN analytical.'+Matrix.TABLE_NAME+' '
 			+' ON analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_PRODUCT_ID+' = warehouse.'+Product.TABLE_NAME+'.'+Product.COLUMN_PRODUCT_ID+' '
 			+' AND analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = warehouse.'+Product.TABLE_NAME+'.'+Product.COLUMN_E_SHOP_ID+' '
-			+' WHERE warehouse.'+Product.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1'
+			+' WHERE warehouse.'+Product.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 '
 			+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 '
 			+' GROUP BY warehouse.'+Product.TABLE_NAME+'.'+Product.COLUMN_E_SHOP_ID+', warehouse.'+Product.TABLE_NAME+'.'+Product.COLUMN_PRODUCT_ID+' '
-			+' ORDER BY warehouse.'+Product.TABLE_NAME+'.'+Product.COLUMN_PRODUCT_ID+' ', 
+			+' ORDER BY warehouse.'+Product.TABLE_NAME+'.'+Product.COLUMN_PRODUCT_ID+' ';
+		this.connection.query(sql, 
 			[eShopId, loadId], (e, result) => {
 			this.createListByResult(e, result, callback);
 		});

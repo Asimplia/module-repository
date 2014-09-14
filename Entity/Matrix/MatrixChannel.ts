@@ -72,7 +72,7 @@ class MatrixChannel extends Matrix {
 			o[Matrix.COLUMN_CHANGE_VALUE_Y],
 			o[Matrix.COLUMN_TANGENS],
 			o[Matrix.COLUMN_CHANGE_TANGENS],
-			new Channel(o[Matrix.COLUMN_CHANNEL_ID], o[Matrix.COLUMN_E_SHOP_ID])
+			Channel.fromRow(o)
 		);
 	}
 

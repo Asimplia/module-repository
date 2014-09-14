@@ -65,10 +65,16 @@ class MatrixLoader {
 			});
 	}
 
-	getListByEShopIdAndLoadIdLimited(eShopId: number, loadId: number, limit: number, offset: number, filter: { productIds: number[] }, callback: (e: Error, recordList?: List<Matrix>) => void) {
+	getListByEShopIdAndLoadIdLimited(eShopId: number, loadId: number, limit: number, offset: number, filter: { productIds?: number[]; customerIds?: number[]; channelIds?: number[] }, callback: (e: Error, recordList?: List<Matrix>) => void) {
 		var filterWhere = '';
 		if (filter.productIds && filter.productIds.length > 0) {
-			filterWhere += ' AND analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_PRODUCT_ID+' IN ('+filter.productIds.join(', ')+')';
+			filterWhere += ' AND analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_PRODUCT_ID+' IN ('+filter.productIds.join(', ')+') ';
+		}
+		if (filter.customerIds && filter.customerIds.length > 0) {
+			filterWhere += ' AND analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CUSTOMER_ID+' IN ('+filter.customerIds.join(', ')+') ';
+		}
+		if (filter.channelIds && filter.channelIds.length > 0) {
+			filterWhere += ' AND analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CHANNEL_ID+' IN ('+filter.channelIds.join(', ')+') ';
 		}
 		this.connection.query(
 			'SELECT * FROM analytical.'+Matrix.TABLE_NAME+' '
