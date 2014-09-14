@@ -100,6 +100,19 @@ var SectionFactory = (function () {
                 return null;
         }
     };
+
+    SectionFactory.getGroupSection = function (section) {
+        if (this.isProduct(section)) {
+            return 1 /* PRODUCT */;
+        }
+        if (this.isCustomer(section)) {
+            return 12 /* CUSTOMER */;
+        }
+        if (this.isChannel(section)) {
+            return 16 /* CHANNEL */;
+        }
+        return null;
+    };
     return SectionFactory;
 })();
 module.exports = SectionFactory;

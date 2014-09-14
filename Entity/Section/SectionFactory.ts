@@ -101,4 +101,17 @@ class SectionFactory {
 				return null;
 		}
 	}
+
+	static getGroupSection(section: SectionEnum) {
+		if (this.isProduct(section)) {
+			return SectionEnum.PRODUCT;
+		}
+		if (this.isCustomer(section)) {
+			return SectionEnum.CUSTOMER;
+		}
+		if (this.isChannel(section)) {
+			return SectionEnum.CHANNEL;
+		}
+		return null;
+	}
 }
