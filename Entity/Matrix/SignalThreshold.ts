@@ -48,26 +48,30 @@ class SignalThreshold implements IEntity {
 	}
 
 	toObject() {
+		return SignalThreshold.toObject(this);
+	}
+
+	static toObject(e: SignalThreshold) {
 		return {
-			section: SectionEnum[this.section],
-			name: this.name,
+			section: SectionEnum[e.section],
+			name: e.name,
 			thresholdValue: {
-				q1: this.thresholdValueQ1,
-				q2: this.thresholdValueQ2,
-				q3: this.thresholdValueQ3,
-				q4: this.thresholdValueQ4
+				q1: e.thresholdValueQ1,
+				q2: e.thresholdValueQ2,
+				q3: e.thresholdValueQ3,
+				q4: e.thresholdValueQ4
 			},
 			priority: {
-				q1: this.priorityQ1,
-				q2: this.priorityQ2,
-				q3: this.priorityQ3,
-				q4: this.priorityQ4
+				q1: e.priorityQ1,
+				q2: e.priorityQ2,
+				q3: e.priorityQ3,
+				q4: e.priorityQ4
 			},
 			description: {
-				q1: this.descriptionQ1,
-				q2: this.descriptionQ2,
-				q3: this.descriptionQ3,
-				q4: this.descriptionQ4
+				q1: e.descriptionQ1,
+				q2: e.descriptionQ2,
+				q3: e.descriptionQ3,
+				q4: e.descriptionQ4
 			}
 		};
 	}

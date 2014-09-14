@@ -1,5 +1,5 @@
 ﻿var SignalThreshold = require('../Entity/Matrix/SignalThreshold');
-
+var List = require('../Entity/List');
 var SectionEnum = require('../Entity/Section/SectionEnum');
 
 var SignalThresholdModel = require('./SignalThresholdModel');
@@ -20,6 +20,17 @@ var SignalThresholdLoader = (function () {
             }
             var signalThreshold = SignalThreshold.fromObject(signalThresholdObject);
             callback(null, signalThreshold);
+        });
+    };
+
+    SignalThresholdLoader.prototype.getList = function (callback) {
+        this.SignalThresholdModel.find({}, null, { sort: 'section' }, function (e, thresholds) {
+            if (e) {
+                return callback(e);
+            }
+            var list = new List();
+            list.pushArray(thresholds, SignalThreshold.fromObject);
+            callback(null, list);
         });
     };
     return SignalThresholdLoader;

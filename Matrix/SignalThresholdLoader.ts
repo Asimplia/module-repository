@@ -28,4 +28,15 @@ class SignalThresholdLoader {
 			callback(null, signalThreshold);
 		});
 	}
+
+	getList(callback: (e: Error, signalThresholdList?: List<SignalThreshold>) => void) {
+		this.SignalThresholdModel.find({}, null, { sort: 'section' }, (e, thresholds: mongoose.Document[]) => {
+			if (e) {
+				return callback(e);
+			}
+			var list = new List<SignalThreshold>();
+			list.pushArray(thresholds, SignalThreshold.fromObject);
+			callback(null, list);
+		});
+	}
 }

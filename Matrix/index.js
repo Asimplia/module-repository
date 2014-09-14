@@ -12,5 +12,7 @@ var SituationLoader = require('./SituationLoader');
 exports.SituationLoader = SituationLoader;
 var SignalThresholdLoader = require('./SignalThresholdLoader');
 exports.SignalThresholdLoader = SignalThresholdLoader;
+var SignalThresholdRecorder = require('./SignalThresholdRecorder');
+exports.SignalThresholdRecorder = SignalThresholdRecorder;
 var SignalThresholdModel = require('./SignalThresholdModel');
 exports.SignalThresholdModel = SignalThresholdModel;
