@@ -3,9 +3,10 @@ var SectionEnum = require('../Section/SectionEnum');
 var SectionFactory = require('../Section/SectionFactory');
 var ColumnEnum = require('../Matrix/ColumnEnum');
 var ShiftValueEnum = require('../Factor/ShiftValueEnum');
+var LocalizedString = require('../Locale/LocalizedString');
 
 var Factor = (function () {
-    function Factor(id, name, description, section, weight, factorType, column) {
+    function Factor(id, name, description, section, weight, factorType, column, label) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -13,6 +14,7 @@ var Factor = (function () {
         this.weight = weight;
         this.factorType = factorType;
         this.column = column;
+        this.label = label;
     }
     Object.defineProperty(Factor.prototype, "Id", {
         get: function () {
@@ -57,7 +59,7 @@ var Factor = (function () {
     });
 
     Factor.fromObject = function (o) {
-        return new Factor(o.id, o.name, o.description, SectionFactory.createSectionEnum(o.section), o.weight, Factor.createTypeEnum(o.factorType), Factor.createColumnEnum(o.column));
+        return new Factor(o.id, o.name, o.description, SectionFactory.createSectionEnum(o.section), o.weight, Factor.createTypeEnum(o.factorType), Factor.createColumnEnum(o.column), new LocalizedString(o.label));
     };
 
     Factor.toObject = function (entity) {
@@ -68,7 +70,8 @@ var Factor = (function () {
             section: SectionEnum[entity.section],
             weight: entity.weight,
             factorType: FactorTypeEnum[entity.factorType],
-            column: ColumnEnum[entity.column]
+            column: ColumnEnum[entity.column],
+            label: entity.label.toObject()
         };
     };
 

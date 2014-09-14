@@ -1,4 +1,6 @@
 ﻿
+import LocalizedString = require('../Locale/LocalizedString');
+
 export = Factor;
 var Factor = {
 	id: Number,
@@ -7,5 +9,6 @@ var Factor = {
 	section: String,
 	weight: Number,
 	factorType: String,
-	column: String
+	column: String,
+	label: LocalizedString
 };

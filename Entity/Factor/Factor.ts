@@ -4,6 +4,7 @@ import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
 import ColumnEnum = require('../Matrix/ColumnEnum');
 import ShiftValueEnum = require('../Factor/ShiftValueEnum');
+import LocalizedString = require('../Locale/LocalizedString');
 
 export = Factor;
 class Factor {
@@ -23,7 +24,8 @@ class Factor {
 		private section: SectionEnum,
 		private weight: number,
 		private factorType: FactorTypeEnum,
-		private column: ColumnEnum
+		private column: ColumnEnum,
+		private label: LocalizedString
 	) { }
 
 	static fromObject(o: any/*FactorObject*/): Factor {
@@ -34,7 +36,8 @@ class Factor {
 			SectionFactory.createSectionEnum(o.section),
 			o.weight,
 			Factor.createTypeEnum(o.factorType),
-			Factor.createColumnEnum(o.column)
+			Factor.createColumnEnum(o.column),
+			new LocalizedString(o.label)
 		);
 	}
 
@@ -46,7 +49,8 @@ class Factor {
 			section: SectionEnum[entity.section],
 			weight: entity.weight,
 			factorType: FactorTypeEnum[entity.factorType],
-			column: ColumnEnum[entity.column]
+			column: ColumnEnum[entity.column],
+			label: entity.label.toObject()
 		};
 	}
 
