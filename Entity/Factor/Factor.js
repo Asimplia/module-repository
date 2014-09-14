@@ -57,6 +57,13 @@ var Factor = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Factor.prototype, "Label", {
+        get: function () {
+            return this.label;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     Factor.fromObject = function (o) {
         return new Factor(o.id, o.name, o.description, SectionFactory.createSectionEnum(o.section), o.weight, Factor.createTypeEnum(o.factorType), Factor.createColumnEnum(o.column), new LocalizedString(o.label));

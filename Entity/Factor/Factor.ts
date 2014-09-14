@@ -16,6 +16,7 @@ class Factor {
 	get Column() { return this.column; }
 	get Section() { return this.section; }
 	get Name() { return this.name; }
+	get Label() { return this.label; }
 
 	constructor(
 		private id: number,
