@@ -48,9 +48,13 @@ var MatrixLoader = (function () {
         });
     };
 
-    MatrixLoader.prototype.getListByEShopIdAndLoadIdLimited = function (eShopId, loadId, limit, offset, callback) {
+    MatrixLoader.prototype.getListByEShopIdAndLoadIdLimited = function (eShopId, loadId, limit, offset, filter, callback) {
         var _this = this;
-        this.connection.query('SELECT * FROM analytical.' + Matrix.TABLE_NAME + ' ' + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' LIMIT $3 OFFSET $4 ', [
+        var filterWhere = '';
+        if (filter.productIds && filter.productIds.length > 0) {
+            filterWhere += ' AND analytical.' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_PRODUCT_ID + ' IN (' + filter.productIds.join(', ') + ')';
+        }
+        this.connection.query('SELECT * FROM analytical.' + Matrix.TABLE_NAME + ' ' + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + filterWhere + ' LIMIT $3 OFFSET $4 ', [
             eShopId, loadId, limit, offset
         ], function (e, result) {
             _this.createListByResult(e, result, callback);
