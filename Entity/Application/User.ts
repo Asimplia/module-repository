@@ -4,6 +4,8 @@ import List = require('../List');
 import Authenticate = require('./Authenticate');
 import AuthTypeEnum = require('./AuthTypeEnum');
 import AuthHash = require('./AuthHash');
+import LanguageEnum = require('../Locale/LanguageEnum')
+import Language = require('../Locale/Language')
 
 export = User;
 class User implements IEntity {
@@ -28,6 +30,7 @@ class User implements IEntity {
 	set CompanyId(value) { this.companyId = value; }
 	set Email(value) { this.email = value; }
 	set PhoneNumber(value) { this.phoneNumber = value; }
+	set ActiveLanguage(value) { this.activeLanguage = value; }
 
 	constructor(
 		private id: number,
@@ -38,7 +41,8 @@ class User implements IEntity {
 		private eShopId: number,
 		private companyId: number,
 		private email: string,
-		private phoneNumber: string
+		private phoneNumber: string,
+		private activeLanguage: LanguageEnum
 		) {}
 
 	toObject() {
@@ -55,7 +59,8 @@ class User implements IEntity {
 			eShopId: e.eShopId,
 			companyId: e.companyId,
 			email: e.email,
-			phoneNumber: e.phoneNumber
+			phoneNumber: e.phoneNumber,
+			activeLanguage: e.activeLanguage ? LanguageEnum[e.activeLanguage] : null
 		};
 	}
 
@@ -76,7 +81,8 @@ class User implements IEntity {
 			parseInt(o.eShopId),
 			parseInt(o.companyId),
 			o.email,
-			o.phoneNumber
+			o.phoneNumber,
+			Language.createLanguageEnum(o.activeLanguage)
 		);
 	}
 

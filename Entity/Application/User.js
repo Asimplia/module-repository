@@ -2,9 +2,11 @@ var List = require('../List');
 var Authenticate = require('./Authenticate');
 var AuthTypeEnum = require('./AuthTypeEnum');
 var AuthHash = require('./AuthHash');
+var LanguageEnum = require('../Locale/LanguageEnum');
+var Language = require('../Locale/Language');
 
 var User = (function () {
-    function User(id, firstName, lastName, authenticateList, authHashList, eShopId, companyId, email, phoneNumber) {
+    function User(id, firstName, lastName, authenticateList, authHashList, eShopId, companyId, email, phoneNumber, activeLanguage) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -14,6 +16,7 @@ var User = (function () {
         this.companyId = companyId;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.activeLanguage = activeLanguage;
     }
     Object.defineProperty(User.prototype, "Id", {
         get: function () {
@@ -105,6 +108,13 @@ var User = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(User.prototype, "ActiveLanguage", {
+        set: function (value) {
+            this.activeLanguage = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     User.prototype.toObject = function () {
         return User.toObject(this);
@@ -120,7 +130,8 @@ var User = (function () {
             eShopId: e.eShopId,
             companyId: e.companyId,
             email: e.email,
-            phoneNumber: e.phoneNumber
+            phoneNumber: e.phoneNumber,
+            activeLanguage: e.activeLanguage ? LanguageEnum[e.activeLanguage] : null
         };
     };
 
@@ -132,7 +143,7 @@ var User = (function () {
     };
 
     User.fromObject = function (o) {
-        return new User(parseInt(o.id), o.firstName, o.lastName, new List(o.authenticates, Authenticate.fromObject), new List(o.authHashes, AuthHash.fromObject), parseInt(o.eShopId), parseInt(o.companyId), o.email, o.phoneNumber);
+        return new User(parseInt(o.id), o.firstName, o.lastName, new List(o.authenticates, Authenticate.fromObject), new List(o.authHashes, AuthHash.fromObject), parseInt(o.eShopId), parseInt(o.companyId), o.email, o.phoneNumber, Language.createLanguageEnum(o.activeLanguage));
     };
 
     User.prototype.getFullName = function () {

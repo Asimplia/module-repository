@@ -15,6 +15,9 @@ var User = {
             authHash: String,
             sessionId: String,
             active: Boolean
-        }]
+        }],
+    email: String,
+    phoneNumber: String,
+    activeLanguage: String
 };
 module.exports = User;

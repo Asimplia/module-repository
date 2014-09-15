@@ -9,4 +9,14 @@ class Language {
 	constructor(
 		private language: LanguageEnum
 	) {}
+
+	static createLanguageEnum(lang: string) {
+		switch (lang) {
+			case LanguageEnum[LanguageEnum.en]:
+				return LanguageEnum.en;
+			case LanguageEnum[LanguageEnum.cs]:
+				return LanguageEnum.cs;
+		}
+		return null;
+	}
 }
