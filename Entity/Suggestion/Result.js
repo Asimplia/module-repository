@@ -151,10 +151,10 @@ var Result = (function () {
     Result.toObject = function (entity) {
         return {
             id: entity.id,
-            title: entity.title.toObject(),
-            shortTitle: entity.shortTitle.toObject(),
-            label: entity.label.toObject(),
-            text: entity.text.toObject(),
+            title: entity.title ? entity.title.toObject() : null,
+            shortTitle: entity.shortTitle ? entity.shortTitle.toObject() : null,
+            label: entity.label ? entity.label.toObject() : null,
+            text: entity.text ? entity.text.toObject() : null,
             activeStatus: entity.activeStatus ? entity.activeStatus.toObject() : null,
             statuses: entity.statusList.toArray(Status.toObject),
             graphs: entity.graphList.toArray(Graph.toObject),
