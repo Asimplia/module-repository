@@ -50,7 +50,7 @@ var FactorDefinition = (function () {
     });
 
     FactorDefinition.fromObject = function (o) {
-        return new FactorDefinition(new FactorValue(o.value), o.weight, Factor.fromObject(o.factor), o.reverse);
+        return new FactorDefinition(new FactorValue(o.value), parseFloat(o.weight), Factor.fromObject(o.factor), !!o.reverse);
     };
 
     FactorDefinition.toObject = function (entity) {

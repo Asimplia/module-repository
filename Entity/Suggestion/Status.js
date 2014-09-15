@@ -72,7 +72,7 @@ var Status = (function () {
     });
 
     Status.fromObject = function (o) {
-        return new Status(o.dateCreated ? moment(o.dateCreated).toDate() : null, o.dateValidTo ? moment(o.dateValidTo).toDate() : null, Status.createResultStateEnum(o.state), o.dateNextRemind ? moment(o.dateNextRemind).toDate() : null, o.priorityValue, o.priorityType);
+        return new Status(o.dateCreated ? moment(o.dateCreated).toDate() : null, o.dateValidTo ? moment(o.dateValidTo).toDate() : null, Status.createResultStateEnum(o.state), o.dateNextRemind ? moment(o.dateNextRemind).toDate() : null, parseFloat(o.priorityValue), o.priorityType);
     };
 
     Status.toObject = function (entity) {

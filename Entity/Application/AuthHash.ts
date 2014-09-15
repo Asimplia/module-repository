@@ -32,6 +32,6 @@ class AuthHash implements IEntity {
 	}
 
 	static fromObject(o: any) {
-		return new AuthHash(moment(o.dateAuthenticated).toDate(), o.authHash, o.sessionId, o.active);
+		return new AuthHash(moment(o.dateAuthenticated).toDate(), o.authHash, o.sessionId, !!o.active);
 	}
 }

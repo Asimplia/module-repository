@@ -28,7 +28,7 @@ class Company implements IEntity {
 
 	static fromObject(o: any) {
 		return new Company(
-			o.id,
+			parseInt(o.id),
 			o.name,
 			o.vatNumber
 		);

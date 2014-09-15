@@ -58,7 +58,7 @@ class Result implements IEntity {
 
 	static fromObject(o: any/*ISuggestionResultObject*/): Result {
 		return new Result(
-			o.id,
+			parseInt(o.id),
 			new LocalizedString(o.title),
 			new LocalizedString(o.shortTitle),
 			new LocalizedString(o.label),
@@ -66,11 +66,11 @@ class Result implements IEntity {
 			Status.fromObject(o.activeStatus),
 			new List<Status>().pushArray(o.statuses, Status.fromObject),
 			new List<Graph>().pushArray(o.graphs, Graph.fromObject),
-			o.eShopId,
+			parseInt(o.eShopId),
 			new List<Reason>().pushArray(o.reasons, Reason.fromObject),
 			SectionFactory.createSectionEnum(o.section),
-			o.main,
-			o.situationId
+			!!o.main,
+			parseInt(o.situationId)
 		);
 	}
 

@@ -37,7 +37,7 @@ var EShop = (function () {
     };
 
     EShop.fromObject = function (o) {
-        return new EShop(o.id, o.name, new List(o.serviceConnections, ServiceConnection.fromObject));
+        return new EShop(parseInt(o.id), o.name, new List(o.serviceConnections, ServiceConnection.fromObject));
     };
 
     EShop.prototype.addServiceConnection = function (serviceType, info) {

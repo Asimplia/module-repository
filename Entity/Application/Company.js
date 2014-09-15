@@ -39,7 +39,7 @@ var Company = (function () {
     };
 
     Company.fromObject = function (o) {
-        return new Company(o.id, o.name, o.vatNumber);
+        return new Company(parseInt(o.id), o.name, o.vatNumber);
     };
     return Company;
 })();

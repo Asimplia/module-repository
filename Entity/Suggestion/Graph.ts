@@ -9,7 +9,10 @@ class Graph implements IEntity {
 	) { }
 
 	static fromObject(object: any): Graph {
-		return new Graph(object.type, object.data);
+		return new Graph(
+			object.type, 
+			object.data
+		);
 	}
 
 	static toObject(entity: Graph) {

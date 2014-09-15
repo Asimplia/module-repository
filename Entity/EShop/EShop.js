@@ -21,7 +21,7 @@ var EShop = (function () {
     };
 
     EShop.fromObject = function (o) {
-        return new EShop(o.id, o.countryCode, o.owner, o.url, o.name);
+        return new EShop(parseInt(o.id), o.countryCode, o.owner, o.url, o.name);
     };
 
     EShop.fromRow = function (r) {

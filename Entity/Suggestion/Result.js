@@ -145,7 +145,7 @@ var Result = (function () {
     });
 
     Result.fromObject = function (o) {
-        return new Result(o.id, new LocalizedString(o.title), new LocalizedString(o.shortTitle), new LocalizedString(o.label), new LocalizedString(o.text), Status.fromObject(o.activeStatus), new List().pushArray(o.statuses, Status.fromObject), new List().pushArray(o.graphs, Graph.fromObject), o.eShopId, new List().pushArray(o.reasons, Reason.fromObject), SectionFactory.createSectionEnum(o.section), o.main, o.situationId);
+        return new Result(parseInt(o.id), new LocalizedString(o.title), new LocalizedString(o.shortTitle), new LocalizedString(o.label), new LocalizedString(o.text), Status.fromObject(o.activeStatus), new List().pushArray(o.statuses, Status.fromObject), new List().pushArray(o.graphs, Graph.fromObject), parseInt(o.eShopId), new List().pushArray(o.reasons, Reason.fromObject), SectionFactory.createSectionEnum(o.section), !!o.main, parseInt(o.situationId));
     };
 
     Result.toObject = function (entity) {

@@ -68,13 +68,13 @@ class User implements IEntity {
 
 	static fromObject(o: any) {
 		return new User(
-			o.id,
+			parseInt(o.id),
 			o.firstName,
 			o.lastName,
 			new List<Authenticate>(o.authenticates, Authenticate.fromObject),
 			new List<AuthHash>(o.authHashes, AuthHash.fromObject),
-			o.eShopId,
-			o.companyId,
+			parseInt(o.eShopId),
+			parseInt(o.companyId),
 			o.email,
 			o.phoneNumber
 		);

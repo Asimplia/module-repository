@@ -35,9 +35,9 @@ class Status implements IEntity {
 			o.dateValidTo ? moment(o.dateValidTo).toDate() : null,
 			Status.createResultStateEnum(o.state),
 			o.dateNextRemind ? moment(o.dateNextRemind).toDate() : null,
-			o.priorityValue,
+			parseFloat(o.priorityValue),
 			o.priorityType
-			);
+		);
 	}
 
 	static toObject(entity: Status) {

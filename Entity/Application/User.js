@@ -132,7 +132,7 @@ var User = (function () {
     };
 
     User.fromObject = function (o) {
-        return new User(o.id, o.firstName, o.lastName, new List(o.authenticates, Authenticate.fromObject), new List(o.authHashes, AuthHash.fromObject), o.eShopId, o.companyId, o.email, o.phoneNumber);
+        return new User(parseInt(o.id), o.firstName, o.lastName, new List(o.authenticates, Authenticate.fromObject), new List(o.authHashes, AuthHash.fromObject), parseInt(o.eShopId), parseInt(o.companyId), o.email, o.phoneNumber);
     };
 
     User.prototype.getFullName = function () {

@@ -25,9 +25,9 @@ class FactorDefinition implements IEntity {
 	static fromObject(o: any/*FactorDefinitionObject*/): FactorDefinition {
 		return new FactorDefinition(
 			new FactorValue(o.value),
-			o.weight,
+			parseFloat(o.weight),
 			Factor.fromObject(o.factor),
-			o.reverse
+			!!o.reverse
 		);
 	}
 

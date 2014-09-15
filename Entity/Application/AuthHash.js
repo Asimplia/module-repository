@@ -53,7 +53,7 @@ var AuthHash = (function () {
     };
 
     AuthHash.fromObject = function (o) {
-        return new AuthHash(moment(o.dateAuthenticated).toDate(), o.authHash, o.sessionId, o.active);
+        return new AuthHash(moment(o.dateAuthenticated).toDate(), o.authHash, o.sessionId, !!o.active);
     };
     return AuthHash;
 })();

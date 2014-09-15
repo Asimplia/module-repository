@@ -48,7 +48,7 @@ var LoadLog = (function () {
     };
 
     LoadLog.fromObject = function (o) {
-        return new LoadLog(o.id, o.eShopId, o.dateLoaded, o.result);
+        return new LoadLog(parseInt(o.id), parseInt(o.eShopId), o.dateLoaded, parseInt(o.result));
     };
 
     LoadLog.fromRow = function (r) {

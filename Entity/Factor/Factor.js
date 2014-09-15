@@ -66,7 +66,7 @@ var Factor = (function () {
     });
 
     Factor.fromObject = function (o) {
-        return new Factor(o.id, o.name, o.description, SectionFactory.createSectionEnum(o.section), o.weight, Factor.createTypeEnum(o.factorType), Factor.createColumnEnum(o.column), new LocalizedString(o.label));
+        return new Factor(parseInt(o.id), o.name, o.description, SectionFactory.createSectionEnum(o.section), parseFloat(o.weight), Factor.createTypeEnum(o.factorType), Factor.createColumnEnum(o.column), new LocalizedString(o.label));
     };
 
     Factor.toObject = function (entity) {

@@ -44,8 +44,7 @@ var Signal = (function () {
     });
 
     Signal.fromRow = function (o) {
-        var matrix = MatrixFactory.createMatrixFromRow(o);
-        return new Signal(parseInt(o[Signal.COLUMN_SIGNAL_ID]), matrix, o[Signal.COLUMN_DATE_CREATED], parseInt(o[Signal.COLUMN_SITUATION_ID]));
+        return new Signal(parseInt(o[Signal.COLUMN_SIGNAL_ID]), MatrixFactory.createMatrixFromRow(o), moment(o[Signal.COLUMN_DATE_CREATED]).toDate(), parseInt(o[Signal.COLUMN_SITUATION_ID]));
     };
 
     Signal.toObject = function (entity) {

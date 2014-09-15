@@ -37,10 +37,10 @@ class LoadLog implements IEntity {
 
 	static fromObject(o: any) {
 		return new LoadLog(
-			o.id,
-			o.eShopId,
+			parseInt(o.id),
+			parseInt(o.eShopId),
 			o.dateLoaded,
-			o.result
+			parseInt(o.result)
 		);
 	}
 

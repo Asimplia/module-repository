@@ -44,7 +44,7 @@ class Action implements IEntity {
 
 	static fromObject(o: any/*ISuggestionActionObject*/): Action {
 		return new Action(
-			o.id,
+			parseInt(o.id),
 			new LocalizedString(o.name),
 			new LocalizedString(o.shortName),
 			new LocalizedString(o.text),
@@ -52,7 +52,7 @@ class Action implements IEntity {
 			new List<FactorDefinition>().pushArray(o.factorDefinitions, FactorDefinition.fromObject),
 			AsimpliaUtil.ArrayHelper.mapFilterNulls(o.placeholders, (placeholder: string) => { return Action.createPlaceholderEnum(placeholder); }),
 			Action.createPriorityTypeEnum(o.priorityType),
-			o.main
+			!!o.main
 		);
 	}
 

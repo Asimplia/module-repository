@@ -31,11 +31,11 @@ class Factor {
 
 	static fromObject(o: any/*FactorObject*/): Factor {
 		return new Factor(
-			o.id,
+			parseInt(o.id),
 			o.name,
 			o.description,
 			SectionFactory.createSectionEnum(o.section),
-			o.weight,
+			parseFloat(o.weight),
 			Factor.createTypeEnum(o.factorType),
 			Factor.createColumnEnum(o.column),
 			new LocalizedString(o.label)

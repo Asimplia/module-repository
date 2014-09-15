@@ -31,7 +31,7 @@ class EShop implements IEntity {
 
 	static fromObject(o: any) {
 		return new EShop(
-			o.id,
+			parseInt(o.id),
 			o.name,
 			new List<ServiceConnection>(o.serviceConnections, ServiceConnection.fromObject)
 		);

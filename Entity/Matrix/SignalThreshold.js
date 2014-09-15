@@ -35,7 +35,7 @@ var SignalThreshold = (function () {
     });
 
     SignalThreshold.fromObject = function (o) {
-        return new SignalThreshold(SectionFactory.createSectionEnum(o.section), o.name, o.thresholdValue.q1, o.thresholdValue.q2, o.thresholdValue.q3, o.thresholdValue.q4, o.priority.q1, o.priority.q2, o.priority.q3, o.priority.q4, o.description.q1, o.description.q2, o.description.q3, o.description.q4);
+        return new SignalThreshold(SectionFactory.createSectionEnum(o.section), o.name, parseFloat(o.thresholdValue.q1), parseFloat(o.thresholdValue.q2), parseFloat(o.thresholdValue.q3), parseFloat(o.thresholdValue.q4), parseFloat(o.priority.q1), parseFloat(o.priority.q2), parseFloat(o.priority.q3), parseFloat(o.priority.q4), o.description.q1, o.description.q2, o.description.q3, o.description.q4);
     };
 
     SignalThreshold.prototype.toObject = function () {
