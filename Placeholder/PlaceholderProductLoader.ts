@@ -1,6 +1,6 @@
 
 import Repository = require('../index');
-
+import _ = require('underscore');
 
 export = PlaceholderProductLoader;
 class PlaceholderProductLoader {

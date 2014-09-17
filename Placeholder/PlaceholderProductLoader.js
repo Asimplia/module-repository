@@ -1,4 +1,5 @@
 var Repository = require('../index');
+var _ = require('underscore');
 
 var PlaceholderProductLoader = (function () {
     function PlaceholderProductLoader() {
