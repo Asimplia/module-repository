@@ -8,26 +8,26 @@ var PlaceholderCategoryLoader = (function () {
         });
     }
     PlaceholderCategoryLoader.prototype.getName = function (productId, callback) {
-        this.db.query('MATCH (a:CATEGORY) WHERE (a.productId = {productId}) RETURN a.name', {
+        this.db.query('MATCH (a:PRODUCT)-->(b:CATEGORY) WHERE (a.productId = {productId}) RETURN b.name limit 1', {
             productId: productId
         }, function (e, res) {
             if (e) {
                 callback(e);
                 return;
             }
-            callback(null, res.pop()['a.name']);
+            callback(null, res.pop()['b.name']);
         });
     };
 
     PlaceholderCategoryLoader.prototype.getChangeInSale = function (productId, callback) {
-        this.db.query('MATCH (a:CATEGORY) WHERE (a.productId = {productId}) RETURN a.categoryChangeInSale', {
+        this.db.query('MATCH (a:PRODUCT)-->(b:CATEGORY) WHERE (a.productId = {productId}) RETURN b.categoryChangeInSale', {
             productId: productId
         }, function (e, res) {
             if (e) {
                 callback(e);
                 return;
             }
-            callback(null, res.pop()['a.categoryChangeInSale']);
+            callback(null, res.pop()['b.categoryChangeInSale']);
         });
     };
     return PlaceholderCategoryLoader;

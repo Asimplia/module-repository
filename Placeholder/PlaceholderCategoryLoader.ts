@@ -13,26 +13,26 @@ class PlaceholderCategoryLoader {
 	}
 
 	getName(productId: number, callback: (e: Error, categoryName?: string) => void): void {
-		this.db.query('MATCH (a:CATEGORY) WHERE (a.productId = {productId}) RETURN a.name', {
+		this.db.query('MATCH (a:PRODUCT)-->(b:CATEGORY) WHERE (a.productId = {productId}) RETURN b.name limit 1', {
 			productId: productId
 		}, (e: Error, res) => {
 			if (e) {
 				callback(e);
 				return;
 			}
-			callback(null, res.pop()['a.name']);
+			callback(null, res.pop()['b.name']);
 		});
 	}
 
 	getChangeInSale(productId: number, callback: (e: Error, changeInSale?: number) => void): void {
-		this.db.query('MATCH (a:CATEGORY) WHERE (a.productId = {productId}) RETURN a.categoryChangeInSale', {
+		this.db.query('MATCH (a:PRODUCT)-->(b:CATEGORY) WHERE (a.productId = {productId}) RETURN b.categoryChangeInSale', {
 			productId: productId
 		}, (e: Error, res) => {
 			if (e) {
 				callback(e);
 				return;
 			}
-			callback(null, res.pop()['a.categoryChangeInSale']);
+			callback(null, res.pop()['b.categoryChangeInSale']);
 		});
 	}
 }
