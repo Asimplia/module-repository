@@ -14,50 +14,89 @@ class PlaceholderProductLoader {
 	}
 
 	getName(productId: number, callback: (e: Error, productName?: string) => void): void {
-		this.db.query('MATCH (c:Customer {name: "Karel Havlena"}) RETURN c.name;', {
+		this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.name', {
 			productId: productId
 		}, (e: Error, res) => {
 			if (e) {
 				callback(e);
 				return;
 			}
-			callback(null, res.pop()['c.name']);
+			callback(null, res.pop()['a.name']);
 		});
 	}
 
 	getPrice(productId: number, callback: (e: Error, price?: number) => void): void {
-		this.db.query('MATCH (a:Product) WHERE (a.id = "{productId}") RETURN a', {
+		this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.productPrice', {
 			productId: productId
-		}, (e: Error, price: number) => {
+		}, (e: Error, res) => {
 			if (e) {
 				callback(e);
 				return;
 			}
-			callback(null, price);
+			callback(null, res.pop()['a.productPrice']);
+		});
+	}
+
+	getPriceChange(productId: number, callback: (e: Error, priceChange?: number) => void): void {
+		this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.productPriceChange', {
+			productId: productId
+		}, (e: Error, res) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, res.pop()['a.productPriceChange']);
 		});
 	}
 
 	getPackageOption(productId: number, callback: (e: Error, productNames?: string[]) => void): void {
-		this.db.query('MATCH (a:Product) WHERE (a.id = "{productId}") RETURN a', {
+		this.db.query('MATCH (a:PRODUCT)-->(b:ORDER_ITEM)-->(c:ORDER)<--(d:ORDER_ITEM)--(e:PRODUCT) WHERE (a.productId = {productId}) RETURN e', {
 			productId: productId
-		}, (e: Error, productNames: string[]) => {
+		}, (e: Error, res) => {
 			if (e) {
 				callback(e);
 				return;
 			}
+			var productNames = _.map(res, (row) => {
+				return row['e'];
+			});
 			callback(null, productNames);
 		});
 	}
 
-	getStokingTime(productId: number, callback: (e: Error, stokingTime?: number) => void): void {
-		this.db.query('MATCH (a:Product) WHERE (a.id = "{productId}") RETURN a', {
+	getSku(productId: number, callback: (e: Error, productSku?: number) => void): void {
+		this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.productSku', {
 			productId: productId
-		}, (e: Error, stokingTime: number) => {
+		}, (e: Error, res) => {
 			if (e) {
 				callback(e);
 				return;
 			}
-			callback(null, stokingTime);
+			callback(null, res.pop()['a.productSku']);
+		});
+	}
+
+	getStokingTime(productId: number, callback: (e: Error, stokingTime?: number) => void): void {
+		this.db.query('', { // TODO
+			productId: productId
+		}, (e: Error, res) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, res.pop()['']);
+		});
+	}
+
+	getMarginRate(productId: number, callback: (e: Error, marginRate?: number) => void): void {
+		this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.productMarginRate', {
+			productId: productId
+		}, (e: Error, res) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, res.pop()['a.productMarginRate']);
 		});
 	}
 

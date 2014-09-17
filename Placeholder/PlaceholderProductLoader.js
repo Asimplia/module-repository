@@ -8,50 +8,89 @@ var PlaceholderProductLoader = (function () {
         });
     }
     PlaceholderProductLoader.prototype.getName = function (productId, callback) {
-        this.db.query('MATCH (c:Customer {name: "Karel Havlena"}) RETURN c.name;', {
+        this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.name', {
             productId: productId
         }, function (e, res) {
             if (e) {
                 callback(e);
                 return;
             }
-            callback(null, res.pop()['c.name']);
+            callback(null, res.pop()['a.name']);
         });
     };
 
     PlaceholderProductLoader.prototype.getPrice = function (productId, callback) {
-        this.db.query('MATCH (a:Product) WHERE (a.id = "{productId}") RETURN a', {
+        this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.productPrice', {
             productId: productId
-        }, function (e, price) {
+        }, function (e, res) {
             if (e) {
                 callback(e);
                 return;
             }
-            callback(null, price);
+            callback(null, res.pop()['a.productPrice']);
+        });
+    };
+
+    PlaceholderProductLoader.prototype.getPriceChange = function (productId, callback) {
+        this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.productPriceChange', {
+            productId: productId
+        }, function (e, res) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(null, res.pop()['a.productPriceChange']);
         });
     };
 
     PlaceholderProductLoader.prototype.getPackageOption = function (productId, callback) {
-        this.db.query('MATCH (a:Product) WHERE (a.id = "{productId}") RETURN a', {
+        this.db.query('MATCH (a:PRODUCT)-->(b:ORDER_ITEM)-->(c:ORDER)<--(d:ORDER_ITEM)--(e:PRODUCT) WHERE (a.productId = {productId}) RETURN e', {
             productId: productId
-        }, function (e, productNames) {
+        }, function (e, res) {
             if (e) {
                 callback(e);
                 return;
             }
+            var productNames = _.map(res, function (row) {
+                return row['e'];
+            });
             callback(null, productNames);
         });
     };
 
-    PlaceholderProductLoader.prototype.getStokingTime = function (productId, callback) {
-        this.db.query('MATCH (a:Product) WHERE (a.id = "{productId}") RETURN a', {
+    PlaceholderProductLoader.prototype.getSku = function (productId, callback) {
+        this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.productSku', {
             productId: productId
-        }, function (e, stokingTime) {
+        }, function (e, res) {
             if (e) {
                 callback(e);
                 return;
             }
-            callback(null, stokingTime);
+            callback(null, res.pop()['a.productSku']);
+        });
+    };
+
+    PlaceholderProductLoader.prototype.getStokingTime = function (productId, callback) {
+        this.db.query('', {
+            productId: productId
+        }, function (e, res) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(null, res.pop()['']);
+        });
+    };
+
+    PlaceholderProductLoader.prototype.getMarginRate = function (productId, callback) {
+        this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.productMarginRate', {
+            productId: productId
+        }, function (e, res) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(null, res.pop()['a.productMarginRate']);
         });
     };
     return PlaceholderProductLoader;
