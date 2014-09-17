@@ -132,12 +132,12 @@ var Action = (function () {
 
     Action.createSectionEnum = function (section) {
         switch (section) {
-            case SectionEnum[12 /* CUSTOMER */]:
-                return 12 /* CUSTOMER */;
+            case SectionEnum[32 /* CUSTOMER */]:
+                return 32 /* CUSTOMER */;
             case SectionEnum[1 /* PRODUCT */]:
                 return 1 /* PRODUCT */;
-            case SectionEnum[16 /* CHANNEL */]:
-                return 16 /* CHANNEL */;
+            case SectionEnum[53 /* CHANNEL */]:
+                return 53 /* CHANNEL */;
         }
         return 0 /* UNKNOWN */;
     };
