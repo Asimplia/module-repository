@@ -4,6 +4,7 @@ var AuthTypeEnum = require('./AuthTypeEnum');
 var AuthHash = require('./AuthHash');
 var LanguageEnum = require('../Locale/LanguageEnum');
 var Language = require('../Locale/Language');
+var EntityPreparer = require('../EntityPreparer');
 
 var User = (function () {
     function User(id, firstName, lastName, authenticateList, authHashList, eShopId, companyId, email, phoneNumber, activeLanguage) {
@@ -143,7 +144,7 @@ var User = (function () {
     };
 
     User.fromObject = function (o) {
-        return new User(parseInt(o.id), o.firstName, o.lastName, new List(o.authenticates, Authenticate.fromObject), new List(o.authHashes, AuthHash.fromObject), parseInt(o.eShopId), parseInt(o.companyId), o.email, o.phoneNumber, Language.createLanguageEnum(o.activeLanguage));
+        return new User(EntityPreparer.int(o.id), EntityPreparer.string(o.firstName), EntityPreparer.string(o.lastName), new List(o.authenticates, Authenticate.fromObject), new List(o.authHashes, AuthHash.fromObject), EntityPreparer.int(o.eShopId), EntityPreparer.int(o.companyId), EntityPreparer.string(o.email), EntityPreparer.stringOrNull(o.phoneNumber), Language.createLanguageEnum(o.activeLanguage));
     };
 
     User.prototype.getFullName = function () {

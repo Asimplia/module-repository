@@ -10,6 +10,7 @@ import Reason = require('./Reason');
 import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
 import moment = require('moment');
+import EntityPreparer = require('../EntityPreparer');
 
 export = Result;
 class Result implements IEntity {
@@ -58,7 +59,7 @@ class Result implements IEntity {
 
 	static fromObject(o: any/*ISuggestionResultObject*/): Result {
 		return new Result(
-			parseInt(o.id),
+			EntityPreparer.int(o.id),
 			new LocalizedString(o.title),
 			new LocalizedString(o.shortTitle),
 			new LocalizedString(o.label),
@@ -66,11 +67,11 @@ class Result implements IEntity {
 			Status.fromObject(o.activeStatus),
 			new List<Status>().pushArray(o.statuses, Status.fromObject),
 			new List<Graph>().pushArray(o.graphs, Graph.fromObject),
-			parseInt(o.eShopId),
+			EntityPreparer.int(o.eShopId),
 			new List<Reason>().pushArray(o.reasons, Reason.fromObject),
 			SectionFactory.createSectionEnum(o.section),
-			!!o.main,
-			parseInt(o.situationId)
+			EntityPreparer.boolean(o.main),
+			EntityPreparer.int(o.situationId)
 		);
 	}
 

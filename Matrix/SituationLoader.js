@@ -3,7 +3,6 @@ var Signal = require('../Entity/Matrix/Signal');
 var Situation = require('../Entity/Matrix/Situation');
 var Matrix = require('../Entity/Matrix/Matrix');
 var List = require('../Entity/List');
-var moment = require('moment');
 
 var SituationLoader = (function () {
     function SituationLoader() {
@@ -51,7 +50,7 @@ var SituationLoader = (function () {
                 return situation.Id == row[Situation.COLUMN_SITUATION_ID];
             });
             if (!situation) {
-                situation = new Situation(parseInt(row[Situation.COLUMN_SITUATION_ID]), new List(), moment(row[Situation.COLUMN_DATE_CREATED]).toDate(), row[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED] ? moment(row[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED]).toDate() : null);
+                situation = Situation.fromRow(row);
                 situationList.push(situation);
             }
             var signal = Signal.fromRow(row);

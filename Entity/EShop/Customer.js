@@ -1,4 +1,6 @@
-﻿var Customer = (function () {
+﻿var EntityPreparer = require('../EntityPreparer');
+
+var Customer = (function () {
     function Customer(id, eShopId, firtname, lastname, email, gender, birthday, anonymous, dateCreated) {
         this.id = id;
         this.eShopId = eShopId;
@@ -19,7 +21,7 @@
     });
 
     Customer.fromRow = function (r) {
-        return new Customer(parseInt(r[Customer.COLUMN_CUSTOMER_ID]), parseInt(r[Customer.COLUMN_E_SHOP_ID]), r[Customer.COLUMN_FIRSTNAME], r[Customer.COLUMN_LASTNAME], r[Customer.COLUMN_EMAIL], r[Customer.COLUMN_GENDER], r[Customer.COLUMN_BIRTHDAY] ? moment(r[Customer.COLUMN_BIRTHDAY]).toDate() : null, !!r[Customer.COLUMN_ANONYMOUS], r[Customer.COLUMN_DATE_CREATED] ? moment(r[Customer.COLUMN_DATE_CREATED]).toDate() : null);
+        return new Customer(EntityPreparer.int(r[Customer.COLUMN_CUSTOMER_ID]), EntityPreparer.int(r[Customer.COLUMN_E_SHOP_ID]), EntityPreparer.stringOrNull(r[Customer.COLUMN_FIRSTNAME]), EntityPreparer.stringOrNull(r[Customer.COLUMN_LASTNAME]), EntityPreparer.stringOrNull(r[Customer.COLUMN_EMAIL]), EntityPreparer.stringOrNull(r[Customer.COLUMN_GENDER]), EntityPreparer.dateOrNull(r[Customer.COLUMN_BIRTHDAY]), EntityPreparer.boolean(r[Customer.COLUMN_ANONYMOUS]), EntityPreparer.dateOrNull(r[Customer.COLUMN_DATE_CREATED]));
     };
 
     Customer.toObject = function (entity) {

@@ -1,6 +1,7 @@
 
 import IEntity = require('../IEntity');
 import AuthTypeEnum = require('./AuthTypeEnum');
+import EntityPreparer = require('../EntityPreparer');
 
 export = Authenticate;
 class Authenticate implements IEntity {
@@ -39,7 +40,12 @@ class Authenticate implements IEntity {
 	}
 
 	static fromObject(o: any) {
-		return new Authenticate(o.identity, o.verification, Authenticate.createAuthTypeEnum(o.authType), o.salt);
+		return new Authenticate(
+			EntityPreparer.string(o.identity), 
+			EntityPreparer.stringOrNull(o.verification), 
+			Authenticate.createAuthTypeEnum(o.authType), 
+			EntityPreparer.stringOrNull(o.salt)
+		);
 	}
 
 	static createAuthTypeEnum(authType: string) {

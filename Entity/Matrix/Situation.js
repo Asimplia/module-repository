@@ -1,5 +1,8 @@
+var List = require('../List');
 var Signal = require('./Signal');
 var MatrixProduct = require('./MatrixProduct');
+
+var EntityPreparer = require('../EntityPreparer');
 
 var Situation = (function () {
     function Situation(id, signalList, dateCreated, dateSuggestionResultCreated) {
@@ -72,6 +75,9 @@ var Situation = (function () {
 
     Situation.prototype.toObject = function () {
         return Situation.toObject(this);
+    };
+    Situation.fromRow = function (r) {
+        return new Situation(EntityPreparer.int(r[Situation.COLUMN_SITUATION_ID]), new List(), EntityPreparer.date(r[Situation.COLUMN_DATE_CREATED]), EntityPreparer.dateOrNull(r[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED]));
     };
 
     Situation.prototype.getMatrixProductBySection = function (section) {

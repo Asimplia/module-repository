@@ -1,3 +1,5 @@
+var EntityPreparer = require('../EntityPreparer');
+
 var LoadLog = (function () {
     function LoadLog(id, eShopId, dateLoaded, result) {
         this.id = id;
@@ -48,11 +50,11 @@ var LoadLog = (function () {
     };
 
     LoadLog.fromObject = function (o) {
-        return new LoadLog(parseInt(o.id), parseInt(o.eShopId), o.dateLoaded, parseInt(o.result));
+        return new LoadLog(EntityPreparer.int(o.id), EntityPreparer.int(o.eShopId), EntityPreparer.date(o.dateLoaded), EntityPreparer.int(o.result));
     };
 
     LoadLog.fromRow = function (r) {
-        return new LoadLog(r[LoadLog.COLUMN_LOAD_LOG_ID], r[LoadLog.COLUMN_E_SHOP_ID], r[LoadLog.COLUMN_DATELOADED], r[LoadLog.COLUMN_RESULT]);
+        return new LoadLog(EntityPreparer.int(r[LoadLog.COLUMN_LOAD_LOG_ID]), EntityPreparer.int(r[LoadLog.COLUMN_E_SHOP_ID]), EntityPreparer.date(r[LoadLog.COLUMN_DATELOADED]), EntityPreparer.int(r[LoadLog.COLUMN_RESULT]));
     };
     LoadLog.TABLE_NAME = 'loadlog';
     LoadLog.COLUMN_LOAD_LOG_ID = 'loadid';

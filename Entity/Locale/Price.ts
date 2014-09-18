@@ -1,6 +1,7 @@
 
 import Currency = require('./Currency');
 import CurrencyEnum = require('./CurrencyEnum');
+import EntityPreparer = require('../EntityPreparer');
 
 export = Price;
 class Price {
@@ -9,8 +10,8 @@ class Price {
 	private USD: number;
 
 	constructor(prices: { CZK: number; USD: number }) {
-		this.CZK = prices.CZK;
-		this.USD = prices.USD;
+		this.CZK = EntityPreparer.float(prices.CZK);
+		this.USD = EntityPreparer.float(prices.USD);
 	}
 
 	getByCurrency(currency: Currency) {

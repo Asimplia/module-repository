@@ -1,4 +1,6 @@
-﻿var Channel = (function () {
+﻿var EntityPreparer = require('../EntityPreparer');
+
+var Channel = (function () {
     function Channel(id, eShopId, customerId, name, paidChannel, refferalOrganic) {
         this.id = id;
         this.eShopId = eShopId;
@@ -16,7 +18,7 @@
     });
 
     Channel.fromRow = function (r) {
-        return new Channel(parseInt(r[Channel.COLUMN_CHANNEL_ID]), parseInt(r[Channel.COLUMN_E_SHOP_ID]), parseInt(r[Channel.COLUMN_CUSTOMER_ID]), r[Channel.COLUMN_NAME], !!r[Channel.COLUMN_PAID_CHANNEL], !!r[Channel.COLUMN_REFFERAL_ORGANIC]);
+        return new Channel(EntityPreparer.int(r[Channel.COLUMN_CHANNEL_ID]), EntityPreparer.int(r[Channel.COLUMN_E_SHOP_ID]), EntityPreparer.int(r[Channel.COLUMN_CUSTOMER_ID]), EntityPreparer.string(r[Channel.COLUMN_NAME]), EntityPreparer.boolean(r[Channel.COLUMN_PAID_CHANNEL]), EntityPreparer.boolean(r[Channel.COLUMN_REFFERAL_ORGANIC]));
     };
 
     Channel.toObject = function (entity) {

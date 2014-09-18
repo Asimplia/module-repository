@@ -1,4 +1,4 @@
-var moment = require('moment');
+var EntityPreparer = require('../EntityPreparer');
 
 var AuthHash = (function () {
     function AuthHash(dateAuthenticated, authHash, sessionId, active) {
@@ -53,7 +53,7 @@ var AuthHash = (function () {
     };
 
     AuthHash.fromObject = function (o) {
-        return new AuthHash(moment(o.dateAuthenticated).toDate(), o.authHash, o.sessionId, !!o.active);
+        return new AuthHash(EntityPreparer.date(o.dateAuthenticated), EntityPreparer.string(o.authHash), EntityPreparer.string(o.sessionId), EntityPreparer.boolean(o.active));
     };
     return AuthHash;
 })();

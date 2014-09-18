@@ -1,6 +1,7 @@
 ﻿
 import Language = require('./Language');
 import LanguageEnum = require('./LanguageEnum');
+import EntityPreparer = require('../EntityPreparer');
 
 export = LocalizedString;
 class LocalizedString {
@@ -13,10 +14,10 @@ class LocalizedString {
 
 	constructor(langsObject: { en: string; cs: string }) {
 		if (!langsObject) {
-			return;
+			langsObject = { en: null, cs: null };
 		}
-		this.en = typeof langsObject.en !== 'undefined' ? langsObject.en : null;
-		this.cs = typeof langsObject.cs !== 'undefined' ? langsObject.cs : null;
+		this.en = EntityPreparer.stringOrNull(langsObject.en);
+		this.cs = EntityPreparer.stringOrNull(langsObject.cs);
 	}
 
 	translate(language: Language) {

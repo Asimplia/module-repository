@@ -6,6 +6,7 @@ import AuthTypeEnum = require('./AuthTypeEnum');
 import AuthHash = require('./AuthHash');
 import LanguageEnum = require('../Locale/LanguageEnum')
 import Language = require('../Locale/Language')
+import EntityPreparer = require('../EntityPreparer');
 
 export = User;
 class User implements IEntity {
@@ -73,15 +74,15 @@ class User implements IEntity {
 
 	static fromObject(o: any) {
 		return new User(
-			parseInt(o.id),
-			o.firstName,
-			o.lastName,
+			EntityPreparer.int(o.id),
+			EntityPreparer.string(o.firstName),
+			EntityPreparer.string(o.lastName),
 			new List<Authenticate>(o.authenticates, Authenticate.fromObject),
 			new List<AuthHash>(o.authHashes, AuthHash.fromObject),
-			parseInt(o.eShopId),
-			parseInt(o.companyId),
-			o.email,
-			o.phoneNumber,
+			EntityPreparer.int(o.eShopId),
+			EntityPreparer.int(o.companyId),
+			EntityPreparer.string(o.email),
+			EntityPreparer.stringOrNull(o.phoneNumber),
 			Language.createLanguageEnum(o.activeLanguage)
 		);
 	}

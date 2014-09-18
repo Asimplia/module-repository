@@ -1,5 +1,6 @@
 ﻿
 import IEntity = require('../IEntity');
+import EntityPreparer = require('../EntityPreparer');
 
 export = Product;
 class Product implements IEntity {
@@ -24,11 +25,11 @@ class Product implements IEntity {
 
 	static fromRow(r: any) {
 		return new Product(
-			parseInt(r[Product.COLUMN_PRODUCT_ID]),
-			parseInt(r[Product.COLUMN_E_SHOP_ID]),
-			r[Product.COLUMN_NAME],
-			parseInt(r[Product.COLUMN_BASE_PRICE]),
-			r[Product.COLUMN_EAN]
+			EntityPreparer.int(r[Product.COLUMN_PRODUCT_ID]),
+			EntityPreparer.int(r[Product.COLUMN_E_SHOP_ID]),
+			EntityPreparer.stringOrNull(r[Product.COLUMN_NAME]),
+			EntityPreparer.float(r[Product.COLUMN_BASE_PRICE]),
+			EntityPreparer.string(r[Product.COLUMN_EAN])
 		);
 	}
 

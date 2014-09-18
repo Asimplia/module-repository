@@ -1,3 +1,5 @@
+var EntityPreparer = require('../EntityPreparer');
+
 var Company = (function () {
     function Company(id, name, vatNumber) {
         this.id = id;
@@ -39,7 +41,7 @@ var Company = (function () {
     };
 
     Company.fromObject = function (o) {
-        return new Company(parseInt(o.id), o.name, o.vatNumber);
+        return new Company(EntityPreparer.int(o.id), EntityPreparer.string(o.name), EntityPreparer.stringOrNull(o.vatNumber));
     };
     return Company;
 })();

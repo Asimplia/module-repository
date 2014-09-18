@@ -7,6 +7,7 @@ import QuadrantValueEnum = require('./QuadrantValueEnum');
 import QuadrantValueFactory = require('./QuadrantValueFactory');
 import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
+import EntityPreparer = require('../EntityPreparer');
 
 export = MatrixChannel;
 class MatrixChannel extends Matrix {
@@ -53,25 +54,25 @@ class MatrixChannel extends Matrix {
 
 	static fromRow(o: any): MatrixChannel {
 		return new MatrixChannel(
-			parseInt(o[Matrix.COLUMN_MATRIX_ID]),
-			parseInt(o[Matrix.COLUMN_E_SHOP_ID]),
+			EntityPreparer.int(o[Matrix.COLUMN_MATRIX_ID]),
+			EntityPreparer.int(o[Matrix.COLUMN_E_SHOP_ID]),
 			SectionFactory.createSectionEnum(o[Matrix.COLUMN_SECTION]),
-			parseInt(o[Matrix.COLUMN_LOAD_ID]),
-			parseFloat(o[Matrix.COLUMN_SCORE_ABSOLUTE]),
-			parseFloat(o[Matrix.COLUMN_SCORE_RELATIVE]),
-			parseFloat(o[Matrix.COLUMN_SCORE_WEIGHT]),
-			parseFloat(o[Matrix.COLUMN_CHANGE_ABSOLUTE]),
-			parseFloat(o[Matrix.COLUMN_CHANGE_RELATIVE]),
-			parseFloat(o[Matrix.COLUMN_CHANGE_WEIGHT]),
-			parseFloat(o[Matrix.COLUMN_PREDICTION]),
+			EntityPreparer.int(o[Matrix.COLUMN_LOAD_ID]),
+			EntityPreparer.float(o[Matrix.COLUMN_SCORE_ABSOLUTE]),
+			EntityPreparer.float(o[Matrix.COLUMN_SCORE_RELATIVE]),
+			EntityPreparer.float(o[Matrix.COLUMN_SCORE_WEIGHT]),
+			EntityPreparer.float(o[Matrix.COLUMN_CHANGE_ABSOLUTE]),
+			EntityPreparer.float(o[Matrix.COLUMN_CHANGE_RELATIVE]),
+			EntityPreparer.float(o[Matrix.COLUMN_CHANGE_WEIGHT]),
+			EntityPreparer.floatOrNull(o[Matrix.COLUMN_PREDICTION]),
 			QuadrantValueFactory.createQuadrantValueEnum(o[Matrix.COLUMN_QUADRANT]),
-			moment(o[Matrix.COLUMN_DATE_VALID]).toDate(),
-			parseFloat(o[Matrix.COLUMN_INPUT_VALUE_X]),
-			parseFloat(o[Matrix.COLUMN_INPUT_VALUE_Y]),
-			parseFloat(o[Matrix.COLUMN_CHANGE_VALUE_X]),
-			parseFloat(o[Matrix.COLUMN_CHANGE_VALUE_Y]),
-			parseFloat(o[Matrix.COLUMN_TANGENS]),
-			parseFloat(o[Matrix.COLUMN_CHANGE_TANGENS]),
+			EntityPreparer.date(o[Matrix.COLUMN_DATE_VALID]),
+			EntityPreparer.floatOrNull(o[Matrix.COLUMN_INPUT_VALUE_X]),
+			EntityPreparer.floatOrNull(o[Matrix.COLUMN_INPUT_VALUE_Y]),
+			EntityPreparer.floatOrNull(o[Matrix.COLUMN_CHANGE_VALUE_X]),
+			EntityPreparer.floatOrNull(o[Matrix.COLUMN_CHANGE_VALUE_Y]),
+			EntityPreparer.floatOrNull(o[Matrix.COLUMN_TANGENS]),
+			EntityPreparer.floatOrNull(o[Matrix.COLUMN_CHANGE_TANGENS]),
 			Channel.fromRow(o)
 		);
 	}

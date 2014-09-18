@@ -4,6 +4,7 @@ import Matrix = require('./Matrix');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
+import EntityPreparer = require('../EntityPreparer');
 
 export = SignalThreshold;
 class SignalThreshold implements IEntity {
@@ -31,19 +32,19 @@ class SignalThreshold implements IEntity {
 	static fromObject(o: any) {
 		return new SignalThreshold(
 			SectionFactory.createSectionEnum(o.section),
-			o.name,
-			parseFloat(o.thresholdValue.q1),
-			parseFloat(o.thresholdValue.q2),
-			parseFloat(o.thresholdValue.q3),
-			parseFloat(o.thresholdValue.q4),
-			parseFloat(o.priority.q1),
-			parseFloat(o.priority.q2),
-			parseFloat(o.priority.q3),
-			parseFloat(o.priority.q4),
-			o.description.q1,
-			o.description.q2,
-			o.description.q3,
-			o.description.q4
+			EntityPreparer.string(o.name),
+			EntityPreparer.float(o.thresholdValue.q1),
+			EntityPreparer.float(o.thresholdValue.q2),
+			EntityPreparer.float(o.thresholdValue.q3),
+			EntityPreparer.float(o.thresholdValue.q4),
+			EntityPreparer.float(o.priority.q1),
+			EntityPreparer.float(o.priority.q2),
+			EntityPreparer.float(o.priority.q3),
+			EntityPreparer.float(o.priority.q4),
+			EntityPreparer.stringOrNull(o.description.q1),
+			EntityPreparer.stringOrNull(o.description.q2),
+			EntityPreparer.stringOrNull(o.description.q3),
+			EntityPreparer.stringOrNull(o.description.q4)
 		);
 	}
 

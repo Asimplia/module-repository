@@ -4,6 +4,7 @@ var SectionFactory = require('../Section/SectionFactory');
 var ColumnEnum = require('../Matrix/ColumnEnum');
 var ShiftValueEnum = require('../Factor/ShiftValueEnum');
 var LocalizedString = require('../Locale/LocalizedString');
+var EntityPreparer = require('../EntityPreparer');
 
 var Factor = (function () {
     function Factor(id, name, description, section, weight, factorType, column, label) {
@@ -66,7 +67,7 @@ var Factor = (function () {
     });
 
     Factor.fromObject = function (o) {
-        return new Factor(parseInt(o.id), o.name, o.description, SectionFactory.createSectionEnum(o.section), parseFloat(o.weight), Factor.createTypeEnum(o.factorType), Factor.createColumnEnum(o.column), new LocalizedString(o.label));
+        return new Factor(EntityPreparer.int(o.id), EntityPreparer.stringOrNull(o.name), EntityPreparer.stringOrNull(o.description), SectionFactory.createSectionEnum(o.section), EntityPreparer.floatOrNull(o.weight), Factor.createTypeEnum(o.factorType), Factor.createColumnEnum(o.column), new LocalizedString(o.label));
     };
 
     Factor.toObject = function (entity) {

@@ -3,6 +3,7 @@
 import IEntity = require('../IEntity');
 import ResultStateEnum = require('./ResultStateEnum');
 import moment = require('moment');
+import EntityPreparer = require('../EntityPreparer');
 
 export = Status;
 class Status implements IEntity {
@@ -31,12 +32,12 @@ class Status implements IEntity {
 
 	static fromObject(o: any): Status {
 		return new Status(
-			o.dateCreated ? moment(o.dateCreated).toDate() : null,
-			o.dateValidTo ? moment(o.dateValidTo).toDate() : null,
+			EntityPreparer.date(o.dateCreated),
+			EntityPreparer.dateOrNull(o.dateValidTo),
 			Status.createResultStateEnum(o.state),
-			o.dateNextRemind ? moment(o.dateNextRemind).toDate() : null,
-			parseFloat(o.priorityValue),
-			o.priorityType
+			EntityPreparer.dateOrNull(o.dateNextRemind),
+			EntityPreparer.float(o.priorityValue),
+			EntityPreparer.string(o.priorityType)
 		);
 	}
 

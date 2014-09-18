@@ -3,6 +3,7 @@ import IEntity = require('../IEntity');
 import Matrix = require('./Matrix');
 import MatrixFactory = require('./MatrixFactory');
 import moment = require('moment');
+import EntityPreparer = require('../EntityPreparer');
 
 export = Signal;
 class Signal implements IEntity {
@@ -29,10 +30,10 @@ class Signal implements IEntity {
 
 	static fromRow(o: any): Signal {
 		return new Signal(
-			parseInt(o[Signal.COLUMN_SIGNAL_ID]), 
+			EntityPreparer.int(o[Signal.COLUMN_SIGNAL_ID]), 
 			MatrixFactory.createMatrixFromRow(o), 
-			moment(o[Signal.COLUMN_DATE_CREATED]).toDate(),
-			parseInt(o[Signal.COLUMN_SITUATION_ID])
+			EntityPreparer.date(o[Signal.COLUMN_DATE_CREATED]),
+			EntityPreparer.intOrNull(o[Signal.COLUMN_SITUATION_ID])
 		);
 	}
 

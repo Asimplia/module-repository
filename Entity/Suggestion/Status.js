@@ -1,5 +1,6 @@
 ﻿var ResultStateEnum = require('./ResultStateEnum');
 var moment = require('moment');
+var EntityPreparer = require('../EntityPreparer');
 
 var Status = (function () {
     function Status(dateCreated, dateValidTo, state, dateNextRemind, priorityValue, priorityType) {
@@ -72,7 +73,7 @@ var Status = (function () {
     });
 
     Status.fromObject = function (o) {
-        return new Status(o.dateCreated ? moment(o.dateCreated).toDate() : null, o.dateValidTo ? moment(o.dateValidTo).toDate() : null, Status.createResultStateEnum(o.state), o.dateNextRemind ? moment(o.dateNextRemind).toDate() : null, parseFloat(o.priorityValue), o.priorityType);
+        return new Status(EntityPreparer.date(o.dateCreated), EntityPreparer.dateOrNull(o.dateValidTo), Status.createResultStateEnum(o.state), EntityPreparer.dateOrNull(o.dateNextRemind), EntityPreparer.float(o.priorityValue), EntityPreparer.string(o.priorityType));
     };
 
     Status.toObject = function (entity) {

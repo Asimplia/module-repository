@@ -3,7 +3,8 @@ import IEntity = require('../IEntity');
 import List = require('../List');
 import Signal = require('./Signal');
 import MatrixProduct = require('./MatrixProduct');
-import SectionEnum = require('../Section/SectionEnum')
+import SectionEnum = require('../Section/SectionEnum');
+import EntityPreparer = require('../EntityPreparer');
 
 export = Situation;
 class Situation implements IEntity {
@@ -48,6 +49,14 @@ class Situation implements IEntity {
 
 	toObject() {
 		return Situation.toObject(this);
+	}
+	static fromRow(r: any) {
+		return new Situation(
+			EntityPreparer.int(r[Situation.COLUMN_SITUATION_ID]),
+			new List<Signal>(),
+			EntityPreparer.date(r[Situation.COLUMN_DATE_CREATED]),
+			EntityPreparer.dateOrNull(r[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED])
+		);
 	}
 
 	getMatrixProductBySection(section: SectionEnum) {

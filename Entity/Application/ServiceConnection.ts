@@ -3,6 +3,7 @@ import IEntity = require('../IEntity');
 import ServiceTypeEnum = require('./ServiceTypeEnum');
 import ServiceTypeFactory = require('./ServiceTypeFactory');
 import moment = require('moment');
+import EntityPreparer = require('../EntityPreparer');
 
 export = ServiceConnection;
 class ServiceConnection implements IEntity {
@@ -30,7 +31,7 @@ class ServiceConnection implements IEntity {
 	static fromObject(o: any) {
 		return new ServiceConnection(
 			ServiceTypeFactory.createServiceTypeEnum(o.serviceType),
-			moment(o.dateCreated).toDate(),
+			EntityPreparer.date(o.dateCreated),
 			o.info
 		);
 	}

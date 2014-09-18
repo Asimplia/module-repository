@@ -1,3 +1,5 @@
+var EntityPreparer = require('../EntityPreparer');
+
 var EShop = (function () {
     function EShop(id, countryCode, owner, url, name) {
         this.id = id;
@@ -21,11 +23,11 @@ var EShop = (function () {
     };
 
     EShop.fromObject = function (o) {
-        return new EShop(parseInt(o.id), o.countryCode, o.owner, o.url, o.name);
+        return new EShop(EntityPreparer.int(o.id), EntityPreparer.stringOrNull(o.countryCode), EntityPreparer.string(o.owner), EntityPreparer.string(o.url), EntityPreparer.string(o.name));
     };
 
     EShop.fromRow = function (r) {
-        return new EShop(r[EShop.COLUMN_E_SHOP_ID], r[EShop.COLUMN_COUNTRY_CODE], r[EShop.COLUMN_OWNER], r[EShop.COLUMN_URL], r[EShop.COLUMN_NAME]);
+        return new EShop(EntityPreparer.int(r[EShop.COLUMN_E_SHOP_ID]), EntityPreparer.stringOrNull(r[EShop.COLUMN_COUNTRY_CODE]), EntityPreparer.string(r[EShop.COLUMN_OWNER]), EntityPreparer.string(r[EShop.COLUMN_URL]), EntityPreparer.string(r[EShop.COLUMN_NAME]));
     };
     EShop.TABLE_NAME = 'eshop';
     EShop.COLUMN_E_SHOP_ID = 'eshopid';

@@ -1,6 +1,7 @@
 ﻿
 export import IEntity = require('./IEntity');
 export import List = require('./List');
+export import EntityPreparer = require('./EntityPreparer');
 export import Factor = require('./Factor/index');
 export import Locale = require('./Locale/index');
 export import Matrix = require('./Matrix/index');

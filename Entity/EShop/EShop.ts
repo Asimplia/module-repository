@@ -1,5 +1,6 @@
 
 import IEntity = require('../IEntity');
+import EntityPreparer = require('../EntityPreparer');
 
 export = EShop;
 class EShop implements IEntity {
@@ -35,21 +36,21 @@ class EShop implements IEntity {
 
 	static fromObject(o: any) {
 		return new EShop(
-			parseInt(o.id),
-			o.countryCode,
-			o.owner,
-			o.url,
-			o.name
+			EntityPreparer.int(o.id),
+			EntityPreparer.stringOrNull(o.countryCode),
+			EntityPreparer.string(o.owner),
+			EntityPreparer.string(o.url),
+			EntityPreparer.string(o.name)
 		);
 	}
 
 	static fromRow(r: any) {
 		return new EShop(
-			r[EShop.COLUMN_E_SHOP_ID],
-			r[EShop.COLUMN_COUNTRY_CODE],
-			r[EShop.COLUMN_OWNER],
-			r[EShop.COLUMN_URL],
-			r[EShop.COLUMN_NAME]
+			EntityPreparer.int(r[EShop.COLUMN_E_SHOP_ID]),
+			EntityPreparer.stringOrNull(r[EShop.COLUMN_COUNTRY_CODE]),
+			EntityPreparer.string(r[EShop.COLUMN_OWNER]),
+			EntityPreparer.string(r[EShop.COLUMN_URL]),
+			EntityPreparer.string(r[EShop.COLUMN_NAME])
 		);
 	}
 }

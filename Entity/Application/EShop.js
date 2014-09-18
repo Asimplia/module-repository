@@ -1,7 +1,7 @@
 var List = require('../List');
 var ServiceConnection = require('./ServiceConnection');
 
-var moment = require('moment');
+var EntityPreparer = require('../EntityPreparer');
 
 var EShop = (function () {
     function EShop(id, name, serviceConnectionList) {
@@ -37,11 +37,11 @@ var EShop = (function () {
     };
 
     EShop.fromObject = function (o) {
-        return new EShop(parseInt(o.id), o.name, new List(o.serviceConnections, ServiceConnection.fromObject));
+        return new EShop(EntityPreparer.int(o.id), EntityPreparer.string(o.name), new List(o.serviceConnections, ServiceConnection.fromObject));
     };
 
     EShop.prototype.addServiceConnection = function (serviceType, info) {
-        this.serviceConnectionList.push(new ServiceConnection(serviceType, moment().toDate(), info));
+        this.serviceConnectionList.push(new ServiceConnection(serviceType, EntityPreparer.now(), info));
     };
 
     EShop.prototype.getServiceConnection = function (serviceType) {

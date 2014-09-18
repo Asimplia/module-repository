@@ -4,6 +4,7 @@ import List = require('../List');
 import ServiceConnection = require('./ServiceConnection');
 import ServiceTypeEnum = require('./ServiceTypeEnum');
 import moment = require('moment');
+import EntityPreparer = require('../EntityPreparer');
 
 export = EShop;
 class EShop implements IEntity {
@@ -31,8 +32,8 @@ class EShop implements IEntity {
 
 	static fromObject(o: any) {
 		return new EShop(
-			parseInt(o.id),
-			o.name,
+			EntityPreparer.int(o.id),
+			EntityPreparer.string(o.name),
 			new List<ServiceConnection>(o.serviceConnections, ServiceConnection.fromObject)
 		);
 	}
@@ -40,7 +41,7 @@ class EShop implements IEntity {
 	addServiceConnection(serviceType: ServiceTypeEnum, info: any) {
 		this.serviceConnectionList.push(new ServiceConnection(
 			serviceType,
-			moment().toDate(),
+			EntityPreparer.now(),
 			info
 		));
 	}

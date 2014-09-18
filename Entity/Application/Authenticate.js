@@ -1,4 +1,5 @@
 var AuthTypeEnum = require('./AuthTypeEnum');
+var EntityPreparer = require('../EntityPreparer');
 
 var Authenticate = (function () {
     function Authenticate(identity, verification, authType, salt) {
@@ -58,7 +59,7 @@ var Authenticate = (function () {
     };
 
     Authenticate.fromObject = function (o) {
-        return new Authenticate(o.identity, o.verification, Authenticate.createAuthTypeEnum(o.authType), o.salt);
+        return new Authenticate(EntityPreparer.string(o.identity), EntityPreparer.stringOrNull(o.verification), Authenticate.createAuthTypeEnum(o.authType), EntityPreparer.stringOrNull(o.salt));
     };
 
     Authenticate.createAuthTypeEnum = function (authType) {

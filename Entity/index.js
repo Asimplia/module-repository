@@ -1,5 +1,7 @@
 ﻿var List = require('./List');
 exports.List = List;
+var EntityPreparer = require('./EntityPreparer');
+exports.EntityPreparer = EntityPreparer;
 var Factor = require('./Factor/index');
 exports.Factor = Factor;
 var Locale = require('./Locale/index');

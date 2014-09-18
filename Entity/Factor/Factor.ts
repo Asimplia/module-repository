@@ -5,6 +5,7 @@ import SectionFactory = require('../Section/SectionFactory');
 import ColumnEnum = require('../Matrix/ColumnEnum');
 import ShiftValueEnum = require('../Factor/ShiftValueEnum');
 import LocalizedString = require('../Locale/LocalizedString');
+import EntityPreparer = require('../EntityPreparer');
 
 export = Factor;
 class Factor {
@@ -31,11 +32,11 @@ class Factor {
 
 	static fromObject(o: any/*FactorObject*/): Factor {
 		return new Factor(
-			parseInt(o.id),
-			o.name,
-			o.description,
+			EntityPreparer.int(o.id),
+			EntityPreparer.stringOrNull(o.name),
+			EntityPreparer.stringOrNull(o.description),
 			SectionFactory.createSectionEnum(o.section),
-			parseFloat(o.weight),
+			EntityPreparer.floatOrNull(o.weight),
 			Factor.createTypeEnum(o.factorType),
 			Factor.createColumnEnum(o.column),
 			new LocalizedString(o.label)

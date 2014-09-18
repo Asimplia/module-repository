@@ -64,12 +64,7 @@ class SituationLoader {
 				return situation.Id == row[Situation.COLUMN_SITUATION_ID];
 			});
 			if (!situation) {
-				situation = new Situation(
-					parseInt(row[Situation.COLUMN_SITUATION_ID]),
-					new List<Signal>(),
-					moment(row[Situation.COLUMN_DATE_CREATED]).toDate(),
-					row[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED] ? moment(row[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED]).toDate() : null
-				);
+				situation = Situation.fromRow(row);
 				situationList.push(situation);
 			}
 			var signal = Signal.fromRow(row);

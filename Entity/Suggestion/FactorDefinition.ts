@@ -2,6 +2,7 @@
 import IEntity = require('../IEntity');
 import Factor = require('../Factor/Factor');
 import FactorValue = require('./FactorValue');
+import EntityPreparer = require('../EntityPreparer');
 
 export = FactorDefinition;
 class FactorDefinition implements IEntity {
@@ -24,10 +25,10 @@ class FactorDefinition implements IEntity {
 
 	static fromObject(o: any/*FactorDefinitionObject*/): FactorDefinition {
 		return new FactorDefinition(
-			new FactorValue(o.value),
-			parseFloat(o.weight),
+			new FactorValue(EntityPreparer.stringOrNull(o.value)),
+			EntityPreparer.float(o.weight),
 			Factor.fromObject(o.factor),
-			!!o.reverse
+			EntityPreparer.boolean(o.reverse)
 		);
 	}
 

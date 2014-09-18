@@ -1,5 +1,6 @@
 
 import IEntity = require('../IEntity');
+import EntityPreparer = require('../EntityPreparer');
 
 export = Company;
 class Company implements IEntity {
@@ -28,9 +29,9 @@ class Company implements IEntity {
 
 	static fromObject(o: any) {
 		return new Company(
-			parseInt(o.id),
-			o.name,
-			o.vatNumber
+			EntityPreparer.int(o.id),
+			EntityPreparer.string(o.name),
+			EntityPreparer.stringOrNull(o.vatNumber)
 		);
 	}
 }

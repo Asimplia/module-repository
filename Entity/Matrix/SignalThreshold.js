@@ -1,6 +1,7 @@
 ﻿var QuadrantValueEnum = require('./QuadrantValueEnum');
 var SectionEnum = require('../Section/SectionEnum');
 var SectionFactory = require('../Section/SectionFactory');
+var EntityPreparer = require('../EntityPreparer');
 
 var SignalThreshold = (function () {
     function SignalThreshold(section, name, thresholdValueQ1, thresholdValueQ2, thresholdValueQ3, thresholdValueQ4, priorityQ1, priorityQ2, priorityQ3, priorityQ4, descriptionQ1, descriptionQ2, descriptionQ3, descriptionQ4) {
@@ -35,7 +36,7 @@ var SignalThreshold = (function () {
     });
 
     SignalThreshold.fromObject = function (o) {
-        return new SignalThreshold(SectionFactory.createSectionEnum(o.section), o.name, parseFloat(o.thresholdValue.q1), parseFloat(o.thresholdValue.q2), parseFloat(o.thresholdValue.q3), parseFloat(o.thresholdValue.q4), parseFloat(o.priority.q1), parseFloat(o.priority.q2), parseFloat(o.priority.q3), parseFloat(o.priority.q4), o.description.q1, o.description.q2, o.description.q3, o.description.q4);
+        return new SignalThreshold(SectionFactory.createSectionEnum(o.section), EntityPreparer.string(o.name), EntityPreparer.float(o.thresholdValue.q1), EntityPreparer.float(o.thresholdValue.q2), EntityPreparer.float(o.thresholdValue.q3), EntityPreparer.float(o.thresholdValue.q4), EntityPreparer.float(o.priority.q1), EntityPreparer.float(o.priority.q2), EntityPreparer.float(o.priority.q3), EntityPreparer.float(o.priority.q4), EntityPreparer.stringOrNull(o.description.q1), EntityPreparer.stringOrNull(o.description.q2), EntityPreparer.stringOrNull(o.description.q3), EntityPreparer.stringOrNull(o.description.q4));
     };
 
     SignalThreshold.prototype.toObject = function () {

@@ -1,5 +1,6 @@
 ﻿
 import IEntity = require('../IEntity');
+import EntityPreparer = require('../EntityPreparer');
 
 export = Customer;
 class Customer implements IEntity {
@@ -31,15 +32,15 @@ class Customer implements IEntity {
 
 	static fromRow(r: any) {
 		return new Customer(
-			parseInt(r[Customer.COLUMN_CUSTOMER_ID]),
-			parseInt(r[Customer.COLUMN_E_SHOP_ID]),
-			r[Customer.COLUMN_FIRSTNAME],
-			r[Customer.COLUMN_LASTNAME],
-			r[Customer.COLUMN_EMAIL],
-			r[Customer.COLUMN_GENDER],
-			r[Customer.COLUMN_BIRTHDAY] ? moment(r[Customer.COLUMN_BIRTHDAY]).toDate() : null,
-			!!r[Customer.COLUMN_ANONYMOUS],
-			r[Customer.COLUMN_DATE_CREATED] ? moment(r[Customer.COLUMN_DATE_CREATED]).toDate() : null
+			EntityPreparer.int(r[Customer.COLUMN_CUSTOMER_ID]),
+			EntityPreparer.int(r[Customer.COLUMN_E_SHOP_ID]),
+			EntityPreparer.stringOrNull(r[Customer.COLUMN_FIRSTNAME]),
+			EntityPreparer.stringOrNull(r[Customer.COLUMN_LASTNAME]),
+			EntityPreparer.stringOrNull(r[Customer.COLUMN_EMAIL]),
+			EntityPreparer.stringOrNull(r[Customer.COLUMN_GENDER]),
+			EntityPreparer.dateOrNull(r[Customer.COLUMN_BIRTHDAY]),
+			EntityPreparer.boolean(r[Customer.COLUMN_ANONYMOUS]),
+			EntityPreparer.dateOrNull(r[Customer.COLUMN_DATE_CREATED])
 		);
 	}
 

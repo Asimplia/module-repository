@@ -1,5 +1,6 @@
 ﻿
 import IEntity = require('../IEntity');
+import EntityPreparer = require('../EntityPreparer');
 
 export = Channel;
 class Channel implements IEntity {
@@ -25,12 +26,12 @@ class Channel implements IEntity {
 
 	static fromRow(r: any) {
 		return new Channel(
-			parseInt(r[Channel.COLUMN_CHANNEL_ID]),
-			parseInt(r[Channel.COLUMN_E_SHOP_ID]),
-			parseInt(r[Channel.COLUMN_CUSTOMER_ID]),
-			r[Channel.COLUMN_NAME],
-			!!r[Channel.COLUMN_PAID_CHANNEL],
-			!!r[Channel.COLUMN_REFFERAL_ORGANIC]
+			EntityPreparer.int(r[Channel.COLUMN_CHANNEL_ID]),
+			EntityPreparer.int(r[Channel.COLUMN_E_SHOP_ID]),
+			EntityPreparer.int(r[Channel.COLUMN_CUSTOMER_ID]),
+			EntityPreparer.string(r[Channel.COLUMN_NAME]),
+			EntityPreparer.boolean(r[Channel.COLUMN_PAID_CHANNEL]),
+			EntityPreparer.boolean(r[Channel.COLUMN_REFFERAL_ORGANIC])
 		);
 	}
 

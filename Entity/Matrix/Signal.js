@@ -1,5 +1,6 @@
 ﻿var MatrixFactory = require('./MatrixFactory');
 var moment = require('moment');
+var EntityPreparer = require('../EntityPreparer');
 
 var Signal = (function () {
     function Signal(id, matrix, dateCreated, situationId) {
@@ -44,7 +45,7 @@ var Signal = (function () {
     });
 
     Signal.fromRow = function (o) {
-        return new Signal(parseInt(o[Signal.COLUMN_SIGNAL_ID]), MatrixFactory.createMatrixFromRow(o), moment(o[Signal.COLUMN_DATE_CREATED]).toDate(), parseInt(o[Signal.COLUMN_SITUATION_ID]));
+        return new Signal(EntityPreparer.int(o[Signal.COLUMN_SIGNAL_ID]), MatrixFactory.createMatrixFromRow(o), EntityPreparer.date(o[Signal.COLUMN_DATE_CREATED]), EntityPreparer.intOrNull(o[Signal.COLUMN_SITUATION_ID]));
     };
 
     Signal.toObject = function (entity) {

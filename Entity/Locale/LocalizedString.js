@@ -1,12 +1,13 @@
 ﻿var LanguageEnum = require('./LanguageEnum');
+var EntityPreparer = require('../EntityPreparer');
 
 var LocalizedString = (function () {
     function LocalizedString(langsObject) {
         if (!langsObject) {
-            return;
+            langsObject = { en: null, cs: null };
         }
-        this.en = typeof langsObject.en !== 'undefined' ? langsObject.en : null;
-        this.cs = typeof langsObject.cs !== 'undefined' ? langsObject.cs : null;
+        this.en = EntityPreparer.stringOrNull(langsObject.en);
+        this.cs = EntityPreparer.stringOrNull(langsObject.cs);
     }
     Object.defineProperty(LocalizedString.prototype, "Cs", {
         get: function () {

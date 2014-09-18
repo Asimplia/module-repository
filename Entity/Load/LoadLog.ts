@@ -1,5 +1,6 @@
 
 import IEntity = require('../IEntity');
+import EntityPreparer = require('../EntityPreparer');
 
 export = LoadLog;
 class LoadLog implements IEntity {
@@ -37,19 +38,19 @@ class LoadLog implements IEntity {
 
 	static fromObject(o: any) {
 		return new LoadLog(
-			parseInt(o.id),
-			parseInt(o.eShopId),
-			o.dateLoaded,
-			parseInt(o.result)
+			EntityPreparer.int(o.id),
+			EntityPreparer.int(o.eShopId),
+			EntityPreparer.date(o.dateLoaded),
+			EntityPreparer.int(o.result)
 		);
 	}
 
 	static fromRow(r: any) {
 		return new LoadLog(
-			r[LoadLog.COLUMN_LOAD_LOG_ID],
-			r[LoadLog.COLUMN_E_SHOP_ID],
-			r[LoadLog.COLUMN_DATELOADED],
-			r[LoadLog.COLUMN_RESULT]
+			EntityPreparer.int(r[LoadLog.COLUMN_LOAD_LOG_ID]),
+			EntityPreparer.int(r[LoadLog.COLUMN_E_SHOP_ID]),
+			EntityPreparer.date(r[LoadLog.COLUMN_DATELOADED]),
+			EntityPreparer.int(r[LoadLog.COLUMN_RESULT])
 		);
 	}
 }
