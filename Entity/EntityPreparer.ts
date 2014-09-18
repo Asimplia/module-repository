@@ -1,6 +1,7 @@
 
 import TypeEnum = require('./Error/TypeEnum');
 import NotAllowedNull = require('./Error/NotAllowedNull');
+import moment = require('moment');
 
 export = EntityPreparer;
 class EntityPreparer {
@@ -38,6 +39,13 @@ class EntityPreparer {
 			throw new NotAllowedNull(TypeEnum.BOOLEAN);
 		}
 		return !!value;
+	}
+
+	static booleanOrNull(value: any): boolean {
+		if (EntityPreparer.isNull(value)) {
+			return null;
+		}
+		return EntityPreparer.boolean(value);
 	}
 	
 	static int(value: any): number {

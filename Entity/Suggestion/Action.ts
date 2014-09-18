@@ -53,7 +53,7 @@ class Action implements IEntity {
 			new List<FactorDefinition>().pushArray(o.factorDefinitions, FactorDefinition.fromObject),
 			AsimpliaUtil.ArrayHelper.mapFilterNulls(o.placeholders, (placeholder: string) => { return Action.createPlaceholderEnum(placeholder); }),
 			Action.createPriorityTypeEnum(o.priorityType),
-			EntityPreparer.boolean(o.main)
+			EntityPreparer.booleanOrNull(o.main)
 		);
 	}
 

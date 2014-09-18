@@ -1,5 +1,6 @@
 var TypeEnum = require('./Error/TypeEnum');
 var NotAllowedNull = require('./Error/NotAllowedNull');
+var moment = require('moment');
 
 var EntityPreparer = (function () {
     function EntityPreparer() {
@@ -37,6 +38,13 @@ var EntityPreparer = (function () {
             throw new NotAllowedNull(4 /* BOOLEAN */);
         }
         return !!value;
+    };
+
+    EntityPreparer.booleanOrNull = function (value) {
+        if (EntityPreparer.isNull(value)) {
+            return null;
+        }
+        return EntityPreparer.boolean(value);
     };
 
     EntityPreparer.int = function (value) {
