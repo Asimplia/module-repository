@@ -74,7 +74,7 @@ class User implements IEntity {
 
 	static fromObject(o: any) {
 		return new User(
-			EntityPreparer.int(o.id),
+			EntityPreparer.intOrNull(o.id),
 			EntityPreparer.string(o.firstName),
 			EntityPreparer.string(o.lastName),
 			new List<Authenticate>(o.authenticates, Authenticate.fromObject),

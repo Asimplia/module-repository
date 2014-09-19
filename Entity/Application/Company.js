@@ -41,7 +41,7 @@ var Company = (function () {
     };
 
     Company.fromObject = function (o) {
-        return new Company(EntityPreparer.int(o.id), EntityPreparer.string(o.name), EntityPreparer.stringOrNull(o.vatNumber));
+        return new Company(EntityPreparer.intOrNull(o.id), EntityPreparer.string(o.name), EntityPreparer.stringOrNull(o.vatNumber));
     };
     return Company;
 })();

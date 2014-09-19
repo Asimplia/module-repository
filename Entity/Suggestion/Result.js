@@ -146,7 +146,7 @@ var Result = (function () {
     });
 
     Result.fromObject = function (o) {
-        return new Result(EntityPreparer.int(o.id), new LocalizedString(o.title), new LocalizedString(o.shortTitle), new LocalizedString(o.label), new LocalizedString(o.text), Status.fromObject(o.activeStatus), new List().pushArray(o.statuses, Status.fromObject), new List().pushArray(o.graphs, Graph.fromObject), EntityPreparer.int(o.eShopId), new List().pushArray(o.reasons, Reason.fromObject), SectionFactory.createSectionEnum(o.section), EntityPreparer.boolean(o.main), EntityPreparer.int(o.situationId));
+        return new Result(EntityPreparer.intOrNull(o.id), new LocalizedString(o.title), new LocalizedString(o.shortTitle), new LocalizedString(o.label), new LocalizedString(o.text), Status.fromObject(o.activeStatus), new List().pushArray(o.statuses, Status.fromObject), new List().pushArray(o.graphs, Graph.fromObject), EntityPreparer.int(o.eShopId), new List().pushArray(o.reasons, Reason.fromObject), SectionFactory.createSectionEnum(o.section), EntityPreparer.boolean(o.main), EntityPreparer.int(o.situationId));
     };
 
     Result.toObject = function (entity) {

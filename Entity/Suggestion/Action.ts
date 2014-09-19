@@ -45,7 +45,7 @@ class Action implements IEntity {
 
 	static fromObject(o: any/*ISuggestionActionObject*/): Action {
 		return new Action(
-			EntityPreparer.int(o.id),
+			EntityPreparer.intOrNull(o.id),
 			new LocalizedString(o.name),
 			new LocalizedString(o.shortName),
 			new LocalizedString(o.text),

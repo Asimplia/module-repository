@@ -1,6 +1,6 @@
 {
   "name": "asimplia-repository",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "Repository",
   "main": "./index.js",
   "author": {
@@ -14,7 +14,8 @@
     "asimplia-util": "git+https://github.com/Asimplia/module-util.git",
     "each": "^0.4.9",
     "pg": "^3.4.0",
-    "neo4j": "~1.1.0"
+    "neo4j": "~1.1.0",
+    "stack-trace": "0.0.9"
   },
   "scripts": {
     "postinstall": ""

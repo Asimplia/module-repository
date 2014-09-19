@@ -52,7 +52,7 @@ class Situation implements IEntity {
 	}
 	static fromRow(r: any) {
 		return new Situation(
-			EntityPreparer.int(r[Situation.COLUMN_SITUATION_ID]),
+			EntityPreparer.intOrNull(r[Situation.COLUMN_SITUATION_ID]),
 			new List<Signal>(),
 			EntityPreparer.date(r[Situation.COLUMN_DATE_CREATED]),
 			EntityPreparer.dateOrNull(r[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED])

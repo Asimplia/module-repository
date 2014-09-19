@@ -37,7 +37,7 @@ var EShop = (function () {
     };
 
     EShop.fromObject = function (o) {
-        return new EShop(EntityPreparer.int(o.id), EntityPreparer.string(o.name), new List(o.serviceConnections, ServiceConnection.fromObject));
+        return new EShop(EntityPreparer.intOrNull(o.id), EntityPreparer.string(o.name), new List(o.serviceConnections, ServiceConnection.fromObject));
     };
 
     EShop.prototype.addServiceConnection = function (serviceType, info) {

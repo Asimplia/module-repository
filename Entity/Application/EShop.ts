@@ -32,7 +32,7 @@ class EShop implements IEntity {
 
 	static fromObject(o: any) {
 		return new EShop(
-			EntityPreparer.int(o.id),
+			EntityPreparer.intOrNull(o.id),
 			EntityPreparer.string(o.name),
 			new List<ServiceConnection>(o.serviceConnections, ServiceConnection.fromObject)
 		);

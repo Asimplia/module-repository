@@ -59,7 +59,7 @@ class Result implements IEntity {
 
 	static fromObject(o: any/*ISuggestionResultObject*/): Result {
 		return new Result(
-			EntityPreparer.int(o.id),
+			EntityPreparer.intOrNull(o.id),
 			new LocalizedString(o.title),
 			new LocalizedString(o.shortTitle),
 			new LocalizedString(o.label),

@@ -32,7 +32,7 @@ class Factor {
 
 	static fromObject(o: any/*FactorObject*/): Factor {
 		return new Factor(
-			EntityPreparer.int(o.id),
+			EntityPreparer.intOrNull(o.id),
 			EntityPreparer.stringOrNull(o.name),
 			EntityPreparer.stringOrNull(o.description),
 			SectionFactory.createSectionEnum(o.section),

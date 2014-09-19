@@ -29,7 +29,7 @@ class Company implements IEntity {
 
 	static fromObject(o: any) {
 		return new Company(
-			EntityPreparer.int(o.id),
+			EntityPreparer.intOrNull(o.id),
 			EntityPreparer.string(o.name),
 			EntityPreparer.stringOrNull(o.vatNumber)
 		);

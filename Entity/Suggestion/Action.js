@@ -106,7 +106,7 @@ var Action = (function () {
     });
 
     Action.fromObject = function (o) {
-        return new Action(EntityPreparer.int(o.id), new LocalizedString(o.name), new LocalizedString(o.shortName), new LocalizedString(o.text), Action.createSectionEnum(o.section), new List().pushArray(o.factorDefinitions, FactorDefinition.fromObject), AsimpliaUtil.ArrayHelper.mapFilterNulls(o.placeholders, function (placeholder) {
+        return new Action(EntityPreparer.intOrNull(o.id), new LocalizedString(o.name), new LocalizedString(o.shortName), new LocalizedString(o.text), Action.createSectionEnum(o.section), new List().pushArray(o.factorDefinitions, FactorDefinition.fromObject), AsimpliaUtil.ArrayHelper.mapFilterNulls(o.placeholders, function (placeholder) {
             return Action.createPlaceholderEnum(placeholder);
         }), Action.createPriorityTypeEnum(o.priorityType), EntityPreparer.booleanOrNull(o.main));
     };

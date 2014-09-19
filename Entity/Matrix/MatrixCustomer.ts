@@ -54,7 +54,7 @@ class MatrixCustomer extends Matrix {
 
 	static fromRow(o: any): MatrixCustomer {
 		return new MatrixCustomer(
-			EntityPreparer.int(o[Matrix.COLUMN_MATRIX_ID]),
+			EntityPreparer.intOrNull(o[Matrix.COLUMN_MATRIX_ID]),
 			EntityPreparer.int(o[Matrix.COLUMN_E_SHOP_ID]),
 			SectionFactory.createSectionEnum(o[Matrix.COLUMN_SECTION]),
 			EntityPreparer.int(o[Matrix.COLUMN_LOAD_ID]),

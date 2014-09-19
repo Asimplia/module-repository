@@ -1,5 +1,7 @@
 
 import TypeEnum = require('./TypeEnum');
+import _ = require('underscore');
+var stackTrace = require('stack-trace');
 
 export = NotAllowedNull;
 class NotAllowedNull implements Error {
@@ -8,7 +10,11 @@ class NotAllowedNull implements Error {
 	public message: string;
 	
 	constructor(type: TypeEnum) {
+		var backTrace = stackTrace.get();
+		var backTraceMethods = _.map(_.first(backTrace, 5), (trace: any) => {
+			return trace.getFunctionName()
+		});
 		this.name = 'NotAllowedNull';
-		this.message = 'Try to set value as NULL, only not null '+TypeEnum[type]+' allowed';
+		this.message = 'Try to set value as NULL, only not null '+TypeEnum[type]+' allowed in "'+backTraceMethods.join('" -> "')+'"';
 	}
 }

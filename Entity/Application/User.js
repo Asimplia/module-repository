@@ -144,7 +144,7 @@ var User = (function () {
     };
 
     User.fromObject = function (o) {
-        return new User(EntityPreparer.int(o.id), EntityPreparer.string(o.firstName), EntityPreparer.string(o.lastName), new List(o.authenticates, Authenticate.fromObject), new List(o.authHashes, AuthHash.fromObject), EntityPreparer.int(o.eShopId), EntityPreparer.int(o.companyId), EntityPreparer.string(o.email), EntityPreparer.stringOrNull(o.phoneNumber), Language.createLanguageEnum(o.activeLanguage));
+        return new User(EntityPreparer.intOrNull(o.id), EntityPreparer.string(o.firstName), EntityPreparer.string(o.lastName), new List(o.authenticates, Authenticate.fromObject), new List(o.authHashes, AuthHash.fromObject), EntityPreparer.int(o.eShopId), EntityPreparer.int(o.companyId), EntityPreparer.string(o.email), EntityPreparer.stringOrNull(o.phoneNumber), Language.createLanguageEnum(o.activeLanguage));
     };
 
     User.prototype.getFullName = function () {
