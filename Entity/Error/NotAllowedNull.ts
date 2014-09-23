@@ -1,7 +1,9 @@
 
+/// <reference path="../../typings_local/stack-trace/stack-trace.d.ts" />
+
 import TypeEnum = require('./TypeEnum');
 import _ = require('underscore');
-var stackTrace = require('stack-trace');
+import stackTrace = require('stack-trace');
 
 export = NotAllowedNull;
 class NotAllowedNull implements Error {
