@@ -17,6 +17,20 @@ var ActionLoader = (function () {
             callback(e, list);
         });
     };
+
+    ActionLoader.prototype.getListByFactor = function (factor, callback) {
+        var condition = {
+            "factorDefinitions.factor.id": factor.Id
+        };
+        this.model.find(condition, null, { sort: 'id' }, function (e, actions) {
+            if (e) {
+                return callback(e);
+            }
+            var list = new List();
+            list.pushArray(actions, SuggestionAction.fromObject);
+            callback(e, list);
+        });
+    };
     return ActionLoader;
 })();
 module.exports = ActionLoader;
