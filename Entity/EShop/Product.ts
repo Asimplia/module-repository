@@ -21,7 +21,7 @@ class Product implements IEntity {
 		private name: string,
 		private basePrice: number,
 		private ean: string
-		) { }
+	) { }
 
 	static fromRow(r: any) {
 		return new Product(

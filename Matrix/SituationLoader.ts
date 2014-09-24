@@ -3,6 +3,9 @@ import Repository = require('../index');
 import Signal = require('../Entity/Matrix/Signal');
 import Situation = require('../Entity/Matrix/Situation');
 import Matrix = require('../Entity/Matrix/Matrix');
+import Product = require('../Entity/EShop/Product');
+import Customer = require('../Entity/EShop/Customer');
+import Channel = require('../Entity/EShop/Channel');
 import List = require('../Entity/List');
 import moment = require('moment');
 
@@ -18,9 +21,12 @@ class SituationLoader {
 	}
 
 	getListNotSuggestedByEShopId(eShopId: number, callback: (e: Error, situationList?: List<Situation>) => void) {
-		this.connection.query('SELECT * FROM analytical.'+Situation.TABLE_NAME
+		this.connection.query('SELECT * FROM analytical.'+Situation.TABLE_NAME+' '
 			+' JOIN analytical.'+Signal.TABLE_NAME+' USING ('+Signal.COLUMN_SITUATION_ID+') '
 			+' JOIN analytical.'+Matrix.TABLE_NAME+' USING ('+Signal.COLUMN_MATRIX_ID+') '
+			+' LEFT JOIN warehouse.'+Product.TABLE_NAME+' USING ('+Product.COLUMN_PRODUCT_ID+', '+Product.COLUMN_E_SHOP_ID+') '
+			+' LEFT JOIN warehouse.'+Customer.TABLE_NAME+' USING ('+Customer.COLUMN_CUSTOMER_ID+', '+Customer.COLUMN_E_SHOP_ID+') '
+			+' LEFT JOIN warehouse.'+Channel.TABLE_NAME+' USING ('+Channel.COLUMN_CHANNEL_ID+', '+Channel.COLUMN_E_SHOP_ID+') '
 			+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
 			+' AND '+Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED+' IS NULL', [
 			eShopId
@@ -40,9 +46,12 @@ class SituationLoader {
 		if (filter.channelIds && filter.channelIds.length > 0) {
 			filterWhere += ' AND analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CHANNEL_ID+' IN ('+filter.channelIds.join(', ')+') ';
 		}
-		this.connection.query('SELECT * FROM analytical.'+Situation.TABLE_NAME
+		this.connection.query('SELECT * FROM analytical.'+Situation.TABLE_NAME+' '
 			+' JOIN analytical.'+Signal.TABLE_NAME+' USING ('+Signal.COLUMN_SITUATION_ID+') '
 			+' JOIN analytical.'+Matrix.TABLE_NAME+' USING ('+Signal.COLUMN_MATRIX_ID+') '
+			+' LEFT JOIN warehouse.'+Product.TABLE_NAME+' USING ('+Product.COLUMN_PRODUCT_ID+', '+Product.COLUMN_E_SHOP_ID+') '
+			+' LEFT JOIN warehouse.'+Customer.TABLE_NAME+' USING ('+Customer.COLUMN_CUSTOMER_ID+', '+Customer.COLUMN_E_SHOP_ID+') '
+			+' LEFT JOIN warehouse.'+Channel.TABLE_NAME+' USING ('+Channel.COLUMN_CHANNEL_ID+', '+Channel.COLUMN_E_SHOP_ID+') '
 			+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
 			+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 '
 			+filterWhere
