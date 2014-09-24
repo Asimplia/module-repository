@@ -5,30 +5,26 @@ import EntityPreparer = require('../EntityPreparer');
 export = LoadLog;
 class LoadLog implements IEntity {
 
-	public static TABLE_NAME = 'loadlog';
+	public static TABLE_NAME = 'eshopmatrixloads';
 	public static COLUMN_LOAD_LOG_ID = 'loadid';
 	public static COLUMN_E_SHOP_ID = 'eshopid';
-	public static COLUMN_DATELOADED = 'loaddate';
-	public static COLUMN_RESULT = 'result';
+	public static COLUMN_DATELOADED = 'period';
 
 	get Id() { return this.id; }
 	get EShopId() { return this.eShopId; }
 	get DateLoaded() { return this.dateLoaded; }
-	get Result() { return this.result; }
 	
 	constructor(
 		private id: number,
 		private eShopId: number,
-		private dateLoaded: Date,
-		private result: number
+		private dateLoaded: Date
 	) {}
 
 	static toObject(e: LoadLog) {
 		return {
 			id: e.id,
 			eShopId: e.eShopId,
-			dateLoaded: e.dateLoaded,
-			result: e.result
+			dateLoaded: e.dateLoaded
 		};
 	}
 
@@ -40,8 +36,7 @@ class LoadLog implements IEntity {
 		return new LoadLog(
 			EntityPreparer.int(o.id),
 			EntityPreparer.int(o.eShopId),
-			EntityPreparer.date(o.dateLoaded),
-			EntityPreparer.int(o.result)
+			EntityPreparer.date(o.dateLoaded)
 		);
 	}
 
@@ -49,8 +44,7 @@ class LoadLog implements IEntity {
 		return new LoadLog(
 			EntityPreparer.int(r[LoadLog.COLUMN_LOAD_LOG_ID]),
 			EntityPreparer.int(r[LoadLog.COLUMN_E_SHOP_ID]),
-			EntityPreparer.date(r[LoadLog.COLUMN_DATELOADED]),
-			EntityPreparer.int(r[LoadLog.COLUMN_RESULT])
+			EntityPreparer.date(r[LoadLog.COLUMN_DATELOADED])
 		);
 	}
 }

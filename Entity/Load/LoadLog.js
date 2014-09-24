@@ -1,11 +1,10 @@
 var EntityPreparer = require('../EntityPreparer');
 
 var LoadLog = (function () {
-    function LoadLog(id, eShopId, dateLoaded, result) {
+    function LoadLog(id, eShopId, dateLoaded) {
         this.id = id;
         this.eShopId = eShopId;
         this.dateLoaded = dateLoaded;
-        this.result = result;
     }
     Object.defineProperty(LoadLog.prototype, "Id", {
         get: function () {
@@ -28,20 +27,12 @@ var LoadLog = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(LoadLog.prototype, "Result", {
-        get: function () {
-            return this.result;
-        },
-        enumerable: true,
-        configurable: true
-    });
 
     LoadLog.toObject = function (e) {
         return {
             id: e.id,
             eShopId: e.eShopId,
-            dateLoaded: e.dateLoaded,
-            result: e.result
+            dateLoaded: e.dateLoaded
         };
     };
 
@@ -50,17 +41,16 @@ var LoadLog = (function () {
     };
 
     LoadLog.fromObject = function (o) {
-        return new LoadLog(EntityPreparer.int(o.id), EntityPreparer.int(o.eShopId), EntityPreparer.date(o.dateLoaded), EntityPreparer.int(o.result));
+        return new LoadLog(EntityPreparer.int(o.id), EntityPreparer.int(o.eShopId), EntityPreparer.date(o.dateLoaded));
     };
 
     LoadLog.fromRow = function (r) {
-        return new LoadLog(EntityPreparer.int(r[LoadLog.COLUMN_LOAD_LOG_ID]), EntityPreparer.int(r[LoadLog.COLUMN_E_SHOP_ID]), EntityPreparer.date(r[LoadLog.COLUMN_DATELOADED]), EntityPreparer.int(r[LoadLog.COLUMN_RESULT]));
+        return new LoadLog(EntityPreparer.int(r[LoadLog.COLUMN_LOAD_LOG_ID]), EntityPreparer.int(r[LoadLog.COLUMN_E_SHOP_ID]), EntityPreparer.date(r[LoadLog.COLUMN_DATELOADED]));
     };
-    LoadLog.TABLE_NAME = 'loadlog';
+    LoadLog.TABLE_NAME = 'eshopmatrixloads';
     LoadLog.COLUMN_LOAD_LOG_ID = 'loadid';
     LoadLog.COLUMN_E_SHOP_ID = 'eshopid';
-    LoadLog.COLUMN_DATELOADED = 'loaddate';
-    LoadLog.COLUMN_RESULT = 'result';
+    LoadLog.COLUMN_DATELOADED = 'period';
     return LoadLog;
 })();
 module.exports = LoadLog;

@@ -14,7 +14,7 @@ class NotAllowedNull implements Error {
 	constructor(type: TypeEnum) {
 		var backTrace = stackTrace.get();
 		var backTraceMethods = _.map(_.first(backTrace, 5), (trace: any) => {
-			return trace.getFunctionName()
+			return trace.getFunctionName() + ':L' + trace.getLineNumber() + ':C' + trace.getColumnNumber();
 		});
 		this.name = 'NotAllowedNull';
 		this.message = 'Try to set value as NULL, only not null '+TypeEnum[type]+' allowed in "'+backTraceMethods.join('" -> "')+'"';
