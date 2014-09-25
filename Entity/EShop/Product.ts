@@ -29,7 +29,7 @@ class Product implements IEntity {
 			EntityPreparer.int(r[Product.COLUMN_E_SHOP_ID]),
 			EntityPreparer.stringOrNull(r[Product.COLUMN_NAME]),
 			EntityPreparer.float(r[Product.COLUMN_BASE_PRICE]),
-			EntityPreparer.string(r[Product.COLUMN_EAN])
+			EntityPreparer.stringOrNull(r[Product.COLUMN_EAN])
 		);
 	}
 

@@ -24,7 +24,7 @@ var Product = (function () {
     });
 
     Product.fromRow = function (r) {
-        return new Product(EntityPreparer.int(r[Product.COLUMN_PRODUCT_ID]), EntityPreparer.int(r[Product.COLUMN_E_SHOP_ID]), EntityPreparer.stringOrNull(r[Product.COLUMN_NAME]), EntityPreparer.float(r[Product.COLUMN_BASE_PRICE]), EntityPreparer.string(r[Product.COLUMN_EAN]));
+        return new Product(EntityPreparer.int(r[Product.COLUMN_PRODUCT_ID]), EntityPreparer.int(r[Product.COLUMN_E_SHOP_ID]), EntityPreparer.stringOrNull(r[Product.COLUMN_NAME]), EntityPreparer.float(r[Product.COLUMN_BASE_PRICE]), EntityPreparer.stringOrNull(r[Product.COLUMN_EAN]));
     };
 
     Product.toObject = function (entity) {
