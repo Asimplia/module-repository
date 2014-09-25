@@ -64,3 +64,4 @@ var a20 = AsimpliaRepository.Entity.Error.NotAllowedNull;
 var a21 = AsimpliaRepository.Entity.Error.ScriptTypeEnum;
 var a22 = AsimpliaRepository.Entity.Error.ErrorTypeEnum;
 var a23 = AsimpliaRepository.Error.ErrorLogRecorder;
+var a24 = AsimpliaRepository.Entity.Error.ApplicationTypeEnum;

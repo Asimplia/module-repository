@@ -84,7 +84,7 @@ var EntityPreparer = (function () {
     };
 
     EntityPreparer.fromDate = function (value) {
-        return moment(value).format('YYYY-MM-DD hh:mm:ss');
+        return moment(value).format('YYYY-MM-DD HH:mm:ss');
     };
     return EntityPreparer;
 })();
