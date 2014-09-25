@@ -1,6 +1,6 @@
 var ServiceTypeEnum = require('./ServiceTypeEnum');
 var ServiceTypeFactory = require('./ServiceTypeFactory');
-var moment = require('moment');
+
 var EntityPreparer = require('../EntityPreparer');
 
 var ServiceConnection = (function () {
@@ -24,7 +24,7 @@ var ServiceConnection = (function () {
     ServiceConnection.toObject = function (e) {
         return {
             serviceType: ServiceTypeEnum[e.serviceType],
-            dateCreated: moment(e.dateCreated).format('YYYY-MM-DD'),
+            dateCreated: EntityPreparer.fromDate(e.dateCreated),
             info: e.info
         };
     };

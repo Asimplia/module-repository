@@ -1,5 +1,5 @@
 
-import TypeEnum = require('./Error/TypeEnum');
+import ScriptTypeEnum = require('./Error/ScriptTypeEnum');
 import NotAllowedNull = require('./Error/NotAllowedNull');
 import moment = require('moment');
 
@@ -8,7 +8,7 @@ class EntityPreparer {
 	
 	static string(value: any): string {
 		if (EntityPreparer.isNull(value)) {
-			throw new NotAllowedNull(TypeEnum.STRING);
+			throw new NotAllowedNull(ScriptTypeEnum.STRING);
 		}
 		return ""+value;
 	}
@@ -22,7 +22,7 @@ class EntityPreparer {
 
 	static date(value: any): Date {
 		if (EntityPreparer.isNull(value)) {
-			throw new NotAllowedNull(TypeEnum.DATE);
+			throw new NotAllowedNull(ScriptTypeEnum.DATE);
 		}
 		return moment(value).toDate();
 	}
@@ -36,7 +36,7 @@ class EntityPreparer {
 	
 	static boolean(value: any): boolean {
 		if (EntityPreparer.isNull(value)) {
-			throw new NotAllowedNull(TypeEnum.BOOLEAN);
+			throw new NotAllowedNull(ScriptTypeEnum.BOOLEAN);
 		}
 		return !!value;
 	}
@@ -50,7 +50,7 @@ class EntityPreparer {
 	
 	static int(value: any): number {
 		if (EntityPreparer.isNull(value)) {
-			throw new NotAllowedNull(TypeEnum.INT);
+			throw new NotAllowedNull(ScriptTypeEnum.INT);
 		}
 		return parseInt(value);
 	}
@@ -64,7 +64,7 @@ class EntityPreparer {
 	
 	static float(value: any): number {
 		if (EntityPreparer.isNull(value)) {
-			throw new NotAllowedNull(TypeEnum.FLOAT);
+			throw new NotAllowedNull(ScriptTypeEnum.FLOAT);
 		}
 		return parseFloat(value);
 	}
@@ -82,5 +82,9 @@ class EntityPreparer {
 
 	static isNull(value: any) {
 		return value === null || typeof value === 'undefined';
+	}
+
+	static fromDate(value: Date) {
+		return moment(value).format('YYYY-MM-DD hh:mm:ss');
 	}
 }

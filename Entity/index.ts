@@ -10,3 +10,4 @@ export import Suggestion = require('./Suggestion/index');
 export import Application = require('./Application/index');
 export import Load = require('./Load/index');
 export import EShop = require('./EShop/index');
+export import Error = require('./Error/index');

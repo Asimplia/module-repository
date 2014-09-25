@@ -1,4 +1,4 @@
-var TypeEnum = require('./Error/TypeEnum');
+var ScriptTypeEnum = require('./Error/ScriptTypeEnum');
 var NotAllowedNull = require('./Error/NotAllowedNull');
 var moment = require('moment');
 
@@ -81,6 +81,10 @@ var EntityPreparer = (function () {
 
     EntityPreparer.isNull = function (value) {
         return value === null || typeof value === 'undefined';
+    };
+
+    EntityPreparer.fromDate = function (value) {
+        return moment(value).format('YYYY-MM-DD hh:mm:ss');
     };
     return EntityPreparer;
 })();

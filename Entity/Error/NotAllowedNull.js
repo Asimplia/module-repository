@@ -1,4 +1,4 @@
-var TypeEnum = require('./TypeEnum');
+var ScriptTypeEnum = require('./ScriptTypeEnum');
 var _ = require('underscore');
 var stackTrace = require('stack-trace');
 
@@ -9,7 +9,7 @@ var NotAllowedNull = (function () {
             return trace.getFunctionName() + ':L' + trace.getLineNumber() + ':C' + trace.getColumnNumber();
         });
         this.name = 'NotAllowedNull';
-        this.message = 'Try to set value as NULL, only not null ' + TypeEnum[type] + ' allowed in "' + backTraceMethods.join('" -> "') + '"';
+        this.message = 'Try to set value as NULL, only not null ' + ScriptTypeEnum[type] + ' allowed in "' + backTraceMethods.join('" -> "') + '"';
     }
     return NotAllowedNull;
 })();

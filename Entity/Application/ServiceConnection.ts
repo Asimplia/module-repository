@@ -23,7 +23,7 @@ class ServiceConnection implements IEntity {
 	static toObject(e: ServiceConnection) {
 		return {
 			serviceType: ServiceTypeEnum[e.serviceType],
-			dateCreated: moment(e.dateCreated).format('YYYY-MM-DD'),
+			dateCreated: EntityPreparer.fromDate(e.dateCreated),
 			info: e.info
 		};
 	}

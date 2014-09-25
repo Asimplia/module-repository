@@ -79,5 +79,7 @@ var Application = require('./Application/index');
 exports.Application = Application;
 var EShop = require('./EShop/index');
 exports.EShop = EShop;
+var Error = require('./Error/index');
+exports.Error = Error;
 var Load = require('./Load/index');
 exports.Load = Load;

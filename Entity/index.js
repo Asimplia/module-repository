@@ -18,3 +18,5 @@ var Load = require('./Load/index');
 exports.Load = Load;
 var EShop = require('./EShop/index');
 exports.EShop = EShop;
+var Error = require('./Error/index');
+exports.Error = Error;

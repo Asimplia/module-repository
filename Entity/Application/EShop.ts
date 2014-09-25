@@ -3,7 +3,6 @@ import IEntity = require('../IEntity');
 import List = require('../List');
 import ServiceConnection = require('./ServiceConnection');
 import ServiceTypeEnum = require('./ServiceTypeEnum');
-import moment = require('moment');
 import EntityPreparer = require('../EntityPreparer');
 
 export = EShop;
