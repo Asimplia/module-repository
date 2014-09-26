@@ -13,7 +13,7 @@ class NotAllowedNull implements Error {
 	
 	constructor(type: ScriptTypeEnum) {
 		var backTrace = stackTrace.get();
-		var backTraceMethods = _.map(_.first(backTrace, 5), (trace: any) => {
+		var backTraceMethods = _.map(_.first(backTrace, 8), (trace: any) => {
 			return trace.getFunctionName() + ':L' + trace.getLineNumber() + ':C' + trace.getColumnNumber();
 		});
 		this.name = 'NotAllowedNull';
