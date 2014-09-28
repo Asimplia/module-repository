@@ -8,7 +8,8 @@ class EntityPreparer {
 	
 	static string(value: any): string {
 		if (EntityPreparer.isNull(value)) {
-			throw new NotAllowedNull(ScriptTypeEnum.STRING);
+			console.warn(new NotAllowedNull(ScriptTypeEnum.STRING));
+			return null;
 		}
 		return ""+value;
 	}
@@ -22,7 +23,8 @@ class EntityPreparer {
 
 	static date(value: any): Date {
 		if (EntityPreparer.isNull(value)) {
-			throw new NotAllowedNull(ScriptTypeEnum.DATE);
+			console.warn(new NotAllowedNull(ScriptTypeEnum.DATE));
+			return null;
 		}
 		return moment(value).toDate();
 	}
@@ -36,7 +38,8 @@ class EntityPreparer {
 	
 	static boolean(value: any): boolean {
 		if (EntityPreparer.isNull(value)) {
-			throw new NotAllowedNull(ScriptTypeEnum.BOOLEAN);
+			console.warn(new NotAllowedNull(ScriptTypeEnum.BOOLEAN));
+			return null;
 		}
 		return !!value;
 	}
@@ -50,7 +53,8 @@ class EntityPreparer {
 	
 	static int(value: any): number {
 		if (EntityPreparer.isNull(value)) {
-			throw new NotAllowedNull(ScriptTypeEnum.INT);
+			console.warn(new NotAllowedNull(ScriptTypeEnum.INT));
+			return null;
 		}
 		return parseInt(value);
 	}
@@ -64,7 +68,8 @@ class EntityPreparer {
 	
 	static float(value: any): number {
 		if (EntityPreparer.isNull(value)) {
-			throw new NotAllowedNull(ScriptTypeEnum.FLOAT);
+			console.warn(new NotAllowedNull(ScriptTypeEnum.FLOAT));
+			return null;
 		}
 		return parseFloat(value);
 	}
