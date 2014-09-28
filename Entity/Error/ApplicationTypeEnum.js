@@ -6,5 +6,6 @@ var ApplicationTypeEnum;
     ApplicationTypeEnum[ApplicationTypeEnum["BACKEND"] = 3] = "BACKEND";
     ApplicationTypeEnum[ApplicationTypeEnum["ADMIN"] = 4] = "ADMIN";
     ApplicationTypeEnum[ApplicationTypeEnum["GRAPH"] = 5] = "GRAPH";
+    ApplicationTypeEnum[ApplicationTypeEnum["FRONTEND"] = 6] = "FRONTEND";
 })(ApplicationTypeEnum || (ApplicationTypeEnum = {}));
 module.exports = ApplicationTypeEnum;

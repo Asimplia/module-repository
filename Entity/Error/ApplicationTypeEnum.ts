@@ -7,5 +7,6 @@ enum ApplicationTypeEnum {
 	ACTION,
 	BACKEND,
 	ADMIN,
-	GRAPH
+	GRAPH,
+	FRONTEND
 }
