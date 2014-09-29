@@ -15,7 +15,8 @@
     "each": "^0.4.9",
     "pg": "^3.4.0",
     "neo4j": "~1.1.0",
-    "stack-trace": "0.0.9"
+    "stack-trace": "0.0.9",
+    "traceback": "~0.3.1"
   },
   "scripts": {
     "postinstall": ""
