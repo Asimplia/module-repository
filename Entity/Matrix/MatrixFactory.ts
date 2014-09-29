@@ -3,6 +3,7 @@ import Matrix = require('./Matrix');
 import MatrixProduct = require('./MatrixProduct');
 import MatrixCustomer = require('./MatrixCustomer');
 import MatrixChannel = require('./MatrixChannel');
+import MatrixCategory = require('./MatrixCategory');
 import SectionFactory = require('../../Entity/Section/SectionFactory');
 
 export = MatrixFactory;
@@ -19,6 +20,9 @@ class MatrixFactory {
 		} else
 		if (SectionFactory.isChannel(section)) {
 			matrix = MatrixChannel.fromRow(row);
+		} else
+		if (SectionFactory.isCategory(section)) {
+			matrix = MatrixCategory.fromRow(row);
 		} else {
 			throw new Error('Not implemented');
 		}

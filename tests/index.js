@@ -15,6 +15,7 @@ var l0 = AsimpliaRepository.Entity.Matrix.Matrix;
 var l2 = AsimpliaRepository.Entity.Matrix.MatrixProduct;
 var l3 = AsimpliaRepository.Entity.Matrix.MatrixCustomer;
 var l4 = AsimpliaRepository.Entity.Matrix.MatrixChannel;
+var l41 = AsimpliaRepository.Entity.Matrix.MatrixCategory;
 var l5 = AsimpliaRepository.Entity.Matrix.Signal;
 var l6 = AsimpliaRepository.Entity.Matrix.Situation;
 var l7 = AsimpliaRepository.Entity.Matrix.QuadrantValueFactory;

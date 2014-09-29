@@ -2,6 +2,7 @@ var Matrix = require('./Matrix');
 var MatrixProduct = require('./MatrixProduct');
 var MatrixCustomer = require('./MatrixCustomer');
 var MatrixChannel = require('./MatrixChannel');
+var MatrixCategory = require('./MatrixCategory');
 var SectionFactory = require('../../Entity/Section/SectionFactory');
 
 var MatrixFactory = (function () {
@@ -16,6 +17,8 @@ var MatrixFactory = (function () {
             matrix = MatrixCustomer.fromRow(row);
         } else if (SectionFactory.isChannel(section)) {
             matrix = MatrixChannel.fromRow(row);
+        } else if (SectionFactory.isCategory(section)) {
+            matrix = MatrixCategory.fromRow(row);
         } else {
             throw new Error('Not implemented');
         }

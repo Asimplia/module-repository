@@ -89,6 +89,8 @@ class SectionFactory {
 				return SectionEnum.MP19;
 			case SectionEnum[SectionEnum.MP20]:
 				return SectionEnum.MP20;
+			case SectionEnum[SectionEnum.CATEGORY]:
+				return SectionEnum.CATEGORY;
 			case SectionEnum[SectionEnum.MGP1]:
 				return SectionEnum.MGP1;
 			case SectionEnum[SectionEnum.MGP2]:
@@ -221,6 +223,24 @@ class SectionFactory {
 		return false;
 	}
 
+	static isCategory(section: SectionEnum) {
+		switch (section) {
+			case SectionEnum.CATEGORY:
+			case SectionEnum.MGP1:
+			case SectionEnum.MGP2:
+			case SectionEnum.MGP3:
+			case SectionEnum.MGP4:
+			case SectionEnum.MGP5:
+			case SectionEnum.MGP6:
+			case SectionEnum.MGP7:
+			case SectionEnum.MGP8:
+			case SectionEnum.MGP9:
+			case SectionEnum.MGP10:
+				return true;
+		}
+		return false;
+	}
+
 	static isChannel(section: SectionEnum) {
 		switch (section) {
 			case SectionEnum.CHANNEL:
@@ -257,6 +277,8 @@ class SectionFactory {
 				return new LocalizedString({cs: 'Zákazník', en: 'Customer'});
 			case SectionFactory.isChannel(section):
 				return new LocalizedString({cs: 'Kanál', en: 'Channel'});
+			case SectionFactory.isCategory(section):
+				return new LocalizedString({cs: 'Kategorie', en: 'Category'});
 			default:
 				return null;
 		}
@@ -271,6 +293,9 @@ class SectionFactory {
 		}
 		if (this.isChannel(section)) {
 			return SectionEnum.CHANNEL;
+		}
+		if (this.isCategory(section)) {
+			return SectionEnum.CATEGORY;
 		}
 		return null;
 	}

@@ -16,5 +16,7 @@ var MatrixCustomer = require('./MatrixCustomer');
 exports.MatrixCustomer = MatrixCustomer;
 var MatrixChannel = require('./MatrixChannel');
 exports.MatrixChannel = MatrixChannel;
+var MatrixCategory = require('./MatrixCategory');
+exports.MatrixCategory = MatrixCategory;
 var ColumnEnum = require('./ColumnEnum');
 exports.ColumnEnum = ColumnEnum;

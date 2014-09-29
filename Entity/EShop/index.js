@@ -6,3 +6,5 @@ var Customer = require('./Customer');
 exports.Customer = Customer;
 var Product = require('./Product');
 exports.Product = Product;
+var Category = require('./Category');
+exports.Category = Category;

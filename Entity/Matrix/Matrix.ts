@@ -3,9 +3,6 @@ import IEntity = require('../IEntity');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 import Product = require('../EShop/Product');
 import moment = require('moment');
-import MatrixProduct = require('./MatrixProduct')
-import MatrixCustomer = require('./MatrixCustomer')
-import MatrixChannel = require('./MatrixChannel')
 import SectionEnum = require('../Section/SectionEnum');
 
 export = Matrix;

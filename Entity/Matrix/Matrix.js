@@ -1,7 +1,6 @@
 ﻿var QuadrantValueEnum = require('./QuadrantValueEnum');
 
 var moment = require('moment');
-
 var SectionEnum = require('../Section/SectionEnum');
 
 var Matrix = (function () {

@@ -23,6 +23,7 @@ enum SectionEnum {
 	MP18,
 	MP19,
 	MP20,
+	CATEGORY,
 	MGP1,
 	MGP2,
 	MGP3,

@@ -184,11 +184,11 @@ var Result = (function () {
     };
 
     Result.prototype.isSectionCustomer = function () {
-        return this.section == 32 /* CUSTOMER */;
+        return this.section == 33 /* CUSTOMER */;
     };
 
     Result.prototype.isSectionChannel = function () {
-        return this.section == 53 /* CHANNEL */;
+        return this.section == 54 /* CHANNEL */;
     };
     return Result;
 })();
