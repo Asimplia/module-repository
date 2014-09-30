@@ -1,6 +1,7 @@
 
 import ScriptTypeEnum = require('./Error/ScriptTypeEnum');
 import NotAllowedNull = require('./Error/NotAllowedNull');
+import ColumnNotExistsInEntityError = require('./Error/Error/ColumnNotExistsInEntityError');
 import moment = require('moment');
 import _ = require('underscore');
 
@@ -83,17 +84,24 @@ class EntityPreparer {
 	}
 
 	static getPrefixedColumns(EntityStatic: any) {
-		var prefix = this.getTypeName(EntityStatic);
-		var columns = _.map(EntityStatic, (columnName: string, keyName: string) => {
-			return keyName.substring(0, 7) === 'COLUMN_' ? columnName : null;
-		});
-		return _.filter(columns, (column: string) => {
-			return column !== null;
-		});
+		var prefix = EntityStatic.name;
+		var columns = [];
+		for (var i in Object.keys(EntityStatic)) {
+			var keyName = Object.keys(EntityStatic)[i];
+			if(keyName.substring(0, 7) === 'COLUMN_') {
+				columns.push(prefix + '_' + EntityStatic[keyName]);
+			}
+		}
+		return columns;
 	}
 
-	private static getTypeName(obj: any) {
-	    return Object.prototype.toString.call(obj).slice(8, -1);
+	static getPrefixedColumn(EntityStatic: any, column: string) {
+		var prefix = EntityStatic.name;
+		var prefixedColumn = prefix + '_' + column;
+		if (!_.contains(EntityPreparer.getPrefixedColumns(EntityStatic), prefixedColumn)) {
+			throw new ColumnNotExistsInEntityError('Column "'+column+'" not exists in Entity "'+prefix+'"');
+		}
+		return prefixedColumn;
 	}
 
 	static now() {
