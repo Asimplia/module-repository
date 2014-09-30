@@ -95,12 +95,12 @@ class MatrixLoader {
 	}
 
 	private getSelect() {
-		return EntityPreparer.getPrefixedColumns(Matrix).join(', ')+', '
-			+EntityPreparer.getPrefixedColumns(Signal).join(', ')+', '
-			+EntityPreparer.getPrefixedColumns(Product).join(', ')+', '
-			+EntityPreparer.getPrefixedColumns(Customer).join(', ')+', '
-			+EntityPreparer.getPrefixedColumns(Channel).join(', ')+', '
-			+EntityPreparer.getPrefixedColumns(Category).join(', ')+' ';
+		return EntityPreparer.getColumnsAsPrefixedAlias(Matrix).join(', ')+', '
+			+EntityPreparer.getColumnsAsPrefixedAlias(Signal).join(', ')+', '
+			+EntityPreparer.getColumnsAsPrefixedAlias(Product).join(', ')+', '
+			+EntityPreparer.getColumnsAsPrefixedAlias(Customer).join(', ')+', '
+			+EntityPreparer.getColumnsAsPrefixedAlias(Channel).join(', ')+', '
+			+EntityPreparer.getColumnsAsPrefixedAlias(Category).join(', ')+' ';
 	}
 
 	private getFrom() {

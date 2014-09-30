@@ -9,6 +9,7 @@ import ColumnNotExistsInEntityError = Repository.Entity.Error.Error.ColumnNotExi
 Repository;
 
 class MockEntity {
+	public static TABLE_NAME = 'schema.tableName';
 	public static COLUMN_TEST_1 = 'test_1';
 	public static COLUMN_TEST_2 = 'test2';
 }
@@ -48,5 +49,26 @@ describe("getPrefixedColumn", () => {
     expect(() => {
     	EntityPreparer.getPrefixedColumn(MockEntityOne, MockEntity.COLUMN_TEST_2)
     }).toThrow(new ColumnNotExistsInEntityError('Column "test2" not exists in Entity "MockEntityOne"'));
+  });
+});
+
+
+describe("getColumnsAsPrefixedAlias", () => {
+  it("returns aliased column names as its prefixed name", () => {
+    expect(EntityPreparer.getColumnsAsPrefixedAlias(MockEntity))
+    .toEqual(['schema.tableName.test_1 AS MockEntity_test_1', 'schema.tableName.test2 AS MockEntity_test2']);
+  });
+});
+
+
+describe("getTableColumns", () => {
+  it("returns more column names", () => {
+    expect(EntityPreparer.getTableColumns(MockEntity)).toEqual(['schema.tableName.test_1', 'schema.tableName.test2']);
+  });
+  it("returns one column name", () => {
+    expect(EntityPreparer.getTableColumns(MockEntityOne)).toEqual(['undefined.test_1']);
+  });
+  it("returns no column names", () => {
+    expect(EntityPreparer.getTableColumns(MockEntityNo)).toEqual([]);
   });
 });

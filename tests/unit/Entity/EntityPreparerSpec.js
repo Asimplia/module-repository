@@ -6,6 +6,7 @@ Repository;
 var MockEntity = (function () {
     function MockEntity() {
     }
+    MockEntity.TABLE_NAME = 'schema.tableName';
     MockEntity.COLUMN_TEST_1 = 'test_1';
     MockEntity.COLUMN_TEST_2 = 'test2';
     return MockEntity;
@@ -49,5 +50,23 @@ describe("getPrefixedColumn", function () {
         expect(function () {
             EntityPreparer.getPrefixedColumn(MockEntityOne, MockEntity.COLUMN_TEST_2);
         }).toThrow(new ColumnNotExistsInEntityError('Column "test2" not exists in Entity "MockEntityOne"'));
+    });
+});
+
+describe("getColumnsAsPrefixedAlias", function () {
+    it("returns aliased column names as its prefixed name", function () {
+        expect(EntityPreparer.getColumnsAsPrefixedAlias(MockEntity)).toEqual(['schema.tableName.test_1 AS MockEntity_test_1', 'schema.tableName.test2 AS MockEntity_test2']);
+    });
+});
+
+describe("getTableColumns", function () {
+    it("returns more column names", function () {
+        expect(EntityPreparer.getTableColumns(MockEntity)).toEqual(['schema.tableName.test_1', 'schema.tableName.test2']);
+    });
+    it("returns one column name", function () {
+        expect(EntityPreparer.getTableColumns(MockEntityOne)).toEqual(['undefined.test_1']);
+    });
+    it("returns no column names", function () {
+        expect(EntityPreparer.getTableColumns(MockEntityNo)).toEqual([]);
     });
 });

@@ -94,6 +94,29 @@ var EntityPreparer = (function () {
         return columns;
     };
 
+    EntityPreparer.getColumnsAsPrefixedAlias = function (EntityStatic) {
+        var prefix = EntityStatic.name;
+        var columns = [];
+        for (var i in Object.keys(EntityStatic)) {
+            var keyName = Object.keys(EntityStatic)[i];
+            if (keyName.substring(0, 7) === 'COLUMN_') {
+                columns.push(EntityStatic.TABLE_NAME + '.' + EntityStatic[keyName] + ' AS ' + EntityPreparer.getPrefixedColumn(EntityStatic, EntityStatic[keyName]));
+            }
+        }
+        return columns;
+    };
+
+    EntityPreparer.getTableColumns = function (EntityStatic) {
+        var columns = [];
+        for (var i in Object.keys(EntityStatic)) {
+            var keyName = Object.keys(EntityStatic)[i];
+            if (keyName.substring(0, 7) === 'COLUMN_') {
+                columns.push(EntityStatic.TABLE_NAME + '.' + EntityStatic[keyName]);
+            }
+        }
+        return columns;
+    };
+
     EntityPreparer.getPrefixedColumn = function (EntityStatic, column) {
         var prefix = EntityStatic.name;
         var prefixedColumn = prefix + '_' + column;

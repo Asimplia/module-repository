@@ -24,7 +24,7 @@ class MatrixFactory {
 		if (SectionFactory.isCategory(section)) {
 			matrix = MatrixCategory.fromRow(row);
 		} else {
-			throw new Error('Not implemented');
+			throw new Error('Not implemented section "' + row[Matrix.COLUMN_SECTION] + '"');
 		}
 		return matrix;
 	}
