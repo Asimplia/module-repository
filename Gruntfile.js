@@ -7,7 +7,7 @@ module.exports = function (grunt) {
 		typescript: {
 			// A specific target
 			build: {
-				src: ["tests/index.ts"],
+				src: ["tests/**/*.ts"],
 				dest: '',
 				options: {
 					// 'es3' (default) | 'es5'
@@ -24,10 +24,26 @@ module.exports = function (grunt) {
 				ignoreTypeCheck: true
 			}
 		},
+		jasmine_node: {
+			options: {
+				forceExit: true,
+				match: '.',
+				matchall: false,
+				extensions: 'js',
+				specNameMatcher: 'spec',
+				jUnit: {
+					report: true,
+					savePath : "./build/reports/jasmine/",
+					useDotNotation: true,
+					consolidate: true
+				}
+			},
+			all: ['tests/unit/']
+		},
 		watch: {
 			ts: {
 				files: tsFiles,
-				tasks: ['typescript:build'],
+				tasks: ['typescript:build', 'jasmine_node'],
 				options: {
 					livereload: 35730,
 					debug: false,
@@ -38,10 +54,11 @@ module.exports = function (grunt) {
 	});
 
 	grunt.loadNpmTasks('grunt-typescript');
+	grunt.loadNpmTasks('grunt-jasmine-node');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	grunt.registerTask('default', [
-		'typescript:build', 'watch'
+		'typescript:build', 'jasmine_node', 'watch'
 	]);
 
 };

@@ -2,6 +2,7 @@
 import ScriptTypeEnum = require('./Error/ScriptTypeEnum');
 import NotAllowedNull = require('./Error/NotAllowedNull');
 import moment = require('moment');
+import _ = require('underscore');
 
 export = EntityPreparer;
 class EntityPreparer {
@@ -79,6 +80,20 @@ class EntityPreparer {
 			return null;
 		}
 		return EntityPreparer.float(value);
+	}
+
+	static getPrefixedColumns(EntityStatic: any) {
+		var prefix = this.getTypeName(EntityStatic);
+		var columns = _.map(EntityStatic, (columnName: string, keyName: string) => {
+			return keyName.substring(0, 7) === 'COLUMN_' ? columnName : null;
+		});
+		return _.filter(columns, (column: string) => {
+			return column !== null;
+		});
+	}
+
+	private static getTypeName(obj: any) {
+	    return Object.prototype.toString.call(obj).slice(8, -1);
 	}
 
 	static now() {

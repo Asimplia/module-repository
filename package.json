@@ -29,6 +29,8 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-typescript": "~0.3.8",
     "grunt-cli": "^0.1.13",
-    "tsd": "^0.5.7"
+    "tsd": "^0.5.7",
+    "jasmine": "~2.0.1",
+    "grunt-jasmine-node": "~0.2.1"
   }
 }
