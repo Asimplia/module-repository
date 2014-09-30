@@ -77,7 +77,7 @@ var Situation = (function () {
         return Situation.toObject(this);
     };
     Situation.fromRow = function (r) {
-        return new Situation(EntityPreparer.intOrNull(r[Situation.COLUMN_SITUATION_ID]), new List(), EntityPreparer.date(r[Situation.COLUMN_DATE_CREATED]), EntityPreparer.dateOrNull(r[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED]));
+        return new Situation(EntityPreparer.intOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_SITUATION_ID]), new List(), EntityPreparer.date(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_CREATED]), EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED]));
     };
 
     Situation.prototype.getMatrixProductBySection = function (section) {
@@ -86,7 +86,7 @@ var Situation = (function () {
         });
         return signal ? signal.Matrix : null;
     };
-    Situation.TABLE_NAME = 'situation';
+    Situation.TABLE_NAME = 'analytical.situation';
     Situation.COLUMN_SITUATION_ID = 'situationid';
     Situation.COLUMN_DATE_CREATED = 'datecreated';
     Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED = 'datesuggestionresultcreated';

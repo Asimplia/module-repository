@@ -9,7 +9,7 @@ var MatrixFactory = (function () {
     function MatrixFactory() {
     }
     MatrixFactory.createMatrixFromRow = function (row) {
-        var section = SectionFactory.createSectionEnum(row[Matrix.COLUMN_SECTION]);
+        var section = SectionFactory.createSectionEnum(row[Matrix.TABLE_NAME + '.' + Matrix.COLUMN_SECTION]);
         var matrix;
         if (SectionFactory.isProduct(section)) {
             matrix = MatrixProduct.fromRow(row);
@@ -20,7 +20,7 @@ var MatrixFactory = (function () {
         } else if (SectionFactory.isCategory(section)) {
             matrix = MatrixCategory.fromRow(row);
         } else {
-            throw new Error('Not implemented section "' + row[Matrix.COLUMN_SECTION] + '"');
+            throw new Error('Not implemented section "' + row[Matrix.TABLE_NAME + '.' + Matrix.COLUMN_SECTION] + '"');
         }
         return matrix;
     };

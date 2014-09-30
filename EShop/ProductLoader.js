@@ -2,6 +2,7 @@ var Repository = require('../index');
 var List = require('../Entity/List');
 var Product = require('../Entity/EShop/Product');
 var Matrix = require('../Entity/Matrix/Matrix');
+var EntityPreparer = require('../Entity/EntityPreparer');
 
 var ProductLoader = (function () {
     function ProductLoader() {
@@ -12,7 +13,7 @@ var ProductLoader = (function () {
     }
     ProductLoader.prototype.getListByEShopIdAndLoadIdInMatrixes = function (eShopId, loadId, callback) {
         var _this = this;
-        var sql = 'SELECT warehouse.' + Product.TABLE_NAME + '.* FROM warehouse.' + Product.TABLE_NAME + ' ' + ' JOIN analytical.' + Matrix.TABLE_NAME + ' ' + ' ON analytical.' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_PRODUCT_ID + ' = warehouse.' + Product.TABLE_NAME + '.' + Product.COLUMN_PRODUCT_ID + ' ' + ' AND analytical.' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = warehouse.' + Product.TABLE_NAME + '.' + Product.COLUMN_E_SHOP_ID + ' ' + ' WHERE warehouse.' + Product.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' GROUP BY warehouse.' + Product.TABLE_NAME + '.' + Product.COLUMN_E_SHOP_ID + ', warehouse.' + Product.TABLE_NAME + '.' + Product.COLUMN_PRODUCT_ID + ' ' + ' ORDER BY warehouse.' + Product.TABLE_NAME + '.' + Product.COLUMN_PRODUCT_ID + ' ';
+        var sql = 'SELECT ' + EntityPreparer.getColumnsAsPrefixedAlias(Product).join(', ') + ' FROM ' + Product.TABLE_NAME + ' ' + ' JOIN ' + Matrix.TABLE_NAME + ' ' + ' ON ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_PRODUCT_ID + ' = ' + Product.TABLE_NAME + '.' + Product.COLUMN_PRODUCT_ID + ' ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = ' + Product.TABLE_NAME + '.' + Product.COLUMN_E_SHOP_ID + ' ' + ' WHERE ' + Product.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' GROUP BY ' + Product.TABLE_NAME + '.' + Product.COLUMN_E_SHOP_ID + ', ' + Product.TABLE_NAME + '.' + Product.COLUMN_PRODUCT_ID + ' ' + ' ORDER BY ' + Product.TABLE_NAME + '.' + Product.COLUMN_PRODUCT_ID + ' ';
         this.connection.query(sql, [eShopId, loadId], function (e, result) {
             _this.createListByResult(e, result, callback);
         });

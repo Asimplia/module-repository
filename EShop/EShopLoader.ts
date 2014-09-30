@@ -2,6 +2,7 @@
 import Repository = require('../index');
 import EShop = require('../Entity/EShop/EShop');
 import List = require('../Entity/List');
+import EntityPreparer = require('../Entity/EntityPreparer');
 
 export = EShopLoader;
 class EShopLoader {
@@ -17,7 +18,7 @@ class EShopLoader {
 
 	getList(callback: (e: Error, eShopList: List<EShop>) => void) {
 		this.connection.query(
-			'SELECT * FROM warehouse.'+EShop.TABLE_NAME+' ', 
+			'SELECT '+EntityPreparer.getColumnsAsPrefixedAlias(EShop).join(', ')+' FROM '+EShop.TABLE_NAME+' ', 
 			[], (e, result) => {
 			this.createListByResult(e, result, callback);
 		});

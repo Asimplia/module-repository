@@ -16,7 +16,7 @@ var Category = (function () {
     });
 
     Category.fromRow = function (r) {
-        return new Category(EntityPreparer.int(r[Category.COLUMN_CATEGORY_ID]), EntityPreparer.int(r[Category.COLUMN_E_SHOP_ID]), EntityPreparer.int(r[Category.COLUMN_PARENT_CATEGORY_ID]), EntityPreparer.string(r[Category.COLUMN_NAME]));
+        return new Category(EntityPreparer.int(r[Category.TABLE_NAME + '.' + Category.COLUMN_CATEGORY_ID]), EntityPreparer.int(r[Category.TABLE_NAME + '.' + Category.COLUMN_E_SHOP_ID]), EntityPreparer.int(r[Category.TABLE_NAME + '.' + Category.COLUMN_PARENT_CATEGORY_ID]), EntityPreparer.string(r[Category.TABLE_NAME + '.' + Category.COLUMN_NAME]));
     };
 
     Category.toObject = function (entity) {
@@ -31,7 +31,7 @@ var Category = (function () {
     Category.prototype.toObject = function () {
         return Category.toObject(this);
     };
-    Category.TABLE_NAME = 'productcategory';
+    Category.TABLE_NAME = 'warehouse.productcategory';
     Category.COLUMN_CATEGORY_ID = 'productcategoryid';
     Category.COLUMN_E_SHOP_ID = 'eshopid';
     Category.COLUMN_PARENT_CATEGORY_ID = 'parentcategory';

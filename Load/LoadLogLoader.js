@@ -1,6 +1,7 @@
 var Repository = require('../index');
 var List = Repository.Entity.List;
 var LoadLog = Repository.Entity.Load.LoadLog;
+var EntityPreparer = require('../Entity/EntityPreparer');
 Repository;
 
 var LoadLogLoader = (function () {
@@ -12,7 +13,7 @@ var LoadLogLoader = (function () {
     }
     LoadLogLoader.prototype.getListByEShopId = function (eShopId, callback) {
         var _this = this;
-        this.connection.query('SELECT * FROM warehouse.' + LoadLog.TABLE_NAME + ' WHERE ' + LoadLog.COLUMN_E_SHOP_ID + ' = $1', [eShopId], function (e, result) {
+        this.connection.query('SELECT ' + EntityPreparer.getColumnsAsPrefixedAlias(LoadLog).join(', ') + ' FROM ' + LoadLog.TABLE_NAME + ' WHERE ' + LoadLog.COLUMN_E_SHOP_ID + ' = $1', [eShopId], function (e, result) {
             _this.createListByResult(e, result, callback);
         });
     };

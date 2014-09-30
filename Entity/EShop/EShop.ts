@@ -5,7 +5,7 @@ import EntityPreparer = require('../EntityPreparer');
 export = EShop;
 class EShop implements IEntity {
 
-	public static TABLE_NAME = 'eshop';
+	public static TABLE_NAME = 'warehouse.eshop';
 	public static COLUMN_E_SHOP_ID = 'eshopid';
 	public static COLUMN_COUNTRY_CODE = 'countryidiso';
 	public static COLUMN_OWNER = 'eshopowner';
@@ -46,11 +46,11 @@ class EShop implements IEntity {
 
 	static fromRow(r: any) {
 		return new EShop(
-			EntityPreparer.int(r[EShop.COLUMN_E_SHOP_ID]),
-			EntityPreparer.stringOrNull(r[EShop.COLUMN_COUNTRY_CODE]),
-			EntityPreparer.string(r[EShop.COLUMN_OWNER]),
-			EntityPreparer.string(r[EShop.COLUMN_URL]),
-			EntityPreparer.string(r[EShop.COLUMN_NAME])
+			EntityPreparer.int(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_E_SHOP_ID]),
+			EntityPreparer.stringOrNull(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_COUNTRY_CODE]),
+			EntityPreparer.string(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_OWNER]),
+			EntityPreparer.string(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_URL]),
+			EntityPreparer.string(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_NAME])
 		);
 	}
 }

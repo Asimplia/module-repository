@@ -74,13 +74,13 @@ class MatrixLoader {
 	getListByEShopIdAndLoadIdLimited(eShopId: number, loadId: number, limit: number, offset: number, filter: { productIds?: number[]; customerIds?: number[]; channelIds?: number[] }, callback: (e: Error, recordList?: List<Matrix>) => void) {
 		var filterWhere = '';
 		if (filter.productIds && filter.productIds.length > 0) {
-			filterWhere += ' AND analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_PRODUCT_ID+' IN ('+filter.productIds.join(', ')+') ';
+			filterWhere += ' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_PRODUCT_ID+' IN ('+filter.productIds.join(', ')+') ';
 		}
 		if (filter.customerIds && filter.customerIds.length > 0) {
-			filterWhere += ' AND analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CUSTOMER_ID+' IN ('+filter.customerIds.join(', ')+') ';
+			filterWhere += ' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CUSTOMER_ID+' IN ('+filter.customerIds.join(', ')+') ';
 		}
 		if (filter.channelIds && filter.channelIds.length > 0) {
-			filterWhere += ' AND analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CHANNEL_ID+' IN ('+filter.channelIds.join(', ')+') ';
+			filterWhere += ' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CHANNEL_ID+' IN ('+filter.channelIds.join(', ')+') ';
 		}
 		var sql = 'SELECT '+this.getSelect()+' FROM '+this.getFrom()
 			+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
@@ -104,12 +104,12 @@ class MatrixLoader {
 	}
 
 	private getFrom() {
-		return 'analytical.'+Matrix.TABLE_NAME+' '
-			+' LEFT JOIN analytical.'+Signal.TABLE_NAME+' USING ('+Matrix.COLUMN_MATRIX_ID+') '
-			+' LEFT JOIN warehouse.'+Product.TABLE_NAME+' USING ('+Product.COLUMN_PRODUCT_ID+', '+Product.COLUMN_E_SHOP_ID+') '
-			+' LEFT JOIN warehouse.'+Customer.TABLE_NAME+' USING ('+Customer.COLUMN_CUSTOMER_ID+', '+Customer.COLUMN_E_SHOP_ID+') '
-			+' LEFT JOIN warehouse.'+Channel.TABLE_NAME+' USING ('+Channel.COLUMN_CHANNEL_ID+', '+Channel.COLUMN_E_SHOP_ID+') '
-			+' LEFT JOIN warehouse.'+Category.TABLE_NAME+' USING ('+Category.COLUMN_CATEGORY_ID+', '+Category.COLUMN_E_SHOP_ID+') ';
+		return ''+Matrix.TABLE_NAME+' '
+			+' LEFT JOIN '+Signal.TABLE_NAME+' USING ('+Matrix.COLUMN_MATRIX_ID+') '
+			+' LEFT JOIN '+Product.TABLE_NAME+' USING ('+Product.COLUMN_PRODUCT_ID+', '+Product.COLUMN_E_SHOP_ID+') '
+			+' LEFT JOIN '+Customer.TABLE_NAME+' USING ('+Customer.COLUMN_CUSTOMER_ID+', '+Customer.COLUMN_E_SHOP_ID+') '
+			+' LEFT JOIN '+Channel.TABLE_NAME+' USING ('+Channel.COLUMN_CHANNEL_ID+', '+Channel.COLUMN_E_SHOP_ID+') '
+			+' LEFT JOIN '+Category.TABLE_NAME+' USING ('+Category.COLUMN_CATEGORY_ID+', '+Category.COLUMN_E_SHOP_ID+') ';
 	}
 
 	private createListByResult(e: Error, result: any, callback: (e: Error, recordList?: List<Matrix>) => void) {

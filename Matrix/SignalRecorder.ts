@@ -27,7 +27,7 @@ class SignalRecorder {
 	}
 
 	insert(signal: Signal, callback: (e: Error, signal?: Signal) => void) {
-		this.connection.query('INSERT INTO analytical.'+Signal.TABLE_NAME+' ('+Signal.COLUMN_MATRIX_ID+', '+Signal.COLUMN_DATE_CREATED+', '+Signal.COLUMN_SITUATION_ID+')'
+		this.connection.query('INSERT INTO '+Signal.TABLE_NAME+' ('+Signal.COLUMN_MATRIX_ID+', '+Signal.COLUMN_DATE_CREATED+', '+Signal.COLUMN_SITUATION_ID+')'
 			+' VALUES ($1, $2::timestamp, $3) RETURNING '+Signal.COLUMN_SIGNAL_ID, [
 			signal.Matrix.Id,
 			moment(signal.DateCreated).format('YYYY-MM-DD HH:mm:ss'),
@@ -44,7 +44,7 @@ class SignalRecorder {
 	}
 
 	update(signal: Signal, callback: (e: Error, signal?: Signal) => void) {
-		this.connection.query('UPDATE analytical.'+Signal.TABLE_NAME
+		this.connection.query('UPDATE '+Signal.TABLE_NAME
 			+' SET '+Signal.COLUMN_MATRIX_ID+' = $1'
 			+', '+Signal.COLUMN_DATE_CREATED+' = $2::timestamp'
 			+', '+Signal.COLUMN_SITUATION_ID+' = $3'
@@ -64,10 +64,10 @@ class SignalRecorder {
 	}
 
 	removeByEShopIdAndLoadId(eShopId: number, loadId: number, callback: (e: Error) => void) {
-		var sql = 'DELETE FROM analytical.'+Signal.TABLE_NAME+' '
-			+' USING analytical.'+Matrix.TABLE_NAME+' '
-			+' WHERE analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 '
-			+' AND analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_LOAD_ID+' = $2 ';
+		var sql = 'DELETE FROM '+Signal.TABLE_NAME+' '
+			+' USING '+Matrix.TABLE_NAME+' '
+			+' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_LOAD_ID+' = $2 ';
 		this.connection.query(sql, [
 			eShopId, loadId
 		], (e, result) => {

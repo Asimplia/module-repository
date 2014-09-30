@@ -27,9 +27,9 @@ var EShop = (function () {
     };
 
     EShop.fromRow = function (r) {
-        return new EShop(EntityPreparer.int(r[EShop.COLUMN_E_SHOP_ID]), EntityPreparer.stringOrNull(r[EShop.COLUMN_COUNTRY_CODE]), EntityPreparer.string(r[EShop.COLUMN_OWNER]), EntityPreparer.string(r[EShop.COLUMN_URL]), EntityPreparer.string(r[EShop.COLUMN_NAME]));
+        return new EShop(EntityPreparer.int(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_E_SHOP_ID]), EntityPreparer.stringOrNull(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_COUNTRY_CODE]), EntityPreparer.string(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_OWNER]), EntityPreparer.string(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_URL]), EntityPreparer.string(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_NAME]));
     };
-    EShop.TABLE_NAME = 'eshop';
+    EShop.TABLE_NAME = 'warehouse.eshop';
     EShop.COLUMN_E_SHOP_ID = 'eshopid';
     EShop.COLUMN_COUNTRY_CODE = 'countryidiso';
     EShop.COLUMN_OWNER = 'eshopowner';

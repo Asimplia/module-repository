@@ -18,7 +18,7 @@ var Channel = (function () {
     });
 
     Channel.fromRow = function (r) {
-        return new Channel(EntityPreparer.int(r[Channel.COLUMN_CHANNEL_ID]), EntityPreparer.int(r[Channel.COLUMN_E_SHOP_ID]), EntityPreparer.int(r[Channel.COLUMN_CUSTOMER_ID]), EntityPreparer.string(r[Channel.COLUMN_NAME]), EntityPreparer.boolean(r[Channel.COLUMN_PAID_CHANNEL]), EntityPreparer.boolean(r[Channel.COLUMN_REFFERAL_ORGANIC]));
+        return new Channel(EntityPreparer.int(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_CHANNEL_ID]), EntityPreparer.int(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_E_SHOP_ID]), EntityPreparer.int(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_CUSTOMER_ID]), EntityPreparer.string(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_NAME]), EntityPreparer.boolean(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_PAID_CHANNEL]), EntityPreparer.boolean(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_REFFERAL_ORGANIC]));
     };
 
     Channel.toObject = function (entity) {
@@ -35,7 +35,7 @@ var Channel = (function () {
     Channel.prototype.toObject = function () {
         return Channel.toObject(this);
     };
-    Channel.TABLE_NAME = 'channel';
+    Channel.TABLE_NAME = 'warehouse.channel';
     Channel.COLUMN_CHANNEL_ID = 'channelid';
     Channel.COLUMN_E_SHOP_ID = 'eshopid';
     Channel.COLUMN_CUSTOMER_ID = 'customerid';

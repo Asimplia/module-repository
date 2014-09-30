@@ -5,7 +5,7 @@ import EntityPreparer = require('../EntityPreparer');
 export = LoadLog;
 class LoadLog implements IEntity {
 
-	public static TABLE_NAME = 'eshopmatrixloads';
+	public static TABLE_NAME = 'warehouse.eshopmatrixloads';
 	public static COLUMN_LOAD_LOG_ID = 'loadid';
 	public static COLUMN_E_SHOP_ID = 'eshopid';
 	public static COLUMN_DATELOADED = 'period';
@@ -42,9 +42,9 @@ class LoadLog implements IEntity {
 
 	static fromRow(r: any) {
 		return new LoadLog(
-			EntityPreparer.int(r[LoadLog.COLUMN_LOAD_LOG_ID]),
-			EntityPreparer.int(r[LoadLog.COLUMN_E_SHOP_ID]),
-			EntityPreparer.date(r[LoadLog.COLUMN_DATELOADED])
+			EntityPreparer.int(r[LoadLog.TABLE_NAME + '.' + LoadLog.COLUMN_LOAD_LOG_ID]),
+			EntityPreparer.int(r[LoadLog.TABLE_NAME + '.' + LoadLog.COLUMN_E_SHOP_ID]),
+			EntityPreparer.date(r[LoadLog.TABLE_NAME + '.' + LoadLog.COLUMN_DATELOADED])
 		);
 	}
 }

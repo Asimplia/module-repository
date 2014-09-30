@@ -45,9 +45,9 @@ var LoadLog = (function () {
     };
 
     LoadLog.fromRow = function (r) {
-        return new LoadLog(EntityPreparer.int(r[LoadLog.COLUMN_LOAD_LOG_ID]), EntityPreparer.int(r[LoadLog.COLUMN_E_SHOP_ID]), EntityPreparer.date(r[LoadLog.COLUMN_DATELOADED]));
+        return new LoadLog(EntityPreparer.int(r[LoadLog.TABLE_NAME + '.' + LoadLog.COLUMN_LOAD_LOG_ID]), EntityPreparer.int(r[LoadLog.TABLE_NAME + '.' + LoadLog.COLUMN_E_SHOP_ID]), EntityPreparer.date(r[LoadLog.TABLE_NAME + '.' + LoadLog.COLUMN_DATELOADED]));
     };
-    LoadLog.TABLE_NAME = 'eshopmatrixloads';
+    LoadLog.TABLE_NAME = 'warehouse.eshopmatrixloads';
     LoadLog.COLUMN_LOAD_LOG_ID = 'loadid';
     LoadLog.COLUMN_E_SHOP_ID = 'eshopid';
     LoadLog.COLUMN_DATELOADED = 'period';

@@ -7,6 +7,8 @@ import Product = require('../Entity/EShop/Product');
 import Customer = require('../Entity/EShop/Customer');
 import Channel = require('../Entity/EShop/Channel');
 import List = require('../Entity/List');
+import Category = require('../Entity/EShop/Category');
+import EntityPreparer = require('../Entity/EntityPreparer');
 import moment = require('moment');
 
 export = SituationLoader;
@@ -21,12 +23,7 @@ class SituationLoader {
 	}
 
 	getListNotSuggestedByEShopId(eShopId: number, callback: (e: Error, situationList?: List<Situation>) => void) {
-		this.connection.query('SELECT * FROM analytical.'+Situation.TABLE_NAME+' '
-			+' JOIN analytical.'+Signal.TABLE_NAME+' USING ('+Signal.COLUMN_SITUATION_ID+') '
-			+' JOIN analytical.'+Matrix.TABLE_NAME+' USING ('+Signal.COLUMN_MATRIX_ID+') '
-			+' LEFT JOIN warehouse.'+Product.TABLE_NAME+' USING ('+Product.COLUMN_PRODUCT_ID+', '+Product.COLUMN_E_SHOP_ID+') '
-			+' LEFT JOIN warehouse.'+Customer.TABLE_NAME+' USING ('+Customer.COLUMN_CUSTOMER_ID+', '+Customer.COLUMN_E_SHOP_ID+') '
-			+' LEFT JOIN warehouse.'+Channel.TABLE_NAME+' USING ('+Channel.COLUMN_CHANNEL_ID+', '+Channel.COLUMN_E_SHOP_ID+') '
+		this.connection.query('SELECT '+this.getSelect()+' FROM '+this.getFrom()
 			+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
 			+' AND '+Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED+' IS NULL', [
 			eShopId
@@ -38,20 +35,15 @@ class SituationLoader {
 	getListByEShopIdAndLoadIdLimited(eShopId: number, loadId: number, limit: number, offset: number, filter: { productIds?: number[]; customerIds?: number[]; channelIds?: number[] }, callback: (e: Error, recordList?: List<Situation>) => void) {
 		var filterWhere = '';
 		if (filter.productIds && filter.productIds.length > 0) {
-			filterWhere += ' AND analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_PRODUCT_ID+' IN ('+filter.productIds.join(', ')+') ';
+			filterWhere += ' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_PRODUCT_ID+' IN ('+filter.productIds.join(', ')+') ';
 		}
 		if (filter.customerIds && filter.customerIds.length > 0) {
-			filterWhere += ' AND analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CUSTOMER_ID+' IN ('+filter.customerIds.join(', ')+') ';
+			filterWhere += ' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CUSTOMER_ID+' IN ('+filter.customerIds.join(', ')+') ';
 		}
 		if (filter.channelIds && filter.channelIds.length > 0) {
-			filterWhere += ' AND analytical.'+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CHANNEL_ID+' IN ('+filter.channelIds.join(', ')+') ';
+			filterWhere += ' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CHANNEL_ID+' IN ('+filter.channelIds.join(', ')+') ';
 		}
-		this.connection.query('SELECT * FROM analytical.'+Situation.TABLE_NAME+' '
-			+' JOIN analytical.'+Signal.TABLE_NAME+' USING ('+Signal.COLUMN_SITUATION_ID+') '
-			+' JOIN analytical.'+Matrix.TABLE_NAME+' USING ('+Signal.COLUMN_MATRIX_ID+') '
-			+' LEFT JOIN warehouse.'+Product.TABLE_NAME+' USING ('+Product.COLUMN_PRODUCT_ID+', '+Product.COLUMN_E_SHOP_ID+') '
-			+' LEFT JOIN warehouse.'+Customer.TABLE_NAME+' USING ('+Customer.COLUMN_CUSTOMER_ID+', '+Customer.COLUMN_E_SHOP_ID+') '
-			+' LEFT JOIN warehouse.'+Channel.TABLE_NAME+' USING ('+Channel.COLUMN_CHANNEL_ID+', '+Channel.COLUMN_E_SHOP_ID+') '
+		this.connection.query('SELECT '+this.getSelect()+' FROM '+this.getFrom()
 			+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
 			+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 '
 			+filterWhere
@@ -80,6 +72,26 @@ class SituationLoader {
 			situation.SignalList.push(signal);
 		});
 		callback(null, situationList);
+	}
+
+	private getSelect() {
+		return EntityPreparer.getColumnsAsPrefixedAlias(Matrix).join(', ')+', '
+			+EntityPreparer.getColumnsAsPrefixedAlias(Signal).join(', ')+', '
+			+EntityPreparer.getColumnsAsPrefixedAlias(Situation).join(', ')+', '
+			+EntityPreparer.getColumnsAsPrefixedAlias(Product).join(', ')+', '
+			+EntityPreparer.getColumnsAsPrefixedAlias(Customer).join(', ')+', '
+			+EntityPreparer.getColumnsAsPrefixedAlias(Channel).join(', ')+', '
+			+EntityPreparer.getColumnsAsPrefixedAlias(Category).join(', ')+' ';
+	}
+
+	private getFrom() {
+		return Situation.TABLE_NAME+' '
+			+' JOIN '+Signal.TABLE_NAME+' USING ('+Signal.COLUMN_SITUATION_ID+') '
+			+' JOIN '+Matrix.TABLE_NAME+' USING ('+Signal.COLUMN_MATRIX_ID+') '
+			+' LEFT JOIN '+Product.TABLE_NAME+' USING ('+Product.COLUMN_PRODUCT_ID+', '+Product.COLUMN_E_SHOP_ID+') '
+			+' LEFT JOIN '+Customer.TABLE_NAME+' USING ('+Customer.COLUMN_CUSTOMER_ID+', '+Customer.COLUMN_E_SHOP_ID+') '
+			+' LEFT JOIN '+Channel.TABLE_NAME+' USING ('+Channel.COLUMN_CHANNEL_ID+', '+Channel.COLUMN_E_SHOP_ID+') '
+			+' LEFT JOIN '+Category.TABLE_NAME+' USING ('+Category.COLUMN_CATEGORY_ID+', '+Category.COLUMN_E_SHOP_ID+') ';
 	}
 
 }

@@ -55,7 +55,7 @@ describe("getPrefixedColumn", function () {
 
 describe("getColumnsAsPrefixedAlias", function () {
     it("returns aliased column names as its prefixed name", function () {
-        expect(EntityPreparer.getColumnsAsPrefixedAlias(MockEntity)).toEqual(['schema.tableName.test_1 AS MockEntity_test_1', 'schema.tableName.test2 AS MockEntity_test2']);
+        expect(EntityPreparer.getColumnsAsPrefixedAlias(MockEntity)).toEqual(['schema.tableName.test_1 AS "schema.tableName.test_1"', 'schema.tableName.test2 AS "schema.tableName.test2"']);
     });
 });
 

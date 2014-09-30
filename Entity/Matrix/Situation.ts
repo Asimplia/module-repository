@@ -9,7 +9,7 @@ import EntityPreparer = require('../EntityPreparer');
 export = Situation;
 class Situation implements IEntity {
 
-	public static TABLE_NAME = 'situation';
+	public static TABLE_NAME = 'analytical.situation';
 	public static COLUMN_SITUATION_ID = 'situationid';
 	public static COLUMN_DATE_CREATED = 'datecreated';
 	public static COLUMN_DATE_SUGGESTION_RESULT_CREATED = 'datesuggestionresultcreated';
@@ -52,10 +52,10 @@ class Situation implements IEntity {
 	}
 	static fromRow(r: any) {
 		return new Situation(
-			EntityPreparer.intOrNull(r[Situation.COLUMN_SITUATION_ID]),
+			EntityPreparer.intOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_SITUATION_ID]),
 			new List<Signal>(),
-			EntityPreparer.date(r[Situation.COLUMN_DATE_CREATED]),
-			EntityPreparer.dateOrNull(r[Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED])
+			EntityPreparer.date(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_CREATED]),
+			EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED])
 		);
 	}
 

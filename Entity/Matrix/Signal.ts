@@ -8,7 +8,7 @@ import EntityPreparer = require('../EntityPreparer');
 export = Signal;
 class Signal implements IEntity {
 
-	public static TABLE_NAME = 'signal';
+	public static TABLE_NAME = 'analytical.signal';
 	public static COLUMN_SIGNAL_ID = 'signalid';
 	public static COLUMN_MATRIX_ID = 'matrixid';
 	public static COLUMN_DATE_CREATED = 'datecreated';
@@ -30,10 +30,10 @@ class Signal implements IEntity {
 
 	static fromRow(o: any): Signal {
 		return new Signal(
-			EntityPreparer.intOrNull(o[Signal.COLUMN_SIGNAL_ID]), 
+			EntityPreparer.intOrNull(o[Signal.TABLE_NAME + '.' + Signal.COLUMN_SIGNAL_ID]), 
 			MatrixFactory.createMatrixFromRow(o), 
-			EntityPreparer.date(o[Signal.COLUMN_DATE_CREATED]),
-			EntityPreparer.intOrNull(o[Signal.COLUMN_SITUATION_ID])
+			EntityPreparer.date(o[Signal.TABLE_NAME + '.' + Signal.COLUMN_DATE_CREATED]),
+			EntityPreparer.intOrNull(o[Signal.TABLE_NAME + '.' + Signal.COLUMN_SITUATION_ID])
 		);
 	}
 

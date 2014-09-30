@@ -190,7 +190,7 @@ var Matrix = (function () {
     Matrix.prototype.isCorresponding = function (matrix) {
         throw new Error('Implement this abstract method');
     };
-    Matrix.TABLE_NAME = 'matrix';
+    Matrix.TABLE_NAME = 'analytical.matrix';
     Matrix.COLUMN_MATRIX_ID = 'matrixid';
     Matrix.COLUMN_E_SHOP_ID = 'eshopid';
     Matrix.COLUMN_SECTION = 'matrixtype';

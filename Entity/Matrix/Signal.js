@@ -45,7 +45,7 @@ var Signal = (function () {
     });
 
     Signal.fromRow = function (o) {
-        return new Signal(EntityPreparer.intOrNull(o[Signal.COLUMN_SIGNAL_ID]), MatrixFactory.createMatrixFromRow(o), EntityPreparer.date(o[Signal.COLUMN_DATE_CREATED]), EntityPreparer.intOrNull(o[Signal.COLUMN_SITUATION_ID]));
+        return new Signal(EntityPreparer.intOrNull(o[Signal.TABLE_NAME + '.' + Signal.COLUMN_SIGNAL_ID]), MatrixFactory.createMatrixFromRow(o), EntityPreparer.date(o[Signal.TABLE_NAME + '.' + Signal.COLUMN_DATE_CREATED]), EntityPreparer.intOrNull(o[Signal.TABLE_NAME + '.' + Signal.COLUMN_SITUATION_ID]));
     };
 
     Signal.toObject = function (entity) {
@@ -60,7 +60,7 @@ var Signal = (function () {
     Signal.prototype.toObject = function () {
         return Signal.toObject(this);
     };
-    Signal.TABLE_NAME = 'signal';
+    Signal.TABLE_NAME = 'analytical.signal';
     Signal.COLUMN_SIGNAL_ID = 'signalid';
     Signal.COLUMN_MATRIX_ID = 'matrixid';
     Signal.COLUMN_DATE_CREATED = 'datecreated';

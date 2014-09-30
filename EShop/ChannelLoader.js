@@ -2,6 +2,7 @@ var Repository = require('../index');
 var List = require('../Entity/List');
 var Channel = require('../Entity/EShop/Channel');
 var Matrix = require('../Entity/Matrix/Matrix');
+var EntityPreparer = require('../Entity/EntityPreparer');
 
 var ChannelLoader = (function () {
     function ChannelLoader() {
@@ -12,7 +13,7 @@ var ChannelLoader = (function () {
     }
     ChannelLoader.prototype.getListByEShopIdAndLoadIdInMatrixes = function (eShopId, loadId, callback) {
         var _this = this;
-        var sql = 'SELECT warehouse.' + Channel.TABLE_NAME + '.* FROM warehouse.' + Channel.TABLE_NAME + ' ' + ' JOIN analytical.' + Matrix.TABLE_NAME + ' ' + ' ON analytical.' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CHANNEL_ID + ' = warehouse.' + Channel.TABLE_NAME + '.' + Channel.COLUMN_CHANNEL_ID + ' ' + ' AND analytical.' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = warehouse.' + Channel.TABLE_NAME + '.' + Channel.COLUMN_E_SHOP_ID + ' ' + ' WHERE warehouse.' + Channel.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' GROUP BY warehouse.' + Channel.TABLE_NAME + '.' + Channel.COLUMN_E_SHOP_ID + ', warehouse.' + Channel.TABLE_NAME + '.' + Channel.COLUMN_CHANNEL_ID + ' ' + ' ORDER BY warehouse.' + Channel.TABLE_NAME + '.' + Channel.COLUMN_CHANNEL_ID + ' ';
+        var sql = 'SELECT ' + EntityPreparer.getColumnsAsPrefixedAlias(Channel).join(', ') + ' FROM ' + Channel.TABLE_NAME + ' ' + ' JOIN ' + Matrix.TABLE_NAME + ' ' + ' ON ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CHANNEL_ID + ' = ' + Channel.TABLE_NAME + '.' + Channel.COLUMN_CHANNEL_ID + ' ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = ' + Channel.TABLE_NAME + '.' + Channel.COLUMN_E_SHOP_ID + ' ' + ' WHERE ' + Channel.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' GROUP BY ' + Channel.TABLE_NAME + '.' + Channel.COLUMN_E_SHOP_ID + ', ' + Channel.TABLE_NAME + '.' + Channel.COLUMN_CHANNEL_ID + ' ' + ' ORDER BY ' + Channel.TABLE_NAME + '.' + Channel.COLUMN_CHANNEL_ID + ' ';
         this.connection.query(sql, [eShopId, loadId], function (e, result) {
             _this.createListByResult(e, result, callback);
         });

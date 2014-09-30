@@ -24,7 +24,7 @@ var Product = (function () {
     });
 
     Product.fromRow = function (r) {
-        return new Product(EntityPreparer.int(r[Product.COLUMN_PRODUCT_ID]), EntityPreparer.int(r[Product.COLUMN_E_SHOP_ID]), EntityPreparer.stringOrNull(r[Product.COLUMN_NAME]), EntityPreparer.float(r[Product.COLUMN_BASE_PRICE]), EntityPreparer.stringOrNull(r[Product.COLUMN_EAN]));
+        return new Product(EntityPreparer.int(r[Product.TABLE_NAME + '.' + Product.COLUMN_PRODUCT_ID]), EntityPreparer.int(r[Product.TABLE_NAME + '.' + Product.COLUMN_E_SHOP_ID]), EntityPreparer.stringOrNull(r[Product.TABLE_NAME + '.' + Product.COLUMN_NAME]), EntityPreparer.float(r[Product.TABLE_NAME + '.' + Product.COLUMN_BASE_PRICE]), EntityPreparer.stringOrNull(r[Product.TABLE_NAME + '.' + Product.COLUMN_EAN]));
     };
 
     Product.toObject = function (entity) {
@@ -40,7 +40,7 @@ var Product = (function () {
     Product.prototype.toObject = function () {
         return Product.toObject(this);
     };
-    Product.TABLE_NAME = 'product';
+    Product.TABLE_NAME = 'warehouse.product';
     Product.COLUMN_E_SHOP_ID = 'eshopid';
     Product.COLUMN_PRODUCT_ID = 'productid';
     Product.COLUMN_NAME = 'productname';

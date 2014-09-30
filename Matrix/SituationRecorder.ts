@@ -18,7 +18,7 @@ class SituationRecorder {
 	}
 
 	insert(situation: Situation, callback: (e: Error, situation?: Situation) => void) {
-		this.connection.query('INSERT INTO analytical.'+Situation.TABLE_NAME+' ('+Situation.COLUMN_DATE_CREATED+', '+Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED+')'
+		this.connection.query('INSERT INTO '+Situation.TABLE_NAME+' ('+Situation.COLUMN_DATE_CREATED+', '+Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED+')'
 			+' VALUES ($1::timestamp, $2) RETURNING '+Situation.COLUMN_SITUATION_ID, [
 			moment(situation.DateCreated).format('YYYY-MM-DD HH:mm:ss'),
 			situation.DateSuggestionResultCreated ? moment(situation.DateSuggestionResultCreated).format('YYYY-MM-DD HH:mm:ss') : null
@@ -34,7 +34,7 @@ class SituationRecorder {
 	}
 
 	update(situation: Situation, callback: (e: Error, situation?: Situation) => void) {
-		this.connection.query('UPDATE analytical.'+Situation.TABLE_NAME
+		this.connection.query('UPDATE '+Situation.TABLE_NAME
 			+' SET '+Situation.COLUMN_DATE_CREATED+' = $1::timestamp '
 			+' , '+Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED+' = $2 '
 			+' WHERE '+Situation.COLUMN_SITUATION_ID+' = $3 ', [
@@ -52,7 +52,7 @@ class SituationRecorder {
 	}
 
 	removeByIds(ids: number[], callback: (e: Error) => void) {
-		var sql = 'DELETE FROM analytical.'+Situation.TABLE_NAME+' '
+		var sql = 'DELETE FROM '+Situation.TABLE_NAME+' '
 			+' WHERE '+Situation.COLUMN_SITUATION_ID+' IN ( '+ids.join(', ')+' ) ';
 		this.connection.query(sql, [], (e, result) => {
 			callback(e);

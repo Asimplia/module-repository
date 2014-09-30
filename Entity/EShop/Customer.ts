@@ -5,7 +5,7 @@ import EntityPreparer = require('../EntityPreparer');
 export = Customer;
 class Customer implements IEntity {
 
-	public static TABLE_NAME = 'customer';
+	public static TABLE_NAME = 'warehouse.customer';
 	public static COLUMN_CUSTOMER_ID = 'customerid';
 	public static COLUMN_E_SHOP_ID = 'eshopid';
 	public static COLUMN_FIRSTNAME = 'firstname';
@@ -32,15 +32,15 @@ class Customer implements IEntity {
 
 	static fromRow(r: any) {
 		return new Customer(
-			EntityPreparer.int(r[Customer.COLUMN_CUSTOMER_ID]),
-			EntityPreparer.int(r[Customer.COLUMN_E_SHOP_ID]),
-			EntityPreparer.stringOrNull(r[Customer.COLUMN_FIRSTNAME]),
-			EntityPreparer.stringOrNull(r[Customer.COLUMN_LASTNAME]),
-			EntityPreparer.stringOrNull(r[Customer.COLUMN_EMAIL]),
-			EntityPreparer.stringOrNull(r[Customer.COLUMN_GENDER]),
-			EntityPreparer.dateOrNull(r[Customer.COLUMN_BIRTHDAY]),
-			EntityPreparer.boolean(r[Customer.COLUMN_ANONYMOUS]),
-			EntityPreparer.dateOrNull(r[Customer.COLUMN_DATE_CREATED])
+			EntityPreparer.int(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_CUSTOMER_ID]),
+			EntityPreparer.int(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_E_SHOP_ID]),
+			EntityPreparer.stringOrNull(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_FIRSTNAME]),
+			EntityPreparer.stringOrNull(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_LASTNAME]),
+			EntityPreparer.stringOrNull(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_EMAIL]),
+			EntityPreparer.stringOrNull(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_GENDER]),
+			EntityPreparer.dateOrNull(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_BIRTHDAY]),
+			EntityPreparer.boolean(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_ANONYMOUS]),
+			EntityPreparer.dateOrNull(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_DATE_CREATED])
 		);
 	}
 

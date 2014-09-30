@@ -8,7 +8,7 @@ import SectionEnum = require('../Section/SectionEnum');
 export = Matrix;
 class Matrix implements IEntity {
 
-	public static TABLE_NAME = 'matrix';
+	public static TABLE_NAME = 'analytical.matrix';
 	public static COLUMN_MATRIX_ID = 'matrixid';
 	public static COLUMN_E_SHOP_ID = 'eshopid';
 	public static COLUMN_SECTION = 'matrixtype';

@@ -5,7 +5,7 @@ import EntityPreparer = require('../EntityPreparer');
 export = Product;
 class Product implements IEntity {
 
-	public static TABLE_NAME = 'product';
+	public static TABLE_NAME = 'warehouse.product';
 	public static COLUMN_E_SHOP_ID = 'eshopid';
 	public static COLUMN_PRODUCT_ID = 'productid';
 	public static COLUMN_NAME = 'productname';
@@ -25,11 +25,11 @@ class Product implements IEntity {
 
 	static fromRow(r: any) {
 		return new Product(
-			EntityPreparer.int(r[Product.COLUMN_PRODUCT_ID]),
-			EntityPreparer.int(r[Product.COLUMN_E_SHOP_ID]),
-			EntityPreparer.stringOrNull(r[Product.COLUMN_NAME]),
-			EntityPreparer.float(r[Product.COLUMN_BASE_PRICE]),
-			EntityPreparer.stringOrNull(r[Product.COLUMN_EAN])
+			EntityPreparer.int(r[Product.TABLE_NAME + '.' + Product.COLUMN_PRODUCT_ID]),
+			EntityPreparer.int(r[Product.TABLE_NAME + '.' + Product.COLUMN_E_SHOP_ID]),
+			EntityPreparer.stringOrNull(r[Product.TABLE_NAME + '.' + Product.COLUMN_NAME]),
+			EntityPreparer.float(r[Product.TABLE_NAME + '.' + Product.COLUMN_BASE_PRICE]),
+			EntityPreparer.stringOrNull(r[Product.TABLE_NAME + '.' + Product.COLUMN_EAN])
 		);
 	}
 

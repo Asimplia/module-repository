@@ -10,7 +10,7 @@ var SituationRecorder = (function () {
         });
     }
     SituationRecorder.prototype.insert = function (situation, callback) {
-        this.connection.query('INSERT INTO analytical.' + Situation.TABLE_NAME + ' (' + Situation.COLUMN_DATE_CREATED + ', ' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED + ')' + ' VALUES ($1::timestamp, $2) RETURNING ' + Situation.COLUMN_SITUATION_ID, [
+        this.connection.query('INSERT INTO ' + Situation.TABLE_NAME + ' (' + Situation.COLUMN_DATE_CREATED + ', ' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED + ')' + ' VALUES ($1::timestamp, $2) RETURNING ' + Situation.COLUMN_SITUATION_ID, [
             moment(situation.DateCreated).format('YYYY-MM-DD HH:mm:ss'),
             situation.DateSuggestionResultCreated ? moment(situation.DateSuggestionResultCreated).format('YYYY-MM-DD HH:mm:ss') : null
         ], function (e, res) {
@@ -25,7 +25,7 @@ var SituationRecorder = (function () {
     };
 
     SituationRecorder.prototype.update = function (situation, callback) {
-        this.connection.query('UPDATE analytical.' + Situation.TABLE_NAME + ' SET ' + Situation.COLUMN_DATE_CREATED + ' = $1::timestamp ' + ' , ' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED + ' = $2 ' + ' WHERE ' + Situation.COLUMN_SITUATION_ID + ' = $3 ', [
+        this.connection.query('UPDATE ' + Situation.TABLE_NAME + ' SET ' + Situation.COLUMN_DATE_CREATED + ' = $1::timestamp ' + ' , ' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED + ' = $2 ' + ' WHERE ' + Situation.COLUMN_SITUATION_ID + ' = $3 ', [
             moment(situation.DateCreated).format('YYYY-MM-DD HH:mm:ss'),
             situation.DateSuggestionResultCreated ? moment(situation.DateSuggestionResultCreated).format('YYYY-MM-DD HH:mm:ss') : null,
             situation.Id
@@ -40,7 +40,7 @@ var SituationRecorder = (function () {
     };
 
     SituationRecorder.prototype.removeByIds = function (ids, callback) {
-        var sql = 'DELETE FROM analytical.' + Situation.TABLE_NAME + ' ' + ' WHERE ' + Situation.COLUMN_SITUATION_ID + ' IN ( ' + ids.join(', ') + ' ) ';
+        var sql = 'DELETE FROM ' + Situation.TABLE_NAME + ' ' + ' WHERE ' + Situation.COLUMN_SITUATION_ID + ' IN ( ' + ids.join(', ') + ' ) ';
         this.connection.query(sql, [], function (e, result) {
             callback(e);
         });
