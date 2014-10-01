@@ -24,7 +24,7 @@ class MatrixLoader {
 
 	getListByEShopId(eShopId:number, callback: (e: Error, recordList?: List<Matrix>) => void) {
 		var sql = 'SELECT '+this.getSelect()+' FROM '+this.getFrom()
-			+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 AND '+Signal.COLUMN_SIGNAL_ID+' IS NULL';
+			+' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 AND '+Signal.TABLE_NAME+'.'+Signal.COLUMN_SIGNAL_ID+' IS NULL';
 		this.connection.query(sql, [
 			eShopId
 		], (e, result) => {
@@ -34,10 +34,10 @@ class MatrixLoader {
 
 	getListByEShopIdAndProductIdForLoad(eShopId: number, productId: number, loadId: number, callback:(e:Error, recordList?:List<Matrix>) => void) {
 		var sql = 'SELECT '+this.getSelect()+' FROM '+this.getFrom()
-			+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
-			+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 '
-			+' AND '+Matrix.COLUMN_PRODUCT_ID+' = $3 '
-			+' AND '+Signal.COLUMN_SIGNAL_ID+' IS NULL ';
+			+' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_LOAD_ID+' = $2 '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_PRODUCT_ID+' = $3 '
+			+' AND '+Signal.TABLE_NAME+'.'+Signal.COLUMN_SIGNAL_ID+' IS NULL ';
 		this.connection.query(sql, [
 				eShopId, loadId, productId
 			], (e, result) => {
@@ -47,11 +47,10 @@ class MatrixLoader {
 
 	getListByEShopIdAndCustomerIdForLoad(eShopId: number, customerId: number, loadId: number, callback:(e:Error, recordList?:List<Matrix>) => void) {
 		var sql = 'SELECT '+this.getSelect()+' FROM '+this.getFrom()
-			+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
-			+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 '
-			+' AND '+Matrix.COLUMN_CUSTOMER_ID+' = $3 '
-			+' AND '+Signal.COLUMN_SIGNAL_ID+' IS NULL ';
-			console.log(sql);
+			+' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_LOAD_ID+' = $2 '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CUSTOMER_ID+' = $3 '
+			+' AND '+Signal.TABLE_NAME+'.'+Signal.COLUMN_SIGNAL_ID+' IS NULL ';
 		this.connection.query(sql, [
 				eShopId, loadId, customerId
 			], (e, result) => {
@@ -61,10 +60,10 @@ class MatrixLoader {
 
 	getListByEShopIdAndChannelIdForLoad(eShopId: number, channelId: number, loadId: number, callback:(e:Error, recordList?:List<Matrix>) => void) {
 		var sql = 'SELECT '+this.getSelect()+' FROM '+this.getFrom()
-			+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
-			+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 '
-			+' AND '+Matrix.COLUMN_CHANNEL_ID+' = $3 '
-			+' AND '+Signal.COLUMN_SIGNAL_ID+' IS NULL ';
+			+' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_LOAD_ID+' = $2 '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CHANNEL_ID+' = $3 '
+			+' AND '+Signal.TABLE_NAME+'.'+Signal.COLUMN_SIGNAL_ID+' IS NULL ';
 		this.connection.query(sql, [
 				eShopId, loadId, channelId
 			], (e, result) => {
@@ -74,10 +73,10 @@ class MatrixLoader {
 
 	getListByEShopIdAndCategoryIdForLoad(eShopId: number, categoryId: number, loadId: number, callback:(e:Error, recordList?:List<Matrix>) => void) {
 		var sql = 'SELECT '+this.getSelect()+' FROM '+this.getFrom()
-			+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
-			+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 '
-			+' AND '+Matrix.COLUMN_CATEGORY_ID+' = $3 '
-			+' AND '+Signal.COLUMN_SIGNAL_ID+' IS NULL ';
+			+' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_LOAD_ID+' = $2 '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CATEGORY_ID+' = $3 '
+			+' AND '+Signal.TABLE_NAME+'.'+Signal.COLUMN_SIGNAL_ID+' IS NULL ';
 		this.connection.query(sql, [
 				eShopId, loadId, categoryId
 			], (e, result) => {
@@ -107,8 +106,8 @@ class MatrixLoader {
 			filterWhere += ' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CATEGORY_ID+' IN ('+filter.categoryIds.join(', ')+') ';
 		}
 		var sql = 'SELECT '+this.getSelect()+' FROM '+this.getFrom()
-			+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
-			+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 '
+			+' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_LOAD_ID+' = $2 '
 			+filterWhere
 			+' LIMIT $3 OFFSET $4 ';
 		this.connection.query(sql, [

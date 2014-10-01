@@ -18,7 +18,7 @@ var SituationLoader = (function () {
     }
     SituationLoader.prototype.getListNotSuggestedByEShopId = function (eShopId, callback) {
         var _this = this;
-        this.connection.query('SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED + ' IS NULL', [
+        this.connection.query('SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED + ' IS NULL', [
             eShopId
         ], function (e, result) {
             _this.createListByResult(e, result, callback);
@@ -37,7 +37,7 @@ var SituationLoader = (function () {
         if (filter.channelIds && filter.channelIds.length > 0) {
             filterWhere += ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CHANNEL_ID + ' IN (' + filter.channelIds.join(', ') + ') ';
         }
-        this.connection.query('SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + filterWhere + ' LIMIT $3 OFFSET $4 ', [
+        this.connection.query('SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + filterWhere + ' LIMIT $3 OFFSET $4 ', [
             eShopId, loadId, limit, offset
         ], function (e, result) {
             _this.createListByResult(e, result, callback);

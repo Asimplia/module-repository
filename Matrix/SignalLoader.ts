@@ -23,7 +23,7 @@ class SignalLoader {
 
 	getListByEShopId(eShopId: number, callback: (e: Error, signalList?: List<Signal>) => void) {
 		var sql = 'SELECT '+this.getSelect()+' FROM '+this.getFrom()
-			+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1';
+			+' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1';
 		this.connection.query(sql, [
 			eShopId
 		], (e, result) => {
@@ -42,7 +42,7 @@ class SignalLoader {
 
 	getListWithoutSituation(eShopId: number, callback: (e: Error, signalList?: List<Signal>) => void) {
 		var sql = 'SELECT '+this.getSelect()+' FROM '+this.getFrom()
-			+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 AND '+Signal.COLUMN_SITUATION_ID+' IS NULL';
+			+' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 AND '+Signal.TABLE_NAME+'.'+Signal.COLUMN_SITUATION_ID+' IS NULL';
 		this.connection.query(sql, [
 			eShopId
 		], (e, result) => {
@@ -72,8 +72,8 @@ class SignalLoader {
 			filterWhere += ' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CHANNEL_ID+' IN ('+filter.channelIds.join(', ')+') ';
 		}
 		var sql = 'SELECT '+this.getSelect()+' FROM '+this.getFrom()
-			+' WHERE '+Matrix.COLUMN_E_SHOP_ID+' = $1 '
-			+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 '
+			+' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_LOAD_ID+' = $2 '
 			+filterWhere
 			+' LIMIT $3 OFFSET $4 ';
 		this.connection.query(sql, [

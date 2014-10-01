@@ -19,7 +19,7 @@ var MatrixLoader = (function () {
     }
     MatrixLoader.prototype.getListByEShopId = function (eShopId, callback) {
         var _this = this;
-        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 AND ' + Signal.COLUMN_SIGNAL_ID + ' IS NULL';
+        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 AND ' + Signal.TABLE_NAME + '.' + Signal.COLUMN_SIGNAL_ID + ' IS NULL';
         this.connection.query(sql, [
             eShopId
         ], function (e, result) {
@@ -29,7 +29,7 @@ var MatrixLoader = (function () {
 
     MatrixLoader.prototype.getListByEShopIdAndProductIdForLoad = function (eShopId, productId, loadId, callback) {
         var _this = this;
-        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' AND ' + Matrix.COLUMN_PRODUCT_ID + ' = $3 ' + ' AND ' + Signal.COLUMN_SIGNAL_ID + ' IS NULL ';
+        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_PRODUCT_ID + ' = $3 ' + ' AND ' + Signal.TABLE_NAME + '.' + Signal.COLUMN_SIGNAL_ID + ' IS NULL ';
         this.connection.query(sql, [
             eShopId, loadId, productId
         ], function (e, result) {
@@ -39,8 +39,7 @@ var MatrixLoader = (function () {
 
     MatrixLoader.prototype.getListByEShopIdAndCustomerIdForLoad = function (eShopId, customerId, loadId, callback) {
         var _this = this;
-        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' AND ' + Matrix.COLUMN_CUSTOMER_ID + ' = $3 ' + ' AND ' + Signal.COLUMN_SIGNAL_ID + ' IS NULL ';
-        console.log(sql);
+        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CUSTOMER_ID + ' = $3 ' + ' AND ' + Signal.TABLE_NAME + '.' + Signal.COLUMN_SIGNAL_ID + ' IS NULL ';
         this.connection.query(sql, [
             eShopId, loadId, customerId
         ], function (e, result) {
@@ -50,7 +49,7 @@ var MatrixLoader = (function () {
 
     MatrixLoader.prototype.getListByEShopIdAndChannelIdForLoad = function (eShopId, channelId, loadId, callback) {
         var _this = this;
-        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' AND ' + Matrix.COLUMN_CHANNEL_ID + ' = $3 ' + ' AND ' + Signal.COLUMN_SIGNAL_ID + ' IS NULL ';
+        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CHANNEL_ID + ' = $3 ' + ' AND ' + Signal.TABLE_NAME + '.' + Signal.COLUMN_SIGNAL_ID + ' IS NULL ';
         this.connection.query(sql, [
             eShopId, loadId, channelId
         ], function (e, result) {
@@ -60,7 +59,7 @@ var MatrixLoader = (function () {
 
     MatrixLoader.prototype.getListByEShopIdAndCategoryIdForLoad = function (eShopId, categoryId, loadId, callback) {
         var _this = this;
-        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' AND ' + Matrix.COLUMN_CATEGORY_ID + ' = $3 ' + ' AND ' + Signal.COLUMN_SIGNAL_ID + ' IS NULL ';
+        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CATEGORY_ID + ' = $3 ' + ' AND ' + Signal.TABLE_NAME + '.' + Signal.COLUMN_SIGNAL_ID + ' IS NULL ';
         this.connection.query(sql, [
             eShopId, loadId, categoryId
         ], function (e, result) {
@@ -83,7 +82,7 @@ var MatrixLoader = (function () {
         if (filter.categoryIds && filter.categoryIds.length > 0) {
             filterWhere += ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CATEGORY_ID + ' IN (' + filter.categoryIds.join(', ') + ') ';
         }
-        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + filterWhere + ' LIMIT $3 OFFSET $4 ';
+        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + filterWhere + ' LIMIT $3 OFFSET $4 ';
         this.connection.query(sql, [
             eShopId, loadId, limit, offset
         ], function (e, result) {
