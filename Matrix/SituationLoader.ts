@@ -62,7 +62,7 @@ class SituationLoader {
 		var situationList = new List<Situation>();
 		result.rows.forEach((row) => {
 			var situation = situationList.find((situation: Situation) => {
-				return situation.Id == row[Situation.COLUMN_SITUATION_ID];
+				return situation.Id == row[Situation.TABLE_NAME + '.' + Situation.COLUMN_SITUATION_ID];
 			});
 			if (!situation) {
 				situation = Situation.fromRow(row);

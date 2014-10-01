@@ -16,7 +16,8 @@ var SignalLoader = (function () {
         });
     }
     SignalLoader.prototype.getListByEShopId = function (eShopId, callback) {
-        this.connection.query('SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1', [
+        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1';
+        this.connection.query(sql, [
             eShopId
         ], function (e, result) {
             if (e) {
@@ -33,7 +34,8 @@ var SignalLoader = (function () {
     };
 
     SignalLoader.prototype.getListWithoutSituation = function (eShopId, callback) {
-        this.connection.query('SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 AND ' + Signal.COLUMN_SITUATION_ID + ' IS NULL', [
+        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 AND ' + Signal.COLUMN_SITUATION_ID + ' IS NULL';
+        this.connection.query(sql, [
             eShopId
         ], function (e, result) {
             if (e) {
@@ -61,7 +63,8 @@ var SignalLoader = (function () {
         if (filter.channelIds && filter.channelIds.length > 0) {
             filterWhere += ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CHANNEL_ID + ' IN (' + filter.channelIds.join(', ') + ') ';
         }
-        this.connection.query('SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + filterWhere + ' LIMIT $3 OFFSET $4 ', [
+        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + filterWhere + ' LIMIT $3 OFFSET $4 ';
+        this.connection.query(sql, [
             eShopId, loadId, limit, offset
         ], function (e, result) {
             if (e) {

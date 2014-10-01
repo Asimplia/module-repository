@@ -52,7 +52,7 @@ var SituationLoader = (function () {
         var situationList = new List();
         result.rows.forEach(function (row) {
             var situation = situationList.find(function (situation) {
-                return situation.Id == row[Situation.COLUMN_SITUATION_ID];
+                return situation.Id == row[Situation.TABLE_NAME + '.' + Situation.COLUMN_SITUATION_ID];
             });
             if (!situation) {
                 situation = Situation.fromRow(row);
