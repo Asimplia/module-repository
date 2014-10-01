@@ -29,6 +29,10 @@ Repository.connectNeo4j('http://localhost:7474/');
 ## Documentation
 Look at ```./tests/``` for full API of module
 
+## Test
+```
+npm test
+```
 
 ## Used database systems:
 * MongoDB

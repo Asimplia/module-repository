@@ -25,25 +25,16 @@ module.exports = function (grunt) {
 			}
 		},
 		jasmine_node: {
-			options: {
-				forceExit: true,
-				match: '.',
-				matchall: false,
-				extensions: 'js',
-				specNameMatcher: 'spec',
-				jUnit: {
-					report: true,
-					savePath : "./build/reports/jasmine/",
-					useDotNotation: true,
-					consolidate: true
-				}
-			},
-			all: ['tests/unit/']
+			unit: {
+				options: {
+					specFolders: ['tests/unit/']
+				},
+			}
 		},
 		watch: {
 			ts: {
 				files: tsFiles,
-				tasks: ['typescript:build', 'jasmine_node'],
+				tasks: ['typescript:build', 'jasmine_node:unit'],
 				options: {
 					livereload: 35730,
 					debug: false,
@@ -58,7 +49,13 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	grunt.registerTask('default', [
-		'typescript:build', 'jasmine_node', 'watch'
+		'typescript:build', 'jasmine_node:unit'
+	]);
+	grunt.registerTask('dev', [
+		'typescript:build', 'jasmine_node:unit', 'watch:ts'
+	]);
+	grunt.registerTask('test', [
+		'jasmine_node:unit'
 	]);
 
 };
