@@ -18,10 +18,11 @@ class SituationRecorder {
 	}
 
 	insert(situation: Situation, callback: (e: Error, situation?: Situation) => void) {
-		this.connection.query('INSERT INTO '+Situation.TABLE_NAME+' ('+Situation.COLUMN_DATE_CREATED+', '+Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED+')'
-			+' VALUES ($1::timestamp, $2) RETURNING '+Situation.COLUMN_SITUATION_ID, [
+		this.connection.query('INSERT INTO '+Situation.TABLE_NAME+' ('+Situation.COLUMN_DATE_CREATED+', '+Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED+', '+Situation.COLUMN_DATE_SUGGESTION_RESULT_PROCESSED+')'
+			+' VALUES ($1::timestamp, $2, $3) RETURNING '+Situation.COLUMN_SITUATION_ID, [
 			moment(situation.DateCreated).format('YYYY-MM-DD HH:mm:ss'),
-			situation.DateSuggestionResultCreated ? moment(situation.DateSuggestionResultCreated).format('YYYY-MM-DD HH:mm:ss') : null
+			situation.DateSuggestionResultCreated ? moment(situation.DateSuggestionResultCreated).format('YYYY-MM-DD HH:mm:ss') : null,
+			situation.DateSuggestionResultProcessed ? moment(situation.DateSuggestionResultProcessed).format('YYYY-MM-DD HH:mm:ss') : null
 		], (e, res) => {
 			if (e) {
 				console.log(e);
