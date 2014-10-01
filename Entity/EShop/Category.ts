@@ -24,7 +24,7 @@ class Category implements IEntity {
 		return new Category(
 			EntityPreparer.int(r[Category.TABLE_NAME + '.' + Category.COLUMN_CATEGORY_ID]),
 			EntityPreparer.int(r[Category.TABLE_NAME + '.' + Category.COLUMN_E_SHOP_ID]),
-			EntityPreparer.int(r[Category.TABLE_NAME + '.' + Category.COLUMN_PARENT_CATEGORY_ID]),
+			EntityPreparer.intOrNull(r[Category.TABLE_NAME + '.' + Category.COLUMN_PARENT_CATEGORY_ID]),
 			EntityPreparer.string(r[Category.TABLE_NAME + '.' + Category.COLUMN_NAME])
 		);
 	}

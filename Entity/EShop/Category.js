@@ -16,7 +16,7 @@ var Category = (function () {
     });
 
     Category.fromRow = function (r) {
-        return new Category(EntityPreparer.int(r[Category.TABLE_NAME + '.' + Category.COLUMN_CATEGORY_ID]), EntityPreparer.int(r[Category.TABLE_NAME + '.' + Category.COLUMN_E_SHOP_ID]), EntityPreparer.int(r[Category.TABLE_NAME + '.' + Category.COLUMN_PARENT_CATEGORY_ID]), EntityPreparer.string(r[Category.TABLE_NAME + '.' + Category.COLUMN_NAME]));
+        return new Category(EntityPreparer.int(r[Category.TABLE_NAME + '.' + Category.COLUMN_CATEGORY_ID]), EntityPreparer.int(r[Category.TABLE_NAME + '.' + Category.COLUMN_E_SHOP_ID]), EntityPreparer.intOrNull(r[Category.TABLE_NAME + '.' + Category.COLUMN_PARENT_CATEGORY_ID]), EntityPreparer.string(r[Category.TABLE_NAME + '.' + Category.COLUMN_NAME]));
     };
 
     Category.toObject = function (entity) {
