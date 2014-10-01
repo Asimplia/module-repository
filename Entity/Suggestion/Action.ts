@@ -32,7 +32,7 @@ class Action implements IEntity {
 	get Main() { return this.main; }
 
 	constructor(
-		private id: Number,
+		private id: number,
 		private name: LocalizedString,
 		private shortName: LocalizedString,
 		private text: LocalizedString,

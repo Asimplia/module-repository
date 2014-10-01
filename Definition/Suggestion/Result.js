@@ -16,6 +16,7 @@ var Result = {
     reasons: [Reason],
     section: String,
     main: Boolean,
-    situationId: Number
+    situationId: Number,
+    actionId: Number
 };
 module.exports = Result;

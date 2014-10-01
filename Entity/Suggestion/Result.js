@@ -10,7 +10,7 @@ var moment = require('moment');
 var EntityPreparer = require('../EntityPreparer');
 
 var Result = (function () {
-    function Result(id, title, shortTitle, label, text, activeStatus, statusList, graphList, eShopId, reasonList, section, main, situationId) {
+    function Result(id, title, shortTitle, label, text, activeStatus, statusList, graphList, eShopId, reasonList, section, main, situationId, actionId) {
         this.id = id;
         this.title = title;
         this.shortTitle = shortTitle;
@@ -24,6 +24,7 @@ var Result = (function () {
         this.section = section;
         this.main = main;
         this.situationId = situationId;
+        this.actionId = actionId;
     }
     Object.defineProperty(Result.prototype, "Id", {
         get: function () {
@@ -144,9 +145,16 @@ var Result = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Result.prototype, "ActionId", {
+        get: function () {
+            return this.actionId;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     Result.fromObject = function (o) {
-        return new Result(EntityPreparer.intOrNull(o.id), new LocalizedString(o.title), new LocalizedString(o.shortTitle), new LocalizedString(o.label), new LocalizedString(o.text), Status.fromObject(o.activeStatus), new List().pushArray(o.statuses, Status.fromObject), new List().pushArray(o.graphs, Graph.fromObject), EntityPreparer.int(o.eShopId), new List().pushArray(o.reasons, Reason.fromObject), SectionFactory.createSectionEnum(o.section), EntityPreparer.boolean(o.main), EntityPreparer.int(o.situationId));
+        return new Result(EntityPreparer.intOrNull(o.id), new LocalizedString(o.title), new LocalizedString(o.shortTitle), new LocalizedString(o.label), new LocalizedString(o.text), Status.fromObject(o.activeStatus), new List().pushArray(o.statuses, Status.fromObject), new List().pushArray(o.graphs, Graph.fromObject), EntityPreparer.int(o.eShopId), new List().pushArray(o.reasons, Reason.fromObject), SectionFactory.createSectionEnum(o.section), EntityPreparer.boolean(o.main), EntityPreparer.int(o.situationId), EntityPreparer.int(o.actionId));
     };
 
     Result.toObject = function (entity) {
@@ -163,7 +171,8 @@ var Result = (function () {
             reasons: entity.reasonList.toArray(Reason.toObject),
             section: SectionEnum[entity.section],
             main: entity.main,
-            situationId: entity.situationId
+            situationId: entity.situationId,
+            actionId: entity.actionId
         };
     };
 
