@@ -214,6 +214,7 @@ var Matrix = (function () {
     Matrix.COLUMN_CUSTOMER_ID = 'customerid';
     Matrix.COLUMN_CHANNEL_ID = 'channelid';
     Matrix.COLUMN_ORDER_ID = 'orderid';
+    Matrix.COLUMN_CATEGORY_ID = 'productcategoryid';
     return Matrix;
 })();
 module.exports = Matrix;

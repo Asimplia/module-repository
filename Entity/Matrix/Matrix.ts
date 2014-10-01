@@ -32,6 +32,7 @@ class Matrix implements IEntity {
 	public static COLUMN_CUSTOMER_ID = 'customerid';
 	public static COLUMN_CHANNEL_ID = 'channelid';
 	public static COLUMN_ORDER_ID = 'orderid';
+	public static COLUMN_CATEGORY_ID = 'productcategoryid';
 
 	get Id(): number { return this.id; }
 	get EShopId(): number { return this.eShopId; }

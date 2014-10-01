@@ -57,6 +57,16 @@ var MatrixLoader = (function () {
         });
     };
 
+    MatrixLoader.prototype.getListByEShopIdAndCategoryIdForLoad = function (eShopId, categoryId, loadId, callback) {
+        var _this = this;
+        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' AND ' + Matrix.COLUMN_CATEGORY_ID + ' = $3 ' + ' AND ' + Signal.COLUMN_SIGNAL_ID + ' IS NULL ';
+        this.connection.query(sql, [
+            eShopId, loadId, categoryId
+        ], function (e, result) {
+            _this.createListByResult(e, result, callback);
+        });
+    };
+
     MatrixLoader.prototype.getListByEShopIdAndLoadIdLimited = function (eShopId, loadId, limit, offset, filter, callback) {
         var _this = this;
         var filterWhere = '';
@@ -68,6 +78,9 @@ var MatrixLoader = (function () {
         }
         if (filter.channelIds && filter.channelIds.length > 0) {
             filterWhere += ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CHANNEL_ID + ' IN (' + filter.channelIds.join(', ') + ') ';
+        }
+        if (filter.categoryIds && filter.categoryIds.length > 0) {
+            filterWhere += ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CATEGORY_ID + ' IN (' + filter.categoryIds.join(', ') + ') ';
         }
         var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + filterWhere + ' LIMIT $3 OFFSET $4 ';
         this.connection.query(sql, [
