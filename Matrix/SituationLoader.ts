@@ -25,7 +25,7 @@ class SituationLoader {
 	getListNotSuggestedByEShopId(eShopId: number, callback: (e: Error, situationList?: List<Situation>) => void) {
 		this.connection.query('SELECT '+this.getSelect()+' FROM '+this.getFrom()
 			+' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 '
-			+' AND '+Situation.TABLE_NAME+'.'+Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED+' IS NULL', [
+			+' AND '+Situation.TABLE_NAME+'.'+Situation.COLUMN_DATE_SUGGESTION_RESULT_PROCESSED+' IS NULL', [
 			eShopId
 		], (e, result) => {
 			this.createListByResult(e, result, callback);

@@ -18,7 +18,7 @@ var SituationLoader = (function () {
     }
     SituationLoader.prototype.getListNotSuggestedByEShopId = function (eShopId, callback) {
         var _this = this;
-        this.connection.query('SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED + ' IS NULL', [
+        this.connection.query('SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_PROCESSED + ' IS NULL', [
             eShopId
         ], function (e, result) {
             _this.createListByResult(e, result, callback);

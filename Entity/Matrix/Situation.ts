@@ -13,6 +13,7 @@ class Situation implements IEntity {
 	public static COLUMN_SITUATION_ID = 'situationid';
 	public static COLUMN_DATE_CREATED = 'datecreated';
 	public static COLUMN_DATE_SUGGESTION_RESULT_CREATED = 'datesuggestionresultcreated';
+	public static COLUMN_DATE_SUGGESTION_RESULT_PROCESSED = 'datesuggestionresultprocessed';
 
 	get Id(): number { return this.id; }
 	set Id(id: number) { this.id = id; }
@@ -20,6 +21,7 @@ class Situation implements IEntity {
 	get SignalList() { return this.signalList; }
 	get DateSuggestionResultCreated() { return this.dateSuggestionResultCreated; }
 	set DateSuggestionResultCreated(value) { this.dateSuggestionResultCreated = value; }
+	set DateSuggestionResultProcessed(value) { this.dateSuggestionResultProcessed = value; }
 	get EShopId() {
 		return this.signalList.first().Matrix.EShopId;
 	}
@@ -35,7 +37,8 @@ class Situation implements IEntity {
 		private id,
 		private signalList: List<Signal>,
 		private dateCreated: Date,
-		private dateSuggestionResultCreated: Date
+		private dateSuggestionResultCreated: Date,
+		private dateSuggestionResultProcessed: Date
 	) {	}
 
 	static toObject(entity: Situation) {
@@ -43,6 +46,7 @@ class Situation implements IEntity {
 			id: entity.id,
 			dateCreated: entity.dateCreated,
 			dateSuggestionResultCreated: entity.dateSuggestionResultCreated,
+			dateSuggestionResultProcessed: entity.dateSuggestionResultProcessed,
 			signals: entity.signalList.toArray(Signal.toObject)
 		};
 	}
@@ -55,7 +59,8 @@ class Situation implements IEntity {
 			EntityPreparer.intOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_SITUATION_ID]),
 			new List<Signal>(),
 			EntityPreparer.date(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_CREATED]),
-			EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED])
+			EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED]),
+			EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_PROCESSED])
 		);
 	}
 

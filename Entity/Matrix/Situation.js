@@ -5,11 +5,12 @@ var MatrixProduct = require('./MatrixProduct');
 var EntityPreparer = require('../EntityPreparer');
 
 var Situation = (function () {
-    function Situation(id, signalList, dateCreated, dateSuggestionResultCreated) {
+    function Situation(id, signalList, dateCreated, dateSuggestionResultCreated, dateSuggestionResultProcessed) {
         this.id = id;
         this.signalList = signalList;
         this.dateCreated = dateCreated;
         this.dateSuggestionResultCreated = dateSuggestionResultCreated;
+        this.dateSuggestionResultProcessed = dateSuggestionResultProcessed;
     }
     Object.defineProperty(Situation.prototype, "Id", {
         get: function () {
@@ -45,6 +46,13 @@ var Situation = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Situation.prototype, "DateSuggestionResultProcessed", {
+        set: function (value) {
+            this.dateSuggestionResultProcessed = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Situation.prototype, "EShopId", {
         get: function () {
             return this.signalList.first().Matrix.EShopId;
@@ -69,6 +77,7 @@ var Situation = (function () {
             id: entity.id,
             dateCreated: entity.dateCreated,
             dateSuggestionResultCreated: entity.dateSuggestionResultCreated,
+            dateSuggestionResultProcessed: entity.dateSuggestionResultProcessed,
             signals: entity.signalList.toArray(Signal.toObject)
         };
     };
@@ -77,7 +86,7 @@ var Situation = (function () {
         return Situation.toObject(this);
     };
     Situation.fromRow = function (r) {
-        return new Situation(EntityPreparer.intOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_SITUATION_ID]), new List(), EntityPreparer.date(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_CREATED]), EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED]));
+        return new Situation(EntityPreparer.intOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_SITUATION_ID]), new List(), EntityPreparer.date(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_CREATED]), EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED]), EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_PROCESSED]));
     };
 
     Situation.prototype.getMatrixProductBySection = function (section) {
@@ -90,6 +99,7 @@ var Situation = (function () {
     Situation.COLUMN_SITUATION_ID = 'situationid';
     Situation.COLUMN_DATE_CREATED = 'datecreated';
     Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED = 'datesuggestionresultcreated';
+    Situation.COLUMN_DATE_SUGGESTION_RESULT_PROCESSED = 'datesuggestionresultprocessed';
     return Situation;
 })();
 module.exports = Situation;
