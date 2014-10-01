@@ -180,16 +180,6 @@ class SectionFactory {
 			case SectionEnum.MP18:
 			case SectionEnum.MP19:
 			case SectionEnum.MP20:
-			case SectionEnum.MGP1:
-			case SectionEnum.MGP2:
-			case SectionEnum.MGP3:
-			case SectionEnum.MGP4:
-			case SectionEnum.MGP5:
-			case SectionEnum.MGP6:
-			case SectionEnum.MGP7:
-			case SectionEnum.MGP8:
-			case SectionEnum.MGP9:
-			case SectionEnum.MGP10:
 				return true;
 		}
 		return false;

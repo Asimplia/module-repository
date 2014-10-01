@@ -179,16 +179,6 @@ var SectionFactory = (function () {
             case 19 /* MP18 */:
             case 20 /* MP19 */:
             case 21 /* MP20 */:
-            case 23 /* MGP1 */:
-            case 24 /* MGP2 */:
-            case 25 /* MGP3 */:
-            case 26 /* MGP4 */:
-            case 27 /* MGP5 */:
-            case 28 /* MGP6 */:
-            case 29 /* MGP7 */:
-            case 30 /* MGP8 */:
-            case 31 /* MGP9 */:
-            case 32 /* MGP10 */:
                 return true;
         }
         return false;
