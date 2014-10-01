@@ -21,6 +21,7 @@ class Situation implements IEntity {
 	get SignalList() { return this.signalList; }
 	get DateSuggestionResultCreated() { return this.dateSuggestionResultCreated; }
 	set DateSuggestionResultCreated(value) { this.dateSuggestionResultCreated = value; }
+	get DateSuggestionResultProcessed() { return this.dateSuggestionResultProcessed; }
 	set DateSuggestionResultProcessed(value) { this.dateSuggestionResultProcessed = value; }
 	get EShopId() {
 		return this.signalList.first().Matrix.EShopId;

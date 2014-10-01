@@ -47,6 +47,9 @@ var Situation = (function () {
         configurable: true
     });
     Object.defineProperty(Situation.prototype, "DateSuggestionResultProcessed", {
+        get: function () {
+            return this.dateSuggestionResultProcessed;
+        },
         set: function (value) {
             this.dateSuggestionResultProcessed = value;
         },
