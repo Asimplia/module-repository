@@ -51,6 +51,7 @@ class MatrixLoader {
 			+' AND '+Matrix.COLUMN_LOAD_ID+' = $2 '
 			+' AND '+Matrix.COLUMN_CUSTOMER_ID+' = $3 '
 			+' AND '+Signal.COLUMN_SIGNAL_ID+' IS NULL ';
+			console.log(sql);
 		this.connection.query(sql, [
 				eShopId, loadId, customerId
 			], (e, result) => {
