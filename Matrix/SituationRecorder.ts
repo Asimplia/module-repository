@@ -37,9 +37,11 @@ class SituationRecorder {
 		this.connection.query('UPDATE '+Situation.TABLE_NAME
 			+' SET '+Situation.COLUMN_DATE_CREATED+' = $1::timestamp '
 			+' , '+Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED+' = $2 '
-			+' WHERE '+Situation.COLUMN_SITUATION_ID+' = $3 ', [
+			+' , '+Situation.COLUMN_DATE_SUGGESTION_RESULT_PROCESSED+' = $3 '
+			+' WHERE '+Situation.COLUMN_SITUATION_ID+' = $4 ', [
 			moment(situation.DateCreated).format('YYYY-MM-DD HH:mm:ss'),
 			situation.DateSuggestionResultCreated ? moment(situation.DateSuggestionResultCreated).format('YYYY-MM-DD HH:mm:ss') : null,
+			situation.DateSuggestionResultProcessed ? moment(situation.DateSuggestionResultProcessed).format('YYYY-MM-DD HH:mm:ss') : null,
 			situation.Id
 		], (e, res) => {
 			if (e) {
