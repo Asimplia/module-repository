@@ -1,5 +1,5 @@
 ﻿
-/// <reference path="../../typings/moment/moment.d.ts" />
+/// <reference path="../../../typings/moment/moment.d.ts" />
 
 import LocalizedString = require('../Locale/LocalizedString');
 import List = require('../List');

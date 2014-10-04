@@ -1,7 +1,7 @@
 
 /// <reference path="../../../typings/jasmine/jasmine.d.ts" />
 /// <reference path="../../../typings/node/node.d.ts" />
-/// <reference path="../../../index.node.d.ts" />
+/// <reference path="../../../asimplia-repository.node.d.ts" />
 
 import Repository = require("../../../src/index");
 import EntityPreparer = Repository.Entity.EntityPreparer;

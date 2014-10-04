@@ -1,6 +1,6 @@
 
 /// <reference path="../../typings/moment/moment.d.ts" />
-/// <reference path="../../typings/underscore/unerscore.d.ts" />
+/// <reference path="../../typings/underscore/underscore.d.ts" />
 
 import ScriptTypeEnum = require('./Error/ScriptTypeEnum');
 import NotAllowedNullError = require('./Error/Error/NotAllowedNullError');
