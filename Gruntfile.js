@@ -26,7 +26,7 @@ module.exports = function (grunt) {
 		jasmine_node: {
 			unit: {
 				options: {
-					specFolders: ['tests/unit/']
+					specFolders: ['build/tests/unit/']
 				},
 			}
 		},
