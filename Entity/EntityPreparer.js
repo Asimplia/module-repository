@@ -1,5 +1,5 @@
 var ScriptTypeEnum = require('./Error/ScriptTypeEnum');
-var NotAllowedNull = require('./Error/NotAllowedNull');
+var NotAllowedNullError = require('./Error/Error/NotAllowedNullError');
 var ColumnNotExistsInEntityError = require('./Error/Error/ColumnNotExistsInEntityError');
 var moment = require('moment');
 var _ = require('underscore');
@@ -9,7 +9,7 @@ var EntityPreparer = (function () {
     }
     EntityPreparer.string = function (value) {
         if (EntityPreparer.isNull(value)) {
-            console.warn(new NotAllowedNull(2 /* STRING */));
+            console.warn(new NotAllowedNullError(2 /* STRING */));
             return null;
         }
         return "" + value;
@@ -24,7 +24,7 @@ var EntityPreparer = (function () {
 
     EntityPreparer.date = function (value) {
         if (EntityPreparer.isNull(value)) {
-            console.warn(new NotAllowedNull(3 /* DATE */));
+            console.warn(new NotAllowedNullError(3 /* DATE */));
             return null;
         }
         return moment(value).toDate();
@@ -39,7 +39,7 @@ var EntityPreparer = (function () {
 
     EntityPreparer.boolean = function (value) {
         if (EntityPreparer.isNull(value)) {
-            console.warn(new NotAllowedNull(4 /* BOOLEAN */));
+            console.warn(new NotAllowedNullError(4 /* BOOLEAN */));
             return null;
         }
         return !!value;
@@ -54,7 +54,7 @@ var EntityPreparer = (function () {
 
     EntityPreparer.int = function (value) {
         if (EntityPreparer.isNull(value)) {
-            console.warn(new NotAllowedNull(0 /* INT */));
+            console.warn(new NotAllowedNullError(0 /* INT */));
             return null;
         }
         return parseInt(value);
@@ -69,7 +69,7 @@ var EntityPreparer = (function () {
 
     EntityPreparer.float = function (value) {
         if (EntityPreparer.isNull(value)) {
-            console.warn(new NotAllowedNull(1 /* FLOAT */));
+            console.warn(new NotAllowedNullError(1 /* FLOAT */));
             return null;
         }
         return parseFloat(value);
