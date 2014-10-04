@@ -11,7 +11,6 @@
     "underscore": "^1.6.0",
     "moment": "^2.6.0",
     "util": "^0.10.3",
-    "asimplia-util": "git+https://github.com/Asimplia/module-util.git",
     "each": "^0.4.9",
     "pg": "^3.4.0",
     "neo4j": "~1.1.0",

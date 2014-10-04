@@ -4,7 +4,7 @@ var List = require('../List');
 var FactorDefinition = require('./FactorDefinition');
 
 var ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
-var AsimpliaUtil = require('asimplia-util');
+var ArrayHelper = require('../../Util/ArrayHelper');
 var PriorityTypeEnum = require('./PriorityTypeEnum');
 var EntityPreparer = require('../EntityPreparer');
 
@@ -106,7 +106,7 @@ var Action = (function () {
     });
 
     Action.fromObject = function (o) {
-        return new Action(EntityPreparer.intOrNull(o.id), new LocalizedString(o.name), new LocalizedString(o.shortName), new LocalizedString(o.text), Action.createSectionEnum(o.section), new List().pushArray(o.factorDefinitions, FactorDefinition.fromObject), AsimpliaUtil.ArrayHelper.mapFilterNulls(o.placeholders, function (placeholder) {
+        return new Action(EntityPreparer.intOrNull(o.id), new LocalizedString(o.name), new LocalizedString(o.shortName), new LocalizedString(o.text), Action.createSectionEnum(o.section), new List().pushArray(o.factorDefinitions, FactorDefinition.fromObject), ArrayHelper.mapFilterNulls(o.placeholders, function (placeholder) {
             return Action.createPlaceholderEnum(placeholder);
         }), Action.createPriorityTypeEnum(o.priorityType), EntityPreparer.boolean(o.main));
     };
@@ -119,7 +119,7 @@ var Action = (function () {
             text: entity.text.toObject(),
             section: SectionEnum[entity.section],
             factorDefinitions: entity.factorDefinitionList.toArray(FactorDefinition.toObject),
-            placeholders: AsimpliaUtil.ArrayHelper.mapFilterNulls(entity.placeholders, function (placeholder) {
+            placeholders: ArrayHelper.mapFilterNulls(entity.placeholders, function (placeholder) {
                 return ActionPlaceholderEnum[placeholder];
             }),
             priorityType: PriorityTypeEnum[entity.priorityType],

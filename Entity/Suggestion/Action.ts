@@ -1,13 +1,11 @@
 ﻿
-/// <reference path="../../node_modules/asimplia-util/index.node.d.ts" />
-
 import LocalizedString = require('../Locale/LocalizedString');
 import SectionEnum = require('../Section/SectionEnum');
 import List = require('../List');
 import FactorDefinition = require('./FactorDefinition');
 import IEntity = require('../IEntity');
 import ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
-import AsimpliaUtil = require('asimplia-util');
+import ArrayHelper = require('../../Util/ArrayHelper');
 import PriorityTypeEnum = require('./PriorityTypeEnum');
 import EntityPreparer = require('../EntityPreparer');
 
@@ -51,7 +49,7 @@ class Action implements IEntity {
 			new LocalizedString(o.text),
 			Action.createSectionEnum(o.section),
 			new List<FactorDefinition>().pushArray(o.factorDefinitions, FactorDefinition.fromObject),
-			AsimpliaUtil.ArrayHelper.mapFilterNulls(o.placeholders, (placeholder: string) => { return Action.createPlaceholderEnum(placeholder); }),
+			ArrayHelper.mapFilterNulls(o.placeholders, (placeholder: string) => { return Action.createPlaceholderEnum(placeholder); }),
 			Action.createPriorityTypeEnum(o.priorityType),
 			EntityPreparer.boolean(o.main)
 		);
@@ -65,7 +63,7 @@ class Action implements IEntity {
 			text: entity.text.toObject(),
 			section: SectionEnum[entity.section],
 			factorDefinitions: entity.factorDefinitionList.toArray(FactorDefinition.toObject),
-			placeholders: AsimpliaUtil.ArrayHelper.mapFilterNulls(entity.placeholders, (placeholder: ActionPlaceholderEnum) => { return ActionPlaceholderEnum[placeholder]; }),
+			placeholders: ArrayHelper.mapFilterNulls(entity.placeholders, (placeholder: ActionPlaceholderEnum) => { return ActionPlaceholderEnum[placeholder]; }),
 			priorityType: PriorityTypeEnum[entity.priorityType],
 			main: entity.main
 		};

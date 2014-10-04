@@ -70,3 +70,4 @@ export import Application = require('./Application/index');
 export import EShop = require('./EShop/index');
 export import Error = require('./Error/index');
 export import Load = require('./Load/index');
+export import Util = require('./Util/index');
