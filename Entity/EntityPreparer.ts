@@ -1,6 +1,6 @@
 
 import ScriptTypeEnum = require('./Error/ScriptTypeEnum');
-import NotAllowedNull = require('./Error/NotAllowedNull');
+import NotAllowedNullError = require('./Error/Error/NotAllowedNullError');
 import ColumnNotExistsInEntityError = require('./Error/Error/ColumnNotExistsInEntityError');
 import moment = require('moment');
 import _ = require('underscore');
@@ -10,7 +10,7 @@ class EntityPreparer {
 	
 	static string(value: any): string {
 		if (EntityPreparer.isNull(value)) {
-			console.warn(new NotAllowedNull(ScriptTypeEnum.STRING));
+			console.warn(new NotAllowedNullError(ScriptTypeEnum.STRING));
 			return null;
 		}
 		return ""+value;
@@ -25,7 +25,7 @@ class EntityPreparer {
 
 	static date(value: any): Date {
 		if (EntityPreparer.isNull(value)) {
-			console.warn(new NotAllowedNull(ScriptTypeEnum.DATE));
+			console.warn(new NotAllowedNullError(ScriptTypeEnum.DATE));
 			return null;
 		}
 		return moment(value).toDate();
@@ -40,7 +40,7 @@ class EntityPreparer {
 	
 	static boolean(value: any): boolean {
 		if (EntityPreparer.isNull(value)) {
-			console.warn(new NotAllowedNull(ScriptTypeEnum.BOOLEAN));
+			console.warn(new NotAllowedNullError(ScriptTypeEnum.BOOLEAN));
 			return null;
 		}
 		return !!value;
@@ -55,7 +55,7 @@ class EntityPreparer {
 	
 	static int(value: any): number {
 		if (EntityPreparer.isNull(value)) {
-			console.warn(new NotAllowedNull(ScriptTypeEnum.INT));
+			console.warn(new NotAllowedNullError(ScriptTypeEnum.INT));
 			return null;
 		}
 		return parseInt(value);
@@ -70,7 +70,7 @@ class EntityPreparer {
 	
 	static float(value: any): number {
 		if (EntityPreparer.isNull(value)) {
-			console.warn(new NotAllowedNull(ScriptTypeEnum.FLOAT));
+			console.warn(new NotAllowedNullError(ScriptTypeEnum.FLOAT));
 			return null;
 		}
 		return parseFloat(value);
