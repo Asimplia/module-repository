@@ -1,14 +1,13 @@
 module.exports = function (grunt) {
 
-	var tsFiles = ["**/*.ts", "!**/*.d.ts", "!node_modules/**/*.ts"];
-
+	var tsFiles = ["src/**/*.ts", "tests/**/*.ts", "!node_modules/**/*.ts"];
 	// Project configuration.
 	grunt.initConfig({
 		typescript: {
 			// A specific target
 			build: {
-				src: ["tests/**/*.ts"],
-				dest: '',
+				src: tsFiles,
+				dest: 'build/',
 				options: {
 					// 'es3' (default) | 'es5'
 					target: 'es5',

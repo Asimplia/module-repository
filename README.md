@@ -29,6 +29,13 @@ Repository.connectNeo4j('http://localhost:7474/');
 ## Documentation
 Look at ```./tests/``` for full API of module
 
+## Development
+```
+npm install
+tsd update
+grunt dev
+```
+
 ## Test
 ```
 npm test

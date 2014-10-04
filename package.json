@@ -1,8 +1,8 @@
 {
   "name": "asimplia-repository",
-  "version": "0.0.43",
+  "version": "0.1.0",
   "description": "Repository",
-  "main": "./index.js",
+  "main": "build/src/index.js",
   "author": {
     "name": "misak113"
   },
