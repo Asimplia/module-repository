@@ -4,7 +4,7 @@ import MatrixProduct = require('./MatrixProduct');
 import MatrixCustomer = require('./MatrixCustomer');
 import MatrixChannel = require('./MatrixChannel');
 import MatrixCategory = require('./MatrixCategory');
-import SectionFactory = require('../../Entity/Section/SectionFactory');
+import SectionFactory = require('../Section/SectionFactory');
 
 export = MatrixFactory;
 class MatrixFactory {

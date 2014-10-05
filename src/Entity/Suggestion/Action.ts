@@ -5,7 +5,7 @@ import List = require('../List');
 import FactorDefinition = require('./FactorDefinition');
 import IEntity = require('../IEntity');
 import ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
-import ArrayHelper = require('../../Util/ArrayHelper');
+import ArrayHelper = require('../Util/ArrayHelper');
 import PriorityTypeEnum = require('./PriorityTypeEnum');
 import EntityPreparer = require('../EntityPreparer');
 

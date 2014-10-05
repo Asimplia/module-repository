@@ -3,7 +3,7 @@ var MatrixProduct = require('./MatrixProduct');
 var MatrixCustomer = require('./MatrixCustomer');
 var MatrixChannel = require('./MatrixChannel');
 var MatrixCategory = require('./MatrixCategory');
-var SectionFactory = require('../../Entity/Section/SectionFactory');
+var SectionFactory = require('../Section/SectionFactory');
 
 var MatrixFactory = (function () {
     function MatrixFactory() {
