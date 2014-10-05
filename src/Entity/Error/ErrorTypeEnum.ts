@@ -4,5 +4,6 @@ enum ErrorTypeEnum {
 	DEBUG,
 	INFO,
 	WARNING,
-	ERROR
+	ERROR,
+	UNCAUGHT_ERROR
 }
