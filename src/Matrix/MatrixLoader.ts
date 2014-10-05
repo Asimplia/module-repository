@@ -10,6 +10,7 @@ import Category = require('../Entity/EShop/Category');
 import Factor = require('../Entity/Factor/Factor');
 import MatrixFactory = require('../Entity/Matrix/MatrixFactory');
 import EntityPreparer = require('../Entity/EntityPreparer');
+import LoadLog = require('../Entity/Load/LoadLog');
 
 export = MatrixLoader;
 class MatrixLoader {
@@ -114,6 +115,32 @@ class MatrixLoader {
 			eShopId, loadId, limit, offset
 		], (e, result) => {
 			this.createListByResult(e, result, callback);
+		});
+	}
+
+	getDailyCount(countDays: number, callback: (e: Error, data?: { date: Date; count: number }[]) => void) {
+		var sql = "SELECT DATE_TRUNC('day', "+LoadLog.COLUMN_DATELOADED+") AS date, "
+			+" COUNT("+Matrix.COLUMN_MATRIX_ID+") AS count "
+			+' FROM '+Matrix.TABLE_NAME+' '
+			+' JOIN '+LoadLog.TABLE_NAME+' USING ('+Matrix.COLUMN_LOAD_ID+', '+Matrix.COLUMN_E_SHOP_ID+') '
+			+' GROUP BY date '
+			+' ORDER BY date DESC '
+			+' LIMIT $1 ';
+		this.connection.query(sql, [
+			countDays
+		], (e, result) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			var data = [];
+			result.rows.forEach((row) => {
+				data.push({
+					date: EntityPreparer.date(row.date),
+					count: row.count
+				});
+			});
+			callback(null, data);
 		});
 	}
 

@@ -9,6 +9,7 @@ var Category = require('../Entity/EShop/Category');
 
 var MatrixFactory = require('../Entity/Matrix/MatrixFactory');
 var EntityPreparer = require('../Entity/EntityPreparer');
+var LoadLog = require('../Entity/Load/LoadLog');
 
 var MatrixLoader = (function () {
     function MatrixLoader() {
@@ -87,6 +88,26 @@ var MatrixLoader = (function () {
             eShopId, loadId, limit, offset
         ], function (e, result) {
             _this.createListByResult(e, result, callback);
+        });
+    };
+
+    MatrixLoader.prototype.getDailyCount = function (countDays, callback) {
+        var sql = "SELECT DATE_TRUNC('day', " + LoadLog.COLUMN_DATELOADED + ") AS date, " + " COUNT(" + Matrix.COLUMN_MATRIX_ID + ") AS count " + ' FROM ' + Matrix.TABLE_NAME + ' ' + ' JOIN ' + LoadLog.TABLE_NAME + ' USING (' + Matrix.COLUMN_LOAD_ID + ', ' + Matrix.COLUMN_E_SHOP_ID + ') ' + ' GROUP BY date ' + ' ORDER BY date DESC ' + ' LIMIT $1 ';
+        this.connection.query(sql, [
+            countDays
+        ], function (e, result) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            var data = [];
+            result.rows.forEach(function (row) {
+                data.push({
+                    date: EntityPreparer.date(row.date),
+                    count: row.count
+                });
+            });
+            callback(null, data);
         });
     };
 

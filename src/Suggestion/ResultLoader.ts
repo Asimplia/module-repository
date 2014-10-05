@@ -9,6 +9,7 @@ import ResultModel = require('./ResultModel');
 import ResultStateEnum = require('../Entity/Suggestion/ResultStateEnum');
 import mongoose = require('mongoose');
 import moment = require('moment');
+import EntityPreparer = require('../Entity/EntityPreparer');
 
 export = ResultLoader;
 class ResultLoader {
@@ -101,6 +102,34 @@ class ResultLoader {
 			var list = new List<SuggestionResult>();
 			list.pushArray(suggestions, SuggestionResult.fromObject);
 			callback(e, list);
+		});
+	}
+
+	getDailyCount(countDays: number, callback: (e: Error, data?: { date: Date; count: number }[]) => void) {
+		this.ResultModel.aggregate([
+			{ $group: { 
+				_id: { 
+					year: { $year: '$activeStatus.dateCreated' },
+					month: { $month: "$activeStatus.dateCreated" }, 
+					day: { $dayOfMonth: "$activeStatus.dateCreated" } 
+				},
+				count: {
+					$sum: 1
+				}
+			} }
+		]).exec((e, rows: any[]) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			var data = [];
+			rows.forEach((row) => {
+				data.push({
+					date: new Date(row._id.year, row._id.month, row._id.day, 0, 0, 0),
+					count: row.count
+				});
+			});
+			callback(null, data);
 		});
 	}
 

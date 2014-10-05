@@ -95,6 +95,34 @@ var ResultLoader = (function () {
         });
     };
 
+    ResultLoader.prototype.getDailyCount = function (countDays, callback) {
+        this.ResultModel.aggregate([
+            { $group: {
+                    _id: {
+                        year: { $year: '$activeStatus.dateCreated' },
+                        month: { $month: "$activeStatus.dateCreated" },
+                        day: { $dayOfMonth: "$activeStatus.dateCreated" }
+                    },
+                    count: {
+                        $sum: 1
+                    }
+                } }
+        ]).exec(function (e, rows) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            var data = [];
+            rows.forEach(function (row) {
+                data.push({
+                    date: new Date(row._id.year, row._id.month, row._id.day, 0, 0, 0),
+                    count: row.count
+                });
+            });
+            callback(null, data);
+        });
+    };
+
     ResultLoader.prototype.getConditionsByType = function (type) {
         var conditions = {};
         var now = moment().toDate();

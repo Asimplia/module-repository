@@ -8,6 +8,7 @@ import Channel = require('../Entity/EShop/Channel');
 import List = require('../Entity/List');
 import Category = require('../Entity/EShop/Category');
 import EntityPreparer = require('../Entity/EntityPreparer');
+import LoadLog = require('../Entity/Load/LoadLog');
 
 export = SignalLoader;
 class SignalLoader {
@@ -89,6 +90,33 @@ class SignalLoader {
 				list.push(signal);
 			});
 			callback(null, list);
+		});
+	}
+
+	getDailyCount(countDays: number, callback: (e: Error, data?: { date: Date; count: number }[]) => void) {
+		var sql = "SELECT DATE_TRUNC('day', "+LoadLog.COLUMN_DATELOADED+") AS date, "
+			+" COUNT("+Matrix.COLUMN_MATRIX_ID+") AS count "
+			+' FROM '+Signal.TABLE_NAME+' '
+			+' JOIN '+Matrix.TABLE_NAME+' USING ('+Matrix.COLUMN_MATRIX_ID+') '
+			+' JOIN '+LoadLog.TABLE_NAME+' USING ('+Matrix.COLUMN_LOAD_ID+', '+Matrix.COLUMN_E_SHOP_ID+') '
+			+' GROUP BY date '
+			+' ORDER BY date DESC '
+			+' LIMIT $1 ';
+		this.connection.query(sql, [
+			countDays
+		], (e, result) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			var data = [];
+			result.rows.forEach((row) => {
+				data.push({
+					date: EntityPreparer.date(row.date),
+					count: row.count
+				});
+			});
+			callback(null, data);
 		});
 	}
 

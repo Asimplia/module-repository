@@ -7,6 +7,7 @@ var Channel = require('../Entity/EShop/Channel');
 var List = require('../Entity/List');
 var Category = require('../Entity/EShop/Category');
 var EntityPreparer = require('../Entity/EntityPreparer');
+var LoadLog = require('../Entity/Load/LoadLog');
 
 var SignalLoader = (function () {
     function SignalLoader() {
@@ -78,6 +79,26 @@ var SignalLoader = (function () {
                 list.push(signal);
             });
             callback(null, list);
+        });
+    };
+
+    SignalLoader.prototype.getDailyCount = function (countDays, callback) {
+        var sql = "SELECT DATE_TRUNC('day', " + LoadLog.COLUMN_DATELOADED + ") AS date, " + " COUNT(" + Matrix.COLUMN_MATRIX_ID + ") AS count " + ' FROM ' + Signal.TABLE_NAME + ' ' + ' JOIN ' + Matrix.TABLE_NAME + ' USING (' + Matrix.COLUMN_MATRIX_ID + ') ' + ' JOIN ' + LoadLog.TABLE_NAME + ' USING (' + Matrix.COLUMN_LOAD_ID + ', ' + Matrix.COLUMN_E_SHOP_ID + ') ' + ' GROUP BY date ' + ' ORDER BY date DESC ' + ' LIMIT $1 ';
+        this.connection.query(sql, [
+            countDays
+        ], function (e, result) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            var data = [];
+            result.rows.forEach(function (row) {
+                data.push({
+                    date: EntityPreparer.date(row.date),
+                    count: row.count
+                });
+            });
+            callback(null, data);
         });
     };
 
