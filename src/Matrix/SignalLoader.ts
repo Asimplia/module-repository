@@ -111,7 +111,7 @@ class SignalLoader {
 			}
 			var data = [];
 			result.rows.forEach((row) => {
-				data.push({
+				data.unshift({
 					date: EntityPreparer.date(row.date),
 					count: row.count
 				});

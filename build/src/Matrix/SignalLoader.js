@@ -93,7 +93,7 @@ var SignalLoader = (function () {
             }
             var data = [];
             result.rows.forEach(function (row) {
-                data.push({
+                data.unshift({
                     date: EntityPreparer.date(row.date),
                     count: row.count
                 });

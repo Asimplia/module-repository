@@ -124,7 +124,7 @@ class ResultLoader {
 			}
 			var data = [];
 			rows.forEach((row) => {
-				data.push({
+				data.unshift({
 					date: new Date(row._id.year, row._id.month, row._id.day, 0, 0, 0),
 					count: row.count
 				});

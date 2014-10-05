@@ -114,7 +114,7 @@ var ResultLoader = (function () {
             }
             var data = [];
             rows.forEach(function (row) {
-                data.push({
+                data.unshift({
                     date: new Date(row._id.year, row._id.month, row._id.day, 0, 0, 0),
                     count: row.count
                 });
