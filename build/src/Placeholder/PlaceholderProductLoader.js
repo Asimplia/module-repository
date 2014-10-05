@@ -94,6 +94,45 @@ var PlaceholderProductLoader = (function () {
             callback(null, res.pop()['a.productMarginRate']);
         });
     };
+
+    PlaceholderProductLoader.prototype.getCustomersForProduct = function (productId, callback) {
+        this.db.query('MATCH (a:PRODUCT {productId: {productId} })-[*2]->(c:ORDER)<-[*2]-(e:PRODUCT) WITH e MATCH (x:CUSTOMER)<--(c:ORDER)<-[*2]-(e) WHERE NOT (e.productId =  {productId} ) RETURN DISTINCT x', {
+            productId: productId
+        }, function (e, res) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            var customers = _.map(res, function (row) {
+                return row['x'];
+            });
+            callback(null, customers);
+        });
+    };
+
+    PlaceholderProductLoader.prototype.getConversionRate = function (productId, callback) {
+        this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.conversionRate', {
+            productId: productId
+        }, function (e, res) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(null, res.pop()['a.conversionRate']);
+        });
+    };
+
+    PlaceholderProductLoader.prototype.getDiscountValue = function (productId, callback) {
+        this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = %product_id ) RETURN a.discount', {
+            productId: productId
+        }, function (e, res) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(null, res.pop()['a.discount']);
+        });
+    };
     return PlaceholderProductLoader;
 })();
 module.exports = PlaceholderProductLoader;
