@@ -16,10 +16,10 @@ var SituationLoader = (function () {
             _this.connection = connection;
         });
     }
-    SituationLoader.prototype.getListNotSuggestedByEShopId = function (eShopId, callback) {
+    SituationLoader.prototype.getListNotSuggested = function (eShopId, loadId, callback) {
         var _this = this;
-        this.connection.query('SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_PROCESSED + ' IS NULL', [
-            eShopId
+        this.connection.query('SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' AND ' + Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_PROCESSED + ' IS NULL', [
+            eShopId, loadId
         ], function (e, result) {
             _this.createListByResult(e, result, callback);
         });

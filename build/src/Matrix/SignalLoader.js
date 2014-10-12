@@ -34,10 +34,10 @@ var SignalLoader = (function () {
         });
     };
 
-    SignalLoader.prototype.getListWithoutSituation = function (eShopId, callback) {
-        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 AND ' + Signal.TABLE_NAME + '.' + Signal.COLUMN_SITUATION_ID + ' IS NULL';
+    SignalLoader.prototype.getListWithoutSituation = function (eShopId, loadId, callback) {
+        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' AND ' + Signal.TABLE_NAME + '.' + Signal.COLUMN_SITUATION_ID + ' IS NULL';
         this.connection.query(sql, [
-            eShopId
+            eShopId, loadId
         ], function (e, result) {
             if (e) {
                 console.log(e);
