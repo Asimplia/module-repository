@@ -2,7 +2,7 @@
 var SectionEnum = require('../Section/SectionEnum');
 var SectionFactory = require('../Section/SectionFactory');
 var EntityPreparer = require('../EntityPreparer');
-
+var ColumnEnum = require('../Matrix/ColumnEnum');
 var ColumnFactory = require('../Matrix/ColumnFactory');
 
 var SignalThreshold = (function () {
@@ -50,7 +50,7 @@ var SignalThreshold = (function () {
         return {
             section: SectionEnum[e.section],
             name: e.name,
-            column: e.column,
+            column: ColumnEnum[e.column],
             thresholdValue: {
                 q1: e.thresholdValueQ1,
                 q2: e.thresholdValueQ2,

@@ -60,7 +60,7 @@ class SignalThreshold implements IEntity {
 		return {
 			section: SectionEnum[e.section],
 			name: e.name,
-			column: e.column,
+			column: ColumnEnum[e.column],
 			thresholdValue: {
 				q1: e.thresholdValueQ1,
 				q2: e.thresholdValueQ2,

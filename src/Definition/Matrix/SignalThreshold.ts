@@ -3,6 +3,7 @@ export = SignalThreshold;
 var SignalThreshold = {
 	section: String,
 	name: String,
+	column: String,
 	thresholdValue: {
 		q1: Number,
 		q2: Number,
