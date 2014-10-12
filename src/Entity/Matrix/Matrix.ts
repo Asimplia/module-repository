@@ -106,10 +106,6 @@ class Matrix implements IEntity {
 		return Matrix.toObject(this);
 	}
 
-	getChange() {
-		return this.changeWeight;
-	}
-
 	isCorresponding(matrix: Matrix): boolean {
 		throw new Error('Implement this abstract method');
 	}

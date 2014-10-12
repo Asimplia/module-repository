@@ -2,6 +2,7 @@
 var SectionEnum = require('../Section/SectionEnum');
 var SectionFactory = require('../Section/SectionFactory');
 var ColumnEnum = require('../Matrix/ColumnEnum');
+var ColumnFactory = require('../Matrix/ColumnFactory');
 var ShiftValueEnum = require('../Factor/ShiftValueEnum');
 var LocalizedString = require('../Locale/LocalizedString');
 var EntityPreparer = require('../EntityPreparer');
@@ -67,7 +68,7 @@ var Factor = (function () {
     });
 
     Factor.fromObject = function (o) {
-        return new Factor(EntityPreparer.intOrNull(o.id), EntityPreparer.stringOrNull(o.name), EntityPreparer.stringOrNull(o.description), SectionFactory.createSectionEnum(o.section), EntityPreparer.floatOrNull(o.weight), Factor.createTypeEnum(o.factorType), Factor.createColumnEnum(o.column), new LocalizedString(o.label));
+        return new Factor(EntityPreparer.intOrNull(o.id), EntityPreparer.stringOrNull(o.name), EntityPreparer.stringOrNull(o.description), SectionFactory.createSectionEnum(o.section), EntityPreparer.floatOrNull(o.weight), Factor.createTypeEnum(o.factorType), ColumnFactory.createColumnEnum(o.column), new LocalizedString(o.label));
     };
 
     Factor.toObject = function (entity) {
@@ -95,38 +96,6 @@ var Factor = (function () {
                 return 1 /* SHIFT */;
         }
         return null;
-    };
-
-    Factor.createColumnEnum = function (column) {
-        switch (column) {
-            case ColumnEnum[1 /* SCORE_ABSOLUTE */]:
-                return 1 /* SCORE_ABSOLUTE */;
-            case ColumnEnum[2 /* SCORE_RELATIVE */]:
-                return 2 /* SCORE_RELATIVE */;
-            case ColumnEnum[3 /* SCORE_WEIGHT */]:
-                return 3 /* SCORE_WEIGHT */;
-            case ColumnEnum[4 /* CHANGE_ABSOLUTE */]:
-                return 4 /* CHANGE_ABSOLUTE */;
-            case ColumnEnum[5 /* CHANGE_RELATIVE */]:
-                return 5 /* CHANGE_RELATIVE */;
-            case ColumnEnum[6 /* CHANGE_WEIGHT */]:
-                return 6 /* CHANGE_WEIGHT */;
-            case ColumnEnum[7 /* PREDICTION */]:
-                return 7 /* PREDICTION */;
-            case ColumnEnum[8 /* INPUT_VALUE_X */]:
-                return 8 /* INPUT_VALUE_X */;
-            case ColumnEnum[9 /* INPUT_VALUE_Y */]:
-                return 9 /* INPUT_VALUE_Y */;
-            case ColumnEnum[10 /* CHANGE_VALUE_X */]:
-                return 10 /* CHANGE_VALUE_X */;
-            case ColumnEnum[11 /* CHANGE_VALUE_Y */]:
-                return 11 /* CHANGE_VALUE_Y */;
-            case ColumnEnum[12 /* TANGENS */]:
-                return 12 /* TANGENS */;
-            case ColumnEnum[13 /* CHANGE_TANGENS */]:
-                return 13 /* CHANGE_TANGENS */;
-        }
-        return 0 /* UNKNOWN */;
     };
 
     Factor.createShiftValueEnum = function (shiftValue) {

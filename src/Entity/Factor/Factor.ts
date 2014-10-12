@@ -3,6 +3,7 @@ import FactorTypeEnum = require('./FactorTypeEnum');
 import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
 import ColumnEnum = require('../Matrix/ColumnEnum');
+import ColumnFactory = require('../Matrix/ColumnFactory');
 import ShiftValueEnum = require('../Factor/ShiftValueEnum');
 import LocalizedString = require('../Locale/LocalizedString');
 import EntityPreparer = require('../EntityPreparer');
@@ -38,7 +39,7 @@ class Factor {
 			SectionFactory.createSectionEnum(o.section),
 			EntityPreparer.floatOrNull(o.weight),
 			Factor.createTypeEnum(o.factorType),
-			Factor.createColumnEnum(o.column),
+			ColumnFactory.createColumnEnum(o.column),
 			new LocalizedString(o.label)
 		);
 	}
@@ -68,38 +69,6 @@ class Factor {
 				return FactorTypeEnum.SHIFT;
 		}
 		return null;
-	}
-
-	static createColumnEnum(column: string) {
-		switch (column) {
-			case ColumnEnum[ColumnEnum.SCORE_ABSOLUTE]:
-				return ColumnEnum.SCORE_ABSOLUTE;
-			case ColumnEnum[ColumnEnum.SCORE_RELATIVE]:
-				return ColumnEnum.SCORE_RELATIVE;
-			case ColumnEnum[ColumnEnum.SCORE_WEIGHT]:
-				return ColumnEnum.SCORE_WEIGHT;
-			case ColumnEnum[ColumnEnum.CHANGE_ABSOLUTE]:
-				return ColumnEnum.CHANGE_ABSOLUTE;
-			case ColumnEnum[ColumnEnum.CHANGE_RELATIVE]:
-				return ColumnEnum.CHANGE_RELATIVE;
-			case ColumnEnum[ColumnEnum.CHANGE_WEIGHT]:
-				return ColumnEnum.CHANGE_WEIGHT;
-			case ColumnEnum[ColumnEnum.PREDICTION]:
-				return ColumnEnum.PREDICTION;
-			case ColumnEnum[ColumnEnum.INPUT_VALUE_X]:
-				return ColumnEnum.INPUT_VALUE_X;
-			case ColumnEnum[ColumnEnum.INPUT_VALUE_Y]:
-				return ColumnEnum.INPUT_VALUE_Y;
-			case ColumnEnum[ColumnEnum.CHANGE_VALUE_X]:
-				return ColumnEnum.CHANGE_VALUE_X;
-			case ColumnEnum[ColumnEnum.CHANGE_VALUE_Y]:
-				return ColumnEnum.CHANGE_VALUE_Y;
-			case ColumnEnum[ColumnEnum.TANGENS]:
-				return ColumnEnum.TANGENS;
-			case ColumnEnum[ColumnEnum.CHANGE_TANGENS]:
-				return ColumnEnum.CHANGE_TANGENS;
-		}
-		return ColumnEnum.UNKNOWN;
 	}
 
 	static createShiftValueEnum(shiftValue: string) {

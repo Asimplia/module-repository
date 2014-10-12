@@ -5,6 +5,8 @@ import QuadrantValueEnum = require('./QuadrantValueEnum');
 import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
 import EntityPreparer = require('../EntityPreparer');
+import ColumnEnum = require('../Matrix/ColumnEnum');
+import ColumnFactory = require('../Matrix/ColumnFactory');
 
 export = SignalThreshold;
 class SignalThreshold implements IEntity {
@@ -15,6 +17,7 @@ class SignalThreshold implements IEntity {
 	constructor(
 		private section: SectionEnum,
 		private name: string,
+		private column: ColumnEnum,
 		private thresholdValueQ1: number,
 		private thresholdValueQ2: number,
 		private thresholdValueQ3: number,
@@ -33,6 +36,7 @@ class SignalThreshold implements IEntity {
 		return new SignalThreshold(
 			SectionFactory.createSectionEnum(o.section),
 			EntityPreparer.string(o.name),
+			ColumnFactory.createColumnEnum(o.column),
 			EntityPreparer.float(o.thresholdValue.q1),
 			EntityPreparer.float(o.thresholdValue.q2),
 			EntityPreparer.float(o.thresholdValue.q3),
@@ -56,6 +60,7 @@ class SignalThreshold implements IEntity {
 		return {
 			section: SectionEnum[e.section],
 			name: e.name,
+			column: e.column,
 			thresholdValue: {
 				q1: e.thresholdValueQ1,
 				q2: e.thresholdValueQ2,
@@ -87,9 +92,9 @@ class SignalThreshold implements IEntity {
 		throw new Error('Specified quadrant '+quadrant+' not supported');
 	}
 
-	isSignalInQuadrant(record: Matrix): boolean {
-		var thresholdValue = this.getThresholdValue(record.Quadrant);
-		var change = record.getChange();
+	isSignalInQuadrant(matrix: Matrix): boolean {
+		var thresholdValue = this.getThresholdValue(matrix.Quadrant);
+		var change = ColumnFactory.getMatrixColumnValue(matrix, this.column);
 		return change >= thresholdValue;
 	}
 }

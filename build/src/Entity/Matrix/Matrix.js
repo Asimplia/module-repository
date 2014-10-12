@@ -183,10 +183,6 @@ var Matrix = (function () {
         return Matrix.toObject(this);
     };
 
-    Matrix.prototype.getChange = function () {
-        return this.changeWeight;
-    };
-
     Matrix.prototype.isCorresponding = function (matrix) {
         throw new Error('Implement this abstract method');
     };

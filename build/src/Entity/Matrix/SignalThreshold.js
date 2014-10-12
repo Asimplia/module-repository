@@ -3,10 +3,13 @@ var SectionEnum = require('../Section/SectionEnum');
 var SectionFactory = require('../Section/SectionFactory');
 var EntityPreparer = require('../EntityPreparer');
 
+var ColumnFactory = require('../Matrix/ColumnFactory');
+
 var SignalThreshold = (function () {
-    function SignalThreshold(section, name, thresholdValueQ1, thresholdValueQ2, thresholdValueQ3, thresholdValueQ4, priorityQ1, priorityQ2, priorityQ3, priorityQ4, descriptionQ1, descriptionQ2, descriptionQ3, descriptionQ4) {
+    function SignalThreshold(section, name, column, thresholdValueQ1, thresholdValueQ2, thresholdValueQ3, thresholdValueQ4, priorityQ1, priorityQ2, priorityQ3, priorityQ4, descriptionQ1, descriptionQ2, descriptionQ3, descriptionQ4) {
         this.section = section;
         this.name = name;
+        this.column = column;
         this.thresholdValueQ1 = thresholdValueQ1;
         this.thresholdValueQ2 = thresholdValueQ2;
         this.thresholdValueQ3 = thresholdValueQ3;
@@ -36,7 +39,7 @@ var SignalThreshold = (function () {
     });
 
     SignalThreshold.fromObject = function (o) {
-        return new SignalThreshold(SectionFactory.createSectionEnum(o.section), EntityPreparer.string(o.name), EntityPreparer.float(o.thresholdValue.q1), EntityPreparer.float(o.thresholdValue.q2), EntityPreparer.float(o.thresholdValue.q3), EntityPreparer.float(o.thresholdValue.q4), EntityPreparer.float(o.priority.q1), EntityPreparer.float(o.priority.q2), EntityPreparer.float(o.priority.q3), EntityPreparer.float(o.priority.q4), EntityPreparer.stringOrNull(o.description.q1), EntityPreparer.stringOrNull(o.description.q2), EntityPreparer.stringOrNull(o.description.q3), EntityPreparer.stringOrNull(o.description.q4));
+        return new SignalThreshold(SectionFactory.createSectionEnum(o.section), EntityPreparer.string(o.name), ColumnFactory.createColumnEnum(o.column), EntityPreparer.float(o.thresholdValue.q1), EntityPreparer.float(o.thresholdValue.q2), EntityPreparer.float(o.thresholdValue.q3), EntityPreparer.float(o.thresholdValue.q4), EntityPreparer.float(o.priority.q1), EntityPreparer.float(o.priority.q2), EntityPreparer.float(o.priority.q3), EntityPreparer.float(o.priority.q4), EntityPreparer.stringOrNull(o.description.q1), EntityPreparer.stringOrNull(o.description.q2), EntityPreparer.stringOrNull(o.description.q3), EntityPreparer.stringOrNull(o.description.q4));
     };
 
     SignalThreshold.prototype.toObject = function () {
@@ -47,6 +50,7 @@ var SignalThreshold = (function () {
         return {
             section: SectionEnum[e.section],
             name: e.name,
+            column: e.column,
             thresholdValue: {
                 q1: e.thresholdValueQ1,
                 q2: e.thresholdValueQ2,
@@ -82,9 +86,9 @@ var SignalThreshold = (function () {
         throw new Error('Specified quadrant ' + quadrant + ' not supported');
     };
 
-    SignalThreshold.prototype.isSignalInQuadrant = function (record) {
-        var thresholdValue = this.getThresholdValue(record.Quadrant);
-        var change = record.getChange();
+    SignalThreshold.prototype.isSignalInQuadrant = function (matrix) {
+        var thresholdValue = this.getThresholdValue(matrix.Quadrant);
+        var change = ColumnFactory.getMatrixColumnValue(matrix, this.column);
         return change >= thresholdValue;
     };
     return SignalThreshold;
