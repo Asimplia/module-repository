@@ -23,11 +23,13 @@ class MatrixLoader {
 		});
 	}
 
-	getListByEShopId(eShopId:number, callback: (e: Error, recordList?: List<Matrix>) => void) {
+	getListNotSignal(eShopId: number, loadId: number, callback: (e: Error, recordList?: List<Matrix>) => void) {
 		var sql = 'SELECT '+this.getSelect()+' FROM '+this.getFrom()
-			+' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 AND '+Signal.TABLE_NAME+'.'+Signal.COLUMN_SIGNAL_ID+' IS NULL';
+			+' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_LOAD_ID+' = $2 '
+			+' AND '+Signal.TABLE_NAME+'.'+Signal.COLUMN_SIGNAL_ID+' IS NULL';
 		this.connection.query(sql, [
-			eShopId
+			eShopId, loadId
 		], (e, result) => {
 			this.createListByResult(e, result, callback);
 		});

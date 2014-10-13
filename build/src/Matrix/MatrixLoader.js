@@ -18,11 +18,11 @@ var MatrixLoader = (function () {
             _this.connection = connection;
         });
     }
-    MatrixLoader.prototype.getListByEShopId = function (eShopId, callback) {
+    MatrixLoader.prototype.getListNotSignal = function (eShopId, loadId, callback) {
         var _this = this;
-        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 AND ' + Signal.TABLE_NAME + '.' + Signal.COLUMN_SIGNAL_ID + ' IS NULL';
+        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' AND ' + Signal.TABLE_NAME + '.' + Signal.COLUMN_SIGNAL_ID + ' IS NULL';
         this.connection.query(sql, [
-            eShopId
+            eShopId, loadId
         ], function (e, result) {
             _this.createListByResult(e, result, callback);
         });
