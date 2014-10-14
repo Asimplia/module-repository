@@ -12,6 +12,8 @@ class EShop implements IEntity {
 	public static COLUMN_URL = 'eshopurl';
 	public static COLUMN_NAME = 'eshopname';
 
+	get Id() { return this.id; }
+
 	constructor(
 		private id: number,
 		private countryCode: string,

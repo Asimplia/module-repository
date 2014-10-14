@@ -24,6 +24,15 @@ class EShopLoader {
 		});
 	}
 
+	getListByNotInIds(ids: number[], callback: (e: Error, eShopList: List<EShop>) => void) {
+		this.connection.query('SELECT '+EntityPreparer.getColumnsAsPrefixedAlias(EShop).join(', ')+' '
+			+' FROM '+EShop.TABLE_NAME+' '
+			+(ids.length ? ' WHERE '+EShop.COLUMN_E_SHOP_ID+' NOT IN ('+ids.join(', ')+')' : ''), 
+			[], (e, result) => {
+			this.createListByResult(e, result, callback);
+		});
+	}
+
 	private createListByResult(e: Error, result: any, callback: (e: Error, recordList?: List<EShop>) => void) {
 		if (e) {
 			console.log(e);

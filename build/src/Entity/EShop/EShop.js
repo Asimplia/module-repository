@@ -8,6 +8,14 @@ var EShop = (function () {
         this.url = url;
         this.name = name;
     }
+    Object.defineProperty(EShop.prototype, "Id", {
+        get: function () {
+            return this.id;
+        },
+        enumerable: true,
+        configurable: true
+    });
+
     EShop.prototype.toObject = function () {
         return EShop.toObject(this);
     };

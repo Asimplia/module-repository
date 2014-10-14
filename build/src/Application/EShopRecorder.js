@@ -13,6 +13,17 @@ var EShopRecorder = (function (_super) {
         _super.call(this);
         this.model = require('./EShopModel');
     }
+    EShopRecorder.prototype.insertOrUpdateList = function (eShopList, callback) {
+        var _this = this;
+        eShopList.createEach().on('item', function (eShop, next) {
+            _this.insertOrUpdate(eShop, next);
+        }).on('error', function (e) {
+            callback(e);
+        }).on('end', function () {
+            callback(null, eShopList);
+        });
+    };
+
     EShopRecorder.prototype.insertOrUpdate = function (eShop, callback) {
         var _this = this;
         this.model.findOne({ id: eShop.Id }, function (e, eShopDocument) {
