@@ -6,6 +6,9 @@ import QuadrantValueEnum = require('./QuadrantValueEnum');
 import Product = require('../EShop/Product');
 import moment = require('moment');
 import SectionEnum = require('../Section/SectionEnum');
+import SectionFactory = require('../Section/SectionFactory');
+import QuadrantValueFactory = require('./QuadrantValueFactory');
+import EntityPreparer = require('../EntityPreparer');
 
 export = Matrix;
 class Matrix implements IEntity {
@@ -75,7 +78,11 @@ class Matrix implements IEntity {
 		private changeValueX: number,
 		private changeValueY: number,
 		private tangens: number,
-		private changeTangens: number
+		private changeTangens: number,
+		private productId: number,
+		private customerId: number,
+		private channelId: number,
+		private categoryId: number
 	) {	}
 
 	static toObject(entity: Matrix): any {
@@ -98,8 +105,40 @@ class Matrix implements IEntity {
 			changeValueX: entity.changeValueX,
 			changeValueY: entity.changeValueY,
 			tangens: entity.tangens,
-			changeTangens: entity.changeTangens
+			changeTangens: entity.changeTangens,
+			productId: entity.productId,
+			customerId: entity.customerId,
+			channelId: entity.channelId,
+			categoryId: entity.categoryId
 		};
+	}
+
+	static fromObject(object: any) {
+		return new Matrix(
+			EntityPreparer.intOrNull(object.id),
+			EntityPreparer.int(object.eShopId),
+			SectionFactory.createSectionEnum(object.section),
+			EntityPreparer.int(object.loadId),
+			EntityPreparer.float(object.scoreAbsolute),
+			EntityPreparer.float(object.scoreRelative),
+			EntityPreparer.float(object.scoreWeight),
+			EntityPreparer.float(object.changeAbsolute),
+			EntityPreparer.float(object.changeRelative),
+			EntityPreparer.float(object.changeWeight),
+			EntityPreparer.floatOrNull(object.prediction),
+			QuadrantValueFactory.createQuadrantValueEnum(object.quadrant),
+			EntityPreparer.date(object.dateValid),
+			EntityPreparer.floatOrNull(object.inputValueX),
+			EntityPreparer.floatOrNull(object.inputValueY),
+			EntityPreparer.floatOrNull(object.changeValueX),
+			EntityPreparer.floatOrNull(object.changeValueY),
+			EntityPreparer.floatOrNull(object.tangens),
+			EntityPreparer.floatOrNull(object.changeTangens),
+			EntityPreparer.intOrNull(object.productId),
+			EntityPreparer.intOrNull(object.customerId),
+			EntityPreparer.intOrNull(object.channelId),
+			EntityPreparer.intOrNull(object.categoryId)
+		);
 	}
 
 	toObject(): any {

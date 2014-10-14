@@ -40,7 +40,8 @@ class MatrixChannel extends Matrix {
 	) {
 		super(
 			id, eShopId, section, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight,
-			prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens
+			prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens,
+			null, null, channel.Id, null
 		);
 	}
 

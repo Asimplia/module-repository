@@ -93,8 +93,8 @@ class MatrixLoader {
 		limit: number, 
 		offset: number, 
 		filter: { productIds?: number[]; customerIds?: number[]; channelIds?: number[]; categoryIds?: number[] }, 
-		callback: (e: Error, recordList?: List<Matrix>
-	) => void) {
+		callback: (e: Error, recordList?: List<Matrix>) => void
+	) {
 		var filterWhere = '';
 		if (filter.productIds && filter.productIds.length > 0) {
 			filterWhere += ' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_PRODUCT_ID+' IN ('+filter.productIds.join(', ')+') ';
@@ -143,6 +143,16 @@ class MatrixLoader {
 				});
 			});
 			callback(null, data);
+		});
+	}
+
+	getListByNotInIds(ids: number[], callback: (e: Error, matrixList?: List<Matrix>) => void) {
+		var sql = 'SELECT '+this.getSelect()+' FROM '+this.getFrom()
+			+(ids.length 
+				? ' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_MATRIX_ID+' NOT IN ('+ids.join(', ')+') '
+				: '');
+		this.connection.query(sql, [], (e, result) => {
+			this.createListByResult(e, result, callback);
 		});
 	}
 

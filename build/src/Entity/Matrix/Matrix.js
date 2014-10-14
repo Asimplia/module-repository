@@ -2,9 +2,12 @@
 
 var moment = require('moment');
 var SectionEnum = require('../Section/SectionEnum');
+var SectionFactory = require('../Section/SectionFactory');
+var QuadrantValueFactory = require('./QuadrantValueFactory');
+var EntityPreparer = require('../EntityPreparer');
 
 var Matrix = (function () {
-    function Matrix(id, eShopId, section, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens) {
+    function Matrix(id, eShopId, section, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens, productId, customerId, channelId, categoryId) {
         this.id = id;
         this.eShopId = eShopId;
         this.section = section;
@@ -24,6 +27,10 @@ var Matrix = (function () {
         this.changeValueY = changeValueY;
         this.tangens = tangens;
         this.changeTangens = changeTangens;
+        this.productId = productId;
+        this.customerId = customerId;
+        this.channelId = channelId;
+        this.categoryId = categoryId;
     }
     Object.defineProperty(Matrix.prototype, "Id", {
         get: function () {
@@ -175,8 +182,16 @@ var Matrix = (function () {
             changeValueX: entity.changeValueX,
             changeValueY: entity.changeValueY,
             tangens: entity.tangens,
-            changeTangens: entity.changeTangens
+            changeTangens: entity.changeTangens,
+            productId: entity.productId,
+            customerId: entity.customerId,
+            channelId: entity.channelId,
+            categoryId: entity.categoryId
         };
+    };
+
+    Matrix.fromObject = function (object) {
+        return new Matrix(EntityPreparer.intOrNull(object.id), EntityPreparer.int(object.eShopId), SectionFactory.createSectionEnum(object.section), EntityPreparer.int(object.loadId), EntityPreparer.float(object.scoreAbsolute), EntityPreparer.float(object.scoreRelative), EntityPreparer.float(object.scoreWeight), EntityPreparer.float(object.changeAbsolute), EntityPreparer.float(object.changeRelative), EntityPreparer.float(object.changeWeight), EntityPreparer.floatOrNull(object.prediction), QuadrantValueFactory.createQuadrantValueEnum(object.quadrant), EntityPreparer.date(object.dateValid), EntityPreparer.floatOrNull(object.inputValueX), EntityPreparer.floatOrNull(object.inputValueY), EntityPreparer.floatOrNull(object.changeValueX), EntityPreparer.floatOrNull(object.changeValueY), EntityPreparer.floatOrNull(object.tangens), EntityPreparer.floatOrNull(object.changeTangens), EntityPreparer.intOrNull(object.productId), EntityPreparer.intOrNull(object.customerId), EntityPreparer.intOrNull(object.channelId), EntityPreparer.intOrNull(object.categoryId));
     };
 
     Matrix.prototype.toObject = function () {

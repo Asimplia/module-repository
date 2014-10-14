@@ -40,7 +40,8 @@ class MatrixProduct extends Matrix {
 	) {
 		super(
 			id, eShopId, section, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight,
-			prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens
+			prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens,
+			product.Id, null, null, null
 		);
 	}
 

@@ -111,6 +111,14 @@ var MatrixLoader = (function () {
         });
     };
 
+    MatrixLoader.prototype.getListByNotInIds = function (ids, callback) {
+        var _this = this;
+        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + (ids.length ? ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_MATRIX_ID + ' NOT IN (' + ids.join(', ') + ') ' : '');
+        this.connection.query(sql, [], function (e, result) {
+            _this.createListByResult(e, result, callback);
+        });
+    };
+
     MatrixLoader.prototype.getSelect = function () {
         return EntityPreparer.getColumnsAsPrefixedAlias(Matrix).join(', ') + ', ' + EntityPreparer.getColumnsAsPrefixedAlias(Signal).join(', ') + ', ' + EntityPreparer.getColumnsAsPrefixedAlias(Product).join(', ') + ', ' + EntityPreparer.getColumnsAsPrefixedAlias(Customer).join(', ') + ', ' + EntityPreparer.getColumnsAsPrefixedAlias(Channel).join(', ') + ', ' + EntityPreparer.getColumnsAsPrefixedAlias(Category).join(', ') + ' ';
     };

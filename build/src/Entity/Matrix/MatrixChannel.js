@@ -16,7 +16,7 @@ var EntityPreparer = require('../EntityPreparer');
 var MatrixChannel = (function (_super) {
     __extends(MatrixChannel, _super);
     function MatrixChannel(id, eShopId, section, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens, channel) {
-        _super.call(this, id, eShopId, section, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens);
+        _super.call(this, id, eShopId, section, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens, null, null, channel.Id, null);
         this.channel = channel;
     }
     Object.defineProperty(MatrixChannel.prototype, "Channel", {

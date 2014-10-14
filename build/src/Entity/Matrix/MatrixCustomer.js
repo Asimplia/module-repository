@@ -16,7 +16,7 @@ var EntityPreparer = require('../EntityPreparer');
 var MatrixCustomer = (function (_super) {
     __extends(MatrixCustomer, _super);
     function MatrixCustomer(id, eShopId, section, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens, customer) {
-        _super.call(this, id, eShopId, section, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens);
+        _super.call(this, id, eShopId, section, loadId, scoreAbsolute, scoreRelative, scoreWeight, changeAbsolute, changeRelative, changeWeight, prediction, quadrant, dateValid, inputValueX, inputValueY, changeValueX, changeValueY, tangens, changeTangens, null, customer.Id, null, null);
         this.customer = customer;
     }
     Object.defineProperty(MatrixCustomer.prototype, "Customer", {
