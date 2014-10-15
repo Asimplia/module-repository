@@ -19,6 +19,24 @@ var ProductLoader = (function () {
         });
     };
 
+    ProductLoader.prototype.getById = function (eShopId, productId, callback) {
+        var _this = this;
+        var sql = 'SELECT ' + EntityPreparer.getColumnsAsPrefixedAlias(Product).join(', ') + ' ' + ' FROM ' + Product.TABLE_NAME + ' ' + ' WHERE ' + Product.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Product.TABLE_NAME + '.' + Product.COLUMN_PRODUCT_ID + ' = $2 ';
+        this.connection.query(sql, [eShopId, productId], function (e, result) {
+            _this.createListByResult(e, result, function (e, productList) {
+                if (e) {
+                    callback(e);
+                    return;
+                }
+                if (productList.isEmpty()) {
+                    callback(null, null);
+                    return;
+                }
+                callback(null, productList.first());
+            });
+        });
+    };
+
     ProductLoader.prototype.searchList = function (eShopId, query, callback) {
         var _this = this;
         var sql = 'SELECT ' + EntityPreparer.getColumnsAsPrefixedAlias(Product).join(', ') + ' ' + ' FROM ' + Product.TABLE_NAME + ' ' + ' WHERE ' + Product.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Product.COLUMN_NAME + ' LIKE \'%' + query + '%\' ';
