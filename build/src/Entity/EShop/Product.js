@@ -40,6 +40,10 @@ var Product = (function () {
     Product.prototype.toObject = function () {
         return Product.toObject(this);
     };
+
+    Product.fromObject = function (object) {
+        return new Product(EntityPreparer.int(object.id), EntityPreparer.int(object.eShopId), EntityPreparer.stringOrNull(object.name), EntityPreparer.float(object.basePrice), EntityPreparer.stringOrNull(object.ean));
+    };
     Product.TABLE_NAME = 'warehouse.product';
     Product.COLUMN_E_SHOP_ID = 'eshopid';
     Product.COLUMN_PRODUCT_ID = 'productid';

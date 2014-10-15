@@ -31,6 +31,17 @@ class ProductLoader {
 		});
 	}
 
+	searchList(eShopId: number, query: string, callback: (e: Error, productList?: List<Product>) => void) {
+		var sql = 'SELECT '+EntityPreparer.getColumnsAsPrefixedAlias(Product).join(', ')+' '
+			+' FROM '+Product.TABLE_NAME+' '
+			+' WHERE '+Product.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+			+' AND '+Product.COLUMN_NAME+' LIKE \'%'+query+'%\' ';
+		this.connection.query(sql, 
+			[eShopId], (e, result) => {
+			this.createListByResult(e, result, callback);
+		});
+	}
+
 	private createListByResult(e: Error, result: any, callback: (e: Error, recordList?: List<Product>) => void) {
 		if (e) {
 			console.log(e);

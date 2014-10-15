@@ -47,4 +47,14 @@ class Product implements IEntity {
 		return Product.toObject(this);
 	}
 
+	static fromObject(object: any) {
+		return new Product(
+			EntityPreparer.int(object.id),
+			EntityPreparer.int(object.eShopId),
+			EntityPreparer.stringOrNull(object.name),
+			EntityPreparer.float(object.basePrice),
+			EntityPreparer.stringOrNull(object.ean)
+		);
+	}
+
 }

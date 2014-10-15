@@ -19,6 +19,14 @@ var ProductLoader = (function () {
         });
     };
 
+    ProductLoader.prototype.searchList = function (eShopId, query, callback) {
+        var _this = this;
+        var sql = 'SELECT ' + EntityPreparer.getColumnsAsPrefixedAlias(Product).join(', ') + ' ' + ' FROM ' + Product.TABLE_NAME + ' ' + ' WHERE ' + Product.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Product.COLUMN_NAME + ' LIKE \'%' + query + '%\' ';
+        this.connection.query(sql, [eShopId], function (e, result) {
+            _this.createListByResult(e, result, callback);
+        });
+    };
+
     ProductLoader.prototype.createListByResult = function (e, result, callback) {
         if (e) {
             console.log(e);
