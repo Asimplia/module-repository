@@ -14,7 +14,9 @@ class EShop implements IEntity {
 	constructor(
 		private id: number,
 		private name: string,
-		private serviceConnectionList: List<ServiceConnection>
+		private serviceConnectionList: List<ServiceConnection>,
+		private url: string,
+		private dateCreated: Date
 	) {}
 
 	toObject() {
@@ -25,7 +27,9 @@ class EShop implements IEntity {
 		return {
 			id: e.id,
 			name: e.name,
-			serviceConnections: e.serviceConnectionList.toArray(ServiceConnection.toObject)
+			serviceConnections: e.serviceConnectionList.toArray(ServiceConnection.toObject),
+			url: e.url,
+			dateCreated: e.dateCreated
 		};
 	}
 
@@ -33,7 +37,9 @@ class EShop implements IEntity {
 		return new EShop(
 			EntityPreparer.intOrNull(o.id),
 			EntityPreparer.string(o.name),
-			new List<ServiceConnection>(o.serviceConnections, ServiceConnection.fromObject)
+			new List<ServiceConnection>(o.serviceConnections, ServiceConnection.fromObject),
+			EntityPreparer.stringOrNull(o.url),
+			EntityPreparer.date(o.dateCreated)
 		);
 	}
 

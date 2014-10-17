@@ -7,5 +7,7 @@ var EShop = {
 		serviceType: String,
 		dateCreated: Date,
 		info: Object
-	}]
+	}],
+	url: String,
+	dateCreated: Date
 };

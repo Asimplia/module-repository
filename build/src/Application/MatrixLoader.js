@@ -29,6 +29,20 @@ var MatrixLoader = (function () {
             });
         });
     };
+
+    MatrixLoader.prototype.getMaxDateValid = function (callback) {
+        this.model.findOne({}).sort({ 'dateValid': -1 }).exec(function (e, object) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            if (!object) {
+                callback(null, null);
+                return;
+            }
+            callback(null, object.dateValid);
+        });
+    };
     return MatrixLoader;
 })();
 module.exports = MatrixLoader;

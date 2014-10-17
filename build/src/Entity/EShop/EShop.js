@@ -1,12 +1,13 @@
 var EntityPreparer = require('../EntityPreparer');
 
 var EShop = (function () {
-    function EShop(id, countryCode, owner, url, name) {
+    function EShop(id, countryCode, owner, url, name, dateCreated) {
         this.id = id;
         this.countryCode = countryCode;
         this.owner = owner;
         this.url = url;
         this.name = name;
+        this.dateCreated = dateCreated;
     }
     Object.defineProperty(EShop.prototype, "Id", {
         get: function () {
@@ -26,16 +27,17 @@ var EShop = (function () {
             countryCode: e.countryCode,
             owner: e.owner,
             url: e.url,
-            name: e.name
+            name: e.name,
+            dateCreated: e.dateCreated
         };
     };
 
     EShop.fromObject = function (o) {
-        return new EShop(EntityPreparer.int(o.id), EntityPreparer.stringOrNull(o.countryCode), EntityPreparer.string(o.owner), EntityPreparer.string(o.url), EntityPreparer.string(o.name));
+        return new EShop(EntityPreparer.int(o.id), EntityPreparer.stringOrNull(o.countryCode), EntityPreparer.string(o.owner), EntityPreparer.string(o.url), EntityPreparer.string(o.name), EntityPreparer.date(o.dateCreated));
     };
 
     EShop.fromRow = function (r) {
-        return new EShop(EntityPreparer.int(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_E_SHOP_ID]), EntityPreparer.stringOrNull(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_COUNTRY_CODE]), EntityPreparer.string(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_OWNER]), EntityPreparer.string(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_URL]), EntityPreparer.string(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_NAME]));
+        return new EShop(EntityPreparer.int(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_E_SHOP_ID]), EntityPreparer.stringOrNull(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_COUNTRY_CODE]), EntityPreparer.string(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_OWNER]), EntityPreparer.string(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_URL]), EntityPreparer.string(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_NAME]), EntityPreparer.date(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_DATE_CREATED]));
     };
     EShop.TABLE_NAME = 'warehouse.eshop';
     EShop.COLUMN_E_SHOP_ID = 'eshopid';
@@ -43,6 +45,7 @@ var EShop = (function () {
     EShop.COLUMN_OWNER = 'eshopowner';
     EShop.COLUMN_URL = 'eshopurl';
     EShop.COLUMN_NAME = 'eshopname';
+    EShop.COLUMN_DATE_CREATED = 'datecreated';
     return EShop;
 })();
 module.exports = EShop;

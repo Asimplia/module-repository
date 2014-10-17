@@ -24,11 +24,17 @@ class EShopLoader {
 		});
 	}
 
-	getListByNotInIds(ids: number[], callback: (e: Error, eShopList: List<EShop>) => void) {
-		this.connection.query('SELECT '+EntityPreparer.getColumnsAsPrefixedAlias(EShop).join(', ')+' '
+	getListCreatedFrom(createdDateFrom: Date, callback: (e: Error, eShopList: List<EShop>) => void) {
+		var where = ['TRUE'];
+		var parameters = [];
+		if (createdDateFrom) {
+			where.push(EShop.COLUMN_DATE_CREATED+' > $1::timestamp');
+			parameters.push(createdDateFrom);
+		}
+		var sql = 'SELECT '+EntityPreparer.getColumnsAsPrefixedAlias(EShop).join(', ')+' '
 			+' FROM '+EShop.TABLE_NAME+' '
-			+(ids.length ? ' WHERE '+EShop.COLUMN_E_SHOP_ID+' NOT IN ('+ids.join(', ')+')' : ''), 
-			[], (e, result) => {
+			+' WHERE '+where.join(' AND ');
+		this.connection.query(sql, parameters, (e, result) => {
 			this.createListByResult(e, result, callback);
 		});
 	}

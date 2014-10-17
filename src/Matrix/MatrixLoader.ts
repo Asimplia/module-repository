@@ -146,12 +146,16 @@ class MatrixLoader {
 		});
 	}
 
-	getListByNotInIds(ids: number[], callback: (e: Error, matrixList?: List<Matrix>) => void) {
+	getListValidFrom(validFrom: Date, callback: (e: Error, matrixList?: List<Matrix>) => void) {
+		var where = ['TRUE'];
+		var parameters = [];
+		if (validFrom) {
+			where.push(Matrix.TABLE_NAME+'.'+Matrix.COLUMN_DATE_VALID+' > $1::timestamp');
+			parameters.push(validFrom);
+		}
 		var sql = 'SELECT '+this.getSelect()+' FROM '+this.getFrom()
-			+(ids.length 
-				? ' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_MATRIX_ID+' NOT IN ('+ids.join(', ')+') '
-				: '');
-		this.connection.query(sql, [], (e, result) => {
+			+' WHERE '+where.join(' AND ');
+		this.connection.query(sql, parameters, (e, result) => {
 			this.createListByResult(e, result, callback);
 		});
 	}

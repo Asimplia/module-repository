@@ -11,6 +11,7 @@ class EShop implements IEntity {
 	public static COLUMN_OWNER = 'eshopowner';
 	public static COLUMN_URL = 'eshopurl';
 	public static COLUMN_NAME = 'eshopname';
+	public static COLUMN_DATE_CREATED = 'datecreated';
 
 	get Id() { return this.id; }
 
@@ -19,7 +20,8 @@ class EShop implements IEntity {
 		private countryCode: string,
 		private owner: string,
 		private url: string,
-		private name: string
+		private name: string,
+		private dateCreated: Date
 	) {}
 
 	toObject() {
@@ -32,7 +34,8 @@ class EShop implements IEntity {
 			countryCode: e.countryCode,
 			owner: e.owner,
 			url: e.url,
-			name: e.name
+			name: e.name,
+			dateCreated: e.dateCreated
 		};
 	}
 
@@ -42,7 +45,8 @@ class EShop implements IEntity {
 			EntityPreparer.stringOrNull(o.countryCode),
 			EntityPreparer.string(o.owner),
 			EntityPreparer.string(o.url),
-			EntityPreparer.string(o.name)
+			EntityPreparer.string(o.name),
+			EntityPreparer.date(o.dateCreated)
 		);
 	}
 
@@ -52,7 +56,8 @@ class EShop implements IEntity {
 			EntityPreparer.stringOrNull(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_COUNTRY_CODE]),
 			EntityPreparer.string(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_OWNER]),
 			EntityPreparer.string(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_URL]),
-			EntityPreparer.string(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_NAME])
+			EntityPreparer.string(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_NAME]),
+			EntityPreparer.date(r[EShop.TABLE_NAME + '.' + EShop.COLUMN_DATE_CREATED])
 		);
 	}
 }

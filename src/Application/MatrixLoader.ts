@@ -37,4 +37,18 @@ class MatrixLoader {
 			});
 		});
 	}
+
+	getMaxDateValid(callback: (e: Error, maxDateValid?: Date) => void) {
+		this.model.findOne({}).sort({ 'dateValid': -1 }).exec((e, object: any) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			if (!object) {
+				callback(null, null);
+				return;
+			}
+			callback(null, object.dateValid);
+		});
+	}
 }

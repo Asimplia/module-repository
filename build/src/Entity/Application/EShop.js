@@ -4,10 +4,12 @@ var ServiceConnection = require('./ServiceConnection');
 var EntityPreparer = require('../EntityPreparer');
 
 var EShop = (function () {
-    function EShop(id, name, serviceConnectionList) {
+    function EShop(id, name, serviceConnectionList, url, dateCreated) {
         this.id = id;
         this.name = name;
         this.serviceConnectionList = serviceConnectionList;
+        this.url = url;
+        this.dateCreated = dateCreated;
     }
     Object.defineProperty(EShop.prototype, "Id", {
         get: function () {
@@ -32,12 +34,14 @@ var EShop = (function () {
         return {
             id: e.id,
             name: e.name,
-            serviceConnections: e.serviceConnectionList.toArray(ServiceConnection.toObject)
+            serviceConnections: e.serviceConnectionList.toArray(ServiceConnection.toObject),
+            url: e.url,
+            dateCreated: e.dateCreated
         };
     };
 
     EShop.fromObject = function (o) {
-        return new EShop(EntityPreparer.intOrNull(o.id), EntityPreparer.string(o.name), new List(o.serviceConnections, ServiceConnection.fromObject));
+        return new EShop(EntityPreparer.intOrNull(o.id), EntityPreparer.string(o.name), new List(o.serviceConnections, ServiceConnection.fromObject), EntityPreparer.stringOrNull(o.url), EntityPreparer.date(o.dateCreated));
     };
 
     EShop.prototype.addServiceConnection = function (serviceType, info) {

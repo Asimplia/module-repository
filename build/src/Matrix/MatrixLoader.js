@@ -111,10 +111,16 @@ var MatrixLoader = (function () {
         });
     };
 
-    MatrixLoader.prototype.getListByNotInIds = function (ids, callback) {
+    MatrixLoader.prototype.getListValidFrom = function (validFrom, callback) {
         var _this = this;
-        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + (ids.length ? ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_MATRIX_ID + ' NOT IN (' + ids.join(', ') + ') ' : '');
-        this.connection.query(sql, [], function (e, result) {
+        var where = ['TRUE'];
+        var parameters = [];
+        if (validFrom) {
+            where.push(Matrix.TABLE_NAME + '.' + Matrix.COLUMN_DATE_VALID + ' > $1::timestamp');
+            parameters.push(validFrom);
+        }
+        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + where.join(' AND ');
+        this.connection.query(sql, parameters, function (e, result) {
             _this.createListByResult(e, result, callback);
         });
     };

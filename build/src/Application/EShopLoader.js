@@ -29,6 +29,20 @@ var EShopLoader = (function () {
             callback(e, count);
         });
     };
+
+    EShopLoader.prototype.getMaxDateCreated = function (callback) {
+        this.model.findOne({}).sort({ 'dateCreated': -1 }).exec(function (e, object) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            if (!object) {
+                callback(null, null);
+                return;
+            }
+            callback(null, object.dateCreated);
+        });
+    };
     return EShopLoader;
 })();
 module.exports = EShopLoader;
