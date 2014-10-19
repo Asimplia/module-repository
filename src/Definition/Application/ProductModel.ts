@@ -7,6 +7,7 @@ import Schema = mongoose.Schema;
 export = ProductModel;
 var Definition = {
 	id: Number,
+	eShopId: Number,
 	name: String,
 	vatNumber: String,
 	dateCreated: Date

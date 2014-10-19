@@ -1,4 +1,5 @@
 var Customer = require('../Entity/Application/Customer');
+var List = require('../Entity/List');
 
 var CustomerModel = require('../Definition/Application/CustomerModel');
 
@@ -27,6 +28,16 @@ var CustomerLoader = (function () {
                 return;
             }
             callback(e, count);
+        });
+    };
+
+    CustomerLoader.prototype.searchList = function (eShopId, query, filter, callback) {
+        this.model.find({ "eShopId": eShopId, "lastname": { $regex: query, $options: 'i' } }).limit(filter.limit).skip(filter.offset).exec(function (e, objects) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(null, new List(objects, Customer.fromObject));
         });
     };
 

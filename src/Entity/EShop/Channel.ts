@@ -16,6 +16,7 @@ class Channel implements IEntity {
 
 	get Id(): number { return this.id; }
 	get EShopId(): number { return this.eShopId; }
+	get Name(): string { return this.name; }
 
 	constructor(
 		private id: number,

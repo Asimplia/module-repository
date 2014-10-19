@@ -3,6 +3,7 @@
 
 import mongoose = require('mongoose');
 import Product = require('../Entity/Application/Product');
+import List = require('../Entity/List');
 import AuthTypeEnum = require('../Entity/Application/AuthTypeEnum');
 import ProductModel = require('../Definition/Application/ProductModel');
 
@@ -36,6 +37,19 @@ class ProductLoader {
 				return;
 			}
 			callback(e, count);
+		});
+	}
+
+	searchList(eShopId: number, query: string, filter: { limit?: number; offset?: number }, callback: (e: Error, productList?: List<Product>) => void) {
+		this.model.find({ "eShopId": eShopId, "name": { $regex: query, $options: 'i' } })
+		.limit(filter.limit)
+		.skip(filter.offset)
+		.exec((e: Error, objects: any[]) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, new List<Product>(objects, Product.fromObject));
 		});
 	}
 

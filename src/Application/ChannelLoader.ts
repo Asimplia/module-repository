@@ -3,6 +3,7 @@
 
 import mongoose = require('mongoose');
 import Channel = require('../Entity/Application/Channel');
+import List = require('../Entity/List');
 import AuthTypeEnum = require('../Entity/Application/AuthTypeEnum');
 import ChannelModel = require('../Definition/Application/ChannelModel');
 
@@ -36,6 +37,19 @@ class ChannelLoader {
 				return;
 			}
 			callback(e, count);
+		});
+	}
+
+	searchList(eShopId: number, query: string, filter: { limit?: number; offset?: number }, callback: (e: Error, channelList?: List<Channel>) => void) {
+		this.model.find({ "eShopId": eShopId, "name": { $regex: query, $options: 'i' } })
+		.limit(filter.limit)
+		.skip(filter.offset)
+		.exec((e: Error, objects: any[]) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, new List<Channel>(objects, Channel.fromObject));
 		});
 	}
 

@@ -18,11 +18,12 @@ class Customer implements IEntity {
 
 	get Id(): number { return this.id; }
 	get EShopId(): number { return this.eShopId; }
+	get Name(): string { return this.firstname + ' ' + this.lastname; }
 
 	constructor(
 		private id: number,
 		private eShopId: number,
-		private firtname: string,
+		private firstname: string,
 		private lastname: string,
 		private email: string,
 		private gender: string,
@@ -49,7 +50,7 @@ class Customer implements IEntity {
 		return {
 			id: entity.id,
 			eShopId: entity.eShopId,
-			firstname: entity.firtname,
+			firstname: entity.firstname,
 			lastname: entity.lastname,
 			email: entity.email,
 			gender: entity.gender,
@@ -67,7 +68,7 @@ class Customer implements IEntity {
 		return new Customer(
 			EntityPreparer.int(object.id),
 			EntityPreparer.int(object.eShopId),
-			EntityPreparer.stringOrNull(object.firtname),
+			EntityPreparer.stringOrNull(object.firstname),
 			EntityPreparer.stringOrNull(object.lastname),
 			EntityPreparer.stringOrNull(object.email),
 			EntityPreparer.stringOrNull(object.gender),

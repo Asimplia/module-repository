@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var Definition = {
     id: Number,
+    eShopId: Number,
     name: String,
     vatNumber: String,
     dateCreated: Date

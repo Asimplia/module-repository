@@ -3,6 +3,7 @@
 
 import mongoose = require('mongoose');
 import Category = require('../Entity/Application/Category');
+import List = require('../Entity/List');
 import AuthTypeEnum = require('../Entity/Application/AuthTypeEnum');
 import CategoryModel = require('../Definition/Application/CategoryModel');
 
@@ -36,6 +37,19 @@ class CategoryLoader {
 				return;
 			}
 			callback(e, count);
+		});
+	}
+
+	searchList(eShopId: number, query: string, filter: { limit?: number; offset?: number }, callback: (e: Error, categoryList?: List<Category>) => void) {
+		this.model.find({ "eShopId": eShopId, "name": { $regex: query, $options: 'i' } })
+		.limit(filter.limit)
+		.skip(filter.offset)
+		.exec((e: Error, objects: any[]) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, new List<Category>(objects, Category.fromObject));
 		});
 	}
 

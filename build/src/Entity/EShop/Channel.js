@@ -24,6 +24,13 @@ var Channel = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Channel.prototype, "Name", {
+        get: function () {
+            return this.name;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     Channel.fromRow = function (r) {
         return new Channel(EntityPreparer.int(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_CHANNEL_ID]), EntityPreparer.int(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_E_SHOP_ID]), EntityPreparer.int(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_CUSTOMER_ID]), EntityPreparer.string(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_NAME]), EntityPreparer.boolean(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_PAID_CHANNEL]), EntityPreparer.boolean(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_REFFERAL_ORGANIC]), EntityPreparer.date(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_DATE_CREATED]));

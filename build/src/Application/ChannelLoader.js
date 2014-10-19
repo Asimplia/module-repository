@@ -1,4 +1,5 @@
 var Channel = require('../Entity/Application/Channel');
+var List = require('../Entity/List');
 
 var ChannelModel = require('../Definition/Application/ChannelModel');
 
@@ -27,6 +28,16 @@ var ChannelLoader = (function () {
                 return;
             }
             callback(e, count);
+        });
+    };
+
+    ChannelLoader.prototype.searchList = function (eShopId, query, filter, callback) {
+        this.model.find({ "eShopId": eShopId, "name": { $regex: query, $options: 'i' } }).limit(filter.limit).skip(filter.offset).exec(function (e, objects) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(null, new List(objects, Channel.fromObject));
         });
     };
 

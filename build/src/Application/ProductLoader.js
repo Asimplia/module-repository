@@ -1,4 +1,5 @@
 var Product = require('../Entity/Application/Product');
+var List = require('../Entity/List');
 
 var ProductModel = require('../Definition/Application/ProductModel');
 
@@ -27,6 +28,16 @@ var ProductLoader = (function () {
                 return;
             }
             callback(e, count);
+        });
+    };
+
+    ProductLoader.prototype.searchList = function (eShopId, query, filter, callback) {
+        this.model.find({ "eShopId": eShopId, "name": { $regex: query, $options: 'i' } }).limit(filter.limit).skip(filter.offset).exec(function (e, objects) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(null, new List(objects, Product.fromObject));
         });
     };
 

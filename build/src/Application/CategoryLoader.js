@@ -1,4 +1,5 @@
 var Category = require('../Entity/Application/Category');
+var List = require('../Entity/List');
 
 var CategoryModel = require('../Definition/Application/CategoryModel');
 
@@ -27,6 +28,16 @@ var CategoryLoader = (function () {
                 return;
             }
             callback(e, count);
+        });
+    };
+
+    CategoryLoader.prototype.searchList = function (eShopId, query, filter, callback) {
+        this.model.find({ "eShopId": eShopId, "name": { $regex: query, $options: 'i' } }).limit(filter.limit).skip(filter.offset).exec(function (e, objects) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(null, new List(objects, Category.fromObject));
         });
     };
 
