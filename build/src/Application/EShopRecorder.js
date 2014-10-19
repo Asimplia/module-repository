@@ -7,11 +7,13 @@ var __extends = this.__extends || function (d, b) {
 var AbstractRecorder = require('../AbstractRecorder');
 var EShop = require('../Entity/Application/EShop');
 
+var EShopModel = require('../Definition/Application/EShopModel');
+
 var EShopRecorder = (function (_super) {
     __extends(EShopRecorder, _super);
     function EShopRecorder() {
         _super.call(this);
-        this.model = require('./EShopModel');
+        this.model = EShopModel;
     }
     EShopRecorder.prototype.insertOrUpdateList = function (eShopList, callback) {
         var _this = this;

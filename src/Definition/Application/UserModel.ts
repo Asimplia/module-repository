@@ -1,6 +1,11 @@
 
-export = User;
-var User = {
+/// <reference path="../../typings/mongoose/mongoose.d.ts" />
+
+import mongoose = require('mongoose');
+import Schema = mongoose.Schema;
+
+export = UserModel;
+var Definition = {
 	id: Number,
 	firstName: String,
 	lastName: String,
@@ -22,3 +27,5 @@ var User = {
 	phoneNumber: String,
 	activeLanguage: String
 };
+var schema = new Schema(Definition);
+var UserModel = mongoose.model('User', schema);

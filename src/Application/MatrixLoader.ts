@@ -4,7 +4,7 @@
 import mongoose = require('mongoose');
 import Matrix = require('../Entity/Application/Matrix');
 import AuthTypeEnum = require('../Entity/Application/AuthTypeEnum');
-import MatrixModel = require('./MatrixModel');
+import MatrixModel = require('../Definition/Application/MatrixModel');
 import List = require('../Entity/List');
 
 export = MatrixLoader;

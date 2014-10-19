@@ -7,11 +7,13 @@ var __extends = this.__extends || function (d, b) {
 var AbstractRecorder = require('../AbstractRecorder');
 var User = require('../Entity/Application/User');
 
+var UserModel = require('../Definition/Application/UserModel');
+
 var UserRecorder = (function (_super) {
     __extends(UserRecorder, _super);
     function UserRecorder() {
         _super.call(this);
-        this.model = require('./UserModel');
+        this.model = UserModel;
     }
     UserRecorder.prototype.insertOrUpdate = function (user, callback) {
         var _this = this;

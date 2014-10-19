@@ -7,7 +7,7 @@ var __extends = this.__extends || function (d, b) {
 var AbstractRecorder = require('../AbstractRecorder');
 var Matrix = require('../Entity/Application/Matrix');
 
-var MatrixModel = require('./MatrixModel');
+var MatrixModel = require('../Definition/Application/MatrixModel');
 
 var MatrixRecorder = (function (_super) {
     __extends(MatrixRecorder, _super);

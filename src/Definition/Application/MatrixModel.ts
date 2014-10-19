@@ -1,6 +1,11 @@
 
-export = Matrix;
-var Matrix = {
+/// <reference path="../../typings/mongoose/mongoose.d.ts" />
+
+import mongoose = require('mongoose');
+import Schema = mongoose.Schema;
+
+export = MatrixModel;
+var Definition = {
 	id: Number,
 	eShopId: Number,
 	section: String,
@@ -25,3 +30,5 @@ var Matrix = {
 	channelId: Number,
 	categoryId: Number
 };
+var schema = new Schema(Definition);
+var MatrixModel = mongoose.model('Matrix', schema);

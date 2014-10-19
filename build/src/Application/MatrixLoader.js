@@ -1,6 +1,6 @@
 var Matrix = require('../Entity/Application/Matrix');
 
-var MatrixModel = require('./MatrixModel');
+var MatrixModel = require('../Definition/Application/MatrixModel');
 var List = require('../Entity/List');
 
 var MatrixLoader = (function () {

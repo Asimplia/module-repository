@@ -3,9 +3,18 @@
 
 import mongoose = require('mongoose');
 import Schema = mongoose.Schema;
-import Definition = require('../Definition/Application/EShop');
 
 export = EShopModel;
-
+var Definition = {
+	id: Number,
+	name: String,
+	serviceConnections: [{
+		serviceType: String,
+		dateCreated: Date,
+		info: Object
+	}],
+	url: String,
+	dateCreated: Date
+};
 var schema = new Schema(Definition);
 var EShopModel = mongoose.model('EShop', schema);

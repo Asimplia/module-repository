@@ -5,6 +5,7 @@ import mongoose = require('mongoose');
 import AbstractRecorder = require('../AbstractRecorder');
 import EShop = require('../Entity/Application/EShop');
 import List = require('../Entity/List');
+import EShopModel = require('../Definition/Application/EShopModel');
 
 export = EShopRecorder;
 class EShopRecorder extends AbstractRecorder {
@@ -13,7 +14,7 @@ class EShopRecorder extends AbstractRecorder {
 
 	constructor() {
 		super();
-		this.model = require('./EShopModel');
+		this.model = EShopModel;
 	}
 
 	insertOrUpdateList(eShopList: List<EShop>, callback: (e: Error, eShopList?: List<EShop>) => void) {

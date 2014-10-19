@@ -4,7 +4,7 @@
 import mongoose = require('mongoose');
 import User = require('../Entity/Application/User');
 import AuthTypeEnum = require('../Entity/Application/AuthTypeEnum');
-import UserModel = require('./UserModel');
+import UserModel = require('../Definition/Application/UserModel');
 
 export = UserLoader;
 class UserLoader {

@@ -4,7 +4,7 @@
 import mongoose = require('mongoose');
 import EShop = require('../Entity/Application/EShop');
 import AuthTypeEnum = require('../Entity/Application/AuthTypeEnum');
-import EShopModel = require('./EShopModel');
+import EShopModel = require('../Definition/Application/EShopModel');
 
 export = EShopLoader;
 class EShopLoader {

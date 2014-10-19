@@ -5,7 +5,7 @@ import mongoose = require('mongoose');
 import AbstractRecorder = require('../AbstractRecorder');
 import Matrix = require('../Entity/Application/Matrix');
 import List = require('../Entity/List');
-import MatrixModel = require('./MatrixModel')
+import MatrixModel = require('../Definition/Application/MatrixModel');
 
 export = MatrixRecorder;
 class MatrixRecorder extends AbstractRecorder {

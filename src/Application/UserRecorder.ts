@@ -5,6 +5,7 @@ import mongoose = require('mongoose');
 import AbstractRecorder = require('../AbstractRecorder');
 import User = require('../Entity/Application/User');
 import AuthTypeEnum = require('../Entity/Application/AuthTypeEnum');
+import UserModel = require('../Definition/Application/UserModel');
 
 export = UserRecorder;
 class UserRecorder extends AbstractRecorder {
@@ -13,7 +14,7 @@ class UserRecorder extends AbstractRecorder {
 
 	constructor() {
 		super();
-		this.model = require('./UserModel');
+		this.model = UserModel;
 	}
 
 	insertOrUpdate(user: User, callback: (e: Error, user?: User) => void) {

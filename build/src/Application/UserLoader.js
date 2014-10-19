@@ -1,6 +1,6 @@
 var User = require('../Entity/Application/User');
 var AuthTypeEnum = require('../Entity/Application/AuthTypeEnum');
-var UserModel = require('./UserModel');
+var UserModel = require('../Definition/Application/UserModel');
 
 var UserLoader = (function () {
     function UserLoader() {

@@ -1,6 +1,6 @@
 var EShop = require('../Entity/Application/EShop');
 
-var EShopModel = require('./EShopModel');
+var EShopModel = require('../Definition/Application/EShopModel');
 
 var EShopLoader = (function () {
     function EShopLoader() {
