@@ -6,7 +6,7 @@ var ColumnEnum = require('../Matrix/ColumnEnum');
 var ColumnFactory = require('../Matrix/ColumnFactory');
 
 var SignalThreshold = (function () {
-    function SignalThreshold(section, name, column, thresholdValueQ1, thresholdValueQ2, thresholdValueQ3, thresholdValueQ4, priorityQ1, priorityQ2, priorityQ3, priorityQ4, descriptionQ1, descriptionQ2, descriptionQ3, descriptionQ4) {
+    function SignalThreshold(section, name, column, thresholdValueQ1, thresholdValueQ2, thresholdValueQ3, thresholdValueQ4, priorityQ1, priorityQ2, priorityQ3, priorityQ4, descriptionQ1, descriptionQ2, descriptionQ3, descriptionQ4, dateValid) {
         this.section = section;
         this.name = name;
         this.column = column;
@@ -22,6 +22,7 @@ var SignalThreshold = (function () {
         this.descriptionQ2 = descriptionQ2;
         this.descriptionQ3 = descriptionQ3;
         this.descriptionQ4 = descriptionQ4;
+        this.dateValid = dateValid;
     }
     Object.defineProperty(SignalThreshold.prototype, "Section", {
         get: function () {
@@ -39,7 +40,7 @@ var SignalThreshold = (function () {
     });
 
     SignalThreshold.fromObject = function (o) {
-        return new SignalThreshold(SectionFactory.createSectionEnum(o.section), EntityPreparer.string(o.name), ColumnFactory.createColumnEnum(o.column), EntityPreparer.float(o.thresholdValue.q1), EntityPreparer.float(o.thresholdValue.q2), EntityPreparer.float(o.thresholdValue.q3), EntityPreparer.float(o.thresholdValue.q4), EntityPreparer.float(o.priority.q1), EntityPreparer.float(o.priority.q2), EntityPreparer.float(o.priority.q3), EntityPreparer.float(o.priority.q4), EntityPreparer.stringOrNull(o.description.q1), EntityPreparer.stringOrNull(o.description.q2), EntityPreparer.stringOrNull(o.description.q3), EntityPreparer.stringOrNull(o.description.q4));
+        return new SignalThreshold(SectionFactory.createSectionEnum(o.section), EntityPreparer.stringOrNull(o.name), ColumnFactory.createColumnEnum(o.column), EntityPreparer.float(o.thresholdValue.q1), EntityPreparer.float(o.thresholdValue.q2), EntityPreparer.float(o.thresholdValue.q3), EntityPreparer.float(o.thresholdValue.q4), EntityPreparer.float(o.priority.q1), EntityPreparer.float(o.priority.q2), EntityPreparer.float(o.priority.q3), EntityPreparer.float(o.priority.q4), EntityPreparer.stringOrNull(o.description.q1), EntityPreparer.stringOrNull(o.description.q2), EntityPreparer.stringOrNull(o.description.q3), EntityPreparer.stringOrNull(o.description.q4), EntityPreparer.date(o.dateValid));
     };
 
     SignalThreshold.prototype.toObject = function () {
@@ -68,7 +69,8 @@ var SignalThreshold = (function () {
                 q2: e.descriptionQ2,
                 q3: e.descriptionQ3,
                 q4: e.descriptionQ4
-            }
+            },
+            dateValid: e.dateValid
         };
     };
 

@@ -3,9 +3,13 @@
 
 import mongoose = require('mongoose');
 import Schema = mongoose.Schema;
-import Definition = require('../Definition/Application/Company');
 
-export = CompanyModel;
-
+export = ProductModel;
+var Definition = {
+	id: Number,
+	name: String,
+	vatNumber: String,
+	dateCreated: Date
+};
 var schema = new Schema(Definition);
-var CompanyModel = mongoose.model('Company', schema);
+var ProductModel = mongoose.model('Product', schema);

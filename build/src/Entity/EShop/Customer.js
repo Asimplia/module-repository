@@ -41,6 +41,10 @@ var Customer = (function () {
     Customer.prototype.toObject = function () {
         return Customer.toObject(this);
     };
+
+    Customer.fromObject = function (object) {
+        return new Customer(EntityPreparer.int(object.id), EntityPreparer.int(object.eShopId), EntityPreparer.stringOrNull(object.firtname), EntityPreparer.stringOrNull(object.lastname), EntityPreparer.stringOrNull(object.email), EntityPreparer.stringOrNull(object.gender), EntityPreparer.dateOrNull(object.birthday), EntityPreparer.boolean(object.anonymous), EntityPreparer.dateOrNull(object.dateCreated));
+    };
     Customer.TABLE_NAME = 'warehouse.customer';
     Customer.COLUMN_CUSTOMER_ID = 'customerid';
     Customer.COLUMN_E_SHOP_ID = 'eshopid';

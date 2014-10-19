@@ -17,6 +17,20 @@ var LoadLogLoader = (function () {
         });
     };
 
+    LoadLogLoader.prototype.getListLoadedFrom = function (loadedDateFrom, callback) {
+        var _this = this;
+        var where = ['TRUE'];
+        var parameters = [];
+        if (loadedDateFrom) {
+            where.push(LoadLog.COLUMN_DATELOADED + ' > $1::timestamp');
+            parameters.push(loadedDateFrom);
+        }
+        var sql = 'SELECT ' + EntityPreparer.getColumnsAsPrefixedAlias(LoadLog).join(', ') + ' ' + ' FROM ' + LoadLog.TABLE_NAME + ' ' + ' WHERE ' + where.join(' AND ');
+        this.connection.query(sql, parameters, function (e, result) {
+            _this.createListByResult(e, result, callback);
+        });
+    };
+
     LoadLogLoader.prototype.createListByResult = function (e, result, callback) {
         if (e) {
             console.log(e);

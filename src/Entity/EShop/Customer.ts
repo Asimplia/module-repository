@@ -62,4 +62,18 @@ class Customer implements IEntity {
 		return Customer.toObject(this);
 	}
 
+	static fromObject(object: any) {
+		return new Customer(
+			EntityPreparer.int(object.id),
+			EntityPreparer.int(object.eShopId),
+			EntityPreparer.stringOrNull(object.firtname),
+			EntityPreparer.stringOrNull(object.lastname),
+			EntityPreparer.stringOrNull(object.email),
+			EntityPreparer.stringOrNull(object.gender),
+			EntityPreparer.dateOrNull(object.birthday),
+			EntityPreparer.boolean(object.anonymous),
+			EntityPreparer.dateOrNull(object.dateCreated)
+		);
+	}
+
 }

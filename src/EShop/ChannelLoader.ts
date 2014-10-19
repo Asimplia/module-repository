@@ -31,6 +31,21 @@ class ChannelLoader {
 		});
 	}
 
+	getListCreatedFrom(createdDateFrom: Date, callback: (e: Error, eShopList: List<Channel>) => void) {
+		var where = ['TRUE'];
+		var parameters = [];
+		if (createdDateFrom) {
+			where.push(Channel.COLUMN_DATE_CREATED+' > $1::timestamp');
+			parameters.push(createdDateFrom);
+		}
+		var sql = 'SELECT '+EntityPreparer.getColumnsAsPrefixedAlias(Channel).join(', ')+' '
+			+' FROM '+Channel.TABLE_NAME+' '
+			+' WHERE '+where.join(' AND ');
+		this.connection.query(sql, parameters, (e, result) => {
+			this.createListByResult(e, result, callback);
+		});
+	}
+
 	private createListByResult(e: Error, result: any, callback: (e: Error, recordList?: List<Channel>) => void) {
 		if (e) {
 			console.log(e);

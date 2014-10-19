@@ -3,9 +3,12 @@
 
 import mongoose = require('mongoose');
 import Schema = mongoose.Schema;
-import Definition = require('../Definition/Matrix/SignalThreshold');
 
-export = SignalThreshold;
-
+export = MatrixLoadModel;
+var Definition = {
+	id: Number,
+	eShopId: Number,
+	dateLoaded: Date
+};
 var schema = new Schema(Definition);
-var SignalThreshold = mongoose.model('SignalThreshold', schema);
+var MatrixLoadModel = mongoose.model('MatrixLoad', schema);

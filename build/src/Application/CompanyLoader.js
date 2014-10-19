@@ -1,6 +1,6 @@
 var Company = require('../Entity/Application/Company');
 
-var CompanyModel = require('./CompanyModel');
+var CompanyModel = require('../Definition/Application/CompanyModel');
 
 var CompanyLoader = (function () {
     function CompanyLoader() {
@@ -27,6 +27,20 @@ var CompanyLoader = (function () {
                 return;
             }
             callback(e, count);
+        });
+    };
+
+    CompanyLoader.prototype.getMaxDateCreated = function (callback) {
+        this.model.findOne({}).sort({ 'dateCreated': -1 }).exec(function (e, object) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            if (!object) {
+                callback(null, null);
+                return;
+            }
+            callback(null, object.dateCreated);
         });
     };
     return CompanyLoader;

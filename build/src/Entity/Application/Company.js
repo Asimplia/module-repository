@@ -1,48 +1,16 @@
-var EntityPreparer = require('../EntityPreparer');
+var __extends = this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var EShopCompany = require('../EShop/Company');
 
-var Company = (function () {
-    function Company(id, name, vatNumber) {
-        this.id = id;
-        this.name = name;
-        this.vatNumber = vatNumber;
+var Company = (function (_super) {
+    __extends(Company, _super);
+    function Company() {
+        _super.apply(this, arguments);
     }
-    Object.defineProperty(Company.prototype, "Id", {
-        get: function () {
-            return this.id;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Company.prototype, "Name", {
-        get: function () {
-            return this.name;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Company.prototype, "VATNumber", {
-        get: function () {
-            return this.vatNumber;
-        },
-        enumerable: true,
-        configurable: true
-    });
-
-    Company.prototype.toObject = function () {
-        return Company.toObject(this);
-    };
-
-    Company.toObject = function (e) {
-        return {
-            id: e.id,
-            name: e.name,
-            vatNumber: e.vatNumber
-        };
-    };
-
-    Company.fromObject = function (o) {
-        return new Company(EntityPreparer.intOrNull(o.id), EntityPreparer.string(o.name), EntityPreparer.stringOrNull(o.vatNumber));
-    };
     return Company;
-})();
+})(EShopCompany);
 module.exports = Company;

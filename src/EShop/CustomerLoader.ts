@@ -31,6 +31,21 @@ class CustomerLoader {
 		});
 	}
 
+	getListCreatedFrom(createdDateFrom: Date, callback: (e: Error, customerList: List<Customer>) => void) {
+		var where = ['TRUE'];
+		var parameters = [];
+		if (createdDateFrom) {
+			where.push(Customer.COLUMN_DATE_CREATED+' > $1::timestamp');
+			parameters.push(createdDateFrom);
+		}
+		var sql = 'SELECT '+EntityPreparer.getColumnsAsPrefixedAlias(Customer).join(', ')+' '
+			+' FROM '+Customer.TABLE_NAME+' '
+			+' WHERE '+where.join(' AND ');
+		this.connection.query(sql, parameters, (e, result) => {
+			this.createListByResult(e, result, callback);
+		});
+	}
+
 	private createListByResult(e: Error, result: any, callback: (e: Error, recordList?: List<Customer>) => void) {
 		if (e) {
 			console.log(e);

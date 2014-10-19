@@ -12,6 +12,7 @@ class Channel implements IEntity {
 	public static COLUMN_NAME = 'channelname';
 	public static COLUMN_PAID_CHANNEL = 'paidchannel';
 	public static COLUMN_REFFERAL_ORGANIC = 'flagrefferalorganic';
+	public static COLUMN_DATE_CREATED = 'datecreated';
 
 	get Id(): number { return this.id; }
 
@@ -21,7 +22,8 @@ class Channel implements IEntity {
 		private customerId: number,
 		private name: string,
 		private paidChannel: boolean,
-		private refferalOrganic: boolean
+		private refferalOrganic: boolean,
+		private dateCreated: Date
 	) { }
 
 	static fromRow(r: any) {
@@ -31,7 +33,8 @@ class Channel implements IEntity {
 			EntityPreparer.int(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_CUSTOMER_ID]),
 			EntityPreparer.string(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_NAME]),
 			EntityPreparer.boolean(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_PAID_CHANNEL]),
-			EntityPreparer.boolean(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_REFFERAL_ORGANIC])
+			EntityPreparer.boolean(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_REFFERAL_ORGANIC]),
+			EntityPreparer.date(r[Channel.TABLE_NAME + '.' + Channel.COLUMN_DATE_CREATED])
 		);
 	}
 
@@ -42,12 +45,25 @@ class Channel implements IEntity {
 			customerId: entity.customerId,
 			name: entity.name,
 			paidChannel: entity.paidChannel,
-			refferalOrganic: entity.refferalOrganic
+			refferalOrganic: entity.refferalOrganic,
+			dateCreated: entity.dateCreated
 		};
 	}
 
 	toObject() {
 		return Channel.toObject(this);
+	}
+
+	static fromObject(object: any) {
+		return new Channel(
+			EntityPreparer.int(object.id),
+			EntityPreparer.int(object.eShopId),
+			EntityPreparer.int(object.customerId),
+			EntityPreparer.string(object.name),
+			EntityPreparer.boolean(object.paidChannel),
+			EntityPreparer.boolean(object.refferalOrganic),
+			EntityPreparer.date(object.dateCreated)
+		);
 	}
 
 }

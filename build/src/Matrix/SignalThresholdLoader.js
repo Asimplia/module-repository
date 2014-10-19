@@ -2,14 +2,14 @@
 var List = require('../Entity/List');
 var SectionEnum = require('../Entity/Section/SectionEnum');
 
-var SignalThresholdModel = require('./SignalThresholdModel');
+var SignalThresholdModel = require('../Definition/Matrix/SignalThresholdModel');
 
 var SignalThresholdLoader = (function () {
     function SignalThresholdLoader() {
-        this.SignalThresholdModel = SignalThresholdModel;
+        this.model = SignalThresholdModel;
     }
     SignalThresholdLoader.prototype.getByMatrixType = function (section, callback) {
-        this.SignalThresholdModel.findOne({ section: SectionEnum[section] }, function (e, signalThresholdObject) {
+        this.model.findOne({ section: SectionEnum[section] }, function (e, signalThresholdObject) {
             if (e) {
                 callback(e);
                 return;
@@ -24,13 +24,27 @@ var SignalThresholdLoader = (function () {
     };
 
     SignalThresholdLoader.prototype.getList = function (callback) {
-        this.SignalThresholdModel.find({}, null, { sort: 'section' }, function (e, thresholds) {
+        this.model.find({}, null, { sort: 'section' }, function (e, thresholds) {
             if (e) {
                 return callback(e);
             }
             var list = new List();
             list.pushArray(thresholds, SignalThreshold.fromObject);
             callback(null, list);
+        });
+    };
+
+    SignalThresholdLoader.prototype.getMaxDateValid = function (callback) {
+        this.model.findOne({}).sort({ 'dateValid': -1 }).exec(function (e, object) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            if (!object) {
+                callback(null, null);
+                return;
+            }
+            callback(null, object.dateValid);
         });
     };
     return SignalThresholdLoader;

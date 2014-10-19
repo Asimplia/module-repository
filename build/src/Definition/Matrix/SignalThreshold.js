@@ -1,4 +1,7 @@
-var SignalThreshold = {
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+var Definition = {
     section: String,
     name: String,
     column: String,
@@ -19,6 +22,9 @@ var SignalThreshold = {
         q2: String,
         q3: String,
         q4: String
-    }
+    },
+    dateValid: Date
 };
+var schema = new Schema(Definition);
+var SignalThreshold = mongoose.model('SignalThreshold', schema);
 module.exports = SignalThreshold;

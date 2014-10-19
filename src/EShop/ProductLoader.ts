@@ -31,6 +31,21 @@ class ProductLoader {
 		});
 	}
 
+	getListCreatedFrom(createdDateFrom: Date, callback: (e: Error, productList: List<Product>) => void) {
+		var where = ['TRUE'];
+		var parameters = [];
+		if (createdDateFrom) {
+			where.push(Product.COLUMN_DATE_CREATED+' > $1::timestamp');
+			parameters.push(createdDateFrom);
+		}
+		var sql = 'SELECT '+EntityPreparer.getColumnsAsPrefixedAlias(Product).join(', ')+' '
+			+' FROM '+Product.TABLE_NAME+' '
+			+' WHERE '+where.join(' AND ');
+		this.connection.query(sql, parameters, (e, result) => {
+			this.createListByResult(e, result, callback);
+		});
+	}
+
 	getById(eShopId: number, productId: number, callback: (e: Error, product?: Product) => void) {
 		var sql = 'SELECT '+EntityPreparer.getColumnsAsPrefixedAlias(Product).join(', ')+' '
 			+' FROM '+Product.TABLE_NAME+' '

@@ -29,13 +29,14 @@ class SignalThreshold implements IEntity {
 		private descriptionQ1: string,
 		private descriptionQ2: string,
 		private descriptionQ3: string,
-		private descriptionQ4: string
+		private descriptionQ4: string,
+		private dateValid: Date
 		) { }
 
 	static fromObject(o: any) {
 		return new SignalThreshold(
 			SectionFactory.createSectionEnum(o.section),
-			EntityPreparer.string(o.name),
+			EntityPreparer.stringOrNull(o.name),
 			ColumnFactory.createColumnEnum(o.column),
 			EntityPreparer.float(o.thresholdValue.q1),
 			EntityPreparer.float(o.thresholdValue.q2),
@@ -48,7 +49,8 @@ class SignalThreshold implements IEntity {
 			EntityPreparer.stringOrNull(o.description.q1),
 			EntityPreparer.stringOrNull(o.description.q2),
 			EntityPreparer.stringOrNull(o.description.q3),
-			EntityPreparer.stringOrNull(o.description.q4)
+			EntityPreparer.stringOrNull(o.description.q4),
+			EntityPreparer.date(o.dateValid)
 		);
 	}
 
@@ -78,7 +80,8 @@ class SignalThreshold implements IEntity {
 				q2: e.descriptionQ2,
 				q3: e.descriptionQ3,
 				q4: e.descriptionQ4
-			}
+			},
+			dateValid: e.dateValid
 		};
 	}
 

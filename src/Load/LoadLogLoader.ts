@@ -25,6 +25,21 @@ class LoadLogLoader {
 			});
 	}
 
+	getListLoadedFrom(loadedDateFrom: Date, callback: (e: Error, loadLogList: List<LoadLog>) => void) {
+		var where = ['TRUE'];
+		var parameters = [];
+		if (loadedDateFrom) {
+			where.push(LoadLog.COLUMN_DATELOADED+' > $1::timestamp');
+			parameters.push(loadedDateFrom);
+		}
+		var sql = 'SELECT '+EntityPreparer.getColumnsAsPrefixedAlias(LoadLog).join(', ')+' '
+			+' FROM '+LoadLog.TABLE_NAME+' '
+			+' WHERE '+where.join(' AND ');
+		this.connection.query(sql, parameters, (e, result) => {
+			this.createListByResult(e, result, callback);
+		});
+	}
+
 	private createListByResult(e: Error, result: any, callback: (e: Error, list?: List<LoadLog>) => void) {
 		if (e) {
 			console.log(e);

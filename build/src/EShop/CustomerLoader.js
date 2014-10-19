@@ -19,6 +19,20 @@ var CustomerLoader = (function () {
         });
     };
 
+    CustomerLoader.prototype.getListCreatedFrom = function (createdDateFrom, callback) {
+        var _this = this;
+        var where = ['TRUE'];
+        var parameters = [];
+        if (createdDateFrom) {
+            where.push(Customer.COLUMN_DATE_CREATED + ' > $1::timestamp');
+            parameters.push(createdDateFrom);
+        }
+        var sql = 'SELECT ' + EntityPreparer.getColumnsAsPrefixedAlias(Customer).join(', ') + ' ' + ' FROM ' + Customer.TABLE_NAME + ' ' + ' WHERE ' + where.join(' AND ');
+        this.connection.query(sql, parameters, function (e, result) {
+            _this.createListByResult(e, result, callback);
+        });
+    };
+
     CustomerLoader.prototype.createListByResult = function (e, result, callback) {
         if (e) {
             console.log(e);

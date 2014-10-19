@@ -10,6 +10,7 @@ class Category implements IEntity {
 	public static COLUMN_E_SHOP_ID = 'eshopid';
 	public static COLUMN_PARENT_CATEGORY_ID = 'parentcategory';
 	public static COLUMN_NAME = 'categoryname';
+	public static COLUMN_DATE_CREATED = 'datecreated';
 
 	get Id(): number { return this.id; }
 
@@ -17,7 +18,8 @@ class Category implements IEntity {
 		private id: number,
 		private eShopId: number,
 		private parentCategoryId: number,
-		private name: string
+		private name: string,
+		private dateCreated: Date
 	) { }
 
 	static fromRow(r: any) {
@@ -25,7 +27,8 @@ class Category implements IEntity {
 			EntityPreparer.int(r[Category.TABLE_NAME + '.' + Category.COLUMN_CATEGORY_ID]),
 			EntityPreparer.int(r[Category.TABLE_NAME + '.' + Category.COLUMN_E_SHOP_ID]),
 			EntityPreparer.intOrNull(r[Category.TABLE_NAME + '.' + Category.COLUMN_PARENT_CATEGORY_ID]),
-			EntityPreparer.string(r[Category.TABLE_NAME + '.' + Category.COLUMN_NAME])
+			EntityPreparer.string(r[Category.TABLE_NAME + '.' + Category.COLUMN_NAME]),
+			EntityPreparer.date(r[Category.TABLE_NAME + '.' + Category.COLUMN_DATE_CREATED])
 		);
 	}
 
@@ -34,12 +37,23 @@ class Category implements IEntity {
 			id: entity.id,
 			eShopId: entity.eShopId,
 			parentCategoryId: entity.parentCategoryId,
-			name: entity.name
+			name: entity.name,
+			dateCreated: entity.dateCreated
 		};
 	}
 
 	toObject() {
 		return Category.toObject(this);
+	}
+
+	static fromObject(object: any) {
+		return new Category(
+			EntityPreparer.int(object.id),
+			EntityPreparer.int(object.eShopId),
+			EntityPreparer.intOrNull(object.productcategoryid),
+			EntityPreparer.string(object.name),
+			EntityPreparer.date(object.dateCreated)
+		);
 	}
 
 }
