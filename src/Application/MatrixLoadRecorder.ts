@@ -30,7 +30,7 @@ class MatrixLoadRecorder extends AbstractRecorder {
 	}
 
 	insertOrUpdate(matrixLoad: MatrixLoad, callback: (e: Error, matrixLoad?: MatrixLoad) => void) {
-		this.model.findOne({ id: matrixLoad.Id }, (e, doc: mongoose.Document) => {
+		this.model.findOne({ id: matrixLoad.Id, eShopId: matrixLoad.EShopId }, (e, doc: mongoose.Document) => {
 			if (e) {
 				callback(e);
 				return;

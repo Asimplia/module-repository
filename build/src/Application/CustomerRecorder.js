@@ -28,7 +28,7 @@ var CustomerRecorder = (function (_super) {
 
     CustomerRecorder.prototype.insertOrUpdate = function (customer, callback) {
         var _this = this;
-        this.model.findOne({ id: customer.Id }, function (e, doc) {
+        this.model.findOne({ id: customer.Id, eShopId: customer.EShopId }, function (e, doc) {
             if (e) {
                 callback(e);
                 return;

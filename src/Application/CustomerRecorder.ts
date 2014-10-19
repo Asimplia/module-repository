@@ -30,7 +30,7 @@ class CustomerRecorder extends AbstractRecorder {
 	}
 
 	insertOrUpdate(customer: Customer, callback: (e: Error, customer?: Customer) => void) {
-		this.model.findOne({ id: customer.Id }, (e, doc: mongoose.Document) => {
+		this.model.findOne({ id: customer.Id, eShopId: customer.EShopId }, (e, doc: mongoose.Document) => {
 			if (e) {
 				callback(e);
 				return;

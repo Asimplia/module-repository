@@ -15,8 +15,8 @@ class CategoryLoader {
 		this.model = CategoryModel;
 	}
 
-	getById(id: number, callback: (e: Error, category?: Category) => void) {
-		this.model.findOne({ "id": id }, (e, object: mongoose.Document) => {
+	getById(eShopId: number, id: number, callback: (e: Error, category?: Category) => void) {
+		this.model.findOne({ "id": id, "eShopId": eShopId }, (e, object: mongoose.Document) => {
 			if (e) {
 				callback(e);
 				return;
@@ -29,8 +29,8 @@ class CategoryLoader {
 		});
 	}
 
-	getCount(callback: (e: Error, count?: number) => void): void {
-		this.model.count({}, (e, count: number) => {
+	getCount(eShopId: number, callback: (e: Error, count?: number) => void): void {
+		this.model.count({ "eShopId": eShopId }, (e, count: number) => {
 			if (e) {
 				callback(e);
 				return;

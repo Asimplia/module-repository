@@ -28,7 +28,7 @@ var MatrixLoadRecorder = (function (_super) {
 
     MatrixLoadRecorder.prototype.insertOrUpdate = function (matrixLoad, callback) {
         var _this = this;
-        this.model.findOne({ id: matrixLoad.Id }, function (e, doc) {
+        this.model.findOne({ id: matrixLoad.Id, eShopId: matrixLoad.EShopId }, function (e, doc) {
             if (e) {
                 callback(e);
                 return;

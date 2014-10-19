@@ -19,6 +19,13 @@ var Customer = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Customer.prototype, "EShopId", {
+        get: function () {
+            return this.eShopId;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     Customer.fromRow = function (r) {
         return new Customer(EntityPreparer.int(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_CUSTOMER_ID]), EntityPreparer.int(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_E_SHOP_ID]), EntityPreparer.stringOrNull(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_FIRSTNAME]), EntityPreparer.stringOrNull(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_LASTNAME]), EntityPreparer.stringOrNull(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_EMAIL]), EntityPreparer.stringOrNull(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_GENDER]), EntityPreparer.dateOrNull(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_BIRTHDAY]), EntityPreparer.boolean(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_ANONYMOUS]), EntityPreparer.dateOrNull(r[Customer.TABLE_NAME + '.' + Customer.COLUMN_DATE_CREATED]));

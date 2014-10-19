@@ -30,7 +30,7 @@ class ChannelRecorder extends AbstractRecorder {
 	}
 
 	insertOrUpdate(channel: Channel, callback: (e: Error, channel?: Channel) => void) {
-		this.model.findOne({ id: channel.Id }, (e, doc: mongoose.Document) => {
+		this.model.findOne({ id: channel.Id, eShopId: channel.EShopId }, (e, doc: mongoose.Document) => {
 			if (e) {
 				callback(e);
 				return;

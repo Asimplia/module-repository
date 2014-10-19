@@ -17,6 +17,7 @@ class Customer implements IEntity {
 	public static COLUMN_DATE_CREATED = 'dateadded';
 
 	get Id(): number { return this.id; }
+	get EShopId(): number { return this.eShopId; }
 
 	constructor(
 		private id: number,

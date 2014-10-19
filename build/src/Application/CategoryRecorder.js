@@ -28,7 +28,7 @@ var CategoryRecorder = (function (_super) {
 
     CategoryRecorder.prototype.insertOrUpdate = function (category, callback) {
         var _this = this;
-        this.model.findOne({ id: category.Id }, function (e, doc) {
+        this.model.findOne({ id: category.Id, eShopId: category.EShopId }, function (e, doc) {
             if (e) {
                 callback(e);
                 return;

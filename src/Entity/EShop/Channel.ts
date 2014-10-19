@@ -15,6 +15,7 @@ class Channel implements IEntity {
 	public static COLUMN_DATE_CREATED = 'datecreated';
 
 	get Id(): number { return this.id; }
+	get EShopId(): number { return this.eShopId; }
 
 	constructor(
 		private id: number,

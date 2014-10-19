@@ -23,6 +23,13 @@ var Product = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Product.prototype, "EShopId", {
+        get: function () {
+            return this.eShopId;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     Product.fromRow = function (r) {
         return new Product(EntityPreparer.int(r[Product.TABLE_NAME + '.' + Product.COLUMN_PRODUCT_ID]), EntityPreparer.int(r[Product.TABLE_NAME + '.' + Product.COLUMN_E_SHOP_ID]), EntityPreparer.stringOrNull(r[Product.TABLE_NAME + '.' + Product.COLUMN_NAME]), EntityPreparer.float(r[Product.TABLE_NAME + '.' + Product.COLUMN_BASE_PRICE]), EntityPreparer.stringOrNull(r[Product.TABLE_NAME + '.' + Product.COLUMN_EAN]), EntityPreparer.date(r[Product.TABLE_NAME + '.' + Product.COLUMN_DATE_CREATED]));

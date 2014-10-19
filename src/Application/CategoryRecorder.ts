@@ -30,7 +30,7 @@ class CategoryRecorder extends AbstractRecorder {
 	}
 
 	insertOrUpdate(category: Category, callback: (e: Error, category?: Category) => void) {
-		this.model.findOne({ id: category.Id }, (e, doc: mongoose.Document) => {
+		this.model.findOne({ id: category.Id, eShopId: category.EShopId }, (e, doc: mongoose.Document) => {
 			if (e) {
 				callback(e);
 				return;

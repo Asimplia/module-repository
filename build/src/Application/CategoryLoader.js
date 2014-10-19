@@ -6,8 +6,8 @@ var CategoryLoader = (function () {
     function CategoryLoader() {
         this.model = CategoryModel;
     }
-    CategoryLoader.prototype.getById = function (id, callback) {
-        this.model.findOne({ "id": id }, function (e, object) {
+    CategoryLoader.prototype.getById = function (eShopId, id, callback) {
+        this.model.findOne({ "id": id, "eShopId": eShopId }, function (e, object) {
             if (e) {
                 callback(e);
                 return;
@@ -20,8 +20,8 @@ var CategoryLoader = (function () {
         });
     };
 
-    CategoryLoader.prototype.getCount = function (callback) {
-        this.model.count({}, function (e, count) {
+    CategoryLoader.prototype.getCount = function (eShopId, callback) {
+        this.model.count({ "eShopId": eShopId }, function (e, count) {
             if (e) {
                 callback(e);
                 return;

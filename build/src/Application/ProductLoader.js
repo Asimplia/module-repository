@@ -6,8 +6,8 @@ var ProductLoader = (function () {
     function ProductLoader() {
         this.model = ProductModel;
     }
-    ProductLoader.prototype.getById = function (id, callback) {
-        this.model.findOne({ "id": id }, function (e, object) {
+    ProductLoader.prototype.getById = function (eShopId, id, callback) {
+        this.model.findOne({ "id": id, "eShopId": eShopId }, function (e, object) {
             if (e) {
                 callback(e);
                 return;
@@ -20,8 +20,8 @@ var ProductLoader = (function () {
         });
     };
 
-    ProductLoader.prototype.getCount = function (callback) {
-        this.model.count({}, function (e, count) {
+    ProductLoader.prototype.getCount = function (eShopId, callback) {
+        this.model.count({ "eShopId": eShopId }, function (e, count) {
             if (e) {
                 callback(e);
                 return;

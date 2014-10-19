@@ -28,7 +28,7 @@ var ChannelRecorder = (function (_super) {
 
     ChannelRecorder.prototype.insertOrUpdate = function (channel, callback) {
         var _this = this;
-        this.model.findOne({ id: channel.Id }, function (e, doc) {
+        this.model.findOne({ id: channel.Id, eShopId: channel.EShopId }, function (e, doc) {
             if (e) {
                 callback(e);
                 return;

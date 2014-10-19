@@ -15,6 +15,13 @@ var Category = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Category.prototype, "EShopId", {
+        get: function () {
+            return this.eShopId;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     Category.fromRow = function (r) {
         return new Category(EntityPreparer.int(r[Category.TABLE_NAME + '.' + Category.COLUMN_CATEGORY_ID]), EntityPreparer.int(r[Category.TABLE_NAME + '.' + Category.COLUMN_E_SHOP_ID]), EntityPreparer.intOrNull(r[Category.TABLE_NAME + '.' + Category.COLUMN_PARENT_CATEGORY_ID]), EntityPreparer.string(r[Category.TABLE_NAME + '.' + Category.COLUMN_NAME]), EntityPreparer.date(r[Category.TABLE_NAME + '.' + Category.COLUMN_DATE_CREATED]));
