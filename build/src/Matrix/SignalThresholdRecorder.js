@@ -40,6 +40,32 @@ var SignalThresholdRecorder = (function (_super) {
             _this.update(thresholdDocument, SignalThreshold.fromObject, threshold, callback);
         });
     };
+
+    SignalThresholdRecorder.prototype.insertList = function (signalThresholdList, callback) {
+        var _this = this;
+        signalThresholdList.createEach().on('item', function (signalThreshold, next) {
+            _this.insert(signalThreshold, next);
+        }).on('error', function (e) {
+            callback(e);
+        }).on('end', function () {
+            callback(null, signalThresholdList);
+        });
+    };
+
+    SignalThresholdRecorder.prototype.insert = function (threshold, callback) {
+        var _this = this;
+        this.model.findOne({ section: SectionEnum[threshold.Section] }, function (e, thresholdDocument) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            if (thresholdDocument) {
+                callback(null, null);
+                return;
+            }
+            _this.update(thresholdDocument, SignalThreshold.fromObject, threshold, callback);
+        });
+    };
     return SignalThresholdRecorder;
 })(AbstractRecorder);
 module.exports = SignalThresholdRecorder;

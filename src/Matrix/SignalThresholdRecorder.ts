@@ -43,4 +43,30 @@ class SignalThresholdRecorder extends AbstractRecorder {
 		});
 	}
 
+	insertList(signalThresholdList: List<SignalThreshold>, callback: (e: Error, signalThresholdList?: List<SignalThreshold>) => void) {
+		signalThresholdList.createEach().on('item', (signalThreshold: SignalThreshold, next) => {
+			this.insert(signalThreshold, next);
+		})
+		.on('error', (e: Error) => {
+			callback(e);
+		})
+		.on('end', () => {
+			callback(null, signalThresholdList);
+		});
+	}
+
+	insert(threshold: SignalThreshold, callback: (e: Error, threshold?: SignalThreshold) => void): void {
+		this.model.findOne({ section: SectionEnum[threshold.Section] }, (e, thresholdDocument: mongoose.Document) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			if (thresholdDocument) {
+				callback(null, null);
+				return;
+			}
+			this.update(thresholdDocument, SignalThreshold.fromObject, threshold, callback);
+		});
+	}
+
 }
