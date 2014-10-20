@@ -129,7 +129,7 @@ class SignalLoader {
 			+EntityPreparer.getColumnsAsPrefixedAlias(Product).join(', ')+', '
 			+EntityPreparer.getColumnsAsPrefixedAlias(Customer).join(', ')+', '
 			+EntityPreparer.getColumnsAsPrefixedAlias(Channel).join(', ')+', '
-			+EntityPreparer.getColumnsAsPrefixedAlias(Category).join(', ')+' '
+			+EntityPreparer.getColumnsAsPrefixedAlias(Category).join(', ')+', '
 			+EntityPreparer.getColumnsAsPrefixedAlias(EShop).join(', ')+' ';
 	}
 
