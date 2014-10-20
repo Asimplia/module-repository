@@ -153,6 +153,48 @@ class SectionFactory {
 				return SectionEnum.MM19;
 			case SectionEnum[SectionEnum.MM20]:
 				return SectionEnum.MM20;
+			case SectionEnum[SectionEnum.E_SHOP]:
+				return SectionEnum.E_SHOP;
+			case SectionEnum[SectionEnum.MS1]:
+				return SectionEnum.MS1;
+			case SectionEnum[SectionEnum.MS2]:
+				return SectionEnum.MS2;
+			case SectionEnum[SectionEnum.MS3]:
+				return SectionEnum.MS3;
+			case SectionEnum[SectionEnum.MS4]:
+				return SectionEnum.MS4;
+			case SectionEnum[SectionEnum.MS5]:
+				return SectionEnum.MS5;
+			case SectionEnum[SectionEnum.MS6]:
+				return SectionEnum.MS6;
+			case SectionEnum[SectionEnum.MS7]:
+				return SectionEnum.MS7;
+			case SectionEnum[SectionEnum.MS8]:
+				return SectionEnum.MS8;
+			case SectionEnum[SectionEnum.MS9]:
+				return SectionEnum.MS9;
+			case SectionEnum[SectionEnum.MS10]:
+				return SectionEnum.MS10;
+			case SectionEnum[SectionEnum.MS11]:
+				return SectionEnum.MS11;
+			case SectionEnum[SectionEnum.MS12]:
+				return SectionEnum.MS12;
+			case SectionEnum[SectionEnum.MS13]:
+				return SectionEnum.MS13;
+			case SectionEnum[SectionEnum.MS14]:
+				return SectionEnum.MS14;
+			case SectionEnum[SectionEnum.MS15]:
+				return SectionEnum.MS15;
+			case SectionEnum[SectionEnum.MS16]:
+				return SectionEnum.MS16;
+			case SectionEnum[SectionEnum.MS17]:
+				return SectionEnum.MS17;
+			case SectionEnum[SectionEnum.MS18]:
+				return SectionEnum.MS18;
+			case SectionEnum[SectionEnum.MS19]:
+				return SectionEnum.MS19;
+			case SectionEnum[SectionEnum.MS20]:
+				return SectionEnum.MS20;
 		}
 		return SectionEnum.UNKNOWN;
 	}
@@ -259,6 +301,34 @@ class SectionFactory {
 		return false;
 	}
 
+	static isEShop(section: SectionEnum) {
+		switch (section) {
+			case SectionEnum.E_SHOP:
+			case SectionEnum.MS1:
+			case SectionEnum.MS2:
+			case SectionEnum.MS3:
+			case SectionEnum.MS4:
+			case SectionEnum.MS5:
+			case SectionEnum.MS6:
+			case SectionEnum.MS7:
+			case SectionEnum.MS8:
+			case SectionEnum.MS9:
+			case SectionEnum.MS10:
+			case SectionEnum.MS11:
+			case SectionEnum.MS12:
+			case SectionEnum.MS13:
+			case SectionEnum.MS14:
+			case SectionEnum.MS15:
+			case SectionEnum.MS16:
+			case SectionEnum.MS17:
+			case SectionEnum.MS18:
+			case SectionEnum.MS19:
+			case SectionEnum.MS20:
+				return true;
+		}
+		return false;
+	}
+
 	static getLabel(section: SectionEnum): LocalizedString {
 		switch (true) {
 			case SectionFactory.isProduct(section):
@@ -269,6 +339,8 @@ class SectionFactory {
 				return new LocalizedString({cs: 'Kanál', en: 'Channel'});
 			case SectionFactory.isCategory(section):
 				return new LocalizedString({cs: 'Kategorie', en: 'Category'});
+			case SectionFactory.isEShop(section):
+				return new LocalizedString({cs: 'e-shop', en: 'e-shop'});
 			default:
 				return null;
 		}
@@ -286,6 +358,9 @@ class SectionFactory {
 		}
 		if (this.isCategory(section)) {
 			return SectionEnum.CATEGORY;
+		}
+		if (this.isEShop(section)) {
+			return SectionEnum.E_SHOP;
 		}
 		return null;
 	}

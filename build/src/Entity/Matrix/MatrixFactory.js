@@ -3,6 +3,7 @@ var MatrixProduct = require('./MatrixProduct');
 var MatrixCustomer = require('./MatrixCustomer');
 var MatrixChannel = require('./MatrixChannel');
 var MatrixCategory = require('./MatrixCategory');
+var MatrixEShop = require('./MatrixEShop');
 var SectionFactory = require('../Section/SectionFactory');
 
 var MatrixFactory = (function () {
@@ -19,6 +20,8 @@ var MatrixFactory = (function () {
             matrix = MatrixChannel.fromRow(row);
         } else if (SectionFactory.isCategory(section)) {
             matrix = MatrixCategory.fromRow(row);
+        } else if (SectionFactory.isEShop(section)) {
+            matrix = MatrixEShop.fromRow(row);
         } else {
             throw new Error('Not implemented section "' + row[Matrix.TABLE_NAME + '.' + Matrix.COLUMN_SECTION] + '"');
         }

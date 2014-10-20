@@ -152,6 +152,48 @@ var SectionFactory = (function () {
                 return 73 /* MM19 */;
             case SectionEnum[74 /* MM20 */]:
                 return 74 /* MM20 */;
+            case SectionEnum[75 /* E_SHOP */]:
+                return 75 /* E_SHOP */;
+            case SectionEnum[76 /* MS1 */]:
+                return 76 /* MS1 */;
+            case SectionEnum[77 /* MS2 */]:
+                return 77 /* MS2 */;
+            case SectionEnum[78 /* MS3 */]:
+                return 78 /* MS3 */;
+            case SectionEnum[79 /* MS4 */]:
+                return 79 /* MS4 */;
+            case SectionEnum[80 /* MS5 */]:
+                return 80 /* MS5 */;
+            case SectionEnum[81 /* MS6 */]:
+                return 81 /* MS6 */;
+            case SectionEnum[82 /* MS7 */]:
+                return 82 /* MS7 */;
+            case SectionEnum[83 /* MS8 */]:
+                return 83 /* MS8 */;
+            case SectionEnum[84 /* MS9 */]:
+                return 84 /* MS9 */;
+            case SectionEnum[85 /* MS10 */]:
+                return 85 /* MS10 */;
+            case SectionEnum[86 /* MS11 */]:
+                return 86 /* MS11 */;
+            case SectionEnum[87 /* MS12 */]:
+                return 87 /* MS12 */;
+            case SectionEnum[88 /* MS13 */]:
+                return 88 /* MS13 */;
+            case SectionEnum[89 /* MS14 */]:
+                return 89 /* MS14 */;
+            case SectionEnum[90 /* MS15 */]:
+                return 90 /* MS15 */;
+            case SectionEnum[91 /* MS16 */]:
+                return 91 /* MS16 */;
+            case SectionEnum[92 /* MS17 */]:
+                return 92 /* MS17 */;
+            case SectionEnum[93 /* MS18 */]:
+                return 93 /* MS18 */;
+            case SectionEnum[94 /* MS19 */]:
+                return 94 /* MS19 */;
+            case SectionEnum[95 /* MS20 */]:
+                return 95 /* MS20 */;
         }
         return 0 /* UNKNOWN */;
     };
@@ -258,6 +300,34 @@ var SectionFactory = (function () {
         return false;
     };
 
+    SectionFactory.isEShop = function (section) {
+        switch (section) {
+            case 75 /* E_SHOP */:
+            case 76 /* MS1 */:
+            case 77 /* MS2 */:
+            case 78 /* MS3 */:
+            case 79 /* MS4 */:
+            case 80 /* MS5 */:
+            case 81 /* MS6 */:
+            case 82 /* MS7 */:
+            case 83 /* MS8 */:
+            case 84 /* MS9 */:
+            case 85 /* MS10 */:
+            case 86 /* MS11 */:
+            case 87 /* MS12 */:
+            case 88 /* MS13 */:
+            case 89 /* MS14 */:
+            case 90 /* MS15 */:
+            case 91 /* MS16 */:
+            case 92 /* MS17 */:
+            case 93 /* MS18 */:
+            case 94 /* MS19 */:
+            case 95 /* MS20 */:
+                return true;
+        }
+        return false;
+    };
+
     SectionFactory.getLabel = function (section) {
         switch (true) {
             case SectionFactory.isProduct(section):
@@ -268,6 +338,8 @@ var SectionFactory = (function () {
                 return new LocalizedString({ cs: 'Kanál', en: 'Channel' });
             case SectionFactory.isCategory(section):
                 return new LocalizedString({ cs: 'Kategorie', en: 'Category' });
+            case SectionFactory.isEShop(section):
+                return new LocalizedString({ cs: 'e-shop', en: 'e-shop' });
             default:
                 return null;
         }
@@ -285,6 +357,9 @@ var SectionFactory = (function () {
         }
         if (this.isCategory(section)) {
             return 22 /* CATEGORY */;
+        }
+        if (this.isEShop(section)) {
+            return 75 /* E_SHOP */;
         }
         return null;
     };

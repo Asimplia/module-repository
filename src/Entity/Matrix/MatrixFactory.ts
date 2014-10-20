@@ -4,6 +4,7 @@ import MatrixProduct = require('./MatrixProduct');
 import MatrixCustomer = require('./MatrixCustomer');
 import MatrixChannel = require('./MatrixChannel');
 import MatrixCategory = require('./MatrixCategory');
+import MatrixEShop = require('./MatrixEShop');
 import SectionFactory = require('../Section/SectionFactory');
 
 export = MatrixFactory;
@@ -23,6 +24,9 @@ class MatrixFactory {
 		} else
 		if (SectionFactory.isCategory(section)) {
 			matrix = MatrixCategory.fromRow(row);
+		} else
+		if (SectionFactory.isEShop(section)) {
+			matrix = MatrixEShop.fromRow(row);
 		} else {
 			throw new Error('Not implemented section "' + row[Matrix.TABLE_NAME + '.' + Matrix.COLUMN_SECTION] + '"');
 		}

@@ -87,6 +87,22 @@ class MatrixLoader {
 			});
 	}
 
+	getListByEShopIdAndOtherNullForLoad(eShopId: number, loadId: number, callback:(e:Error, recordList?:List<Matrix>) => void) {
+		var sql = 'SELECT '+this.getSelect()+' FROM '+this.getFrom()
+			+' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_LOAD_ID+' = $2 '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_PRODUCT_ID+' IS NULL '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CUSTOMER_ID+' IS NULL '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CATEGORY_ID+' IS NULL '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_CHANNEL_ID+' IS NULL '
+			+' AND '+Signal.TABLE_NAME+'.'+Signal.COLUMN_SIGNAL_ID+' IS NULL ';
+		this.connection.query(sql, [
+				eShopId, loadId
+			], (e, result) => {
+				this.createListByResult(e, result, callback);
+			});
+	}
+
 	getListByEShopIdAndLoadIdLimited(
 		eShopId: number, 
 		loadId: number, 

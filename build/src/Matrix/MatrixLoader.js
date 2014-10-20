@@ -68,6 +68,16 @@ var MatrixLoader = (function () {
         });
     };
 
+    MatrixLoader.prototype.getListByEShopIdAndOtherNullForLoad = function (eShopId, loadId, callback) {
+        var _this = this;
+        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_LOAD_ID + ' = $2 ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_PRODUCT_ID + ' IS NULL ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CUSTOMER_ID + ' IS NULL ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CATEGORY_ID + ' IS NULL ' + ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CHANNEL_ID + ' IS NULL ' + ' AND ' + Signal.TABLE_NAME + '.' + Signal.COLUMN_SIGNAL_ID + ' IS NULL ';
+        this.connection.query(sql, [
+            eShopId, loadId
+        ], function (e, result) {
+            _this.createListByResult(e, result, callback);
+        });
+    };
+
     MatrixLoader.prototype.getListByEShopIdAndLoadIdLimited = function (eShopId, loadId, limit, offset, filter, callback) {
         var _this = this;
         var filterWhere = '';
