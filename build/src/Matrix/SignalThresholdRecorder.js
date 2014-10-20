@@ -63,6 +63,7 @@ var SignalThresholdRecorder = (function (_super) {
                 callback(null, null);
                 return;
             }
+            thresholdDocument = new _this.model({});
             _this.update(thresholdDocument, SignalThreshold.fromObject, threshold, callback);
         });
     };

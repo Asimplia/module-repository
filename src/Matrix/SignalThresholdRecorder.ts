@@ -65,6 +65,7 @@ class SignalThresholdRecorder extends AbstractRecorder {
 				callback(null, null);
 				return;
 			}
+			thresholdDocument = new this.model({});
 			this.update(thresholdDocument, SignalThreshold.fromObject, threshold, callback);
 		});
 	}
