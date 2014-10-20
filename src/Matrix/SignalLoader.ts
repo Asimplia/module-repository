@@ -5,6 +5,7 @@ import Matrix = require('../Entity/Matrix/Matrix');
 import Product = require('../Entity/EShop/Product');
 import Customer = require('../Entity/EShop/Customer');
 import Channel = require('../Entity/EShop/Channel');
+import EShop = require('../Entity/EShop/EShop');
 import List = require('../Entity/List');
 import Category = require('../Entity/EShop/Category');
 import EntityPreparer = require('../Entity/EntityPreparer');
@@ -128,7 +129,8 @@ class SignalLoader {
 			+EntityPreparer.getColumnsAsPrefixedAlias(Product).join(', ')+', '
 			+EntityPreparer.getColumnsAsPrefixedAlias(Customer).join(', ')+', '
 			+EntityPreparer.getColumnsAsPrefixedAlias(Channel).join(', ')+', '
-			+EntityPreparer.getColumnsAsPrefixedAlias(Category).join(', ')+' ';
+			+EntityPreparer.getColumnsAsPrefixedAlias(Category).join(', ')+' '
+			+EntityPreparer.getColumnsAsPrefixedAlias(EShop).join(', ')+' ';
 	}
 
 	private getFrom() {
@@ -137,6 +139,7 @@ class SignalLoader {
 			+' LEFT JOIN '+Product.TABLE_NAME+' USING ('+Product.COLUMN_PRODUCT_ID+', '+Product.COLUMN_E_SHOP_ID+') '
 			+' LEFT JOIN '+Customer.TABLE_NAME+' USING ('+Customer.COLUMN_CUSTOMER_ID+', '+Customer.COLUMN_E_SHOP_ID+') '
 			+' LEFT JOIN '+Channel.TABLE_NAME+' USING ('+Channel.COLUMN_CHANNEL_ID+', '+Channel.COLUMN_E_SHOP_ID+') '
-			+' LEFT JOIN '+Category.TABLE_NAME+' USING ('+Category.COLUMN_CATEGORY_ID+', '+Category.COLUMN_E_SHOP_ID+') ';
+			+' LEFT JOIN '+Category.TABLE_NAME+' USING ('+Category.COLUMN_CATEGORY_ID+', '+Category.COLUMN_E_SHOP_ID+') '
+			+' LEFT JOIN '+EShop.TABLE_NAME+' USING ('+EShop.COLUMN_E_SHOP_ID+') ';
 	}
 }
