@@ -45,7 +45,7 @@ class MatrixDescription implements IEntity {
 		return new MatrixDescription(
 			SectionFactory.createSectionEnum(object.section),
 			object.icon,
-			object.description,
+			new LocalizedString(object.description),
 			new List<QuadrantDescription>(object.quadrantDescriptions, QuadrantDescription.fromObject)
 		);
 	}

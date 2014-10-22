@@ -1,4 +1,5 @@
 var List = require('../List');
+var LocalizedString = require('../Locale/LocalizedString');
 
 var QuadrantDescription = require('./QuadrantDescription');
 var SectionEnum = require('../Section/SectionEnum');
@@ -53,7 +54,7 @@ var MatrixDescription = (function () {
     };
 
     MatrixDescription.fromObject = function (object) {
-        return new MatrixDescription(SectionFactory.createSectionEnum(object.section), object.icon, object.description, new List(object.quadrantDescriptions, QuadrantDescription.fromObject));
+        return new MatrixDescription(SectionFactory.createSectionEnum(object.section), object.icon, new LocalizedString(object.description), new List(object.quadrantDescriptions, QuadrantDescription.fromObject));
     };
     return MatrixDescription;
 })();

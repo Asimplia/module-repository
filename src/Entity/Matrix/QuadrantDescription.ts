@@ -29,7 +29,7 @@ class QuadrantDescription implements IEntity {
 	static fromObject(object: any) {
 		return new QuadrantDescription(
 			QuadrantValueFactory.createQuadrantValueEnum(object.quadrant),
-			object.description
+			new LocalizedString(object.description)
 		);
 	}
 }

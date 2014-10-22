@@ -1,5 +1,6 @@
 var QuadrantValueEnum = require('./QuadrantValueEnum');
 var QuadrantValueFactory = require('./QuadrantValueFactory');
+var LocalizedString = require('../Locale/LocalizedString');
 
 var QuadrantDescription = (function () {
     function QuadrantDescription(quadrant, description) {
@@ -33,7 +34,7 @@ var QuadrantDescription = (function () {
     };
 
     QuadrantDescription.fromObject = function (object) {
-        return new QuadrantDescription(QuadrantValueFactory.createQuadrantValueEnum(object.quadrant), object.description);
+        return new QuadrantDescription(QuadrantValueFactory.createQuadrantValueEnum(object.quadrant), new LocalizedString(object.description));
     };
     return QuadrantDescription;
 })();
