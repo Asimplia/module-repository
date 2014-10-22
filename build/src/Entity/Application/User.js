@@ -138,7 +138,9 @@ var User = (function () {
 
     User.prototype.toSafeObject = function () {
         var object = this.toObject();
-        object.authenticates = null;
+        object.authenticates = this.authenticateList.map(function (authenticate) {
+            return authenticate.toSafeObject();
+        }).toArray();
         object.authHashes = null;
         return object;
     };

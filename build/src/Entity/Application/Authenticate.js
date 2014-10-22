@@ -41,6 +41,13 @@ var Authenticate = (function () {
         return Authenticate.toObject(this);
     };
 
+    Authenticate.prototype.toSafeObject = function () {
+        var object = this.toObject();
+        object.verification = null;
+        object.salt = null;
+        return object;
+    };
+
     Authenticate.prototype.hasValidVerification = function () {
         return this.verification.length >= 8;
     };

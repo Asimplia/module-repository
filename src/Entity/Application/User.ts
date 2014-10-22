@@ -67,7 +67,9 @@ class User implements IEntity {
 
 	toSafeObject() {
 		var object = this.toObject();
-		object.authenticates = null;
+		object.authenticates = this.authenticateList.map((authenticate: Authenticate) => {
+			return authenticate.toSafeObject();
+		}).toArray();
 		object.authHashes = null;
 		return object;
 	}

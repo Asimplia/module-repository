@@ -22,6 +22,13 @@ class Authenticate implements IEntity {
 		return Authenticate.toObject(this);
 	}
 
+	toSafeObject() {
+		var object = this.toObject();
+		object.verification = null;
+		object.salt = null;
+		return object;
+	}
+
 	hasValidVerification() {
 		return this.verification.length >= 8;
 	}
