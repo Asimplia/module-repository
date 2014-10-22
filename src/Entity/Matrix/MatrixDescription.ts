@@ -36,7 +36,7 @@ class MatrixDescription implements IEntity {
 		return {
 			section: SectionEnum[entity.section],
 			icon: entity.icon,
-			description: entity.description,
+			description: entity.description.toObject(),
 			quadrantDescriptions: entity.quadrantDescriptionList.toArray(QuadrantDescription.toObject)
 		};
 	}

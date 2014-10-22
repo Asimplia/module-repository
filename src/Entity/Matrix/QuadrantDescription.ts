@@ -22,7 +22,7 @@ class QuadrantDescription implements IEntity {
 	static toObject(entity: QuadrantDescription) {
 		return {
 			quadrant: QuadrantValueEnum[entity.quadrant],
-			description: entity.description
+			description: entity.description.toObject()
 		};
 	}
 

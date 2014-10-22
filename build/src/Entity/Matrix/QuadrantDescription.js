@@ -29,7 +29,7 @@ var QuadrantDescription = (function () {
     QuadrantDescription.toObject = function (entity) {
         return {
             quadrant: QuadrantValueEnum[entity.quadrant],
-            description: entity.description
+            description: entity.description.toObject()
         };
     };
 
