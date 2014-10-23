@@ -6,7 +6,8 @@ var Definition = {
     eShopId: Number,
     name: String,
     vatNumber: String,
-    dateCreated: Date
+    dateCreated: Date,
+    imageUri: String
 };
 var schema = new Schema(Definition);
 var ProductModel = mongoose.model('Product', schema);

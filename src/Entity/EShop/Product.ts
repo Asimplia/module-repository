@@ -12,10 +12,12 @@ class Product implements IEntity {
 	public static COLUMN_BASE_PRICE = 'baseprice';
 	public static COLUMN_EAN = 'ean';
 	public static COLUMN_DATE_CREATED = 'dateadded';
+	public static COLUMN_IMAGE_URI = 'picture';
 
 	get Id(): number { return this.id; }
 	get Name(): string { return this.name; }
 	get EShopId(): number { return this.eShopId; }
+	get ImageUri(): string { return this.imageUri; }
 
 	constructor(
 		private id: number,
@@ -23,7 +25,8 @@ class Product implements IEntity {
 		private name: string,
 		private basePrice: number,
 		private ean: string,
-		private dateCreated: Date
+		private dateCreated: Date,
+		private imageUri: string
 	) { }
 
 	static fromRow(r: any) {
@@ -33,7 +36,8 @@ class Product implements IEntity {
 			EntityPreparer.stringOrNull(r[Product.TABLE_NAME + '.' + Product.COLUMN_NAME]),
 			EntityPreparer.float(r[Product.TABLE_NAME + '.' + Product.COLUMN_BASE_PRICE]),
 			EntityPreparer.stringOrNull(r[Product.TABLE_NAME + '.' + Product.COLUMN_EAN]),
-			EntityPreparer.date(r[Product.TABLE_NAME + '.' + Product.COLUMN_DATE_CREATED])
+			EntityPreparer.date(r[Product.TABLE_NAME + '.' + Product.COLUMN_DATE_CREATED]),
+			EntityPreparer.stringOrNull(r[Product.TABLE_NAME + '.' + Product.COLUMN_IMAGE_URI])
 		);
 	}
 
@@ -45,6 +49,7 @@ class Product implements IEntity {
 			basePrice: entity.basePrice,
 			ean: entity.ean,
 			dateCreated: entity.dateCreated,
+			imageUri: entity.imageUri
 		};
 	}
 
@@ -59,7 +64,8 @@ class Product implements IEntity {
 			EntityPreparer.stringOrNull(object.name),
 			EntityPreparer.float(object.basePrice),
 			EntityPreparer.stringOrNull(object.ean),
-			EntityPreparer.date(object.dateCreated)
+			EntityPreparer.date(object.dateCreated),
+			EntityPreparer.stringOrNull(object.imageUri)
 		);
 	}
 

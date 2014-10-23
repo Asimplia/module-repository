@@ -123,6 +123,21 @@ var ResultLoader = (function () {
         });
     };
 
+    ResultLoader.prototype.getListByProductId = function (eShopId, productId, type, callback) {
+        var conditions = this.getConditionsByType(type);
+        conditions.eShopId = eShopId;
+        conditions.productIds = productId;
+        this.ResultModel.find(conditions).sort("-activeStatus.dateCreated").exec(function (e, suggestions) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            var list = new List();
+            list.pushArray(suggestions, SuggestionResult.fromObject);
+            callback(e, list);
+        });
+    };
+
     ResultLoader.prototype.getConditionsByType = function (type) {
         var conditions = {};
         var now = moment().toDate();

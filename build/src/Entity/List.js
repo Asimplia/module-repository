@@ -80,6 +80,10 @@ var List = (function () {
         return _.max(this.entities, cb);
     };
 
+    List.prototype.sortBy = function (cb) {
+        return new List(_.sortBy(this.entities, cb), this.returnValue);
+    };
+
     List.prototype.getListByMax = function (cb) {
         var maxEntity = this.max(cb);
         return this.filter(function (entity) {
@@ -106,6 +110,10 @@ var List = (function () {
 
     List.prototype.first = function () {
         return this.entities[0];
+    };
+
+    List.prototype.firstList = function (n) {
+        return new List(_.first(this.entities, n), this.returnValue);
     };
 
     List.prototype.createEach = function () {

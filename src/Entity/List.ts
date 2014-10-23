@@ -83,6 +83,10 @@ class List<Entity extends IEntity> {
 		return _.max(this.entities, cb);
 	}
 
+	sortBy(cb: (entity: Entity) => number) {
+		return new List<Entity>(_.sortBy(this.entities, cb), this.returnValue);
+	}
+
 	getListByMax(cb: (entity: Entity) => number): List<Entity> {
 		var maxEntity = this.max(cb);
 		return this.filter((entity: Entity) => {
@@ -109,6 +113,10 @@ class List<Entity extends IEntity> {
 
 	first(): Entity {
 		return this.entities[0];
+	}
+
+	firstList(n: number): List<Entity> {
+		return new List<Entity>(_.first(this.entities, n), this.returnValue);
 	}
 
 	createEach() {

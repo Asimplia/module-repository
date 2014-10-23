@@ -3,9 +3,10 @@ var QuadrantValueFactory = require('./QuadrantValueFactory');
 var LocalizedString = require('../Locale/LocalizedString');
 
 var QuadrantDescription = (function () {
-    function QuadrantDescription(quadrant, description) {
+    function QuadrantDescription(quadrant, description, icon) {
         this.quadrant = quadrant;
         this.description = description;
+        this.icon = icon;
     }
     Object.defineProperty(QuadrantDescription.prototype, "Quadrant", {
         get: function () {
@@ -21,6 +22,13 @@ var QuadrantDescription = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(QuadrantDescription.prototype, "Icon", {
+        get: function () {
+            return this.icon;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     QuadrantDescription.prototype.toObject = function () {
         return QuadrantDescription.toObject(this);
@@ -29,12 +37,13 @@ var QuadrantDescription = (function () {
     QuadrantDescription.toObject = function (entity) {
         return {
             quadrant: QuadrantValueEnum[entity.quadrant],
-            description: entity.description.toObject()
+            description: entity.description.toObject(),
+            icon: entity.icon
         };
     };
 
     QuadrantDescription.fromObject = function (object) {
-        return new QuadrantDescription(QuadrantValueFactory.createQuadrantValueEnum(object.quadrant), new LocalizedString(object.description));
+        return new QuadrantDescription(QuadrantValueFactory.createQuadrantValueEnum(object.quadrant), new LocalizedString(object.description), object.icon);
     };
     return QuadrantDescription;
 })();

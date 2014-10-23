@@ -12,7 +12,8 @@ var Definition = {
 	description: LocalizedString,
 	quadrantDescriptions: [{
 		quadrant: String,
-		description: LocalizedString
+		description: LocalizedString,
+		icon: String
 	}]
 };
 var schema = new Schema(Definition);

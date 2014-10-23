@@ -1,13 +1,14 @@
 ﻿var EntityPreparer = require('../EntityPreparer');
 
 var Product = (function () {
-    function Product(id, eShopId, name, basePrice, ean, dateCreated) {
+    function Product(id, eShopId, name, basePrice, ean, dateCreated, imageUri) {
         this.id = id;
         this.eShopId = eShopId;
         this.name = name;
         this.basePrice = basePrice;
         this.ean = ean;
         this.dateCreated = dateCreated;
+        this.imageUri = imageUri;
     }
     Object.defineProperty(Product.prototype, "Id", {
         get: function () {
@@ -30,9 +31,16 @@ var Product = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Product.prototype, "ImageUri", {
+        get: function () {
+            return this.imageUri;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     Product.fromRow = function (r) {
-        return new Product(EntityPreparer.int(r[Product.TABLE_NAME + '.' + Product.COLUMN_PRODUCT_ID]), EntityPreparer.int(r[Product.TABLE_NAME + '.' + Product.COLUMN_E_SHOP_ID]), EntityPreparer.stringOrNull(r[Product.TABLE_NAME + '.' + Product.COLUMN_NAME]), EntityPreparer.float(r[Product.TABLE_NAME + '.' + Product.COLUMN_BASE_PRICE]), EntityPreparer.stringOrNull(r[Product.TABLE_NAME + '.' + Product.COLUMN_EAN]), EntityPreparer.date(r[Product.TABLE_NAME + '.' + Product.COLUMN_DATE_CREATED]));
+        return new Product(EntityPreparer.int(r[Product.TABLE_NAME + '.' + Product.COLUMN_PRODUCT_ID]), EntityPreparer.int(r[Product.TABLE_NAME + '.' + Product.COLUMN_E_SHOP_ID]), EntityPreparer.stringOrNull(r[Product.TABLE_NAME + '.' + Product.COLUMN_NAME]), EntityPreparer.float(r[Product.TABLE_NAME + '.' + Product.COLUMN_BASE_PRICE]), EntityPreparer.stringOrNull(r[Product.TABLE_NAME + '.' + Product.COLUMN_EAN]), EntityPreparer.date(r[Product.TABLE_NAME + '.' + Product.COLUMN_DATE_CREATED]), EntityPreparer.stringOrNull(r[Product.TABLE_NAME + '.' + Product.COLUMN_IMAGE_URI]));
     };
 
     Product.toObject = function (entity) {
@@ -42,7 +50,8 @@ var Product = (function () {
             name: entity.name,
             basePrice: entity.basePrice,
             ean: entity.ean,
-            dateCreated: entity.dateCreated
+            dateCreated: entity.dateCreated,
+            imageUri: entity.imageUri
         };
     };
 
@@ -51,7 +60,7 @@ var Product = (function () {
     };
 
     Product.fromObject = function (object) {
-        return new Product(EntityPreparer.int(object.id), EntityPreparer.int(object.eShopId), EntityPreparer.stringOrNull(object.name), EntityPreparer.float(object.basePrice), EntityPreparer.stringOrNull(object.ean), EntityPreparer.date(object.dateCreated));
+        return new Product(EntityPreparer.int(object.id), EntityPreparer.int(object.eShopId), EntityPreparer.stringOrNull(object.name), EntityPreparer.float(object.basePrice), EntityPreparer.stringOrNull(object.ean), EntityPreparer.date(object.dateCreated), EntityPreparer.stringOrNull(object.imageUri));
     };
     Product.TABLE_NAME = 'warehouse.product';
     Product.COLUMN_E_SHOP_ID = 'eshopid';
@@ -60,6 +69,7 @@ var Product = (function () {
     Product.COLUMN_BASE_PRICE = 'baseprice';
     Product.COLUMN_EAN = 'ean';
     Product.COLUMN_DATE_CREATED = 'dateadded';
+    Product.COLUMN_IMAGE_URI = 'picture';
     return Product;
 })();
 module.exports = Product;
