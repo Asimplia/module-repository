@@ -161,6 +161,34 @@ var Matrix = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Matrix.prototype, "ProductId", {
+        get: function () {
+            return this.productId;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Matrix.prototype, "CustomerId", {
+        get: function () {
+            return this.customerId;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Matrix.prototype, "ChannelId", {
+        get: function () {
+            return this.channelId;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Matrix.prototype, "CategoryId", {
+        get: function () {
+            return this.categoryId;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     Matrix.toObject = function (entity) {
         return {

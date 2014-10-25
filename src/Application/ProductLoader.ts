@@ -66,4 +66,15 @@ class ProductLoader {
 			callback(null, object.dateCreated);
 		});
 	}
+
+	getListByProductIds(eShopId: number, productIds: number[], callback: (e: Error, productList?: List<Product>) => void) {
+		this.model.find({ "eShopId": eShopId, "id": { $in: productIds } })
+		.exec((e: Error, objects: any[]) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, new List<Product>(objects, Product.fromObject));
+		});
+	}
 }

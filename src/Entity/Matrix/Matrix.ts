@@ -58,6 +58,10 @@ class Matrix implements IEntity {
 	get ChangeValueY(): number { return this.changeValueY; }
 	get Tangens(): number { return this.tangens; }
 	get ChangeTangens(): number { return this.changeTangens; }
+	get ProductId(): number { return this.productId; }
+	get CustomerId(): number { return this.customerId; }
+	get ChannelId(): number { return this.channelId; }
+	get CategoryId(): number { return this.categoryId; }
 
 	constructor(
 		private id: number,

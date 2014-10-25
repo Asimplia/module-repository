@@ -54,6 +54,16 @@ var ProductLoader = (function () {
             callback(null, object.dateCreated);
         });
     };
+
+    ProductLoader.prototype.getListByProductIds = function (eShopId, productIds, callback) {
+        this.model.find({ "eShopId": eShopId, "id": { $in: productIds } }).exec(function (e, objects) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(null, new List(objects, Product.fromObject));
+        });
+    };
     return ProductLoader;
 })();
 module.exports = ProductLoader;

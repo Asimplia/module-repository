@@ -30,6 +30,29 @@ var MatrixLoader = (function () {
         });
     };
 
+    MatrixLoader.prototype.getListLastSortedByChange = function (eShopId, callback) {
+        var _this = this;
+        this.model.findOne({ "eShopId": eShopId }, null, { sortBy: "-loadId" }, function (e, maxMatrix) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            if (!maxMatrix) {
+                callback(null, new List());
+                return;
+            }
+            var maxLoadId = maxMatrix.loadId;
+            _this.model.find({ "eShopId": eShopId, "loadId": maxLoadId }, function (e, objects) {
+                if (e) {
+                    callback(e);
+                    return;
+                }
+                var matrixList = new List(objects, Matrix.fromObject);
+                callback(null, matrixList);
+            });
+        });
+    };
+
     MatrixLoader.prototype.getMaxDateValid = function (callback) {
         this.model.findOne({}).sort({ 'dateValid': -1 }).exec(function (e, object) {
             if (e) {

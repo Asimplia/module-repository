@@ -38,6 +38,28 @@ class MatrixLoader {
 		});
 	}
 
+	getListLastSortedByChange(eShopId: number, callback: (e: Error, matrixList?: List<Matrix>) => void) {
+		this.model.findOne({ "eShopId": eShopId }, null, { sortBy: "-loadId" }, (e, maxMatrix: any) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			if (!maxMatrix) {
+				callback(null, new List<Matrix>());
+				return;
+			}
+			var maxLoadId = maxMatrix.loadId;
+			this.model.find({ "eShopId": eShopId, "loadId": maxLoadId }, (e, objects: any[]) => {
+				if (e) {
+					callback(e);
+					return;
+				}
+				var matrixList = new List<Matrix>(objects, Matrix.fromObject);
+				callback(null, matrixList);
+			});
+		});
+	}
+
 	getMaxDateValid(callback: (e: Error, maxDateValid?: Date) => void) {
 		this.model.findOne({}).sort({ 'dateValid': -1 }).exec((e, object: any) => {
 			if (e) {
