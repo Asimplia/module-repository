@@ -10,46 +10,24 @@ export = Status;
 class Status implements IEntity {
 
 	get DateCreated() { return this.dateCreated; }
-	set DateCreated(value: Date) { this.dateCreated = value; }
-	get DateValidTo() { return this.dateValidTo; }
-	set DateValidTo(value: Date) { this.dateValidTo = value; }
 	get State() { return this.state; }
-	set State(value: ResultStateEnum) { this.state = value; }
-	get DateNextRemind() { return this.dateNextRemind; }
-	set DateNextRemind(value: Date) { this.dateNextRemind = value; }
-	get PriorityValue() { return this.priorityValue; }
-	set PriorityValue(value: number) { this.priorityValue = value; }
-	get PriorityType() { return this.priorityType; }
-	set PriorityType(value: string) { this.priorityType = value; }
 
 	constructor(
 		private dateCreated: Date,
-		private dateValidTo: Date,
-		private state: ResultStateEnum,
-		private dateNextRemind: Date,
-		private priorityValue: number, // define number of coins 1-5
-		private priorityType: string // define color of coins - green/red
+		private state: ResultStateEnum
 	) { }
 
 	static fromObject(o: any): Status {
 		return new Status(
 			EntityPreparer.date(o.dateCreated),
-			EntityPreparer.dateOrNull(o.dateValidTo),
-			Status.createResultStateEnum(o.state),
-			EntityPreparer.dateOrNull(o.dateNextRemind),
-			EntityPreparer.float(o.priorityValue),
-			EntityPreparer.string(o.priorityType)
+			Status.createResultStateEnum(o.state)
 		);
 	}
 
 	static toObject(entity: Status) {
 		return {
 			dateCreated: entity.dateCreated ? moment(entity.dateCreated).format() : null,
-			dateValidTo: entity.dateValidTo ? moment(entity.dateValidTo).format() : null,
-			state: ResultStateEnum[entity.state],
-			dateNextRemind: entity.dateNextRemind ? moment(entity.dateNextRemind).format() : null,
-			priorityValue: entity.priorityValue,
-			priorityType: entity.priorityType
+			state: ResultStateEnum[entity.state]
 		};
 	}
 
@@ -69,6 +47,8 @@ class Status implements IEntity {
 				return ResultStateEnum.REMIND_LATER;
 			case ResultStateEnum[ResultStateEnum.USED]:
 				return ResultStateEnum.USED;
+			case ResultStateEnum[ResultStateEnum.EXPIRED]:
+				return ResultStateEnum.EXPIRED;
 		}
 		return ResultStateEnum.UNKNOWN;
 	}
@@ -91,5 +71,9 @@ class Status implements IEntity {
 
 	isStateCreated() {
 		return this.state == ResultStateEnum.CREATED;
+	}
+
+	isStateExpired() {
+		return this.state == ResultStateEnum.EXPIRED;
 	}
 }

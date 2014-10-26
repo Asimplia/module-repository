@@ -6,11 +6,14 @@ var Graph = require('./Graph');
 var Reason = require('./Reason');
 var SectionEnum = require('../Section/SectionEnum');
 var SectionFactory = require('../Section/SectionFactory');
-var moment = require('moment');
+
 var EntityPreparer = require('../EntityPreparer');
+var PlaceholderValue = require('./PlaceholderValue');
+var PriorityTypeEnum = require('./PriorityTypeEnum');
+var PriorityTypeFactory = require('./PriorityTypeFactory');
 
 var Result = (function () {
-    function Result(id, title, shortTitle, label, text, activeStatus, statusList, graphList, eShopId, reasonList, section, main, situationId, actionId) {
+    function Result(id, title, shortTitle, label, text, activeStatus, statusList, graphList, eShopId, reasonList, section, main, situationId, actionId, dateCreated, priorityValue, priorityType, productIds, customerIds, categoryIds, channelIds, placeholderValueList) {
         this.id = id;
         this.title = title;
         this.shortTitle = shortTitle;
@@ -25,6 +28,14 @@ var Result = (function () {
         this.main = main;
         this.situationId = situationId;
         this.actionId = actionId;
+        this.dateCreated = dateCreated;
+        this.priorityValue = priorityValue;
+        this.priorityType = priorityType;
+        this.productIds = productIds;
+        this.customerIds = customerIds;
+        this.categoryIds = categoryIds;
+        this.channelIds = channelIds;
+        this.placeholderValueList = placeholderValueList;
     }
     Object.defineProperty(Result.prototype, "Id", {
         get: function () {
@@ -40,18 +51,12 @@ var Result = (function () {
         get: function () {
             return this.title;
         },
-        set: function (value) {
-            this.title = value;
-        },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(Result.prototype, "ShortTitle", {
         get: function () {
             return this.shortTitle;
-        },
-        set: function (value) {
-            this.shortTitle = value;
         },
         enumerable: true,
         configurable: true
@@ -60,18 +65,12 @@ var Result = (function () {
         get: function () {
             return this.label;
         },
-        set: function (value) {
-            this.label = value;
-        },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(Result.prototype, "Text", {
         get: function () {
             return this.text;
-        },
-        set: function (value) {
-            this.text = value;
         },
         enumerable: true,
         configurable: true
@@ -91,9 +90,6 @@ var Result = (function () {
         get: function () {
             return this.statusList;
         },
-        set: function (value) {
-            this.statusList = value;
-        },
         enumerable: true,
         configurable: true
     });
@@ -101,18 +97,12 @@ var Result = (function () {
         get: function () {
             return this.graphList;
         },
-        set: function (value) {
-            this.graphList = value;
-        },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(Result.prototype, "EShopId", {
         get: function () {
             return this.eShopId;
-        },
-        set: function (value) {
-            this.eShopId = value;
         },
         enumerable: true,
         configurable: true
@@ -152,9 +142,31 @@ var Result = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Result.prototype, "DateCreated", {
+        get: function () {
+            return this.dateCreated;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Result.prototype, "PriorityValue", {
+        get: function () {
+            return this.priorityValue;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Result.prototype, "PriorityType", {
+        get: function () {
+            return this.priorityType;
+        },
+        enumerable: true,
+        configurable: true
+    });
+
 
     Result.fromObject = function (o) {
-        return new Result(EntityPreparer.intOrNull(o.id), new LocalizedString(o.title), new LocalizedString(o.shortTitle), new LocalizedString(o.label), new LocalizedString(o.text), Status.fromObject(o.activeStatus), new List().pushArray(o.statuses, Status.fromObject), new List().pushArray(o.graphs, Graph.fromObject), EntityPreparer.int(o.eShopId), new List().pushArray(o.reasons, Reason.fromObject), SectionFactory.createSectionEnum(o.section), EntityPreparer.boolean(o.main), EntityPreparer.int(o.situationId), EntityPreparer.int(o.actionId));
+        return new Result(EntityPreparer.intOrNull(o.id), new LocalizedString(o.title), new LocalizedString(o.shortTitle), new LocalizedString(o.label), new LocalizedString(o.text), Status.fromObject(o.activeStatus), new List().pushArray(o.statuses, Status.fromObject), new List().pushArray(o.graphs, Graph.fromObject), EntityPreparer.int(o.eShopId), new List().pushArray(o.reasons, Reason.fromObject), SectionFactory.createSectionEnum(o.section), EntityPreparer.boolean(o.main), EntityPreparer.int(o.situationId), EntityPreparer.int(o.actionId), EntityPreparer.date(o.dateCreated), EntityPreparer.intOrNull(o.priorityValue), PriorityTypeFactory.createPriorityTypeEnum(o.priorityType), o.productIds, o.customerIds, o.categoryIds, o.channelIds, new List(o.placeholderValues, PlaceholderValue.fromObject));
     };
 
     Result.toObject = function (entity) {
@@ -172,7 +184,15 @@ var Result = (function () {
             section: SectionEnum[entity.section],
             main: entity.main,
             situationId: entity.situationId,
-            actionId: entity.actionId
+            actionId: entity.actionId,
+            dateCreated: entity.dateCreated,
+            priorityValue: entity.priorityValue,
+            priorityType: PriorityTypeEnum[entity.priorityType],
+            productIds: entity.productIds,
+            customerIds: entity.customerIds,
+            categoryIds: entity.categoryIds,
+            channelIds: entity.channelIds,
+            placeholderValues: entity.placeholderValueList.toArray(PlaceholderValue.toObject)
         };
     };
 
@@ -185,7 +205,7 @@ var Result = (function () {
     };
 
     Result.prototype.isExpired = function () {
-        return moment() > moment(this.activeStatus.DateValidTo);
+        return this.activeStatus.isStateExpired();
     };
 
     Result.prototype.isSectionProduct = function () {

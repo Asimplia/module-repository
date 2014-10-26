@@ -5,9 +5,6 @@ var List = (function () {
     function List(items, entityFactory) {
         this.entities = [];
         if (typeof items !== 'undefined') {
-            if (typeof entityFactory === 'undefined') {
-                throw new Error('You must specify entityFactory if items in constructor');
-            }
             this.pushArray(items, entityFactory);
         }
     }

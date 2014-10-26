@@ -1,12 +1,15 @@
 ﻿
 import LocalizedString = require('../Locale/LocalizedString');
 import SectionEnum = require('../Section/SectionEnum');
+import SectionFactory = require('../Section/SectionFactory');
 import List = require('../List');
 import FactorDefinition = require('./FactorDefinition');
 import IEntity = require('../IEntity');
 import ActionPlaceholderEnum = require('./ActionPlaceholderEnum');
+import ActionPlaceholderFactory = require('./ActionPlaceholderFactory');
 import ArrayHelper = require('../Util/ArrayHelper');
 import PriorityTypeEnum = require('./PriorityTypeEnum');
+import PriorityTypeFactory = require('./PriorityTypeFactory');
 import EntityPreparer = require('../EntityPreparer');
 
 export = Action;
@@ -47,10 +50,10 @@ class Action implements IEntity {
 			new LocalizedString(o.name),
 			new LocalizedString(o.shortName),
 			new LocalizedString(o.text),
-			Action.createSectionEnum(o.section),
+			SectionFactory.getGroupSection(SectionFactory.createSectionEnum(o.section)),
 			new List<FactorDefinition>().pushArray(o.factorDefinitions, FactorDefinition.fromObject),
-			ArrayHelper.mapFilterNulls(o.placeholders, (placeholder: string) => { return Action.createPlaceholderEnum(placeholder); }),
-			Action.createPriorityTypeEnum(o.priorityType),
+			ArrayHelper.mapFilterNulls(o.placeholders, (placeholder: string) => { return ActionPlaceholderFactory.createActionPlaceholderEnum(placeholder); }),
+			PriorityTypeFactory.createPriorityTypeEnum(o.priorityType),
 			EntityPreparer.boolean(o.main)
 		);
 	}
@@ -71,62 +74,6 @@ class Action implements IEntity {
 
 	toObject(): any {
 		return Action.toObject(this);
-	}
-
-	static createSectionEnum(section: string) {
-		switch (section) {
-			case SectionEnum[SectionEnum.CUSTOMER]:
-				return SectionEnum.CUSTOMER;
-			case SectionEnum[SectionEnum.PRODUCT]:
-				return SectionEnum.PRODUCT;
-			case SectionEnum[SectionEnum.CHANNEL]:
-				return SectionEnum.CHANNEL;
-		}
-		return SectionEnum.UNKNOWN;
-	}
-
-	static createPriorityTypeEnum(priorityType: string) {
-		switch (priorityType) {
-			case PriorityTypeEnum[PriorityTypeEnum.RED]:
-				return PriorityTypeEnum.RED;
-			case PriorityTypeEnum[PriorityTypeEnum.GREEN]:
-				return PriorityTypeEnum.GREEN;
-		}
-		return PriorityTypeEnum.UNKNOWN;
-	}
-
-	static createPlaceholderEnum(placeholder: string) {
-		switch (placeholder) {
-			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_NAME]:
-				return ActionPlaceholderEnum.PRODUCT_NAME;
-			case ActionPlaceholderEnum[ActionPlaceholderEnum.DISCOUNT_VALUE]:
-				return ActionPlaceholderEnum.DISCOUNT_VALUE;
-			case ActionPlaceholderEnum[ActionPlaceholderEnum.COMMERCIAL_CHANELS]:
-				return ActionPlaceholderEnum.COMMERCIAL_CHANELS;
-			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_PRICE]:
-				return ActionPlaceholderEnum.PRODUCT_PRICE;
-			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRICE_CHANGE]:
-				return ActionPlaceholderEnum.PRICE_CHANGE;
-			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_PACKAGE_OPTION]:
-				return ActionPlaceholderEnum.PRODUCT_PACKAGE_OPTION;
-			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_SKU]:
-				return ActionPlaceholderEnum.PRODUCT_SKU;
-			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_STOCKING_TIME]:
-				return ActionPlaceholderEnum.PRODUCT_STOCKING_TIME;
-			case ActionPlaceholderEnum[ActionPlaceholderEnum.CUSTOMERS_FOR_PRODUCT]:
-				return ActionPlaceholderEnum.CUSTOMERS_FOR_PRODUCT;
-			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_MARGIN_RATE]:
-				return ActionPlaceholderEnum.PRODUCT_MARGIN_RATE;
-			case ActionPlaceholderEnum[ActionPlaceholderEnum.PRODUCT_CONVERSION_RATE]:
-				return ActionPlaceholderEnum.PRODUCT_CONVERSION_RATE;
-			case ActionPlaceholderEnum[ActionPlaceholderEnum.CATEGORY_NAME]:
-				return ActionPlaceholderEnum.CATEGORY_NAME;
-			case ActionPlaceholderEnum[ActionPlaceholderEnum.CATEGORY_CHANGE_IN_SALE]:
-				return ActionPlaceholderEnum.CATEGORY_CHANGE_IN_SALE;
-			case ActionPlaceholderEnum[ActionPlaceholderEnum.BENEFITS]:
-				return ActionPlaceholderEnum.BENEFITS;
-		}
-		return null;
 	}
 
 }

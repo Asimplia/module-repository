@@ -2,6 +2,8 @@ var List = require('../List');
 var Signal = require('./Signal');
 var MatrixProduct = require('./MatrixProduct');
 var MatrixCategory = require('./MatrixCategory');
+var MatrixChannel = require('./MatrixChannel');
+var MatrixCustomer = require('./MatrixCustomer');
 
 var EntityPreparer = require('../EntityPreparer');
 
@@ -82,6 +84,28 @@ var Situation = (function () {
             }
             var categoryMatrix = this.signalList.first().Matrix;
             return categoryMatrix.Category.Id;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Situation.prototype, "ChannelId", {
+        get: function () {
+            if (!(this.signalList.first().Matrix instanceof MatrixChannel)) {
+                return null;
+            }
+            var channelMatrix = this.signalList.first().Matrix;
+            return channelMatrix.Channel.Id;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Situation.prototype, "CustomerId", {
+        get: function () {
+            if (!(this.signalList.first().Matrix instanceof MatrixCustomer)) {
+                return null;
+            }
+            var customerMatrix = this.signalList.first().Matrix;
+            return customerMatrix.Customer.Id;
         },
         enumerable: true,
         configurable: true

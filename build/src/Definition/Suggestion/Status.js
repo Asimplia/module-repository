@@ -1,9 +1,5 @@
 ﻿var StatusDefinition = {
     dateCreated: Date,
-    dateValidTo: Date,
-    state: String,
-    dateNextRemind: Date,
-    priorityValue: Number,
-    priorityType: String
+    state: String
 };
 module.exports = StatusDefinition;

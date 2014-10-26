@@ -6,5 +6,6 @@ enum ResultStateEnum {
 	READY_TO_APPLY,
 	REMIND_LATER,
 	CREATED,
-	DECLINED
+	DECLINED,
+	EXPIRED
 }

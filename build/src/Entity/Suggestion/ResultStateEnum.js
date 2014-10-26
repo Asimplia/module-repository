@@ -6,5 +6,6 @@
     ResultStateEnum[ResultStateEnum["REMIND_LATER"] = 3] = "REMIND_LATER";
     ResultStateEnum[ResultStateEnum["CREATED"] = 4] = "CREATED";
     ResultStateEnum[ResultStateEnum["DECLINED"] = 5] = "DECLINED";
+    ResultStateEnum[ResultStateEnum["EXPIRED"] = 6] = "EXPIRED";
 })(ResultStateEnum || (ResultStateEnum = {}));
 module.exports = ResultStateEnum;

@@ -11,36 +11,36 @@ import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
 import moment = require('moment');
 import EntityPreparer = require('../EntityPreparer');
+import PlaceholderValue = require('./PlaceholderValue');
+import PriorityTypeEnum = require('./PriorityTypeEnum');
+import PriorityTypeFactory = require('./PriorityTypeFactory');
 
 export = Result;
 class Result implements IEntity {
 
 	get Id() { return this.id; }
-	set Id(value: number) { this.id = value; }
 	get Title() { return this.title; }
-	set Title(value: LocalizedString) { this.title = value; }
 	get ShortTitle() { return this.shortTitle; }
-	set ShortTitle(value: LocalizedString) { this.shortTitle = value; }
 	get Label() { return this.label; }
-	set Label(value: LocalizedString) { this.label = value; }
 	get Text() { return this.text; }
-	set Text(value: LocalizedString) { this.text = value; }
 	get ActiveStatus() { return this.activeStatus; }
-	set ActiveStatus(value: Status) {
-		this.statusList.push(value);
-		this.activeStatus = value;
-	}
 	get StatusList() { return this.statusList; }
-	set StatusList(value: List<Status>) { this.statusList = value; }
 	get GraphList() { return this.graphList; }
-	set GraphList(value: List<Graph>) { this.graphList = value; }
 	get EShopId() { return this.eShopId; }
-	set EShopId(value: number) { this.eShopId = value; }
 	get ReasonList() { return this.reasonList; }
 	get Section() { return this.section; }
 	get Main() { return this.main; }
 	get SituationId() { return this.situationId; }
 	get ActionId() { return this.actionId; }
+	get DateCreated() { return this.dateCreated; }
+	get PriorityValue() { return this.priorityValue; }
+	get PriorityType() { return this.priorityType; }
+
+	set Id(value: number) { this.id = value; }
+	set ActiveStatus(value: Status) {
+		this.statusList.push(value);
+		this.activeStatus = value;
+	}
 
 	constructor(
 		private id: number,
@@ -56,7 +56,15 @@ class Result implements IEntity {
 		private section: SectionEnum,
 		private main: boolean,
 		private situationId: number,
-		private actionId: number
+		private actionId: number,
+		private dateCreated: Date,
+		private priorityValue: number, // define number of coins 1-5
+		private priorityType: PriorityTypeEnum, // define color of coins - green/red
+		private productIds: number[],
+		private customerIds: number[],
+		private categoryIds: number[],
+		private channelIds: number[],
+		private placeholderValueList: List<PlaceholderValue>
 	) { }
 
 	static fromObject(o: any/*ISuggestionResultObject*/): Result {
@@ -74,7 +82,15 @@ class Result implements IEntity {
 			SectionFactory.createSectionEnum(o.section),
 			EntityPreparer.boolean(o.main),
 			EntityPreparer.int(o.situationId),
-			EntityPreparer.int(o.actionId)
+			EntityPreparer.int(o.actionId),
+			EntityPreparer.date(o.dateCreated),
+			EntityPreparer.intOrNull(o.priorityValue),
+			PriorityTypeFactory.createPriorityTypeEnum(o.priorityType),
+			o.productIds,
+			o.customerIds,
+			o.categoryIds,
+			o.channelIds,
+			new List<PlaceholderValue>(o.placeholderValues, PlaceholderValue.fromObject)
 		);
 	}
 
@@ -93,7 +109,15 @@ class Result implements IEntity {
 			section: SectionEnum[entity.section],
 			main: entity.main,
 			situationId: entity.situationId,
-			actionId: entity.actionId
+			actionId: entity.actionId,
+			dateCreated: entity.dateCreated,
+			priorityValue: entity.priorityValue,
+			priorityType: PriorityTypeEnum[entity.priorityType],
+			productIds: entity.productIds,
+			customerIds: entity.customerIds,
+			categoryIds: entity.categoryIds,
+			channelIds: entity.channelIds,
+			placeholderValues: entity.placeholderValueList.toArray(PlaceholderValue.toObject)
 		};
 	}
 
@@ -106,7 +130,7 @@ class Result implements IEntity {
 	}
 
 	isExpired() {
-		return moment() > moment(this.activeStatus.DateValidTo);
+		return this.activeStatus.isStateExpired();
 	}
 
 	isSectionProduct() {

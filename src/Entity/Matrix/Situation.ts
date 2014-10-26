@@ -4,6 +4,8 @@ import List = require('../List');
 import Signal = require('./Signal');
 import MatrixProduct = require('./MatrixProduct');
 import MatrixCategory = require('./MatrixCategory');
+import MatrixChannel = require('./MatrixChannel');
+import MatrixCustomer = require('./MatrixCustomer');
 import SectionEnum = require('../Section/SectionEnum');
 import EntityPreparer = require('../EntityPreparer');
 
@@ -40,6 +42,20 @@ class Situation implements IEntity {
 		}
 		var categoryMatrix = <MatrixCategory> this.signalList.first().Matrix;
 		return categoryMatrix.Category.Id;
+	}
+	get ChannelId() {
+		if (!(this.signalList.first().Matrix instanceof MatrixChannel)) {
+			return null;
+		}
+		var channelMatrix = <MatrixChannel> this.signalList.first().Matrix;
+		return channelMatrix.Channel.Id;
+	}
+	get CustomerId() {
+		if (!(this.signalList.first().Matrix instanceof MatrixCustomer)) {
+			return null;
+		}
+		var customerMatrix = <MatrixCustomer> this.signalList.first().Matrix;
+		return customerMatrix.Customer.Id;
 	}
 
 	constructor(
