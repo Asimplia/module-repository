@@ -12,27 +12,27 @@ class PlaceholderCategoryLoader {
 		});
 	}
 
-	getName(productId: number, callback: (e: Error, categoryName?: string) => void): void {
-		this.db.query('MATCH (a:PRODUCT)-->(b:CATEGORY) WHERE (a.productId = {productId}) RETURN b.name limit 1', {
-			productId: productId
+	getName(categoryId: number, callback: (e: Error, categoryName?: string) => void): void {
+		this.db.query('MATCH (a:CATEGORY) WHERE (a.categoryId = {categoryId} ) RETURN a.name', {
+			categoryId: categoryId
 		}, (e: Error, res) => {
 			if (e) {
 				callback(e);
 				return;
 			}
-			callback(null, res.pop()['b.name']);
+			callback(null, res.pop()['a.name']);
 		});
 	}
 
-	getChangeInSale(productId: number, callback: (e: Error, changeInSale?: number) => void): void {
-		this.db.query('MATCH (a:PRODUCT)-->(b:CATEGORY) WHERE (a.productId = {productId}) RETURN b.categoryChangeInSale', {
-			productId: productId
+	getChangeInSale(categoryId: number, callback: (e: Error, changeInSale?: number) => void): void {
+		this.db.query('MATCH (a:CATEGORY) WHERE (a.categoryId = {categoryId}) RETURN a.categoryChangeInSale', {
+			categoryId: categoryId
 		}, (e: Error, res) => {
 			if (e) {
 				callback(e);
 				return;
 			}
-			callback(null, res.pop()['b.categoryChangeInSale']);
+			callback(null, res.pop()['a.categoryChangeInSale']);
 		});
 	}
 }

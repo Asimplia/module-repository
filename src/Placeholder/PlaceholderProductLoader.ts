@@ -52,7 +52,7 @@ class PlaceholderProductLoader {
 	}
 
 	getPackageOption(productId: number, callback: (e: Error, productNames?: string[]) => void): void {
-		this.db.query('MATCH (a:PRODUCT)-->(b:ORDER_ITEM)-->(c:ORDER)<--(d:ORDER_ITEM)--(e:PRODUCT) WHERE (a.productId = {productId}) RETURN e', {
+		this.db.query('MATCH (a:PRODUCT)-->(b:ORDER_ITEM)-->(c:ORDER)<--(d:ORDER_ITEM)--(e:PRODUCT) WHERE (a.productId = {productId}) RETURN e.name', {
 			productId: productId
 		}, (e: Error, res) => {
 			if (e) {
@@ -60,7 +60,7 @@ class PlaceholderProductLoader {
 				return;
 			}
 			var productNames = _.map(res, (row) => {
-				return row['e'];
+				return row['e.name'];
 			});
 			callback(null, productNames);
 		});
@@ -78,18 +78,6 @@ class PlaceholderProductLoader {
 		});
 	}
 
-	getStokingTime(productId: number, callback: (e: Error, stokingTime?: number) => void): void {
-		this.db.query('', { // TODO
-			productId: productId
-		}, (e: Error, res) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			callback(null, res.pop()['']);
-		});
-	}
-
 	getMarginRate(productId: number, callback: (e: Error, marginRate?: number) => void): void {
 		this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.productMarginRate', {
 			productId: productId
@@ -102,8 +90,8 @@ class PlaceholderProductLoader {
 		});
 	}
 
-	getCustomersForProduct(productId: number, callback: (e: Error, customers?: string[]) => void): void {
-		this.db.query('MATCH (a:PRODUCT {productId: {productId} })-[*2]->(c:ORDER)<-[*2]-(e:PRODUCT) WITH e MATCH (x:CUSTOMER)<--(c:ORDER)<-[*2]-(e) WHERE NOT (e.productId =  {productId} ) RETURN DISTINCT x', {
+	getCustomersForProduct(productId: number, callback: (e: Error, customers?: { firstname: string; lastname: string; email: string }[]) => void): void {
+		this.db.query('MATCH (a:PRODUCT {productId: {productId} })-[*2]->(c:ORDER)<-[*2]-(e:PRODUCT) WITH e MATCH (x:CUSTOMER)<--(c:ORDER)<-[*2]-(e) WHERE NOT (e.productId = {productId} ) RETURN DISTINCT x.firstname, x.lastname, x.email LIMIT 50', {
 			productId: productId
 		}, (e: Error, res) => {
 			if (e) {
@@ -111,7 +99,7 @@ class PlaceholderProductLoader {
 				return;
 			}
 			var customers = _.map(res, (row) => {
-				return row['x'];
+				return { firstname: row['x.firstname'], lastname: row['x.lastname'], email: row['x.email'] };
 			});
 			callback(null, customers);
 		});
@@ -130,7 +118,7 @@ class PlaceholderProductLoader {
 	}
 
 	getDiscountValue(productId: number, callback: (e: Error, discount?: number) => void): void {
-		this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = %product_id ) RETURN a.discount', {
+		this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.discount', {
 			productId: productId
 		}, (e: Error, res) => {
 			if (e) {
@@ -138,6 +126,45 @@ class PlaceholderProductLoader {
 				return;
 			}
 			callback(null, res.pop()['a.discount']);
+		});
+	}
+
+	getStockingTime(productId: number, callback: (e: Error, stockingTime?: number) => void): void {
+		this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.productStockingTime', {
+			productId: productId
+		}, (e: Error, res) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, res.pop()['a.productStockingTime']);
+		});
+	}
+
+	getCategoryName(productId: number, callback: (e: Error, categoryName?: string) => void): void {
+		this.db.query('MATCH (a:PRODUCT)-->(b:CATEGORY) WHERE (a.productId = {productId}) RETURN b.name limit 1', {
+			productId: productId
+		}, (e: Error, res) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, res.pop()['b.name']);
+		});
+	}
+
+	getCommercialChannels(productId: number, callback: (e: Error, channelNames?: string[]) => void): void {
+		this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.name', {
+			productId: productId
+		}, (e: Error, res) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			var channelNames = _.map(res, (row) => {
+				return row['a.name'];
+			});
+			callback(null, channelNames);
 		});
 	}
 

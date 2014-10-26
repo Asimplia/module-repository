@@ -1,6 +1,6 @@
 {
   "name": "asimplia-repository",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "Repository",
   "main": "build/src/index.js",
   "author": {

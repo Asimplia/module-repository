@@ -7,27 +7,27 @@ var PlaceholderCategoryLoader = (function () {
             _this.db = db;
         });
     }
-    PlaceholderCategoryLoader.prototype.getName = function (productId, callback) {
-        this.db.query('MATCH (a:PRODUCT)-->(b:CATEGORY) WHERE (a.productId = {productId}) RETURN b.name limit 1', {
-            productId: productId
+    PlaceholderCategoryLoader.prototype.getName = function (categoryId, callback) {
+        this.db.query('MATCH (a:CATEGORY) WHERE (a.categoryId = {categoryId} ) RETURN a.name', {
+            categoryId: categoryId
         }, function (e, res) {
             if (e) {
                 callback(e);
                 return;
             }
-            callback(null, res.pop()['b.name']);
+            callback(null, res.pop()['a.name']);
         });
     };
 
-    PlaceholderCategoryLoader.prototype.getChangeInSale = function (productId, callback) {
-        this.db.query('MATCH (a:PRODUCT)-->(b:CATEGORY) WHERE (a.productId = {productId}) RETURN b.categoryChangeInSale', {
-            productId: productId
+    PlaceholderCategoryLoader.prototype.getChangeInSale = function (categoryId, callback) {
+        this.db.query('MATCH (a:CATEGORY) WHERE (a.categoryId = {categoryId}) RETURN a.categoryChangeInSale', {
+            categoryId: categoryId
         }, function (e, res) {
             if (e) {
                 callback(e);
                 return;
             }
-            callback(null, res.pop()['b.categoryChangeInSale']);
+            callback(null, res.pop()['a.categoryChangeInSale']);
         });
     };
     return PlaceholderCategoryLoader;

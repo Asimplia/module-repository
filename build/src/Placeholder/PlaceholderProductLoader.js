@@ -45,7 +45,7 @@ var PlaceholderProductLoader = (function () {
     };
 
     PlaceholderProductLoader.prototype.getPackageOption = function (productId, callback) {
-        this.db.query('MATCH (a:PRODUCT)-->(b:ORDER_ITEM)-->(c:ORDER)<--(d:ORDER_ITEM)--(e:PRODUCT) WHERE (a.productId = {productId}) RETURN e', {
+        this.db.query('MATCH (a:PRODUCT)-->(b:ORDER_ITEM)-->(c:ORDER)<--(d:ORDER_ITEM)--(e:PRODUCT) WHERE (a.productId = {productId}) RETURN e.name', {
             productId: productId
         }, function (e, res) {
             if (e) {
@@ -53,7 +53,7 @@ var PlaceholderProductLoader = (function () {
                 return;
             }
             var productNames = _.map(res, function (row) {
-                return row['e'];
+                return row['e.name'];
             });
             callback(null, productNames);
         });
@@ -71,18 +71,6 @@ var PlaceholderProductLoader = (function () {
         });
     };
 
-    PlaceholderProductLoader.prototype.getStokingTime = function (productId, callback) {
-        this.db.query('', {
-            productId: productId
-        }, function (e, res) {
-            if (e) {
-                callback(e);
-                return;
-            }
-            callback(null, res.pop()['']);
-        });
-    };
-
     PlaceholderProductLoader.prototype.getMarginRate = function (productId, callback) {
         this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.productMarginRate', {
             productId: productId
@@ -96,7 +84,7 @@ var PlaceholderProductLoader = (function () {
     };
 
     PlaceholderProductLoader.prototype.getCustomersForProduct = function (productId, callback) {
-        this.db.query('MATCH (a:PRODUCT {productId: {productId} })-[*2]->(c:ORDER)<-[*2]-(e:PRODUCT) WITH e MATCH (x:CUSTOMER)<--(c:ORDER)<-[*2]-(e) WHERE NOT (e.productId =  {productId} ) RETURN DISTINCT x', {
+        this.db.query('MATCH (a:PRODUCT {productId: {productId} })-[*2]->(c:ORDER)<-[*2]-(e:PRODUCT) WITH e MATCH (x:CUSTOMER)<--(c:ORDER)<-[*2]-(e) WHERE NOT (e.productId = {productId} ) RETURN DISTINCT x.firstname, x.lastname, x.email LIMIT 50', {
             productId: productId
         }, function (e, res) {
             if (e) {
@@ -104,7 +92,7 @@ var PlaceholderProductLoader = (function () {
                 return;
             }
             var customers = _.map(res, function (row) {
-                return row['x'];
+                return { firstname: row['x.firstname'], lastname: row['x.lastname'], email: row['x.email'] };
             });
             callback(null, customers);
         });
@@ -123,7 +111,7 @@ var PlaceholderProductLoader = (function () {
     };
 
     PlaceholderProductLoader.prototype.getDiscountValue = function (productId, callback) {
-        this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = %product_id ) RETURN a.discount', {
+        this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.discount', {
             productId: productId
         }, function (e, res) {
             if (e) {
@@ -131,6 +119,45 @@ var PlaceholderProductLoader = (function () {
                 return;
             }
             callback(null, res.pop()['a.discount']);
+        });
+    };
+
+    PlaceholderProductLoader.prototype.getStockingTime = function (productId, callback) {
+        this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.productStockingTime', {
+            productId: productId
+        }, function (e, res) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(null, res.pop()['a.productStockingTime']);
+        });
+    };
+
+    PlaceholderProductLoader.prototype.getCategoryName = function (productId, callback) {
+        this.db.query('MATCH (a:PRODUCT)-->(b:CATEGORY) WHERE (a.productId = {productId}) RETURN b.name limit 1', {
+            productId: productId
+        }, function (e, res) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(null, res.pop()['b.name']);
+        });
+    };
+
+    PlaceholderProductLoader.prototype.getCommercialChannels = function (productId, callback) {
+        this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.name', {
+            productId: productId
+        }, function (e, res) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            var channelNames = _.map(res, function (row) {
+                return row['a.name'];
+            });
+            callback(null, channelNames);
         });
     };
     return PlaceholderProductLoader;
