@@ -163,7 +163,7 @@ class MatrixLoader {
 		});
 	}
 
-	getListValidFrom(validFrom: Date, callback: (e: Error, matrixList?: List<Matrix>) => void) {
+	getListValidFromLimited(validFrom: Date, limit: number, callback: (e: Error, matrixList?: List<Matrix>) => void) {
 		var where = ['TRUE'];
 		var parameters = [];
 		if (validFrom) {
@@ -171,7 +171,8 @@ class MatrixLoader {
 			parameters.push(validFrom);
 		}
 		var sql = 'SELECT '+this.getSelect()+' FROM '+this.getFrom()
-			+' WHERE '+where.join(' AND ');
+			+' WHERE '+where.join(' AND ')
+			+' LIMIT '+limit;
 		this.connection.query(sql, parameters, (e, result) => {
 			this.createListByResult(e, result, callback);
 		});

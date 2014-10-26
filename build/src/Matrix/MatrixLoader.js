@@ -122,7 +122,7 @@ var MatrixLoader = (function () {
         });
     };
 
-    MatrixLoader.prototype.getListValidFrom = function (validFrom, callback) {
+    MatrixLoader.prototype.getListValidFromLimited = function (validFrom, limit, callback) {
         var _this = this;
         var where = ['TRUE'];
         var parameters = [];
@@ -130,7 +130,7 @@ var MatrixLoader = (function () {
             where.push(Matrix.TABLE_NAME + '.' + Matrix.COLUMN_DATE_VALID + ' > $1::timestamp');
             parameters.push(validFrom);
         }
-        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + where.join(' AND ');
+        var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom() + ' WHERE ' + where.join(' AND ') + ' LIMIT ' + limit;
         this.connection.query(sql, parameters, function (e, result) {
             _this.createListByResult(e, result, callback);
         });
