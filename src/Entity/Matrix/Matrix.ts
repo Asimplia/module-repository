@@ -100,7 +100,7 @@ class Matrix implements IEntity {
 			scoreWeight: entity.scoreWeight,
 			changeAbsolute: entity.changeAbsolute,
 			changeRelative: entity.changeRelative,
-			changeWeight: entity.scoreWeight,
+			changeWeight: entity.changeWeight,
 			prediction: entity.prediction,
 			quadrant: QuadrantValueEnum[entity.quadrant],
 			dateValid: entity.dateValid ? moment(entity.dateValid).format('YYYY-MM-DD HH:mm:ss') : null,
