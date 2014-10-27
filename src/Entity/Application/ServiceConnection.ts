@@ -11,6 +11,7 @@ export = ServiceConnection;
 class ServiceConnection implements IEntity {
 
 	get ServiceType() { return this.serviceType; }
+	get Info() { return this.info; }
 
 	constructor(
 		private serviceType: ServiceTypeEnum,

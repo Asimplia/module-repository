@@ -5,6 +5,7 @@ import mongoose = require('mongoose');
 import EShop = require('../Entity/Application/EShop');
 import AuthTypeEnum = require('../Entity/Application/AuthTypeEnum');
 import EShopModel = require('../Definition/Application/EShopModel');
+import List = require('../Entity/List');
 
 export = EShopLoader;
 class EShopLoader {
@@ -50,6 +51,16 @@ class EShopLoader {
 				return;
 			}
 			callback(null, object.dateCreated);
+		});
+	}
+
+	getList(callback: (e: Error, eSholList?: List<EShop>) => void) {
+		this.model.find({}).exec((e: Error, objects: any[]) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, new List<EShop>(objects, EShop.fromObject));
 		});
 	}
 }

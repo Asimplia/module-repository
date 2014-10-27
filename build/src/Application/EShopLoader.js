@@ -1,6 +1,7 @@
 var EShop = require('../Entity/Application/EShop');
 
 var EShopModel = require('../Definition/Application/EShopModel');
+var List = require('../Entity/List');
 
 var EShopLoader = (function () {
     function EShopLoader() {
@@ -41,6 +42,16 @@ var EShopLoader = (function () {
                 return;
             }
             callback(null, object.dateCreated);
+        });
+    };
+
+    EShopLoader.prototype.getList = function (callback) {
+        this.model.find({}).exec(function (e, objects) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(null, new List(objects, EShop.fromObject));
         });
     };
     return EShopLoader;

@@ -16,6 +16,13 @@ var ServiceConnection = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(ServiceConnection.prototype, "Info", {
+        get: function () {
+            return this.info;
+        },
+        enumerable: true,
+        configurable: true
+    });
 
     ServiceConnection.prototype.toObject = function () {
         return ServiceConnection.toObject(this);
