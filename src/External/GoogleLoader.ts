@@ -6,8 +6,6 @@ var googleapis = require('googleapis');
 export = GoogleLoader;
 class GoogleLoader {
 
-	private oauth2: any;
-	private jwt: any;
 	private webApplicationClientId: string;
 	private webApplicationClientSecret: string;
 	private serviceAccountEmailAddress: string;
@@ -20,29 +18,38 @@ class GoogleLoader {
 		this.serviceAccountEmailAddress = process.env.GOOGLE_API_SERVICE_ACCOUNT_EMAIL_ADDRESS || '268122361426-v4qp2m1f2iqq1t5e8a923itm272korsu@developer.gserviceaccount.com';
 		this.serviceAccountClientId = process.env.GOOGLE_API_SERVICE_ACCOUNT_CLIENT_ID || '268122361426-v4qp2m1f2iqq1t5e8a923itm272korsu.apps.googleusercontent.com';
 		this.serviceAccountPrivateKeyPath = process.env.GOOGLE_API_SERVICE_ACCOUNT_PRIVATE_KEY_PATH || __dirname + '/../../../certs/privatekey.googleapi.pem';
-		this.oauth2 = new googleapis.auth.OAuth2(this.serviceAccountClientId);
-		googleapis.options({
-			auth: this.oauth2
-		});
-		this.jwt = new googleapis.auth.JWT(
-			this.serviceAccountEmailAddress, 
-			this.serviceAccountPrivateKeyPath,
-			null,
-			['https://www.googleapis.com/auth/analytics.readonly']
-		);
 	}
 	
 	getClientId(callback: (e: Error, clientId?: string) => void) {
 		callback(null, this.webApplicationClientId);
 	}
 
-	getAccessToken(code: string, permissionScopes: string[], callback: (e: Error, accessToken?: string) => void) {
-		this.jwt.authorize((e: Error, result) => {
-			callback(e, result.access_token);
+	getAccessTokenByRefreshToken(refreshToken: string, permissionScopes: string[], callback: (e: Error, accessToken?: string) => void) {
+		var oauth2 = this.createOAuth2();
+		oauth2.setCredentials({ refresh_token: refreshToken })
+		oauth2.refreshAccessToken((e: Error, credentials) => {
+			console.log(e, credentials);
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, credentials.access_token);
 		});
 	}
 
-	getData(
+	getRefreshTokenByCode(code: string, permissionScopes: string[], callback: (e: Error, refreshToken?: string) => void) {
+		var oauth2 = this.createOAuth2();
+		oauth2.getToken(code, (e: Error, credentials) => {
+			console.log(e, credentials);
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, credentials.refresh_token);
+		});
+	}
+
+	getAnalyticsData(
 		accessToken: string, 
 		profileId: string, 
 		startDate: Date, 
@@ -54,25 +61,44 @@ class GoogleLoader {
 		segment: string,
 		callback: (e: Error, data?: any[]) => void
 	) {
-		var analytics = googleapis.analytics({ version: 'v3' });
-		this.oauth2.setCredentials({
+		var oauth2 = this.createOAuth2();
+		oauth2.setCredentials({
 			access_token: accessToken
 		});
-		analytics.data.ga.get({
+		googleapis.options({
+			auth: oauth2
+		});
+		var analytics = googleapis.analytics({ version: 'v3' });
+		var options: any = {
 			"ids": profileId,
 			"start-date": moment(startDate).format('YYYY-MM-DD'),
 			"end-date": moment(endDate).format('YYYY-MM-DD'),
-			"metrics": metrics.join(','),
-			"dimensions": dimensions.join(','),
-			"sort": sort,
-			"filters": filters.join(','),
-			"segment": segment
-		}, (e: Error, result?: any) => {
-			if (e) {
+			"metrics": metrics ? metrics.join(',') : '',
+			"max-results": 10000 // TODO add paging
+		};
+		if (dimensions) {
+			options['dimensions'] = dimensions.join(',');
+		}
+		if (sort) {
+			options['sort'] = sort;
+		}
+		if (filters) {
+			options['filters'] = filters.join(',');
+		}
+		if (segment) {
+			options['segment'] = segment;
+		}
+
+		analytics.data.ga.get(options, (e: Error, result?: any) => {
+			if (e) {console.log(e);
 				callback(e);
 				return;
 			}
 			callback(null, result.rows);
 		});
+	}
+
+	private createOAuth2() {
+		return new googleapis.auth.OAuth2(this.webApplicationClientId, this.webApplicationClientSecret, 'https://localhost:8081/oauth2callback')
 	}
 }

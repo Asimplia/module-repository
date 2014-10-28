@@ -8,43 +8,77 @@ var GoogleLoader = (function () {
         this.serviceAccountEmailAddress = process.env.GOOGLE_API_SERVICE_ACCOUNT_EMAIL_ADDRESS || '268122361426-v4qp2m1f2iqq1t5e8a923itm272korsu@developer.gserviceaccount.com';
         this.serviceAccountClientId = process.env.GOOGLE_API_SERVICE_ACCOUNT_CLIENT_ID || '268122361426-v4qp2m1f2iqq1t5e8a923itm272korsu.apps.googleusercontent.com';
         this.serviceAccountPrivateKeyPath = process.env.GOOGLE_API_SERVICE_ACCOUNT_PRIVATE_KEY_PATH || __dirname + '/../../../certs/privatekey.googleapi.pem';
-        this.oauth2 = new googleapis.auth.OAuth2(this.serviceAccountClientId);
-        googleapis.options({
-            auth: this.oauth2
-        });
-        this.jwt = new googleapis.auth.JWT(this.serviceAccountEmailAddress, this.serviceAccountPrivateKeyPath, null, ['https://www.googleapis.com/auth/analytics.readonly']);
     }
     GoogleLoader.prototype.getClientId = function (callback) {
         callback(null, this.webApplicationClientId);
     };
 
-    GoogleLoader.prototype.getAccessToken = function (code, permissionScopes, callback) {
-        this.jwt.authorize(function (e, result) {
-            callback(e, result.access_token);
+    GoogleLoader.prototype.getAccessTokenByRefreshToken = function (refreshToken, permissionScopes, callback) {
+        var oauth2 = this.createOAuth2();
+        oauth2.setCredentials({ refresh_token: refreshToken });
+        oauth2.refreshAccessToken(function (e, credentials) {
+            console.log(e, credentials);
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(null, credentials.access_token);
         });
     };
 
-    GoogleLoader.prototype.getData = function (accessToken, profileId, startDate, endDate, metrics, dimensions, sort, filters, segment, callback) {
-        var analytics = googleapis.analytics({ version: 'v3' });
-        this.oauth2.setCredentials({
+    GoogleLoader.prototype.getRefreshTokenByCode = function (code, permissionScopes, callback) {
+        var oauth2 = this.createOAuth2();
+        oauth2.getToken(code, function (e, credentials) {
+            console.log(e, credentials);
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(null, credentials.refresh_token);
+        });
+    };
+
+    GoogleLoader.prototype.getAnalyticsData = function (accessToken, profileId, startDate, endDate, metrics, dimensions, sort, filters, segment, callback) {
+        var oauth2 = this.createOAuth2();
+        oauth2.setCredentials({
             access_token: accessToken
         });
-        analytics.data.ga.get({
+        googleapis.options({
+            auth: oauth2
+        });
+        var analytics = googleapis.analytics({ version: 'v3' });
+        var options = {
             "ids": profileId,
             "start-date": moment(startDate).format('YYYY-MM-DD'),
             "end-date": moment(endDate).format('YYYY-MM-DD'),
-            "metrics": metrics.join(','),
-            "dimensions": dimensions.join(','),
-            "sort": sort,
-            "filters": filters.join(','),
-            "segment": segment
-        }, function (e, result) {
+            "metrics": metrics ? metrics.join(',') : '',
+            "max-results": 10000
+        };
+        if (dimensions) {
+            options['dimensions'] = dimensions.join(',');
+        }
+        if (sort) {
+            options['sort'] = sort;
+        }
+        if (filters) {
+            options['filters'] = filters.join(',');
+        }
+        if (segment) {
+            options['segment'] = segment;
+        }
+
+        analytics.data.ga.get(options, function (e, result) {
             if (e) {
+                console.log(e);
                 callback(e);
                 return;
             }
             callback(null, result.rows);
         });
+    };
+
+    GoogleLoader.prototype.createOAuth2 = function () {
+        return new googleapis.auth.OAuth2(this.webApplicationClientId, this.webApplicationClientSecret, 'https://localhost:8081/oauth2callback');
     };
     return GoogleLoader;
 })();
