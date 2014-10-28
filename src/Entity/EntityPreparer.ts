@@ -121,6 +121,17 @@ class EntityPreparer {
 		return columns;
 	}
 
+	static getTablePlainColumns(EntityStatic: any) {
+		var columns = [];
+		for (var i in Object.keys(EntityStatic)) {
+			var keyName = Object.keys(EntityStatic)[i];
+			if(keyName.substring(0, 7) === 'COLUMN_') {
+				columns.push(EntityStatic[keyName]);
+			}
+		}
+		return columns;
+	}
+
 	static getPrefixedColumn(EntityStatic: any, column: string) {
 		var prefix = EntityStatic.name;
 		var prefixedColumn = prefix + '_' + column;

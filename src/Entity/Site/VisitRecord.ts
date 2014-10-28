@@ -5,8 +5,8 @@ import EntityPreparer = require('../EntityPreparer');
 export = VisitRecord;
 class VisitRecord implements IEntity {
 
-	public static TABLE_NAME = 'googleanalytics';
-	public static COLUMN_ID = 'gaid';
+	public static TABLE_NAME = 'warehouse.googleanalytics';
+	public static COLUMN_VISIT_RECORD_ID = 'gaid';
 	public static COLUMN_E_SHOP_ID = 'eshopid';
 	public static COLUMN_QUERY = 'gaquery';
 	public static COLUMN_DATE_CHANGED = 'datechanged';
@@ -66,41 +66,41 @@ class VisitRecord implements IEntity {
 
 	static fromObject(object: any) {
 		return new VisitRecord(
-			object.id,
-			object.eShopId,
-			object.query,
-			object.dateChanged,
-			object.source,
-			object.medium,
-			object.campaign,
-			object.adContent,
-			object.keyword,
-			object.sessions,
-			object.transactions,
-			object.transactionRevenue,
-			object.itemQuantity,
-			object.bounces,
-			object.newUsers
+			EntityPreparer.intOrNull(object.id),
+			EntityPreparer.int(object.eShopId),
+			EntityPreparer.string(object.query),
+			EntityPreparer.date(object.dateChanged),
+			EntityPreparer.stringOrNull(object.source),
+			EntityPreparer.stringOrNull(object.medium),
+			EntityPreparer.stringOrNull(object.campaign),
+			EntityPreparer.stringOrNull(object.adContent),
+			EntityPreparer.stringOrNull(object.keyword),
+			EntityPreparer.intOrNull(object.sessions),
+			EntityPreparer.floatOrNull(object.transactions),
+			EntityPreparer.floatOrNull(object.transactionRevenue),
+			EntityPreparer.intOrNull(object.itemQuantity),
+			EntityPreparer.intOrNull(object.bounces),
+			EntityPreparer.intOrNull(object.newUsers)
 		);
 	}
 
 	static fromRow(row: any) {
 		return new VisitRecord(
-			row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_ID],
-			row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_E_SHOP_ID],
-			row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_QUERY],
-			row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_DATE_CHANGED],
-			row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_SOURCE],
-			row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_MEDIUM],
-			row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_CAMPAIGN],
-			row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_AD_CONTENT],
-			row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_KEYWORD],
-			row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_SESSIONS],
-			row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_TRANSACTIONS],
-			row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_TRANSACTION_REVENUE],
-			row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_ITEM_QUANTITY],
-			row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_BOUNCES],
-			row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_NEW_USERS]
+			EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_VISIT_RECORD_ID]),
+			EntityPreparer.int(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_E_SHOP_ID]),
+			EntityPreparer.string(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_QUERY]),
+			EntityPreparer.date(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_DATE_CHANGED]),
+			EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_SOURCE]),
+			EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_MEDIUM]),
+			EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_CAMPAIGN]),
+			EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_AD_CONTENT]),
+			EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_KEYWORD]),
+			EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_SESSIONS]),
+			EntityPreparer.floatOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_TRANSACTIONS]),
+			EntityPreparer.floatOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_TRANSACTION_REVENUE]),
+			EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_ITEM_QUANTITY]),
+			EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_BOUNCES]),
+			EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_NEW_USERS])
 		);
 	}
 }

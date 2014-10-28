@@ -24,11 +24,10 @@ class GoogleLoader {
 		callback(null, this.webApplicationClientId);
 	}
 
-	getAccessTokenByRefreshToken(refreshToken: string, permissionScopes: string[], callback: (e: Error, accessToken?: string) => void) {
+	getAccessTokenByRefreshToken(refreshToken: string, callback: (e: Error, accessToken?: string) => void) {
 		var oauth2 = this.createOAuth2();
 		oauth2.setCredentials({ refresh_token: refreshToken })
 		oauth2.refreshAccessToken((e: Error, credentials) => {
-			console.log(e, credentials);
 			if (e) {
 				callback(e);
 				return;
@@ -37,10 +36,9 @@ class GoogleLoader {
 		});
 	}
 
-	getRefreshTokenByCode(code: string, permissionScopes: string[], callback: (e: Error, refreshToken?: string) => void) {
+	getRefreshTokenByCode(code: string, callback: (e: Error, refreshToken?: string) => void) {
 		var oauth2 = this.createOAuth2();
 		oauth2.getToken(code, (e: Error, credentials) => {
-			console.log(e, credentials);
 			if (e) {
 				callback(e);
 				return;
@@ -90,7 +88,7 @@ class GoogleLoader {
 		}
 
 		analytics.data.ga.get(options, (e: Error, result?: any) => {
-			if (e) {console.log(e);
+			if (e) {
 				callback(e);
 				return;
 			}

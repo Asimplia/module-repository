@@ -117,6 +117,17 @@ var EntityPreparer = (function () {
         return columns;
     };
 
+    EntityPreparer.getTablePlainColumns = function (EntityStatic) {
+        var columns = [];
+        for (var i in Object.keys(EntityStatic)) {
+            var keyName = Object.keys(EntityStatic)[i];
+            if (keyName.substring(0, 7) === 'COLUMN_') {
+                columns.push(EntityStatic[keyName]);
+            }
+        }
+        return columns;
+    };
+
     EntityPreparer.getPrefixedColumn = function (EntityStatic, column) {
         var prefix = EntityStatic.name;
         var prefixedColumn = prefix + '_' + column;

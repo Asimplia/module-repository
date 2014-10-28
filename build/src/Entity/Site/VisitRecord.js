@@ -1,3 +1,5 @@
+var EntityPreparer = require('../EntityPreparer');
+
 var VisitRecord = (function () {
     function VisitRecord(id, eShopId, query, dateChanged, source, medium, campaign, adContent, keyword, sessions, transactions, transactionRevenue, itemQuantity, bounces, newUsers) {
         this.id = id;
@@ -41,14 +43,14 @@ var VisitRecord = (function () {
     };
 
     VisitRecord.fromObject = function (object) {
-        return new VisitRecord(object.id, object.eShopId, object.query, object.dateChanged, object.source, object.medium, object.campaign, object.adContent, object.keyword, object.sessions, object.transactions, object.transactionRevenue, object.itemQuantity, object.bounces, object.newUsers);
+        return new VisitRecord(EntityPreparer.intOrNull(object.id), EntityPreparer.int(object.eShopId), EntityPreparer.string(object.query), EntityPreparer.date(object.dateChanged), EntityPreparer.stringOrNull(object.source), EntityPreparer.stringOrNull(object.medium), EntityPreparer.stringOrNull(object.campaign), EntityPreparer.stringOrNull(object.adContent), EntityPreparer.stringOrNull(object.keyword), EntityPreparer.intOrNull(object.sessions), EntityPreparer.floatOrNull(object.transactions), EntityPreparer.floatOrNull(object.transactionRevenue), EntityPreparer.intOrNull(object.itemQuantity), EntityPreparer.intOrNull(object.bounces), EntityPreparer.intOrNull(object.newUsers));
     };
 
     VisitRecord.fromRow = function (row) {
-        return new VisitRecord(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_ID], row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_E_SHOP_ID], row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_QUERY], row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_DATE_CHANGED], row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_SOURCE], row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_MEDIUM], row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_CAMPAIGN], row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_AD_CONTENT], row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_KEYWORD], row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_SESSIONS], row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_TRANSACTIONS], row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_TRANSACTION_REVENUE], row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_ITEM_QUANTITY], row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_BOUNCES], row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_NEW_USERS]);
+        return new VisitRecord(EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_VISIT_RECORD_ID]), EntityPreparer.int(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_E_SHOP_ID]), EntityPreparer.string(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_QUERY]), EntityPreparer.date(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_DATE_CHANGED]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_SOURCE]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_MEDIUM]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_CAMPAIGN]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_AD_CONTENT]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_KEYWORD]), EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_SESSIONS]), EntityPreparer.floatOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_TRANSACTIONS]), EntityPreparer.floatOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_TRANSACTION_REVENUE]), EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_ITEM_QUANTITY]), EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_BOUNCES]), EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_NEW_USERS]));
     };
-    VisitRecord.TABLE_NAME = 'googleanalytics';
-    VisitRecord.COLUMN_ID = 'gaid';
+    VisitRecord.TABLE_NAME = 'warehouse.googleanalytics';
+    VisitRecord.COLUMN_VISIT_RECORD_ID = 'gaid';
     VisitRecord.COLUMN_E_SHOP_ID = 'eshopid';
     VisitRecord.COLUMN_QUERY = 'gaquery';
     VisitRecord.COLUMN_DATE_CHANGED = 'datechanged';

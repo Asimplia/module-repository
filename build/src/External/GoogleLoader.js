@@ -13,11 +13,10 @@ var GoogleLoader = (function () {
         callback(null, this.webApplicationClientId);
     };
 
-    GoogleLoader.prototype.getAccessTokenByRefreshToken = function (refreshToken, permissionScopes, callback) {
+    GoogleLoader.prototype.getAccessTokenByRefreshToken = function (refreshToken, callback) {
         var oauth2 = this.createOAuth2();
         oauth2.setCredentials({ refresh_token: refreshToken });
         oauth2.refreshAccessToken(function (e, credentials) {
-            console.log(e, credentials);
             if (e) {
                 callback(e);
                 return;
@@ -26,10 +25,9 @@ var GoogleLoader = (function () {
         });
     };
 
-    GoogleLoader.prototype.getRefreshTokenByCode = function (code, permissionScopes, callback) {
+    GoogleLoader.prototype.getRefreshTokenByCode = function (code, callback) {
         var oauth2 = this.createOAuth2();
         oauth2.getToken(code, function (e, credentials) {
-            console.log(e, credentials);
             if (e) {
                 callback(e);
                 return;
@@ -69,7 +67,6 @@ var GoogleLoader = (function () {
 
         analytics.data.ga.get(options, function (e, result) {
             if (e) {
-                console.log(e);
                 callback(e);
                 return;
             }
