@@ -1,7 +1,7 @@
 var EntityPreparer = require('../EntityPreparer');
 
 var VisitRecord = (function () {
-    function VisitRecord(id, eShopId, query, dateChanged, source, medium, campaign, adContent, keyword, sessions, transactions, transactionRevenue, itemQuantity, bounces, newUsers, landingPagePath) {
+    function VisitRecord(id, eShopId, query, dateChanged, source, medium, campaign, adContent, keyword, sessions, transactions, transactionRevenue, itemQuantity, bounces, newUsers, landingPagePath, country) {
         this.id = id;
         this.eShopId = eShopId;
         this.query = query;
@@ -18,6 +18,7 @@ var VisitRecord = (function () {
         this.bounces = bounces;
         this.newUsers = newUsers;
         this.landingPagePath = landingPagePath;
+        this.country = country;
     }
     VisitRecord.prototype.toObject = function () {
         return VisitRecord.toObject(this);
@@ -40,16 +41,17 @@ var VisitRecord = (function () {
             itemQuantity: entity.itemQuantity,
             bounces: entity.bounces,
             newUsers: entity.newUsers,
-            landingPagePath: entity.landingPagePath
+            landingPagePath: entity.landingPagePath,
+            country: entity.country
         };
     };
 
     VisitRecord.fromObject = function (object) {
-        return new VisitRecord(EntityPreparer.intOrNull(object.id), EntityPreparer.int(object.eShopId), EntityPreparer.string(object.query), EntityPreparer.date(object.dateChanged), EntityPreparer.stringOrNull(object.source), EntityPreparer.stringOrNull(object.medium), EntityPreparer.stringOrNull(object.campaign), EntityPreparer.stringOrNull(object.adContent), EntityPreparer.stringOrNull(object.keyword), EntityPreparer.intOrNull(object.sessions), EntityPreparer.floatOrNull(object.transactions), EntityPreparer.floatOrNull(object.transactionRevenue), EntityPreparer.intOrNull(object.itemQuantity), EntityPreparer.intOrNull(object.bounces), EntityPreparer.intOrNull(object.newUsers), EntityPreparer.stringOrNull(object.landingPagePath));
+        return new VisitRecord(EntityPreparer.intOrNull(object.id), EntityPreparer.int(object.eShopId), EntityPreparer.string(object.query), EntityPreparer.date(object.dateChanged), EntityPreparer.stringOrNull(object.source), EntityPreparer.stringOrNull(object.medium), EntityPreparer.stringOrNull(object.campaign), EntityPreparer.stringOrNull(object.adContent), EntityPreparer.stringOrNull(object.keyword), EntityPreparer.intOrNull(object.sessions), EntityPreparer.floatOrNull(object.transactions), EntityPreparer.floatOrNull(object.transactionRevenue), EntityPreparer.intOrNull(object.itemQuantity), EntityPreparer.intOrNull(object.bounces), EntityPreparer.intOrNull(object.newUsers), EntityPreparer.stringOrNull(object.landingPagePath), EntityPreparer.stringOrNull(object.country));
     };
 
     VisitRecord.fromRow = function (row) {
-        return new VisitRecord(EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_VISIT_RECORD_ID]), EntityPreparer.int(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_E_SHOP_ID]), EntityPreparer.string(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_QUERY]), EntityPreparer.date(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_DATE_CHANGED]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_SOURCE]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_MEDIUM]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_CAMPAIGN]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_AD_CONTENT]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_KEYWORD]), EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_SESSIONS]), EntityPreparer.floatOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_TRANSACTIONS]), EntityPreparer.floatOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_TRANSACTION_REVENUE]), EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_ITEM_QUANTITY]), EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_BOUNCES]), EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_NEW_USERS]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_LANDING_PAGE_PATH]));
+        return new VisitRecord(EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_VISIT_RECORD_ID]), EntityPreparer.int(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_E_SHOP_ID]), EntityPreparer.string(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_QUERY]), EntityPreparer.date(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_DATE_CHANGED]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_SOURCE]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_MEDIUM]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_CAMPAIGN]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_AD_CONTENT]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_KEYWORD]), EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_SESSIONS]), EntityPreparer.floatOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_TRANSACTIONS]), EntityPreparer.floatOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_TRANSACTION_REVENUE]), EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_ITEM_QUANTITY]), EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_BOUNCES]), EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_NEW_USERS]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_LANDING_PAGE_PATH]), EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_COUNTRY]));
     };
     VisitRecord.TABLE_NAME = 'warehouse.googleanalytics';
     VisitRecord.COLUMN_VISIT_RECORD_ID = 'gaid';
@@ -68,6 +70,7 @@ var VisitRecord = (function () {
     VisitRecord.COLUMN_BOUNCES = 'bounces';
     VisitRecord.COLUMN_NEW_USERS = 'newusers';
     VisitRecord.COLUMN_LANDING_PAGE_PATH = 'landingpagepath';
+    VisitRecord.COLUMN_COUNTRY = 'country';
     return VisitRecord;
 })();
 module.exports = VisitRecord;

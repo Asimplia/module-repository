@@ -22,6 +22,7 @@ class VisitRecord implements IEntity {
 	public static COLUMN_BOUNCES = 'bounces';
 	public static COLUMN_NEW_USERS = 'newusers';
 	public static COLUMN_LANDING_PAGE_PATH = 'landingpagepath';
+	public static COLUMN_COUNTRY = 'country';
 	
 	constructor(
 		private id: number,
@@ -39,7 +40,8 @@ class VisitRecord implements IEntity {
 		private itemQuantity: number,
 		private bounces: number,
 		private newUsers: number,
-		private landingPagePath: string
+		private landingPagePath: string,
+		private country: string
 	) { }
 
 	toObject() {
@@ -63,7 +65,8 @@ class VisitRecord implements IEntity {
 			itemQuantity: entity.itemQuantity,
 			bounces: entity.bounces,
 			newUsers: entity.newUsers,
-			landingPagePath: entity.landingPagePath
+			landingPagePath: entity.landingPagePath,
+			country: entity.country
 		};
 	}
 
@@ -84,7 +87,8 @@ class VisitRecord implements IEntity {
 			EntityPreparer.intOrNull(object.itemQuantity),
 			EntityPreparer.intOrNull(object.bounces),
 			EntityPreparer.intOrNull(object.newUsers),
-			EntityPreparer.stringOrNull(object.landingPagePath)
+			EntityPreparer.stringOrNull(object.landingPagePath),
+			EntityPreparer.stringOrNull(object.country)
 		);
 	}
 
@@ -105,7 +109,8 @@ class VisitRecord implements IEntity {
 			EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_ITEM_QUANTITY]),
 			EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_BOUNCES]),
 			EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_NEW_USERS]),
-			EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_LANDING_PAGE_PATH])
+			EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_LANDING_PAGE_PATH]),
+			EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_COUNTRY])
 		);
 	}
 }
