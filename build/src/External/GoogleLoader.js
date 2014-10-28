@@ -70,7 +70,7 @@ var GoogleLoader = (function () {
                 callback(e);
                 return;
             }
-            callback(null, result.rows);
+            callback(null, result);
         });
     };
 

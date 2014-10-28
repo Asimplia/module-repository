@@ -21,6 +21,7 @@ class VisitRecord implements IEntity {
 	public static COLUMN_ITEM_QUANTITY = 'itemquantity';
 	public static COLUMN_BOUNCES = 'bounces';
 	public static COLUMN_NEW_USERS = 'newusers';
+	public static COLUMN_LANDING_PAGE_PATH = 'landingpagepath';
 	
 	constructor(
 		private id: number,
@@ -37,7 +38,8 @@ class VisitRecord implements IEntity {
 		private transactionRevenue: number,
 		private itemQuantity: number,
 		private bounces: number,
-		private newUsers: number
+		private newUsers: number,
+		private landingPagePath: string
 	) { }
 
 	toObject() {
@@ -60,7 +62,8 @@ class VisitRecord implements IEntity {
 			transactionRevenue: entity.transactionRevenue,
 			itemQuantity: entity.itemQuantity,
 			bounces: entity.bounces,
-			newUsers: entity.newUsers
+			newUsers: entity.newUsers,
+			landingPagePath: entity.landingPagePath
 		};
 	}
 
@@ -80,7 +83,8 @@ class VisitRecord implements IEntity {
 			EntityPreparer.floatOrNull(object.transactionRevenue),
 			EntityPreparer.intOrNull(object.itemQuantity),
 			EntityPreparer.intOrNull(object.bounces),
-			EntityPreparer.intOrNull(object.newUsers)
+			EntityPreparer.intOrNull(object.newUsers),
+			EntityPreparer.stringOrNull(object.landingPagePath)
 		);
 	}
 
@@ -100,7 +104,8 @@ class VisitRecord implements IEntity {
 			EntityPreparer.floatOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_TRANSACTION_REVENUE]),
 			EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_ITEM_QUANTITY]),
 			EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_BOUNCES]),
-			EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_NEW_USERS])
+			EntityPreparer.intOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_NEW_USERS]),
+			EntityPreparer.stringOrNull(row[VisitRecord.TABLE_NAME + '.' + VisitRecord.COLUMN_LANDING_PAGE_PATH])
 		);
 	}
 }

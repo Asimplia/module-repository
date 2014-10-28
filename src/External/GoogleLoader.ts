@@ -57,7 +57,7 @@ class GoogleLoader {
 		sort: string, 
 		filters: string[], 
 		segment: string,
-		callback: (e: Error, data?: any[]) => void
+		callback: (e: Error, data?: any) => void
 	) {
 		var oauth2 = this.createOAuth2();
 		oauth2.setCredentials({
@@ -92,7 +92,7 @@ class GoogleLoader {
 				callback(e);
 				return;
 			}
-			callback(null, result.rows);
+			callback(null, result);
 		});
 	}
 
