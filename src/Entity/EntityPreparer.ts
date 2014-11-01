@@ -5,6 +5,7 @@
 import ScriptTypeEnum = require('./Error/ScriptTypeEnum');
 import NotAllowedNullError = require('./Error/Error/NotAllowedNullError');
 import ColumnNotExistsInEntityError = require('./Error/Error/ColumnNotExistsInEntityError');
+import IEntityStatic = require('./IEntityStatic');
 import moment = require('moment');
 import _ = require('underscore');
 
@@ -86,20 +87,7 @@ class EntityPreparer {
 		return EntityPreparer.float(value);
 	}
 
-	static getPrefixedColumns(EntityStatic: any) {
-		var prefix = EntityStatic.name;
-		var columns = [];
-		for (var i in Object.keys(EntityStatic)) {
-			var keyName = Object.keys(EntityStatic)[i];
-			if(keyName.substring(0, 7) === 'COLUMN_') {
-				columns.push(prefix + '_' + EntityStatic[keyName]);
-			}
-		}
-		return columns;
-	}
-
-	static getColumnsAsPrefixedAlias(EntityStatic: any) {
-		var prefix = EntityStatic.name;
+	static getColumnsAsPrefixedAlias(EntityStatic: IEntityStatic) {
 		var columns = [];
 		for (var i in Object.keys(EntityStatic)) {
 			var keyName = Object.keys(EntityStatic)[i];
@@ -110,7 +98,7 @@ class EntityPreparer {
 		return columns;
 	}
 
-	static getTableColumns(EntityStatic: any) {
+	static getTableColumns(EntityStatic: IEntityStatic) {
 		var columns = [];
 		for (var i in Object.keys(EntityStatic)) {
 			var keyName = Object.keys(EntityStatic)[i];
@@ -121,7 +109,7 @@ class EntityPreparer {
 		return columns;
 	}
 
-	static getTablePlainColumns(EntityStatic: any) {
+	static getTablePlainColumns(EntityStatic: IEntityStatic) {
 		var columns = [];
 		for (var i in Object.keys(EntityStatic)) {
 			var keyName = Object.keys(EntityStatic)[i];
@@ -132,13 +120,22 @@ class EntityPreparer {
 		return columns;
 	}
 
-	static getPrefixedColumn(EntityStatic: any, column: string) {
-		var prefix = EntityStatic.name;
-		var prefixedColumn = prefix + '_' + column;
-		if (!_.contains(EntityPreparer.getPrefixedColumns(EntityStatic), prefixedColumn)) {
-			throw new ColumnNotExistsInEntityError('Column "'+column+'" not exists in Entity "'+prefix+'"');
+	static getTableColumnByKey(EntityStatic: IEntityStatic, key: string): string {
+		for (var i in Object.keys(EntityStatic)) {
+			var keyName = Object.keys(EntityStatic)[i];
+			if(keyName.substring(0, 7) === 'COLUMN_') {
+				var underscoredKeyName = keyName.substring(7);
+				var cammeledKeyName = EntityPreparer.getCammelCaseByUnderscore(underscoredKeyName);
+				if (cammeledKeyName == key || (key == 'id' && cammeledKeyName.substring((<any>EntityStatic).name.length).toLowerCase() == 'id')) {
+					return EntityStatic.TABLE_NAME + '.' + EntityStatic[keyName]
+				}
+			}
 		}
-		return prefixedColumn;
+		throw new ColumnNotExistsInEntityError('Column with associated key ' + key + ' not exists' + EntityStatic);
+	}
+
+	static getCammelCaseByUnderscore(underscored) {
+		return underscored.toLowerCase().replace(/[_]([a-z0-9])/g, function (g) { return g[1].toUpperCase(); })
 	}
 
 	static now() {

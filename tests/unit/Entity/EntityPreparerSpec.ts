@@ -5,18 +5,38 @@
 
 import Repository = require("../../../src/index");
 import EntityPreparer = Repository.Entity.EntityPreparer;
+import IEntity = Repository.Entity.IEntity;
 import ColumnNotExistsInEntityError = Repository.Entity.Error.Error.ColumnNotExistsInEntityError;
 Repository;
 
-class MockEntity {
+class MockEntity implements IEntity {
 	public static TABLE_NAME = 'schema.tableName';
 	public static COLUMN_TEST_1 = 'test_1';
-	public static COLUMN_TEST_2 = 'test2';
+  public static COLUMN_TEST_2 = 'test2';
+	public static COLUMN_MORE_WORD_NAME = 'somewordname';
+  toObject() { return MockEntityNo.toObject(this); } 
+  static toObject(e: IEntity) { return {}; }
+  static fromObject(o) { return new MockEntity; }
 }
-class MockEntityOne {
+class MockEntityOne implements IEntity {
+  public static TABLE_NAME = undefined;
 	public static COLUMN_TEST_1 = 'test_1';
+  toObject() { return MockEntityNo.toObject(this); } 
+  static toObject(e: IEntity) { return {}; }
+  static fromObject(o) { return new MockEntityOne; }
 }
-class MockEntityNo {
+class MockEntityNo implements IEntity {
+  public static TABLE_NAME = 'schema.tableName';
+  toObject() { return MockEntityNo.toObject(this); } 
+  static toObject(e: IEntity) { return {}; }
+  static fromObject(o) { return new MockEntityNo; }
+}
+class MockEntityId implements IEntity {
+  public static TABLE_NAME = 'some.table';
+  public static COLUMN_MOCK_ENTITY_ID_ID = 'tableid';
+  toObject() { return MockEntityId.toObject(this); } 
+  static toObject(e: IEntity) { return {}; }
+  static fromObject(o) { return new MockEntityId; }
 }
 
 
@@ -27,48 +47,34 @@ describe("Class.name", () => {
 });
 
 
-describe("getPrefixedColumns", () => {
-  it("returns more column names", () => {
-    expect(EntityPreparer.getPrefixedColumns(MockEntity)).toEqual(['MockEntity_test_1', 'MockEntity_test2']);
-  });
-  it("returns one column name", () => {
-    expect(EntityPreparer.getPrefixedColumns(MockEntityOne)).toEqual(['MockEntityOne_test_1']);
-  });
-  it("returns no column names", () => {
-    expect(EntityPreparer.getPrefixedColumns(MockEntityNo)).toEqual([]);
-  });
-});
-
-
-describe("getPrefixedColumn", () => {
-  it("returns column name", () => {
-    expect(EntityPreparer.getPrefixedColumn(MockEntity, MockEntity.COLUMN_TEST_1)).toBe('MockEntity_test_1');
-    expect(EntityPreparer.getPrefixedColumn(MockEntity, MockEntity.COLUMN_TEST_2)).toBe('MockEntity_test2');
-  });
-  it("throws exception that column is not in Entity object specified", () => {
-    expect(() => {
-    	EntityPreparer.getPrefixedColumn(MockEntityOne, MockEntity.COLUMN_TEST_2)
-    }).toThrow(new ColumnNotExistsInEntityError('Column "test2" not exists in Entity "MockEntityOne"'));
-  });
-});
-
-
 describe("getColumnsAsPrefixedAlias", () => {
   it("returns aliased column names as its prefixed name", () => {
     expect(EntityPreparer.getColumnsAsPrefixedAlias(MockEntity))
-    .toEqual(['schema.tableName.test_1 AS "schema.tableName.test_1"', 'schema.tableName.test2 AS "schema.tableName.test2"']);
+    .toEqual(['schema.tableName.test_1 AS "schema.tableName.test_1"', 'schema.tableName.test2 AS "schema.tableName.test2"', 'schema.tableName.somewordname AS "schema.tableName.somewordname"']);
   });
 });
 
 
 describe("getTableColumns", () => {
   it("returns more column names", () => {
-    expect(EntityPreparer.getTableColumns(MockEntity)).toEqual(['schema.tableName.test_1', 'schema.tableName.test2']);
+    expect(EntityPreparer.getTableColumns(MockEntity)).toEqual(['schema.tableName.test_1', 'schema.tableName.test2', 'schema.tableName.somewordname']);
   });
   it("returns one column name", () => {
     expect(EntityPreparer.getTableColumns(MockEntityOne)).toEqual(['undefined.test_1']);
   });
   it("returns no column names", () => {
     expect(EntityPreparer.getTableColumns(MockEntityNo)).toEqual([]);
+  });
+});
+
+describe("getTableColumnByKey", () => {
+  it("returns table.column by object key name with number", () => {
+    expect(EntityPreparer.getTableColumnByKey(MockEntity, 'test1')).toEqual('schema.tableName.test_1');
+  });
+  it("returns table.column by object key name with more words", () => {
+    expect(EntityPreparer.getTableColumnByKey(MockEntity, 'moreWordName')).toEqual('schema.tableName.somewordname');
+  });
+  it("returns table.column by object key name id", () => {
+    expect(EntityPreparer.getTableColumnByKey(MockEntityId, 'id')).toEqual('some.table.tableid');
   });
 });
