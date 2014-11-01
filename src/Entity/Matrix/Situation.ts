@@ -79,6 +79,7 @@ class Situation implements IEntity {
 	toObject() {
 		return Situation.toObject(this);
 	}
+
 	static fromRow(r: any) {
 		return new Situation(
 			EntityPreparer.intOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_SITUATION_ID]),
@@ -86,6 +87,16 @@ class Situation implements IEntity {
 			EntityPreparer.date(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_CREATED]),
 			EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED]),
 			EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_PROCESSED])
+		);
+	}
+
+	static fromObject(object: any) {
+		return new Situation(
+			EntityPreparer.intOrNull(object.id),
+			new List<Signal>(),
+			EntityPreparer.date(object.dateCreated),
+			EntityPreparer.dateOrNull(object.dateSuggestionResultCreated),
+			EntityPreparer.dateOrNull(object.dateSuggestionResultProcessed)
 		);
 	}
 

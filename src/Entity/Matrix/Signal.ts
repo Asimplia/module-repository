@@ -39,6 +39,15 @@ class Signal implements IEntity {
 		);
 	}
 
+	static fromObject(object: any): Signal {
+		return new Signal(
+			EntityPreparer.intOrNull(object.id), 
+			Matrix.fromObject(object), 
+			EntityPreparer.date(object.dateCreated),
+			EntityPreparer.intOrNull(object.situationId)
+		);
+	}
+
 	static toObject(entity: Signal): any {
 		return {
 			id: entity.id,
