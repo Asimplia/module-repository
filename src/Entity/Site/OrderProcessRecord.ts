@@ -5,7 +5,7 @@ import EntityPreparer = require('../EntityPreparer');
 export = OrderProcessRecord;
 class OrderProcessRecord implements IEntity {
 
-	public static TABLE_NAME = 'warehouse.googleanalytics';
+	public static TABLE_NAME = 'warehouse.googleanalyticsbasket';
 	public static COLUMN_ORDER_PROCESS_RECORD_ID = 'gaid';
 	public static COLUMN_E_SHOP_ID = 'eshopid';
 	public static COLUMN_QUERY = 'gaquery';
