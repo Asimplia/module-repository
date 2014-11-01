@@ -13,6 +13,10 @@ var VisitRecordRecorder = (function () {
     VisitRecordRecorder.prototype.insertList = function (list, callback) {
         this.sqlExecutor.insertList(list, callback);
     };
+
+    VisitRecordRecorder.prototype.removeByDateAndQuery = function (eShopId, dateFrom, dateTo, query, callback) {
+        this.sqlExecutor.removeBy({ eShopId: eShopId, dateChanged: { $gte: dateFrom, $lte: dateTo }, query: query }, callback);
+    };
     return VisitRecordRecorder;
 })();
 module.exports = VisitRecordRecorder;

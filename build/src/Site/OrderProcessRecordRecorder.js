@@ -13,6 +13,10 @@ var OrderProcessRecordRecorder = (function () {
     OrderProcessRecordRecorder.prototype.insertList = function (list, callback) {
         this.sqlExecutor.insertList(list, callback);
     };
+
+    OrderProcessRecordRecorder.prototype.removeByDateAndQuery = function (eShopId, dateFrom, dateTo, query, callback) {
+        this.sqlExecutor.removeBy({ eShopId: eShopId, dateChanged: { $gte: dateFrom, $lte: dateTo }, query: query }, callback);
+    };
     return OrderProcessRecordRecorder;
 })();
 module.exports = OrderProcessRecordRecorder;

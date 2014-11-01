@@ -124,8 +124,13 @@ var Situation = (function () {
     Situation.prototype.toObject = function () {
         return Situation.toObject(this);
     };
+
     Situation.fromRow = function (r) {
         return new Situation(EntityPreparer.intOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_SITUATION_ID]), new List(), EntityPreparer.date(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_CREATED]), EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED]), EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_PROCESSED]));
+    };
+
+    Situation.fromObject = function (object) {
+        return new Situation(EntityPreparer.intOrNull(object.id), new List(), EntityPreparer.date(object.dateCreated), EntityPreparer.dateOrNull(object.dateSuggestionResultCreated), EntityPreparer.dateOrNull(object.dateSuggestionResultProcessed));
     };
 
     Situation.prototype.getMatrixProductBySection = function (section) {

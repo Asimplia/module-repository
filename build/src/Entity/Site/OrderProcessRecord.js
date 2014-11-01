@@ -39,7 +39,7 @@ var OrderProcessRecord = (function () {
     OrderProcessRecord.fromRow = function (row) {
         return new OrderProcessRecord(EntityPreparer.intOrNull(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_ORDER_PROCESS_RECORD_ID]), EntityPreparer.int(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_E_SHOP_ID]), EntityPreparer.string(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_QUERY]), EntityPreparer.date(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_DATE_CHANGED]), EntityPreparer.stringOrNull(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_SOURCE]), EntityPreparer.stringOrNull(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_MEDIUM]), EntityPreparer.stringOrNull(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_CAMPAIGN]), EntityPreparer.intOrNull(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_PAGE_PATH]), EntityPreparer.intOrNull(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_PAGE_VIEWS]), EntityPreparer.intOrNull(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_UNIQUE_PAGE_VIEWS]));
     };
-    OrderProcessRecord.TABLE_NAME = 'warehouse.googleanalytics';
+    OrderProcessRecord.TABLE_NAME = 'warehouse.googleanalyticsbasket';
     OrderProcessRecord.COLUMN_ORDER_PROCESS_RECORD_ID = 'gaid';
     OrderProcessRecord.COLUMN_E_SHOP_ID = 'eshopid';
     OrderProcessRecord.COLUMN_QUERY = 'gaquery';
