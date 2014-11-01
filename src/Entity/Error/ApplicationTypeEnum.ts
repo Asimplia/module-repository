@@ -7,5 +7,7 @@ enum ApplicationTypeEnum {
 	BACKEND,
 	ADMIN,
 	GRAPH,
-	FRONTEND
+	FRONTEND,
+	ANALYTICS,
+	SYNC
 }
