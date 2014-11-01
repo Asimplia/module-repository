@@ -16,6 +16,10 @@ class OrderProcessRecord implements IEntity {
 	public static COLUMN_PAGE_PATH = 'pagepath';
 	public static COLUMN_PAGE_VIEWS = 'pageviews';
 	public static COLUMN_UNIQUE_PAGE_VIEWS = 'uniquepageviews';
+	public static COLUMN_BROWSER = 'browser';
+	public static COLUMN_BROWSER_VERSION = 'browserVersion';
+	public static COLUMN_OPERATING_SYSTEM = 'operatingSystem';
+	public static COLUMN_OPERATING_SYSTEM_VERSION = 'operatingSystemVersion';
 	
 	constructor(
 		private id: number,
@@ -27,7 +31,11 @@ class OrderProcessRecord implements IEntity {
 		private campaign: string,
 		private pagePath: number,
 		private pageViews: number,
-		private uniquePageViews: number
+		private uniquePageViews: number,
+		private browser: string,
+		private browserVersion: string,
+		private operatingSystem: string,
+		private operatingSystemVersion: string
 	) { }
 
 	toObject() {
@@ -45,7 +53,11 @@ class OrderProcessRecord implements IEntity {
 			campaign: entity.campaign,
 			pagePath: entity.pagePath,
 			pageViews: entity.pageViews,
-			uniquePageViews: entity.uniquePageViews
+			uniquePageViews: entity.uniquePageViews,
+			browser: entity.browser,
+			browserVersion: entity.browserVersion,
+			operatingSystem: entity.operatingSystem,
+			operatingSystemVersion: entity.operatingSystemVersion
 		};
 	}
 
@@ -60,7 +72,11 @@ class OrderProcessRecord implements IEntity {
 			EntityPreparer.stringOrNull(object.campaign),
 			EntityPreparer.intOrNull(object.pagePath),
 			EntityPreparer.intOrNull(object.pageViews),
-			EntityPreparer.intOrNull(object.uniquePageViews)
+			EntityPreparer.intOrNull(object.uniquePageViews),
+			EntityPreparer.stringOrNull(object.browser),
+			EntityPreparer.stringOrNull(object.browserVersion),
+			EntityPreparer.stringOrNull(object.operatingSystem),
+			EntityPreparer.stringOrNull(object.operatingSystemVersion)
 		);
 	}
 
@@ -75,7 +91,11 @@ class OrderProcessRecord implements IEntity {
 			EntityPreparer.stringOrNull(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_CAMPAIGN]),
 			EntityPreparer.intOrNull(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_PAGE_PATH]),
 			EntityPreparer.intOrNull(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_PAGE_VIEWS]),
-			EntityPreparer.intOrNull(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_UNIQUE_PAGE_VIEWS])
+			EntityPreparer.intOrNull(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_UNIQUE_PAGE_VIEWS]),
+			EntityPreparer.stringOrNull(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_BROWSER]),
+			EntityPreparer.stringOrNull(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_BROWSER_VERSION]),
+			EntityPreparer.stringOrNull(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_OPERATING_SYSTEM]),
+			EntityPreparer.stringOrNull(row[OrderProcessRecord.TABLE_NAME + '.' + OrderProcessRecord.COLUMN_OPERATING_SYSTEM_VERSION])
 		);
 	}
 }
