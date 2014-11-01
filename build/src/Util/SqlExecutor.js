@@ -12,6 +12,10 @@ var SqlExecutor = (function () {
     }
     SqlExecutor.prototype.insertList = function (list, callback) {
         var _this = this;
+        if (list.isEmpty()) {
+            callback(null, list);
+            return;
+        }
         var params = [];
         var placeholderRows = [];
         var placeholderIndex = 0;

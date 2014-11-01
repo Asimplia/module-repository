@@ -16,6 +16,10 @@ class SqlExecutor {
 	) {}
 	
 	insertList(list: List<IEntity>, callback: (e: Error, list?: List<IEntity>) => void) {
+		if (list.isEmpty()) {
+			callback(null, list);
+			return;
+		}
 		var params = [];
 		var placeholderRows = [];
 		var placeholderIndex = 0;
