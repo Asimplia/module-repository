@@ -8,6 +8,7 @@ var GoogleLoader = (function () {
         this.serviceAccountEmailAddress = process.env.GOOGLE_API_SERVICE_ACCOUNT_EMAIL_ADDRESS || '268122361426-v4qp2m1f2iqq1t5e8a923itm272korsu@developer.gserviceaccount.com';
         this.serviceAccountClientId = process.env.GOOGLE_API_SERVICE_ACCOUNT_CLIENT_ID || '268122361426-v4qp2m1f2iqq1t5e8a923itm272korsu.apps.googleusercontent.com';
         this.serviceAccountPrivateKeyPath = process.env.GOOGLE_API_SERVICE_ACCOUNT_PRIVATE_KEY_PATH || __dirname + '/../../../certs/privatekey.googleapi.pem';
+        this.webApplicationRedirectUri = process.env.GOOGLE_API_WEB_APPLICATION_REDIRECT_URI || 'https://localhost:8081/oauth2callback';
     }
     GoogleLoader.prototype.getClientId = function (callback) {
         callback(null, this.webApplicationClientId);
@@ -75,7 +76,7 @@ var GoogleLoader = (function () {
     };
 
     GoogleLoader.prototype.createOAuth2 = function () {
-        return new googleapis.auth.OAuth2(this.webApplicationClientId, this.webApplicationClientSecret, 'https://localhost:8081/oauth2callback');
+        return new googleapis.auth.OAuth2(this.webApplicationClientId, this.webApplicationClientSecret, this.webApplicationRedirectUri);
     };
     return GoogleLoader;
 })();
