@@ -49,6 +49,28 @@ class GoogleLoader {
 		});
 	}
 
+	getAnalyticsProfiles(accessToken: string, callback: (e: Error, data?: any) => void) {
+		var oauth2 = this.createOAuth2();
+		oauth2.setCredentials({
+			access_token: accessToken
+		});
+		googleapis.options({
+			auth: oauth2
+		});
+		var analytics = googleapis.analytics({ version: 'v3' });
+		var options = {
+			accountId: '~all',
+			webPropertyId: '~all'
+		};
+		analytics.management.profiles.list(options, (e: Error, result?: any) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, result);
+		});
+	}
+
 	getAnalyticsData(
 		accessToken: string, 
 		profileId: string, 

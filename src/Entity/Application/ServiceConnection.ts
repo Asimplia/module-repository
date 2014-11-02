@@ -12,6 +12,7 @@ class ServiceConnection implements IEntity {
 
 	get ServiceType() { return this.serviceType; }
 	get Info() { return this.info; }
+	set Info(value) { this.info = value; }
 
 	constructor(
 		private serviceType: ServiceTypeEnum,

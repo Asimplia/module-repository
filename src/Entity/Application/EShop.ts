@@ -51,6 +51,10 @@ class EShop implements IEntity {
 		));
 	}
 
+	removeServiceConnection(serviceType: ServiceTypeEnum) {
+		this.serviceConnectionList.remove(this.getServiceConnection(serviceType));
+	}
+
 	getServiceConnection(serviceType: ServiceTypeEnum) {
 		return this.serviceConnectionList.findOneOnly((serviceConnection: ServiceConnection) => {
 			return serviceConnection.ServiceType == serviceType;

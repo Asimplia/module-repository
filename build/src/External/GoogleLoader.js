@@ -37,6 +37,28 @@ var GoogleLoader = (function () {
         });
     };
 
+    GoogleLoader.prototype.getAnalyticsProfiles = function (accessToken, callback) {
+        var oauth2 = this.createOAuth2();
+        oauth2.setCredentials({
+            access_token: accessToken
+        });
+        googleapis.options({
+            auth: oauth2
+        });
+        var analytics = googleapis.analytics({ version: 'v3' });
+        var options = {
+            accountId: '~all',
+            webPropertyId: '~all'
+        };
+        analytics.management.profiles.list(options, function (e, result) {
+            if (e) {
+                callback(e);
+                return;
+            }
+            callback(null, result);
+        });
+    };
+
     GoogleLoader.prototype.getAnalyticsData = function (accessToken, profileId, startDate, endDate, metrics, dimensions, sort, filters, segment, callback) {
         var oauth2 = this.createOAuth2();
         oauth2.setCredentials({

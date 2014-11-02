@@ -33,6 +33,14 @@ var List = (function () {
         return this;
     };
 
+    List.prototype.remove = function (item) {
+        var i = _.indexOf(this.entities, item);
+        if (i === null) {
+            throw new Error('Item ' + item + ' not exists in List');
+        }
+        this.entities.splice(i, 1);
+    };
+
     List.prototype.toArray = function (objectFactory) {
         if (typeof objectFactory === 'undefined') {
             objectFactory = function (entity) {

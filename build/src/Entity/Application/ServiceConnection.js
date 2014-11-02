@@ -20,6 +20,9 @@ var ServiceConnection = (function () {
         get: function () {
             return this.info;
         },
+        set: function (value) {
+            this.info = value;
+        },
         enumerable: true,
         configurable: true
     });

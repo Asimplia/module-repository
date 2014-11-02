@@ -38,6 +38,14 @@ class List<Entity extends IEntity> {
 		return this;
 	}
 
+	remove(item: Entity): void {
+		var i = _.indexOf(this.entities, item);
+		if (i === null) {
+			throw new Error('Item ' + item + ' not exists in List');
+		}
+		this.entities.splice(i, 1);
+	}
+
 	toArray(objectFactory?: (entity: Entity) => any) {
 		if (typeof objectFactory === 'undefined') {
 			objectFactory = (entity: Entity) => { return entity; };

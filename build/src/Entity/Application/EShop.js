@@ -48,6 +48,10 @@ var EShop = (function () {
         this.serviceConnectionList.push(new ServiceConnection(serviceType, EntityPreparer.now(), info));
     };
 
+    EShop.prototype.removeServiceConnection = function (serviceType) {
+        this.serviceConnectionList.remove(this.getServiceConnection(serviceType));
+    };
+
     EShop.prototype.getServiceConnection = function (serviceType) {
         return this.serviceConnectionList.findOneOnly(function (serviceConnection) {
             return serviceConnection.ServiceType == serviceType;
