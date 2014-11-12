@@ -18,8 +18,8 @@
     "googleapis": "~1.0.19"
   },
   "scripts": {
-    "postinstall": "",
-    "test": "grunt test"
+    "postinstall": "./node_modules/.bin/grunt",
+    "test": "./node_modules/.bin/grunt test"
   },
   "readme": "﻿# Repository\r\n\r\nmodule for work with data in repository\r\n",
   "readmeFilename": "README.md",
