@@ -18,7 +18,7 @@ Repository.connectNeo4j('http://localhost:7474/');
 
 ### TypeScript
 ```
-/// <reference path="./path/to/asimplia-repository/index.node.d.ts" />
+/// <reference path="./path/to/asimplia-repository/index.d.ts" />
 import Repository = require('asimplia-repository');
 // Connection to Databases
 Repository.connectMongoDB('mongodb://localhost:27017/test');
@@ -32,7 +32,6 @@ Look at ```./tests/``` for full API of module
 ## Development
 ```
 npm install
-tsd update
 grunt dev
 ```
 
