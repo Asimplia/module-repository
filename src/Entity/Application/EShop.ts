@@ -10,6 +10,7 @@ class EShop implements IEntity {
 
 	get Id() { return this.id; }
 	get Name() { return this.name; }
+	get Url() { return this.url; }
 
 	constructor(
 		private id: number,
