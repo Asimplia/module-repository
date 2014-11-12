@@ -1,6 +1,6 @@
 {
   "name": "asimplia-repository",
-  "version": "0.2.16",
+  "version": "0.3.0",
   "description": "Repository",
   "main": "build/src/index.js",
   "author": {
@@ -18,8 +18,8 @@
     "googleapis": "~1.0.19"
   },
   "scripts": {
-    "postinstall": "",
-    "test": "grunt test"
+    "postinstall": "./node_modules/.bin/grunt",
+    "test": "./node_modules/.bin/grunt test"
   },
   "readme": "﻿# Repository\r\n\r\nmodule for work with data in repository\r\n",
   "readmeFilename": "README.md",
@@ -27,10 +27,11 @@
     "grunt": "^0.4.5",
     "grunt-contrib-copy": "^0.5.0",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-typescript": "~0.3.8",
+    "grunt-typescript": "~0.4.4",
     "grunt-cli": "^0.1.13",
     "tsd": "^0.5.7",
     "jasmine": "~2.0.1",
-    "grunt-jasmine-node": "~0.2.1"
+    "grunt-jasmine-node": "~0.2.1",
+    "grunt-tsd": "~0.1.0"
   }
 }

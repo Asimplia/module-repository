@@ -1,6 +1,4 @@
 
-/// <reference path="../../typings/moment/moment.d.ts" />
-
 import Situation = require('../Entity/Matrix/Situation');
 import moment = require('moment');
 import Repository = require('../index');

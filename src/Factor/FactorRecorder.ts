@@ -1,6 +1,4 @@
 ﻿
-/// <reference path="../../typings/mongoose/mongoose.d.ts" />
-
 import AbstractRecorder = require('../AbstractRecorder');
 import Factor = require('../Entity/Factor/Factor');
 import List = require('../Entity/List');

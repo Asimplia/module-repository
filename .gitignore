@@ -14,7 +14,7 @@
 [Dd]ebug/
 [Rr]elease/
 x64/
-build/reports/
+build/
 [Bb]in/
 [Oo]bj/
 
@@ -164,5 +164,3 @@ node_modules/
 typings/
 *.js.map
 .npmignore
-!build_modules/node-sqlserver/build/
-!build_modules/node-sqlserver/build/Release/

@@ -1,6 +1,4 @@
 
-/// <reference path="../../typings/underscore/underscore.d.ts" />
-
 import Repository = require('../index');
 import _ = require('underscore');
 

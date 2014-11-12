@@ -1,6 +1,4 @@
 
-/// <reference path="../../typings/mongoose/mongoose.d.ts" />
-
 import mongoose = require('mongoose');
 import AbstractRecorder = require('../AbstractRecorder');
 import Customer = require('../Entity/Application/Customer');

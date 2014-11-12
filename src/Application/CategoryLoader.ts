@@ -1,6 +1,4 @@
 
-/// <reference path="../../typings/mongoose/mongoose.d.ts" />
-
 import mongoose = require('mongoose');
 import Category = require('../Entity/Application/Category');
 import List = require('../Entity/List');

@@ -1,6 +1,4 @@
 
-/// <reference path="../../typings/mongoose/mongoose.d.ts" />
-
 import mongoose = require('mongoose');
 import List = require('../Entity/List');
 import MatrixDescription = require('../Entity/Matrix/MatrixDescription');

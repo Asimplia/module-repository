@@ -1,7 +1,4 @@
 ﻿
-/// <reference path="../../typings/underscore/underscore.d.ts" />
-/// <reference path="../../typings_local/each/each.d.ts" />
-
 import each = require('each');
 import _ = require('underscore');
 import IEntity = require('./IEntity');

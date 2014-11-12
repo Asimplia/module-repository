@@ -1,6 +1,4 @@
 
-/// <reference path="../../typings/mongoose/mongoose.d.ts" />
-
 import mongoose = require('mongoose');
 import EShop = require('../Entity/Application/EShop');
 import AuthTypeEnum = require('../Entity/Application/AuthTypeEnum');

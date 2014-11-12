@@ -1,7 +1,4 @@
 ﻿
-/// <reference path="../typings/node/node.d.ts" />
-/// <reference path="../typings/mongoose/mongoose.d.ts" />
-
 import mongoose = require('mongoose');
 var pg = require('pg');
 var neo4j = require('neo4j');

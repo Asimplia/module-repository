@@ -1,6 +1,4 @@
 ﻿
-/// <reference path="../typings/mongoose/mongoose.d.ts" />
-
 import IEntity = require('./Entity/IEntity');
 import mongoose = require('mongoose');
 
