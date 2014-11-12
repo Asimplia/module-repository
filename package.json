@@ -1,6 +1,6 @@
 {
   "name": "asimplia-repository",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Repository",
   "main": "build/src/index.js",
   "author": {
@@ -27,8 +27,8 @@
     "grunt-tsd": "~0.1.0"
   },
   "scripts": {
-    "postinstall": "./node_modules/.bin/grunt",
-    "test": "./node_modules/.bin/grunt test"
+    "postinstall": "grunt",
+    "test": "grunt test"
   },
   "readme": "﻿# Repository\r\n\r\nmodule for work with data in repository\r\n",
   "readmeFilename": "README.md"
