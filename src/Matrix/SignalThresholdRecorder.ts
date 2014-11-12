@@ -1,6 +1,4 @@
 
-/// <reference path="../../typings/mongoose/mongoose.d.ts" />
-
 import AbstractRecorder = require('../AbstractRecorder');
 import SignalThreshold = require('../Entity/Matrix/SignalThreshold');
 import SectionEnum = require('../Entity/Section/SectionEnum');

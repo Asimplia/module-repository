@@ -1,6 +1,4 @@
 ﻿
-/// <reference path="../../typings/mongoose/mongoose.d.ts" />
-
 import SignalThreshold = require('../Entity/Matrix/SignalThreshold');
 import List = require('../Entity/List');
 import SectionEnum = require('../Entity/Section/SectionEnum');

@@ -1,6 +1,4 @@
 ﻿
-/// <reference path="../../typings/moment/moment.d.ts" />
-
 import moment = require('moment');
 import AsimpliaRepository = require('../index');
 import Signal = require('../Entity/Matrix/Signal');

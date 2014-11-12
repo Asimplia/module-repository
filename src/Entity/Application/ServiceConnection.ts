@@ -1,6 +1,4 @@
 
-/// <reference path="../../../typings/moment/moment.d.ts" />
-
 import IEntity = require('../IEntity');
 import ServiceTypeEnum = require('./ServiceTypeEnum');
 import ServiceTypeFactory = require('./ServiceTypeFactory');

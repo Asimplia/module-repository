@@ -1,7 +1,4 @@
 
-/// <reference path="../../../../typings_local/traceback/traceback.d.ts" />
-/// <reference path="../../../../typings/underscore/underscore.d.ts" />
-
 import ScriptTypeEnum = require('../ScriptTypeEnum');
 import _ = require('underscore');
 import traceback = require('traceback');
