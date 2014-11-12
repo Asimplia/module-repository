@@ -1,8 +1,4 @@
 ﻿
-// TODO delete after typings is added to DefinitelyTyped
-/// <reference path="../typings_local/each/each.d.ts" />
-/// <reference path="../typings_local/traceback/traceback.d.ts" />
-
 import mongoose = require('mongoose');
 var pg = require('pg');
 var neo4j = require('neo4j');
