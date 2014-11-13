@@ -27,7 +27,7 @@
     "grunt-tsd": "~0.1.0"
   },
   "scripts": {
-    "postinstall": "grunt",
+    "postinstall": "",
     "test": "grunt test"
   },
   "readme": "﻿# Repository\r\n\r\nmodule for work with data in repository\r\n",
