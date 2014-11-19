@@ -33,6 +33,14 @@ class Result implements IEntity {
 	get DateCreated() { return this.dateCreated; }
 	get PriorityValue() { return this.priorityValue; }
 	get PriorityType() { return this.priorityType; }
+	get ProductId() { return this.productIds[0]; }
+	get CustomerId() { return this.customerIds[0]; }
+	get ChannelId() { return this.channelIds[0]; }
+	get CategoryId() { return this.categoryIds[0]; }
+	get ProductIds() { return this.productIds; }
+	get CustomerIds() { return this.customerIds; }
+	get ChannelIds() { return this.channelIds; }
+	get CategoryIds() { return this.categoryIds; }
 
 	set Id(value: number) { this.id = value; }
 	set ActiveStatus(value: Status) {
@@ -141,5 +149,9 @@ class Result implements IEntity {
 
 	isSectionChannel() {
 		return this.section == SectionEnum.CHANNEL;
+	}
+
+	isSectionCategory() {
+		return this.section == SectionEnum.CATEGORY;
 	}
 }
