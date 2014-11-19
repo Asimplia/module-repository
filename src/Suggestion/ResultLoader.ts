@@ -35,7 +35,7 @@ class ResultLoader {
 	getListByType(eShopId: number, limit: number, offset: number, type: ResultTypeEnum, callback: (e: Error, suggestion?: List<SuggestionResult>) => void): void {
 		var conditions = this.getConditionsByType(type);
 		conditions.eShopId = eShopId;
-		this.ResultModel.find(conditions).skip(offset).limit(limit).sort("-activeStatus.dateCreated").exec((e, suggestions: mongoose.Document[]) => {
+		this.ResultModel.find(conditions).skip(offset).limit(limit).sort("-dateCreated").exec((e, suggestions: mongoose.Document[]) => {
 			if (e) {
 				callback(e);
 				return;
@@ -50,7 +50,7 @@ class ResultLoader {
 		var conditions = this.getConditionsByType(type);
 		conditions.eShopId = eShopId;
 		conditions.main = isMain;
-		this.ResultModel.find(conditions).skip(offset).limit(limit).sort("-activeStatus.dateCreated").exec((e, suggestions: mongoose.Document[]) => {
+		this.ResultModel.find(conditions).skip(offset).limit(limit).sort("-dateCreated").exec((e, suggestions: mongoose.Document[]) => {
 			if (e) {
 				callback(e);
 				return;
@@ -106,9 +106,9 @@ class ResultLoader {
 		this.ResultModel.aggregate([
 			{ $group: { 
 				_id: { 
-					year: { $year: '$activeStatus.dateCreated' },
-					month: { $month: "$activeStatus.dateCreated" }, 
-					day: { $dayOfMonth: "$activeStatus.dateCreated" } 
+					year: { $year: '$dateCreated' },
+					month: { $month: "$dateCreated" }, 
+					day: { $dayOfMonth: "$dateCreated" } 
 				},
 				count: {
 					$sum: 1
@@ -134,7 +134,7 @@ class ResultLoader {
 		var conditions = this.getConditionsByType(type);
 		conditions.eShopId = eShopId;
 		conditions.productIds = productId;
-		this.ResultModel.find(conditions).sort("-activeStatus.dateCreated").exec((e, suggestions: mongoose.Document[]) => {
+		this.ResultModel.find(conditions).sort("-dateCreated").exec((e, suggestions: mongoose.Document[]) => {
 			if (e) {
 				callback(e);
 				return;
