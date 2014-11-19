@@ -64,4 +64,15 @@ class ChannelLoader {
 			callback(null, object.dateCreated);
 		});
 	}
+
+	getListByChannelIds(eShopId: number, ids: number[], callback: (e: Error, channelList?: List<Channel>) => void) {
+		this.model.find({ "eShopId": eShopId, "id": { $in: ids } })
+		.exec((e: Error, objects: any[]) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, new List<Channel>(objects, Channel.fromObject));
+		});
+	}
 }

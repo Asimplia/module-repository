@@ -64,4 +64,15 @@ class CustomerLoader {
 			callback(null, object.dateCreated);
 		});
 	}
+
+	getListByCustomerIds(eShopId: number, ids: number[], callback: (e: Error, customerList?: List<Customer>) => void) {
+		this.model.find({ "eShopId": eShopId, "id": { $in: ids } })
+		.exec((e: Error, objects: any[]) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, new List<Customer>(objects, Customer.fromObject));
+		});
+	}
 }

@@ -64,4 +64,15 @@ class CategoryLoader {
 			callback(null, object.dateCreated);
 		});
 	}
+
+	getListByCategoryIds(eShopId: number, ids: number[], callback: (e: Error, categoryList?: List<Category>) => void) {
+		this.model.find({ "eShopId": eShopId, "id": { $in: ids } })
+		.exec((e: Error, objects: any[]) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, new List<Category>(objects, Category.fromObject));
+		});
+	}
 }
