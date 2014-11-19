@@ -37,7 +37,7 @@ module.exports = function (grunt) {
 		watch: {
 			ts: {
 				files: tsFiles,
-				tasks: ['tsd:reinstall', 'typescript:build', 'jasmine_node:unit'],
+				tasks: ['typescript:build', 'jasmine_node:unit'],
 				options: {
 					livereload: 35730,
 					debug: false,
@@ -77,7 +77,7 @@ module.exports = function (grunt) {
 		'tsd:reinstall', 'typescript:build', 'jasmine_node:unit'
 	]);
 	grunt.registerTask('dev', [
-		'tsd:reinstall', 'typescript:build', 'jasmine_node:unit', 'watch:ts'
+		'typescript:build', 'jasmine_node:unit', 'watch:ts'
 	]);
 	grunt.registerTask('test', [
 		'jasmine_node:unit'
