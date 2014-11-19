@@ -33,10 +33,10 @@ class Result implements IEntity {
 	get DateCreated() { return this.dateCreated; }
 	get PriorityValue() { return this.priorityValue; }
 	get PriorityType() { return this.priorityType; }
-	get ProductId() { return this.productIds[0]; }
-	get CustomerId() { return this.customerIds[0]; }
-	get ChannelId() { return this.channelIds[0]; }
-	get CategoryId() { return this.categoryIds[0]; }
+	get ProductId() { return this.productIds ? this.productIds[0] : null; }
+	get CustomerId() { return this.customerIds ? this.customerIds[0] : null; }
+	get ChannelId() { return this.channelIds ? this.channelIds[0] : null; }
+	get CategoryId() { return this.categoryIds ? this.categoryIds[0] : null; }
 	get ProductIds() { return this.productIds; }
 	get CustomerIds() { return this.customerIds; }
 	get ChannelIds() { return this.channelIds; }
