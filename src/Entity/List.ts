@@ -6,6 +6,7 @@ import IEntity = require('./IEntity');
 export = List;
 class List<Entity extends IEntity> {
 	private entities: Entity[] = [];
+	private indexedBy: {[propertyName: string]: {[index: string]: Entity} } = {};
 
 	constructor(items?: Entity[], entityFactory?: (o: any) => Entity) {
 		if (typeof items !== 'undefined') {
@@ -123,6 +124,16 @@ class List<Entity extends IEntity> {
 
 	createEach() {
 		return each(this.entities);
+	}
+
+	indexBy(propertyName: string) {
+		if (typeof this.indexedBy[propertyName] === 'undefined') {
+			this.indexedBy[propertyName] = {};
+			this.forEach((entity: Entity) => {
+				this.indexedBy[propertyName][entity[propertyName]] = entity;
+			});
+		}
+		return this.indexedBy[propertyName];
 	}
 
 	private returnValue(entity: Entity) {
