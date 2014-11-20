@@ -19,6 +19,12 @@
     },
     "jasmine/jasmine.d.ts": {
       "commit": "7c194584f39e29c7f150e0bfc1686a796efc19be"
+    },
+    "each/each.d.ts": {
+      "commit": "a17e409c11c91b7e9b4c6d01736c885e1ec48d5a"
+    },
+    "traceback/traceback.d.ts": {
+      "commit": "a17e409c11c91b7e9b4c6d01736c885e1ec48d5a"
     }
   }
 }

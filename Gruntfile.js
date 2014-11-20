@@ -20,8 +20,7 @@ module.exports = function (grunt) {
 					// true (default) | false
 					removeComments: false,
 					references: [
-						'typings/tsd.d.ts',
-						'typings_local/tsd.d.ts'
+						'typings/tsd.d.ts'
 					]
 				},
 				ignoreTypeCheck: true
