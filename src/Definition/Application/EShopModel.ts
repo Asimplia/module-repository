@@ -12,7 +12,8 @@ var Definition = {
 		info: Object
 	}],
 	url: String,
-	dateCreated: Date
+	dateCreated: Date,
+	imageUri: String
 };
 var schema = new Schema(Definition);
 var EShopModel = mongoose.model('EShop', schema);

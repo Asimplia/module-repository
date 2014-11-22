@@ -11,13 +11,15 @@ class EShop implements IEntity {
 	get Id() { return this.id; }
 	get Name() { return this.name; }
 	get Url() { return this.url; }
+	get ImageUri() { return this.imageUri; }
 
 	constructor(
 		private id: number,
 		private name: string,
 		private serviceConnectionList: List<ServiceConnection>,
 		private url: string,
-		private dateCreated: Date
+		private dateCreated: Date,
+		private imageUri: string
 	) {}
 
 	toObject() {
@@ -30,7 +32,8 @@ class EShop implements IEntity {
 			name: e.name,
 			serviceConnections: e.serviceConnectionList.toArray(ServiceConnection.toObject),
 			url: e.url,
-			dateCreated: e.dateCreated
+			dateCreated: e.dateCreated,
+			imageUri: e.imageUri
 		};
 	}
 
@@ -40,7 +43,8 @@ class EShop implements IEntity {
 			EntityPreparer.string(o.name),
 			new List<ServiceConnection>(o.serviceConnections, ServiceConnection.fromObject),
 			EntityPreparer.stringOrNull(o.url),
-			EntityPreparer.date(o.dateCreated)
+			EntityPreparer.date(o.dateCreated),
+			EntityPreparer.stringOrNull(o.imageUri)
 		);
 	}
 
