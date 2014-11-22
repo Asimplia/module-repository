@@ -134,10 +134,35 @@ class ResultLoader {
 		});
 	}
 
-	getListByProductId(eShopId: number, productId: number, type: ResultTypeEnum, callback: (e: Error, suggestion?: List<SuggestionResult>) => void): void {
+	getListByProductId(eShopId: number, productId: number, type: ResultTypeEnum, callback: (e: Error, list?: List<SuggestionResult>) => void): void {
 		var conditions = this.getConditionsByType(type);
 		conditions.eShopId = eShopId;
 		conditions.productIds = productId;
+		this.getList(conditions, callback);
+	}
+
+	getListByCustomerId(eShopId: number, customerId: number, type: ResultTypeEnum, callback: (e: Error, list?: List<SuggestionResult>) => void): void {
+		var conditions = this.getConditionsByType(type);
+		conditions.eShopId = eShopId;
+		conditions.customerIds = customerId;
+		this.getList(conditions, callback);
+	}
+
+	getListByChannelId(eShopId: number, channelId: number, type: ResultTypeEnum, callback: (e: Error, list?: List<SuggestionResult>) => void): void {
+		var conditions = this.getConditionsByType(type);
+		conditions.eShopId = eShopId;
+		conditions.channelIds = channelId;
+		this.getList(conditions, callback);
+	}
+
+	getListByCategoryId(eShopId: number, categoryId: number, type: ResultTypeEnum, callback: (e: Error, list?: List<SuggestionResult>) => void): void {
+		var conditions = this.getConditionsByType(type);
+		conditions.eShopId = eShopId;
+		conditions.categoryIds = categoryId;
+		this.getList(conditions, callback);
+	}
+
+	private getList(conditions: any, callback: (e: Error, list?: List<SuggestionResult>) => void) {
 		this.ResultModel.find(conditions).sort("-dateCreated").exec((e, suggestions: mongoose.Document[]) => {
 			if (e) {
 				callback(e);

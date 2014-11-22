@@ -15,7 +15,39 @@ class MatrixLoader {
 	}
 
 	getListLastByProductId(eShopId: number, productId: number, callback: (e: Error, matrixList?: List<Matrix>) => void) {
-		this.model.findOne({ "eShopId": eShopId, "productId": productId }, null, { sortBy: "-loadId" }, (e, maxMatrix: any) => {
+		var conditions = {
+			"eShopId": eShopId,
+			"productId": productId
+		};
+		this.getListLast(conditions, callback);
+	}
+
+	getListLastByCustomerId(eShopId: number, customerId: number, callback: (e: Error, matrixList?: List<Matrix>) => void) {
+		var conditions = {
+			"eShopId": eShopId,
+			"customerId": customerId
+		};
+		this.getListLast(conditions, callback);
+	}
+
+	getListLastByChannelId(eShopId: number, channelId: number, callback: (e: Error, matrixList?: List<Matrix>) => void) {
+		var conditions = {
+			"eShopId": eShopId,
+			"channelId": channelId
+		};
+		this.getListLast(conditions, callback);
+	}
+
+	getListLastByCategoryId(eShopId: number, categoryId: number, callback: (e: Error, matrixList?: List<Matrix>) => void) {
+		var conditions = {
+			"eShopId": eShopId,
+			"categoryId": categoryId
+		};
+		this.getListLast(conditions, callback);
+	}
+
+	private getListLast(conditions: any, callback: (e: Error, matrixList?: List<Matrix>) => void) {
+		this.model.findOne(conditions, null, { sortBy: "-dateValid" }).limit(1).exec((e, maxMatrix: any) => {
 			if (e) {
 				callback(e);
 				return;
@@ -24,8 +56,8 @@ class MatrixLoader {
 				callback(null, new List<Matrix>());
 				return;
 			}
-			var maxLoadId = maxMatrix.loadId;
-			this.model.find({ "eShopId": eShopId, "productId": productId, "loadId": maxLoadId }, (e, objects: any[]) => {
+			conditions.loadId = maxMatrix.loadId;
+			this.model.find(conditions, (e, objects: any[]) => {
 				if (e) {
 					callback(e);
 					return;
