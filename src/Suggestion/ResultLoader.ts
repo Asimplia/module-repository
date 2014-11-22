@@ -4,6 +4,7 @@ import List = require('../Entity/List');
 import ResultTypeEnum = require('./ResultTypeEnum');
 import ResultModel = require('./ResultModel');
 import ResultStateEnum = require('../Entity/Suggestion/ResultStateEnum');
+import SectionEnum = require('../Entity/Section/SectionEnum');
 import mongoose = require('mongoose');
 import moment = require('moment');
 import EntityPreparer = require('../Entity/EntityPreparer');
@@ -46,9 +47,12 @@ class ResultLoader {
 		});
 	}
 
-	getListByTypeIsMain(eShopId: number, limit: number, offset: number, isMain: boolean, type: ResultTypeEnum, callback: (e: Error, suggestion?: List<SuggestionResult>) => void): void {
+	getListByTypeIsMain(eShopId: number, section: SectionEnum, limit: number, offset: number, isMain: boolean, type: ResultTypeEnum, callback: (e: Error, suggestion?: List<SuggestionResult>) => void): void {
 		var conditions = this.getConditionsByType(type);
 		conditions.eShopId = eShopId;
+		if (section !== null && section != SectionEnum.UNKNOWN) {
+			conditions.section = SectionEnum[section];
+		}
 		conditions.main = isMain;
 		this.ResultModel.find(conditions).skip(offset).limit(limit).sort("-dateCreated").exec((e, suggestions: mongoose.Document[]) => {
 			if (e) {
