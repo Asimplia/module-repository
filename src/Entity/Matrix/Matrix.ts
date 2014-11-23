@@ -43,6 +43,7 @@ class Matrix implements IEntity {
 	get Section(): SectionEnum { return this.section; }
 	set Section(value: SectionEnum) { this.section = value; }
 	get Quadrant(): QuadrantValueEnum { return this.quadrant; }
+	get DateValid(): Date { return this.dateValid; }
 	get ChangeAbsolute(): number { return this.changeAbsolute; }
 	get ChangeRelative(): number { return this.changeRelative; }
 	get ChangeWeight(): number { return this.changeWeight; }
@@ -60,6 +61,19 @@ class Matrix implements IEntity {
 	get CustomerId(): number { return this.customerId; }
 	get ChannelId(): number { return this.channelId; }
 	get CategoryId(): number { return this.categoryId; }
+	get EntityId(): number {
+		switch (true) {
+			case SectionFactory.isProduct(this.section):
+				return this.productId;
+			case SectionFactory.isCustomer(this.section):
+				return this.customerId;
+			case SectionFactory.isChannel(this.section):
+				return this.channelId;
+			case SectionFactory.isCategory(this.section):
+				return this.categoryId;
+		}
+		throw new Error('Not supported section '+this.section);
+	}
 
 	constructor(
 		private id: number,

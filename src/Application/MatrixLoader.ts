@@ -4,6 +4,8 @@ import Matrix = require('../Entity/Application/Matrix');
 import AuthTypeEnum = require('../Entity/Application/AuthTypeEnum');
 import MatrixModel = require('../Definition/Application/MatrixModel');
 import List = require('../Entity/List');
+import SectionEnum = require('../Entity/Section/SectionEnum');
+import SectionFactory = require('../Entity/Section/SectionFactory');
 
 export = MatrixLoader;
 class MatrixLoader {
@@ -44,6 +46,41 @@ class MatrixLoader {
 			"categoryId": categoryId
 		};
 		this.getListLast(conditions, callback);
+	}
+
+	getListLastBySectionAndEntityId(eShopId: number, section: SectionEnum, entityId: number, limit: number, callback: (e: Error, matrixList?: List<Matrix>) => void) {
+		var conditions: any = {
+			"eShopId": eShopId,
+			"section": SectionEnum[section]
+		};
+		switch (true) {
+			case SectionFactory.isProduct(section):
+				conditions.productId = entityId;
+				break;
+			case SectionFactory.isCustomer(section):
+				conditions.customerId = entityId;
+				break;
+			case SectionFactory.isChannel(section):
+				conditions.channelId = entityId;
+				break;
+			case SectionFactory.isCategory(section):
+				conditions.categoryId = entityId;
+				break;
+			default:
+				callback(new Error('Not supported section '+section));
+		}
+		this.getListLastLimited(conditions, limit, callback);
+	}
+
+	private getListLastLimited(conditions: any, limit: number, callback: (e: Error, matrixList?: List<Matrix>) => void) {
+		this.model.find(conditions).limit(limit).sort('-dateValid').exec((e, objects: any[]) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			var matrixList = new List<Matrix>(objects, Matrix.fromObject);
+			callback(null, matrixList);
+		});
 	}
 
 	private getListLast(conditions: any, callback: (e: Error, matrixList?: List<Matrix>) => void) {

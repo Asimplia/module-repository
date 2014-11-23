@@ -13,6 +13,7 @@ class SignalThreshold implements IEntity {
 
 	get Section(): SectionEnum { return this.section; }
 	get Name(): string { return this.name; }
+	get Column(): ColumnEnum { return this.column; }
 
 	constructor(
 		private section: SectionEnum,
