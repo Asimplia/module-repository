@@ -51,6 +51,16 @@ class SqlExecutor {
 		});
 	}
 
+	getListBy(conditions: any, callback: (e: Error, list: List<IEntity>) => void) {
+		var where = this.getWhereByConditions(conditions);
+		var sql = 'SELECT ' + EntityPreparer.getColumnsAsPrefixedAlias(this.EntityStatic).join(', ') + ' '
+			+ ' FROM ' + this.EntityStatic.TABLE_NAME + ' '
+			+ ' WHERE ' + where.sql;
+		this.connection.query(sql, where.params, (e: Error, result) => {
+			this.createListByResult(e, result, callback);
+		});
+	}
+
 	removeBy(conditions: any, callback: (e: Error) => void) {
 		var where = this.getWhereByConditions(conditions);
 		var sql = 'DELETE FROM ' + this.EntityStatic.TABLE_NAME + ' '
@@ -72,22 +82,22 @@ class SqlExecutor {
 			var value = conditions[key];
 			var column = EntityPreparer.getTableColumnByKey(this.EntityStatic, key);
 			if (typeof value === 'object') {
-				if (typeof value.$gt !== 'undefined') {
+				if (typeof value.$gt !== 'undefined' && value.$gt !== null) {
 					placeholderIndex++;
 					whereParts.push(' ' + column + ' > $' + placeholderIndex) + ' ';
 					params.push(this.prepareValue(value.$gt));
 				}
-				if (typeof value.$lt !== 'undefined') {
+				if (typeof value.$lt !== 'undefined' && value.$lt !== null) {
 					placeholderIndex++;
 					whereParts.push(' ' + column + ' < $' + placeholderIndex) + ' ';
 					params.push(this.prepareValue(value.$lt));
 				}
-				if (typeof value.$gte !== 'undefined') {
+				if (typeof value.$gte !== 'undefined' && value.$gte !== null) {
 					placeholderIndex++;
 					whereParts.push(' ' + column + ' >= $' + placeholderIndex) + ' ';
 					params.push(this.prepareValue(value.$gte));
 				}
-				if (typeof value.$lte !== 'undefined') {
+				if (typeof value.$lte !== 'undefined' && value.$lte !== null) {
 					placeholderIndex++;
 					whereParts.push(' ' + column + ' <= $' + placeholderIndex) + ' ';
 					params.push(this.prepareValue(value.$lte));
@@ -99,9 +109,22 @@ class SqlExecutor {
 			}
 		});
 		return {
-			sql: whereParts.join(' AND '),
+			sql: whereParts.length ? whereParts.join(' AND ') : 'TRUE',
 			params: params
 		};
+	}
+
+	createListByResult(e: Error, result: any, callback: (e: Error, list?: List<IEntity>) => void) {
+		if (e) {
+			callback(e);
+			return;
+		}
+		var list = new List<any>();
+		result.rows.forEach((row) => {
+			var record = this.EntityStatic.fromRow(row);
+			list.push(record);
+		});
+		callback(null, list);
 	}
 
 	private prepareValue(value: any) {
