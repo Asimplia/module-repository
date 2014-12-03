@@ -4,15 +4,18 @@ import List = require('../Entity/List');
 import Category = require('../Entity/EShop/Category');
 import Matrix = require('../Entity/Matrix/Matrix');
 import EntityPreparer = require('../Entity/EntityPreparer');
+import SqlExecutor = require('../Util/SqlExecutor');
 
 export = CategoryLoader;
 class CategoryLoader {
 	
 	private connection;
+	private sqlExecutor: SqlExecutor;
 
 	constructor() {
 		Repository.getConnection((connection) => {
 			this.connection = connection;
+			this.sqlExecutor = new SqlExecutor(connection, Category, Category.COLUMN_CATEGORY_ID, 'id');
 		});
 	}
 
@@ -28,36 +31,11 @@ class CategoryLoader {
 			+' ORDER BY '+Category.TABLE_NAME+'.'+Category.COLUMN_CATEGORY_ID+' ';
 		this.connection.query(sql, 
 			[eShopId, loadId], (e, result) => {
-			this.createListByResult(e, result, callback);
+			this.sqlExecutor.createListByResult(e, result, callback);
 		});
 	}
 
 	getListCreatedFrom(createdDateFrom: Date, callback: (e: Error, categoryList: List<Category>) => void) {
-		var where = ['TRUE'];
-		var parameters = [];
-		if (createdDateFrom) {
-			where.push(Category.COLUMN_DATE_CREATED+' > $1::timestamp');
-			parameters.push(createdDateFrom);
-		}
-		var sql = 'SELECT '+EntityPreparer.getColumnsAsPrefixedAlias(Category).join(', ')+' '
-			+' FROM '+Category.TABLE_NAME+' '
-			+' WHERE '+where.join(' AND ');
-		this.connection.query(sql, parameters, (e, result) => {
-			this.createListByResult(e, result, callback);
-		});
-	}
-
-	private createListByResult(e: Error, result: any, callback: (e: Error, recordList?: List<Category>) => void) {
-		if (e) {
-			console.log(e);
-			callback(e);
-			return;
-		}
-		var list = new List<Category>();
-		result.rows.forEach((row) => {
-			var record = Category.fromRow(row);
-			list.push(record);
-		});
-		callback(null, list);
+		this.sqlExecutor.getListBy({ dateCreated: { $gt: createdDateFrom } }, callback);
 	}
 }
