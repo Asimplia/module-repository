@@ -27,7 +27,7 @@ class ErrorLog implements IEntity {
 		return {
 			applicationType: ApplicationTypeEnum[e.applicationType],
 			errorType: ErrorTypeEnum[e.errorType],
-			dateCreated: EntityPreparer.fromDate(e.dateCreated),
+			dateCreated: EntityPreparer.formatDate(e.dateCreated),
 			errorData: e.errorData
 		};
 	}

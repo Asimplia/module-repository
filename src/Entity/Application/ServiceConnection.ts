@@ -25,7 +25,7 @@ class ServiceConnection implements IEntity {
 	static toObject(e: ServiceConnection) {
 		return {
 			serviceType: ServiceTypeEnum[e.serviceType],
-			dateCreated: EntityPreparer.fromDate(e.dateCreated),
+			dateCreated: EntityPreparer.formatDate(e.dateCreated),
 			info: e.info
 		};
 	}
