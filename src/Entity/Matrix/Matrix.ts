@@ -7,6 +7,7 @@ import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
 import QuadrantValueFactory = require('./QuadrantValueFactory');
 import EntityPreparer = require('../EntityPreparer');
+import MatrixFactory = require('./MatrixFactory');
 
 export = Matrix;
 class Matrix implements IEntity {
@@ -115,7 +116,7 @@ class Matrix implements IEntity {
 			changeWeight: entity.changeWeight,
 			prediction: entity.prediction,
 			quadrant: QuadrantValueEnum[entity.quadrant],
-			dateValid: entity.dateValid ? moment(entity.dateValid).format('YYYY-MM-DD HH:mm:ss') : null,
+			dateValid: entity.dateValid ? moment(entity.dateValid).toDate() : null,
 			inputValueX: entity.inputValueX,
 			inputValueY: entity.inputValueY,
 			changeValueX: entity.changeValueX,
@@ -155,6 +156,10 @@ class Matrix implements IEntity {
 			EntityPreparer.intOrNull(object.channelId),
 			EntityPreparer.intOrNull(object.categoryId)
 		);
+	}
+
+	static fromRow(row: any): Matrix {
+		return MatrixFactory.createMatrixFromRow(row);
 	}
 
 	toObject(): any {

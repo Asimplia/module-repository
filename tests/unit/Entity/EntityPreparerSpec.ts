@@ -14,6 +14,7 @@ class MockEntity implements IEntity {
   toObject() { return MockEntityNo.toObject(this); } 
   static toObject(e: IEntity) { return {}; }
   static fromObject(o) { return new MockEntity; }
+  static fromRow(o) { return new MockEntity; }
 }
 class MockEntityOne implements IEntity {
   public static TABLE_NAME = undefined;
@@ -21,12 +22,14 @@ class MockEntityOne implements IEntity {
   toObject() { return MockEntityNo.toObject(this); } 
   static toObject(e: IEntity) { return {}; }
   static fromObject(o) { return new MockEntityOne; }
+  static fromRow(o) { return new MockEntityOne; }
 }
 class MockEntityNo implements IEntity {
   public static TABLE_NAME = 'schema.tableName';
   toObject() { return MockEntityNo.toObject(this); } 
   static toObject(e: IEntity) { return {}; }
   static fromObject(o) { return new MockEntityNo; }
+  static fromRow(o) { return new MockEntityNo; }
 }
 class MockEntityId implements IEntity {
   public static TABLE_NAME = 'some.table';
@@ -34,6 +37,7 @@ class MockEntityId implements IEntity {
   toObject() { return MockEntityId.toObject(this); } 
   static toObject(e: IEntity) { return {}; }
   static fromObject(o) { return new MockEntityId; }
+  static fromRow(o) { return new MockEntityId; }
 }
 
 

@@ -12,15 +12,18 @@ import Factor = require('../Entity/Factor/Factor');
 import MatrixFactory = require('../Entity/Matrix/MatrixFactory');
 import EntityPreparer = require('../Entity/EntityPreparer');
 import LoadLog = require('../Entity/Load/LoadLog');
+import SqlExecutor = require('../Util/SqlExecutor');
 
 export = MatrixLoader;
 class MatrixLoader {
 
 	private connection;
+	private sqlExecutor: SqlExecutor;
 
 	constructor() {
 		Repository.getConnection((connection) => {
 			this.connection = connection;
+			this.sqlExecutor = new SqlExecutor(connection, Matrix, Matrix.COLUMN_CATEGORY_ID, 'id');
 		});
 	}
 
@@ -32,7 +35,7 @@ class MatrixLoader {
 		this.connection.query(sql, [
 			eShopId, loadId
 		], (e, result) => {
-			this.createListByResult(e, result, callback);
+			this.sqlExecutor.createListByResult(e, result, callback);
 		});
 	}
 
@@ -45,7 +48,7 @@ class MatrixLoader {
 		this.connection.query(sql, [
 				eShopId, loadId, productId
 			], (e, result) => {
-				this.createListByResult(e, result, callback);
+				this.sqlExecutor.createListByResult(e, result, callback);
 			});
 	}
 
@@ -58,7 +61,7 @@ class MatrixLoader {
 		this.connection.query(sql, [
 				eShopId, loadId, customerId
 			], (e, result) => {
-				this.createListByResult(e, result, callback);
+				this.sqlExecutor.createListByResult(e, result, callback);
 			});
 	}
 
@@ -71,7 +74,7 @@ class MatrixLoader {
 		this.connection.query(sql, [
 				eShopId, loadId, channelId
 			], (e, result) => {
-				this.createListByResult(e, result, callback);
+				this.sqlExecutor.createListByResult(e, result, callback);
 			});
 	}
 
@@ -84,7 +87,7 @@ class MatrixLoader {
 		this.connection.query(sql, [
 				eShopId, loadId, categoryId
 			], (e, result) => {
-				this.createListByResult(e, result, callback);
+				this.sqlExecutor.createListByResult(e, result, callback);
 			});
 	}
 
@@ -100,7 +103,7 @@ class MatrixLoader {
 		this.connection.query(sql, [
 				eShopId, loadId
 			], (e, result) => {
-				this.createListByResult(e, result, callback);
+				this.sqlExecutor.createListByResult(e, result, callback);
 			});
 	}
 
@@ -133,7 +136,7 @@ class MatrixLoader {
 		this.connection.query(sql, [
 			eShopId, loadId, limit, offset
 		], (e, result) => {
-			this.createListByResult(e, result, callback);
+			this.sqlExecutor.createListByResult(e, result, callback);
 		});
 	}
 
@@ -174,7 +177,7 @@ class MatrixLoader {
 			+' WHERE '+where.join(' AND ')
 			+' LIMIT '+limit;
 		this.connection.query(sql, parameters, (e, result) => {
-			this.createListByResult(e, result, callback);
+			this.sqlExecutor.createListByResult(e, result, callback);
 		});
 	}
 
@@ -197,19 +200,4 @@ class MatrixLoader {
 			+' LEFT JOIN '+Category.TABLE_NAME+' USING ('+Category.COLUMN_CATEGORY_ID+', '+Category.COLUMN_E_SHOP_ID+') '
 			+' LEFT JOIN '+EShop.TABLE_NAME+' USING ('+EShop.COLUMN_E_SHOP_ID+') ';
 	}
-
-	private createListByResult(e: Error, result: any, callback: (e: Error, recordList?: List<Matrix>) => void) {
-		if (e) {
-			console.log(e);
-			callback(e);
-			return;
-		}
-		var list = new List<Matrix>();
-		result.rows.forEach((row) => {
-			var record = MatrixFactory.createMatrixFromRow(row);
-			list.push(record);
-		});
-		callback(null, list);
-	}
-
 }
