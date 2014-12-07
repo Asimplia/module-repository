@@ -2,6 +2,7 @@
 import EntityPreparer = require('../Entity/EntityPreparer');
 import List = require('../Entity/List');
 import IEntity = require('../Entity/IEntity');
+import IEntityStatic = require('../Entity/IEntityStatic');
 import _ = require('underscore');
 import moment = require('moment');
 
@@ -10,7 +11,7 @@ class SqlExecutor {
 
 	constructor(
 		private connection: any, 
-		private EntityStatic: any, 
+		private EntityStatic: IEntityStatic, 
 		private idColumnName: string,
 		private idKeyName: string
 	) {}
