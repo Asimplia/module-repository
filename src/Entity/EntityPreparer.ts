@@ -144,6 +144,6 @@ class EntityPreparer {
 	}
 
 	static formatDate(value: Date) {
-		return moment(value).format('YYYY-MM-DD HH:mm:ss');
+		return moment(value).format('YYYY-MM-DD\\THH:mm:ss.SSSZZ');
 	}
 }

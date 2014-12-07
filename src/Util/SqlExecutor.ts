@@ -129,7 +129,7 @@ class SqlExecutor {
 
 	private prepareValue(value: any) {
 		if (value instanceof Date) {
-			return moment(value).add(value.getTimezoneOffset(), 'minutes').toDate();
+			return EntityPreparer.formatDate(moment(value).toDate());
 		}
 		return value;
 	}
