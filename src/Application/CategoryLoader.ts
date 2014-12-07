@@ -4,37 +4,28 @@ import Category = require('../Entity/Application/Category');
 import List = require('../Entity/List');
 import AuthTypeEnum = require('../Entity/Application/AuthTypeEnum');
 import CategoryModel = require('../Definition/Application/CategoryModel');
+import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = CategoryLoader;
 class CategoryLoader {
 
 	private model: mongoose.Model<mongoose.Document>;
+	private documentExecutor: DocumentExecutor;
 
 	constructor() {
 		this.model = CategoryModel;
+		this.documentExecutor = new DocumentExecutor(this.model, Category);
 	}
 
 	getById(eShopId: number, id: number, callback: (e: Error, category?: Category) => void) {
 		this.model.findOne({ "id": id, "eShopId": eShopId }, (e, object: mongoose.Document) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			if (!object) {
-				callback(null, null);
-				return;
-			}
-			callback(null, Category.fromObject(object));
+			this.documentExecutor.createByObject(e, object, callback);
 		});
 	}
 
 	getCount(eShopId: number, callback: (e: Error, count?: number) => void): void {
 		this.model.count({ "eShopId": eShopId }, (e, count: number) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			callback(e, count);
+			this.documentExecutor.createIntValue(e, count, callback);
 		});
 	}
 
@@ -42,37 +33,24 @@ class CategoryLoader {
 		this.model.find({ "eShopId": eShopId, "name": { $regex: query, $options: 'i' } })
 		.limit(filter.limit)
 		.skip(filter.offset)
-		.exec((e: Error, objects: any[]) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			callback(null, new List<Category>(objects, Category.fromObject));
+		.exec((e: Error, objects: mongoose.Document[]) => {
+			this.documentExecutor.createListByObjects(e, objects, callback);
 		});
 	}
 
 	getMaxDateCreated(callback: (e: Error, maxDateCreated?: Date) => void) {
-		this.model.findOne({}).sort({ 'dateCreated': -1 }).exec((e, object: any) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			if (!object) {
-				callback(null, null);
-				return;
-			}
-			callback(null, object.dateCreated);
+		this.model.findOne({})
+		.limit(1)
+		.sort({ 'dateCreated': -1 })
+		.exec((e, object: mongoose.Document) => {
+			this.documentExecutor.createDateValue(e, object, callback, 'dateCreated');
 		});
 	}
 
 	getListByCategoryIds(eShopId: number, ids: number[], callback: (e: Error, categoryList?: List<Category>) => void) {
 		this.model.find({ "eShopId": eShopId, "id": { $in: ids } })
 		.exec((e: Error, objects: any[]) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			callback(null, new List<Category>(objects, Category.fromObject));
+			this.documentExecutor.createListByObjects(e, objects, callback);
 		});
 	}
 }
