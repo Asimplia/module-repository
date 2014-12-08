@@ -4,15 +4,18 @@ import AbstractRecorder = require('../AbstractRecorder');
 import Category = require('../Entity/Application/Category');
 import List = require('../Entity/List');
 import CategoryModel = require('../Definition/Application/CategoryModel');
+import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = CategoryRecorder;
 class CategoryRecorder extends AbstractRecorder {
 	
 	private model: mongoose.Model<mongoose.Document>;
+	private documentExecutor: DocumentExecutor;
 
 	constructor() {
 		super();
 		this.model = CategoryModel;
+		this.documentExecutor = new DocumentExecutor(this.model, Category);
 	}
 
 	insertOrUpdateList(categoryList: List<Category>, callback: (e: Error, categoryList?: List<Category>) => void) {
@@ -28,20 +31,6 @@ class CategoryRecorder extends AbstractRecorder {
 	}
 
 	insertOrUpdate(category: Category, callback: (e: Error, category?: Category) => void) {
-		this.model.findOne({ id: category.Id, eShopId: category.EShopId }, (e, doc: mongoose.Document) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			if (!doc) {
-				doc = new this.model({});
-				this.getNextId(this.model, (id) => {
-					category.Id = id;
-					this.update(doc, Category.fromObject, category, callback);
-				});
-				return;
-			}
-			this.update(doc, Category.fromObject, category, callback);
-		});
+		this.documentExecutor.insertOrUpdate(category, callback);
 	}
 }
