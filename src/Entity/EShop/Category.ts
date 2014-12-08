@@ -1,9 +1,9 @@
 
-import IEntity = require('../IEntity');
+import IIdentificableEntity = require('../IIdentificableEntity');
 import EntityPreparer = require('../EntityPreparer');
 
 export = Category;
-class Category implements IEntity {
+class Category implements IIdentificableEntity {
 
 	public static TABLE_NAME = 'warehouse.productcategory';
 	public static COLUMN_CATEGORY_ID = 'productcategoryid';
@@ -13,6 +13,7 @@ class Category implements IEntity {
 	public static COLUMN_DATE_CREATED = 'datecreated';
 
 	get Id(): number { return this.id; }
+	set Id(value: number) { this.id = value; }
 	get EShopId(): number { return this.eShopId; }
 	get Name(): string { return this.name; }
 
