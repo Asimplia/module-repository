@@ -1,10 +1,17 @@
 
 import mongoose = require('mongoose');
+import each = require('each');
+import _ = require('underscore');
 import IIdentificableEntity = require('../Entity/IIdentificableEntity');
 import IEntity = require('../Entity/IEntity');
 import IEntityStatic = require('../Entity/IEntityStatic');
 import List = require('../Entity/List');
 import EntityPreparer = require('../Entity/EntityPreparer');
+
+// TODO move it to mongoose.d.ts & DefinitelyTyped repo
+interface MongooseCollection {
+	insert(docs: any[], callback: (e: Error, docs?: mongoose.Document[]) => void): void;
+}
 
 export = DocumentExecutor;
 class DocumentExecutor {
@@ -13,6 +20,107 @@ class DocumentExecutor {
 		private model: mongoose.Model<mongoose.Document>, 
 		private EntityStatic: IEntityStatic
 	) { }
+
+	insertList(list: List<IIdentificableEntity>, callback: (e: Error, list?: List<IEntity>) => void) {
+		this.getNextId((e: Error, nextId?: number) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			list.forEach((entity: IIdentificableEntity) => {
+				if (entity.Id) {
+					entity.Id = nextId++;
+				}
+			});
+			var objects = list.toArray(this.EntityStatic.toObject);
+			(<MongooseCollection>this.model.collection).insert(objects, (e: Error, docs?: mongoose.Document[]) => {
+				if (e) {
+					callback(e);
+					return;
+				}
+				callback(null, list);
+			});
+		});
+	}
+
+	updateList(list: List<IIdentificableEntity>, callback: (e: Error, list?: List<IEntity>) => void) {
+		var ids = list.map((entity: IIdentificableEntity) => {
+			return entity.Id;
+		}).filter((id: number) => {
+			return id !== null;
+		}).toArray();
+		this.model.find({ id: { $in: ids } })
+		.exec((e: Error, docs?: mongoose.Document[]) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			if (docs.length != list.count()) {
+				callback(new Error('Some entities not found'));
+				return;
+			}
+			var indexById = list.indexBy('Id');
+			each(docs)
+			.on('item', (doc: mongoose.Document, next: (e?: Error) => void) => {
+				var loadedEntity = <IIdentificableEntity>this.EntityStatic.fromObject(doc.toObject()); // TODO create IdentificableEntityStatic
+				var entity = indexById[loadedEntity.Id];
+				this.updateDocument(entity, doc, next);
+			})
+			.on('error', (e: Error) => {
+				callback(e);
+			})
+			.on('end', () => {
+				callback(null, list);
+			});
+		});
+	}
+
+	insertOrUpdateList(list: List<IIdentificableEntity>, callback: (e: Error, list?: List<IEntity>) => void) {
+		var ids = list.map((entity: IIdentificableEntity) => {
+			return entity.Id;
+		}).filter((id: number) => {
+			return id !== null;
+		}).toArray();
+		this.model.find({ id: { $in: ids } })
+		.exec((e: Error, docs?: mongoose.Document[]) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			var loadedIds = _.map(docs, (doc: mongoose.Document) => {
+				var loadedEntity = <IIdentificableEntity>this.EntityStatic.fromObject(doc.toObject()); // TODO create IdentificableEntityStatic
+				return loadedEntity.Id;
+			});
+			var listToInsert = list.filter((entity: IIdentificableEntity) => {
+				return loadedIds.indexOf(entity.Id) === -1
+			});
+			var listToUpdate = list.filter((entity: IIdentificableEntity) => {
+				return loadedIds.indexOf(entity.Id) !== -1
+			});
+
+			var processCallbacks = [];
+			if (listToInsert.count()) {
+				processCallbacks.push((next: () => void) => {
+					this.insertList(listToInsert, next);
+				});
+			}
+			if (listToUpdate.count()) {
+				processCallbacks.push((next: () => void) => {
+					this.updateList(listToUpdate, next);
+				});
+			}
+			each(processCallbacks)
+			.on('item', (process: (next: (e?: Error) => void) => void, next: (e?: Error) => void) => {
+				process(next);
+			})
+			.on('error', (e: Error) => {
+				callback(e);
+			})
+			.on('end', () => {
+				callback(null, list);
+			});
+		});
+	}
 
 	insertOrUpdate(entity: IIdentificableEntity, callback: (e: Error, entity?: IEntity) => void) {
 		if (entity.Id) {
