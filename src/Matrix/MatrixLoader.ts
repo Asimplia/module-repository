@@ -107,7 +107,7 @@ class MatrixLoader {
 			});
 	}
 
-	getListByEShopIdAndLoadIdLimited(
+	getListByEShopIdAndLoadId(
 		eShopId: number, 
 		loadId: number, 
 		limit: number, 
@@ -166,7 +166,7 @@ class MatrixLoader {
 		});
 	}
 
-	getListValidFromLimited(validFrom: Date, limit: number, callback: (e: Error, matrixList?: List<Matrix>) => void) {
+	getListValidFrom(validFrom: Date, callback: (e: Error, matrixList?: List<Matrix>) => void) {
 		var where = ['TRUE'];
 		var parameters = [];
 		if (validFrom) {
@@ -174,8 +174,7 @@ class MatrixLoader {
 			parameters.push(validFrom);
 		}
 		var sql = 'SELECT '+this.getSelect()+' FROM '+this.getFrom()
-			+' WHERE '+where.join(' AND ')
-			+' LIMIT '+limit;
+			+' WHERE '+where.join(' AND ');
 		this.connection.query(sql, parameters, (e, result) => {
 			this.sqlExecutor.createListByResult(e, result, callback);
 		});
