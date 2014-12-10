@@ -7,7 +7,8 @@ import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
 import QuadrantValueFactory = require('./QuadrantValueFactory');
 import EntityPreparer = require('../EntityPreparer');
-import MatrixFactory = require('./MatrixFactory');
+// TODO workaround cyclic require dependency using require('./MatrixFactory'); hard in code fromRow()
+// import MatrixFactory = require('./MatrixFactory');
 
 export = Matrix;
 class Matrix implements IEntity {
@@ -159,7 +160,7 @@ class Matrix implements IEntity {
 	}
 
 	static fromRow(row: any): Matrix {
-		return MatrixFactory.createMatrixFromRow(row);
+		return /*MatrixFactory*/require('./MatrixFactory').createMatrixFromRow(row);
 	}
 
 	toObject(): any {

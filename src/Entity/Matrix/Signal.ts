@@ -1,7 +1,6 @@
 ﻿
 import IEntity = require('../IEntity');
 import Matrix = require('./Matrix');
-import MatrixFactory = require('./MatrixFactory');
 import moment = require('moment');
 import EntityPreparer = require('../EntityPreparer');
 
@@ -31,7 +30,7 @@ class Signal implements IEntity {
 	static fromRow(o: any): Signal {
 		return new Signal(
 			EntityPreparer.intOrNull(o[Signal.TABLE_NAME + '.' + Signal.COLUMN_SIGNAL_ID]), 
-			MatrixFactory.createMatrixFromRow(o), 
+			Matrix.fromRow(o), 
 			EntityPreparer.date(o[Signal.TABLE_NAME + '.' + Signal.COLUMN_DATE_CREATED]),
 			EntityPreparer.intOrNull(o[Signal.TABLE_NAME + '.' + Signal.COLUMN_SITUATION_ID])
 		);
