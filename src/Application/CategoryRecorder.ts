@@ -19,15 +19,7 @@ class CategoryRecorder extends AbstractRecorder {
 	}
 
 	insertOrUpdateList(categoryList: List<Category>, callback: (e: Error, categoryList?: List<Category>) => void) {
-		categoryList.createEach().on('item', (category: Category, next) => {
-			this.insertOrUpdate(category, next);
-		})
-		.on('error', (e: Error) => {
-			callback(e);
-		})
-		.on('end', () => {
-			callback(null, categoryList);
-		});
+		this.documentExecutor.insertOrUpdateList(categoryList, callback);
 	}
 
 	insertOrUpdate(category: Category, callback: (e: Error, category?: Category) => void) {
