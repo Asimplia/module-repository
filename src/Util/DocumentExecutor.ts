@@ -168,19 +168,9 @@ class DocumentExecutor {
 	}
 
 	insert(entity: IIdentificableEntity, callback: (e: Error, entity?: IEntity) => void) {
-		var insert = (entity: IIdentificableEntity) => {
-			var object = entity.toObject();
-			var doc = new this.model(object);
-			doc.update(object, { upsert: true }, (e: Error, affectedRows: number) => {
-				if (e) {
-					callback(e);
-					return;
-				}
-				callback(null, entity);
-			});
-		};
+		
 		if (entity.Id) {
-			insert(entity);
+			this.insertWithId(entity, callback);
 		} else {
 			this.getNextId((e: Error, id?: number) => {
 				if (e) {
@@ -188,9 +178,21 @@ class DocumentExecutor {
 					return;
 				}
 				entity.Id = id;
-				insert(entity);
+				this.insertWithId(entity, callback);
 			});
 		}
+	}
+
+	private insertWithId(entity: IIdentificableEntity, callback: (e: Error, entity?: IEntity) => void) {
+		var object = entity.toObject();
+		var doc = new this.model(object);
+		doc.update(object, { upsert: true }, (e: Error, affectedRows: number) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			callback(null, entity);
+		});
 	}
 
 	private getNextId(callback: (e: Error, id?: number) => void) {
