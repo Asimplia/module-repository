@@ -89,7 +89,7 @@ class EntityPreparer {
 		for (var i in Object.keys(EntityStatic)) {
 			var keyName = Object.keys(EntityStatic)[i];
 			if(keyName.substring(0, 7) === 'COLUMN_') {
-				columns.push(EntityStatic.TABLE_NAME + '.' + EntityStatic[keyName] + ' AS "' + EntityStatic.TABLE_NAME + '.' + EntityStatic[keyName] + '"');
+				columns.push(EntityPreparer.getTableColumnByConstantName(EntityStatic, keyName) + ' AS "' + EntityPreparer.getTableColumnByConstantName(EntityStatic, keyName) + '"');
 			}
 		}
 		return columns;
@@ -100,7 +100,7 @@ class EntityPreparer {
 		for (var i in Object.keys(EntityStatic)) {
 			var keyName = Object.keys(EntityStatic)[i];
 			if(keyName.substring(0, 7) === 'COLUMN_') {
-				columns.push(EntityStatic.TABLE_NAME + '.' + EntityStatic[keyName]);
+				columns.push(EntityPreparer.getTableColumnByConstantName(EntityStatic, keyName));
 			}
 		}
 		return columns;
@@ -124,11 +124,19 @@ class EntityPreparer {
 				var underscoredKeyName = keyName.substring(7);
 				var cammeledKeyName = EntityPreparer.getCammelCaseByUnderscore(underscoredKeyName);
 				if (cammeledKeyName == key || (key == 'id' && cammeledKeyName.substring((<any>EntityStatic).name.length).toLowerCase() == 'id')) {
-					return EntityStatic.TABLE_NAME + '.' + EntityStatic[keyName]
+					return EntityPreparer.getTableColumnByConstantName(EntityStatic, keyName)
 				}
 			}
 		}
 		throw new ColumnNotExistsInEntityError('Column with associated key ' + key + ' not exists' + EntityStatic);
+	}
+
+	static getTableColumnByConstantName(EntityStatic: IEntityStatic, constantName: string) {
+		return EntityPreparer.getTableColumn(EntityStatic, EntityStatic[constantName]);
+	}
+
+	static getTableColumn(EntityStatic: IEntityStatic, plainColumn: string) {
+		return EntityStatic.TABLE_NAME + '.' + plainColumn;
 	}
 
 	static getCammelCaseByUnderscore(underscored) {
