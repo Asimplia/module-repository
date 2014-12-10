@@ -6,14 +6,18 @@ import MatrixModel = require('../Definition/Application/MatrixModel');
 import List = require('../Entity/List');
 import SectionEnum = require('../Entity/Section/SectionEnum');
 import SectionFactory = require('../Entity/Section/SectionFactory');
+import DocumentExecutor = require('../Util/DocumentExecutor');
+import IMatrixDocument = require('../Definition/Application/IMatrixDocument');
 
 export = MatrixLoader;
 class MatrixLoader {
 
-	private model: mongoose.Model<mongoose.Document>;
+	private model: mongoose.Model<IMatrixDocument>;
+	private documentExecutor: DocumentExecutor;
 
 	constructor() {
 		this.model = MatrixModel;
+		this.documentExecutor = new DocumentExecutor(this.model, Matrix);
 	}
 
 	getListLastByProductId(eShopId: number, productId: number, callback: (e: Error, matrixList?: List<Matrix>) => void) {
@@ -73,18 +77,13 @@ class MatrixLoader {
 	}
 
 	private getListLastLimited(conditions: any, limit: number, callback: (e: Error, matrixList?: List<Matrix>) => void) {
-		this.model.find(conditions).limit(limit).sort('-dateValid').exec((e, objects: any[]) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			var matrixList = new List<Matrix>(objects, Matrix.fromObject);
-			callback(null, matrixList);
+		this.model.find(conditions).limit(limit).sort('-dateValid').exec((e, objects: IMatrixDocument[]) => {
+			this.documentExecutor.createListByObjects(e, objects, callback);
 		});
 	}
 
 	private getListLast(conditions: any, callback: (e: Error, matrixList?: List<Matrix>) => void) {
-		this.model.findOne(conditions, null, { sortBy: "-dateValid" }).limit(1).exec((e, maxMatrix: any) => {
+		this.model.findOne(conditions, null, { sortBy: "-dateValid" }).limit(1).exec((e, maxMatrix: IMatrixDocument) => {
 			if (e) {
 				callback(e);
 				return;
@@ -94,19 +93,14 @@ class MatrixLoader {
 				return;
 			}
 			conditions.loadId = maxMatrix.loadId;
-			this.model.find(conditions, (e, objects: any[]) => {
-				if (e) {
-					callback(e);
-					return;
-				}
-				var matrixList = new List<Matrix>(objects, Matrix.fromObject);
-				callback(null, matrixList);
+			this.model.find(conditions, (e, objects: IMatrixDocument[]) => {
+				this.documentExecutor.createListByObjects(e, objects, callback);
 			});
 		});
 	}
 
 	getListLastSortedByChange(eShopId: number, callback: (e: Error, matrixList?: List<Matrix>) => void) {
-		this.model.findOne({ "eShopId": eShopId }, null, { sortBy: "-loadId" }, (e, maxMatrix: any) => {
+		this.model.findOne({ "eShopId": eShopId }, null, { sortBy: "-loadId" }, (e, maxMatrix: IMatrixDocument) => {
 			if (e) {
 				callback(e);
 				return;
@@ -116,28 +110,15 @@ class MatrixLoader {
 				return;
 			}
 			var maxLoadId = maxMatrix.loadId;
-			this.model.find({ "eShopId": eShopId, "loadId": maxLoadId }, (e, objects: any[]) => {
-				if (e) {
-					callback(e);
-					return;
-				}
-				var matrixList = new List<Matrix>(objects, Matrix.fromObject);
-				callback(null, matrixList);
+			this.model.find({ "eShopId": eShopId, "loadId": maxLoadId }, (e, objects: IMatrixDocument[]) => {
+				this.documentExecutor.createListByObjects(e, objects, callback);
 			});
 		});
 	}
 
 	getMaxDateValid(callback: (e: Error, maxDateValid?: Date) => void) {
 		this.model.findOne({}).sort({ 'dateValid': -1 }).exec((e, object: any) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			if (!object) {
-				callback(null, null);
-				return;
-			}
-			callback(null, object.dateValid);
+			this.documentExecutor.createDateValue(e, object, callback, 'dateValid');
 		});
 	}
 }
