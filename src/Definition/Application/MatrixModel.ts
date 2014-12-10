@@ -1,6 +1,7 @@
 
 import mongoose = require('mongoose');
 import Schema = mongoose.Schema;
+import IMatrixDocument = require('./IMatrixDocument');
 
 export = MatrixModel;
 var Definition = {
@@ -29,4 +30,4 @@ var Definition = {
 	categoryId: Number
 };
 var schema = new Schema(Definition);
-var MatrixModel = mongoose.model('Matrix', schema);
+var MatrixModel = <mongoose.Model<IMatrixDocument>>mongoose.model('Matrix', schema);
