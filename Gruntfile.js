@@ -67,7 +67,9 @@ module.exports = function (grunt) {
 		}
 	});
 
-	if (typeof process.env.NODE_ENV === 'undefined') {
+	var isSubModule = process.env.PWD.indexOf('/node_modules/asimplia-repository', process.env.PWD.length - '/node_modules/asimplia-repository'.length) !== -1;
+
+	if (!isSubModule) {
 		grunt.loadNpmTasks('grunt-typescript');
 		grunt.loadNpmTasks('grunt-jasmine-node');
 		grunt.loadNpmTasks('grunt-contrib-watch');
@@ -81,7 +83,7 @@ module.exports = function (grunt) {
 		'typescript:build', 'jasmine_node:unit', 'watch:ts'
 	]);
 	grunt.registerTask('postinstall', function () {
-		if (typeof process.env.NODE_ENV === 'undefined') {
+		if (!isSubModule) {
 			grunt.task.run('default');
 		}
 	});
