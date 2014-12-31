@@ -27,7 +27,7 @@
     "jasmine": "~2.0.1"
     },
   "scripts": {
-    "postinstall": "",
+    "postinstall": "grunt postinstall",
     "test": "grunt test"
   },
   "keywords": [],

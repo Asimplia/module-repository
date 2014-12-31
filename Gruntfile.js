@@ -78,6 +78,11 @@ module.exports = function (grunt) {
 	grunt.registerTask('dev', [
 		'typescript:build', 'jasmine_node:unit', 'watch:ts'
 	]);
+	grunt.registerTask('postinstall', function () {
+		if (typeof process.env.NODE_ENV === 'undefined') {
+			grunt.task.run('default');
+		}
+	});
 	grunt.registerTask('test', [
 		'jasmine_node:unit'
 	]);
