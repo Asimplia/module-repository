@@ -67,10 +67,12 @@ module.exports = function (grunt) {
 		}
 	});
 
-	grunt.loadNpmTasks('grunt-typescript');
-	grunt.loadNpmTasks('grunt-jasmine-node');
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-tsd');
+	if (typeof process.env.NODE_ENV === 'undefined') {
+		grunt.loadNpmTasks('grunt-typescript');
+		grunt.loadNpmTasks('grunt-jasmine-node');
+		grunt.loadNpmTasks('grunt-contrib-watch');
+		grunt.loadNpmTasks('grunt-tsd');
+	}
 
 	grunt.registerTask('default', [
 		'tsd:reinstall', 'typescript:build', 'jasmine_node:unit'
