@@ -1,6 +1,6 @@
 {
   "name": "asimplia-repository",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "description": "Repository",
   "main": "build/src/index.js",
   "author": {
@@ -14,7 +14,7 @@
     "each": "^0.4.9",
     "pg": "^3.4.0",
     "neo4j": "~1.1.0",
-    "traceback": "~0.3.1",
+    "traceback": "git+https://github.com/misak113/traceback.git",
     "googleapis": "~1.0.19"
   },
   "buildDependencies": {
