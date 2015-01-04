@@ -6,7 +6,9 @@ module.exports = function (grunt) {
 	// Project configuration.
 	var config = GruntConfiguration([], [], [], [
 		'typescript:build', 'jasmine_node:unit'
-	], typescriptBuildFiles, typescriptBuildFiles, []);
+	], typescriptBuildFiles, typescriptBuildFiles, [
+		'typings/tsd.d.ts'
+	]);
 	grunt.initConfig(config);
 
 	GruntConfiguration.loadParentNpmTasks(grunt, 'grunt-typescript');
