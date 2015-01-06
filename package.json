@@ -1,6 +1,6 @@
 {
   "name": "asimplia-repository",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "description": "Repository",
   "main": "build/src/index.js",
   "author": {
@@ -26,6 +26,8 @@
     "grunt-cli": "^0.1.13",
     "grunt-jasmine-node": "~0.2.1",
     "grunt-tsd": "~0.1.0",
+    "grunt-wait": "~0.1.0",
+    "grunt-shell": "~1.1.1",
     "jasmine": "~2.0.1"
   },
   "scripts": {
