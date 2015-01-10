@@ -72,6 +72,7 @@ export import Error = require('./Error/index');
 export import Load = require('./Load/index');
 export import External = require('./External/index');
 export import Site = require('./Site/index');
+export import Checklist = require('./Checklist/index');
 Suggestion;
 Factor;
 Entity;
@@ -84,3 +85,4 @@ Error;
 Load;
 External;
 Site;
+Checklist

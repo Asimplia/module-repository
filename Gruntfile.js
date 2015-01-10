@@ -33,7 +33,7 @@ module.exports = function (grunt) {
 		}
 	});
 	grunt.registerTask('test', [
-		'jasmine_node:unit'
+		'jasmine_node:unit', 'jasmine_node:integration'
 	]);
 
 };
