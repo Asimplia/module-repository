@@ -1,5 +1,6 @@
 
 import IEntity = require('../IEntity');
+import IHashIdentificableEntity = require('../Common/IHashIdentificableEntity');
 import SectionEnum = require('../Section/SectionEnum');
 import LocalizedString = require('../Locale/LocalizedString');
 import CheckItemList = require("./CheckItemList");
@@ -9,7 +10,7 @@ import IChecklistObject = require('../../Definition/Checklist/IChecklistObject')
 import EntityPreparer = require('../EntityPreparer');
 
 export = Checklist;
-class Checklist implements IEntity {
+class Checklist implements IHashIdentificableEntity {
 
 	get Id() { return this.id; }
 	get Section() { return this.section; }

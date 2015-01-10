@@ -1,5 +1,5 @@
 
-import IIdentificableEntity = require('../IIdentificableEntity');
+import IIdentificableEntity = require('../Common/IIdentificableEntity');
 import EntityPreparer = require('../EntityPreparer');
 
 export = Category;

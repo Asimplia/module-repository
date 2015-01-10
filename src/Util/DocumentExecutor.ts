@@ -2,9 +2,9 @@
 import mongoose = require('mongoose');
 import each = require('each');
 import _ = require('underscore');
-import IIdentificableEntity = require('../Entity/IIdentificableEntity');
+import IIdentificableEntity = require('../Entity/Common/IIdentificableEntity');
 import IEntity = require('../Entity/IEntity');
-import IEntityStatic = require('../Entity/IEntityStatic');
+import IEntityStatic = require('../Entity/Common/IEntityStatic');
 import List = require('../Entity/List');
 import EntityPreparer = require('../Entity/EntityPreparer');
 
