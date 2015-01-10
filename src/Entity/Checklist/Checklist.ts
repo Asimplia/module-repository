@@ -28,7 +28,7 @@ class Checklist implements IHashIdentificableEntity {
 
 	static fromObject(object: IChecklistObject) {
 		return new Checklist(
-			EntityPreparer.string(object.id),
+			EntityPreparer.id(object.id),
 			EntityPreparer.int(object.eShopId),
 			EntityPreparer.date(object.dateCreated),
 			SectionEnum[object.section],
