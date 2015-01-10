@@ -24,6 +24,10 @@ class EntityPreparer {
 		return EntityPreparer.string(value);
 	}
 
+	static id(value: any) {
+		return this.string(value);
+	}
+
 	static date(value: any): Date {
 		if (EntityPreparer.isNull(value)) {
 			console.warn(new NotAllowedNullError(ScriptTypeEnum.DATE));
