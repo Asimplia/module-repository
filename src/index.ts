@@ -3,12 +3,15 @@ import mongoose = require('mongoose');
 var pg = require('pg');
 var neo4j = require('neo4j');
 
-export function connectMongoDB(dsn: string) {
+export function connectMongoDB(dsn: string, callback?: Function) {
 	mongoose.connect(dsn, (e) => {
 		if (e) {
 			throw e;
 		}
 		console.log('Connected MongoDB');
+		if (callback) {
+			callback();
+		}
 	});
 }
 
