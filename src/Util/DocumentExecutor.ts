@@ -29,7 +29,7 @@ class DocumentExecutor {
 			}
 			list.forEach((entity: IIdentificableEntity) => {
 				if (entity.Id) {
-					entity.Id = nextId++;
+					entity['id'] = nextId++;
 				}
 			});
 			var objects = list.toArray(this.EntityStatic.toObject);
@@ -177,7 +177,7 @@ class DocumentExecutor {
 					callback(e);
 					return;
 				}
-				entity.Id = id;
+				entity['id'] = id;
 				this.insertWithId(entity, callback);
 			});
 		}
