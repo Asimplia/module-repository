@@ -8,7 +8,7 @@ class List<Entity extends IEntity> {
 	private entities: Entity[] = [];
 	private indexedBy: {[propertyName: string]: {[index: string]: Entity} } = {};
 
-	constructor(items?: Entity[], entityFactory?: (o: any) => Entity) {
+	constructor(items?: any[], entityFactory?: (o: any) => Entity) {
 		if (typeof items !== 'undefined') {
 			this.pushArray(items, entityFactory);
 		}
