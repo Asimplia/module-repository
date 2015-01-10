@@ -7,6 +7,7 @@ import IImageObject = require('../Image/IImageObject');
 export = IChecklistObject;
 interface IChecklistObject {
 	id?: string;
+	eShopId: number;
 	dateCreated: Date;
 	section: string;
 	name: ILocalizedStringObject;

@@ -8,6 +8,7 @@ import LocalizedString = require('../Locale/LocalizedString');
 export = ChecklistModel;
 var Definition = {
 	id: String,
+	eShopId: Number,
 	dateCreated: Date,
 	section: String,
 	name: LocalizedString,

@@ -17,6 +17,7 @@ class Checklist implements IHashIdentificableEntity {
 
 	constructor(
 		private id: string,
+		private eShopId: number,
 		private dateCreated: Date,
 		private section: SectionEnum,
 		private name: LocalizedString,
@@ -28,6 +29,7 @@ class Checklist implements IHashIdentificableEntity {
 	static fromObject(object: IChecklistObject) {
 		return new Checklist(
 			EntityPreparer.string(object.id),
+			EntityPreparer.int(object.eShopId),
 			EntityPreparer.date(object.dateCreated),
 			SectionEnum[object.section],
 			new LocalizedString(object.name),
@@ -40,6 +42,7 @@ class Checklist implements IHashIdentificableEntity {
 	static toObject(entity: Checklist): IChecklistObject {
 		return {
 			id: entity.id,
+			eShopId: entity.eShopId,
 			dateCreated: entity.dateCreated,
 			section: SectionEnum[entity.section],
 			name: entity.name.toObject(),

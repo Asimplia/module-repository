@@ -9,6 +9,7 @@ describe('Checklist', () => {
 		it("should return instance with section enum like integer", () => {
 			var checklist = Checklist.fromObject({
 				id: '1',
+				eShopId: 1,
 				dateCreated: new Date(),
 				section: 'MP1',
 				name: { cs: 'a', en: 'b' },
