@@ -7,7 +7,6 @@ import IEntity = require('../IEntity');
 import Reason = require('./Reason');
 import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
-import moment = require('moment');
 import EntityPreparer = require('../EntityPreparer');
 import PlaceholderValue = require('./PlaceholderValue');
 import PriorityTypeEnum = require('./PriorityTypeEnum');

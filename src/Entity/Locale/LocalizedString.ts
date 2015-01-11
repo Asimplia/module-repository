@@ -2,6 +2,7 @@
 import Language = require('./Language');
 import LanguageEnum = require('./LanguageEnum');
 import EntityPreparer = require('../EntityPreparer');
+import ILocalizedStringObject = require('../../Definition/Locale/ILocalizedStringObject');
 
 export = LocalizedString;
 class LocalizedString {
@@ -12,7 +13,7 @@ class LocalizedString {
 	get Cs() { return this.cs; }
 	get En() { return this.en; }
 
-	constructor(langsObject: { en: string; cs: string }) {
+	constructor(langsObject: ILocalizedStringObject) {
 		if (!langsObject) {
 			langsObject = { en: null, cs: null };
 		}
@@ -44,7 +45,7 @@ class LocalizedString {
 		});
 	}
 
-	toObject() {
+	toObject(): ILocalizedStringObject {
 		return {
 			cs: this.cs,
 			en: this.en

@@ -3,12 +3,15 @@ import mongoose = require('mongoose');
 var pg = require('pg');
 var neo4j = require('neo4j');
 
-export function connectMongoDB(dsn: string) {
+export function connectMongoDB(dsn: string, callback?: Function) {
 	mongoose.connect(dsn, (e) => {
 		if (e) {
 			throw e;
 		}
 		console.log('Connected MongoDB');
+		if (callback) {
+			callback();
+		}
 	});
 }
 
@@ -69,6 +72,7 @@ export import Error = require('./Error/index');
 export import Load = require('./Load/index');
 export import External = require('./External/index');
 export import Site = require('./Site/index');
+export import Checklist = require('./Checklist/index');
 Suggestion;
 Factor;
 Entity;
@@ -81,3 +85,4 @@ Error;
 Load;
 External;
 Site;
+Checklist

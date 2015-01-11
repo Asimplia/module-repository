@@ -3,5 +3,5 @@
 export = IIdentificable;
 interface IIdentificable {
 	
-	Id: number;
+	Id: any;
 }

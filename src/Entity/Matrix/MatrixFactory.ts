@@ -7,7 +7,6 @@ import MatrixCategory = require('./MatrixCategory');
 import MatrixEShop = require('./MatrixEShop');
 import SectionFactory = require('../Section/SectionFactory');
 import EntityPreparer = require('../EntityPreparer');
-import IEntityStatic = require('../IEntityStatic');
 import Product = require('../EShop/Product');
 import QuadrantValueFactory = require('./QuadrantValueFactory');
 

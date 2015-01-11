@@ -2,7 +2,7 @@
 import ScriptTypeEnum = require('./Error/ScriptTypeEnum');
 import NotAllowedNullError = require('./Error/Error/NotAllowedNullError');
 import ColumnNotExistsInEntityError = require('./Error/Error/ColumnNotExistsInEntityError');
-import IEntityStatic = require('./IEntityStatic');
+import ITableEntityStatic = require('./Common/ITableEntityStatic');
 import moment = require('moment');
 import _ = require('underscore');
 
@@ -22,6 +22,10 @@ class EntityPreparer {
 			return null;
 		}
 		return EntityPreparer.string(value);
+	}
+
+	static id(value: any) {
+		return this.string(value);
 	}
 
 	static date(value: any): Date {
@@ -84,7 +88,7 @@ class EntityPreparer {
 		return EntityPreparer.float(value);
 	}
 
-	static getColumnsAsPrefixedAlias(EntityStatic: IEntityStatic) {
+	static getColumnsAsPrefixedAlias(EntityStatic: ITableEntityStatic) {
 		var columns = [];
 		for (var i in Object.keys(EntityStatic)) {
 			var keyName = Object.keys(EntityStatic)[i];
@@ -95,7 +99,7 @@ class EntityPreparer {
 		return columns;
 	}
 
-	static getTableColumns(EntityStatic: IEntityStatic) {
+	static getTableColumns(EntityStatic: ITableEntityStatic) {
 		var columns = [];
 		for (var i in Object.keys(EntityStatic)) {
 			var keyName = Object.keys(EntityStatic)[i];
@@ -106,7 +110,7 @@ class EntityPreparer {
 		return columns;
 	}
 
-	static getTablePlainColumns(EntityStatic: IEntityStatic) {
+	static getTablePlainColumns(EntityStatic: ITableEntityStatic) {
 		var columns = [];
 		for (var i in Object.keys(EntityStatic)) {
 			var keyName = Object.keys(EntityStatic)[i];
@@ -117,7 +121,7 @@ class EntityPreparer {
 		return columns;
 	}
 
-	static getTableColumnByKey(EntityStatic: IEntityStatic, key: string): string {
+	static getTableColumnByKey(EntityStatic: ITableEntityStatic, key: string): string {
 		for (var i in Object.keys(EntityStatic)) {
 			var keyName = Object.keys(EntityStatic)[i];
 			if(keyName.substring(0, 7) === 'COLUMN_') {
@@ -131,11 +135,11 @@ class EntityPreparer {
 		throw new ColumnNotExistsInEntityError('Column with associated key ' + key + ' not exists' + EntityStatic);
 	}
 
-	static getTableColumnByConstantName(EntityStatic: IEntityStatic, constantName: string) {
+	static getTableColumnByConstantName(EntityStatic: ITableEntityStatic, constantName: string) {
 		return EntityPreparer.getTableColumn(EntityStatic, EntityStatic[constantName]);
 	}
 
-	static getTableColumn(EntityStatic: IEntityStatic, plainColumn: string) {
+	static getTableColumn(EntityStatic: ITableEntityStatic, plainColumn: string) {
 		return EntityStatic.TABLE_NAME + '.' + plainColumn;
 	}
 
