@@ -9,6 +9,7 @@ export import Currency = require('./Currency');
 export import CurrencyEnum = require('./CurrencyEnum');
 export import TerritoryEnum = require('./TerritoryEnum');
 export import Locale = require('./Locale');
+export import ILocalizedStringObject = require('./ILocalizedStringObject');
 LocalizedString;
 Domain;
 DomainEnum;

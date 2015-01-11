@@ -6,7 +6,7 @@ import LocalizedString = require('../Locale/LocalizedString');
 import CheckItemList = require("./CheckItemList");
 import CheckItem = require("./CheckItem");
 import Image = require("../Image/Image");
-import IChecklistObject = require('../../Definition/Checklist/IChecklistObject');
+import IChecklistObject = require('./IChecklistObject');
 import EntityPreparer = require('../EntityPreparer');
 
 export = Checklist;
@@ -14,6 +14,7 @@ class Checklist implements IHashIdentificableEntity {
 
 	get Id() { return this.id; }
 	get Section() { return this.section; }
+	get Name() { return this.name; }
 
 	constructor(
 		private id: string,

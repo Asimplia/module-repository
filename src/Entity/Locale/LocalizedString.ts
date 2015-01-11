@@ -2,7 +2,7 @@
 import Language = require('./Language');
 import LanguageEnum = require('./LanguageEnum');
 import EntityPreparer = require('../EntityPreparer');
-import ILocalizedStringObject = require('../../Definition/Locale/ILocalizedStringObject');
+import ILocalizedStringObject = require('./ILocalizedStringObject');
 
 export = LocalizedString;
 class LocalizedString {

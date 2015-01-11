@@ -1,7 +1,7 @@
 
 import IEntity = require('../IEntity');
 import EntityPreparer = require('../EntityPreparer');
-import IImageObject = require('../../Definition/Image/IImageObject');
+import IImageObject = require('./IImageObject');
 
 export = Image;
 class Image implements IEntity {

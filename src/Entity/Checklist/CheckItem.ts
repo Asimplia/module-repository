@@ -1,6 +1,6 @@
 
 import IEntity = require('../IEntity');
-import ICheckItemObject = require('../../Definition/Checklist/ICheckItemObject');
+import ICheckItemObject = require('./ICheckItemObject');
 import EntityPreparer = require('../EntityPreparer');
 import CheckTypeEnum = require('./CheckTypeEnum');
 
