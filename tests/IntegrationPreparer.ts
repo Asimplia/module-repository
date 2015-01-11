@@ -2,18 +2,22 @@
 import mongoose = require('mongoose');
 import Repository = require('../src/index');
 
-export = create;
-var create = (beforeEach: Function, afterEach: Function) => {
-	return new Integration(beforeEach, afterEach);
-};
+export = integrationPreparer;
 
-class Integration {
+class IntegrationPreparer {
 
-	constructor(beforeEach: Function, afterEach: Function) {
-		beforeEach((done) => {
-			Repository.connectMongoDB('mongodb://localhost:27017/farfalia_test', () => {
-				done();
-			});
+	private connecting = false;
+	private connected = false;
+
+	startup(done: Function) {
+		if (this.connecting || this.connected) {
+			done();
+			return;
+		}
+		this.connecting = true;
+		Repository.connectMongoDB('mongodb://localhost:27017/farfalia_test', () => {
+			this.connected = true;
+			done();
 		});
 	}
 
@@ -35,3 +39,5 @@ class Integration {
 	}
 	
 }
+
+var integrationPreparer = new IntegrationPreparer();

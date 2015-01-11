@@ -1,13 +1,15 @@
 
 import Repository = require("../../../src/index");
-import IntegrationPreparer = require('../../IntegrationPreparer');
+import i = require('../../IntegrationPreparer');
 import ChecklistLoader = Repository.Checklist.ChecklistLoader;
 import ChecklistRecorder = Repository.Checklist.ChecklistRecorder;
 import Checklist = Repository.Entity.Checklist.Checklist;
 Repository;
 
 describe('ChecklistModel', () => {
-	var i = IntegrationPreparer(beforeEach, afterEach);
+	beforeEach((done) => {
+		i.startup(done);
+	});
 	var checklistRecorder = new ChecklistRecorder();
 	var checklistLoader = new ChecklistLoader();
 
