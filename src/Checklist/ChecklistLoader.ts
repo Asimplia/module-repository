@@ -1,6 +1,7 @@
 
 import mongoose = require('mongoose');
 import Checklist = require('../Entity/Checklist/Checklist');
+import ChecklistFilter = require('../Entity/Checklist/ChecklistFilter');
 import ChecklistModel = require('../Definition/Checklist/ChecklistModel');
 import List = require('../Entity/List');
 import DocumentExecutor = require('../Util/DocumentExecutor');
@@ -23,5 +24,11 @@ class ChecklistLoader {
 			"id": id
 		};
 		this.model.findOne(conditions, (e, object) => this.documentExecutor.createByObject(e, object, callback));
+	}
+
+	getList(eShopId: number, filter: ChecklistFilter, callback: (e: Error, ChecklistList?: List<Checklist>) => void) {
+		var conditions = filter.toObject();
+		conditions['eShopId'] = eShopId;
+		this.model.find(conditions, (e, objects) => this.documentExecutor.createListByObjects(e, objects, callback));
 	}
 }
