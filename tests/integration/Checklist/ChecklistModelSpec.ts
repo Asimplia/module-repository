@@ -14,7 +14,9 @@ describe('ChecklistModel', () => {
 	var checklistLoader = new ChecklistLoader();
 
 	describe("load recorded checklist", () => {
-		i.setup(beforeEach, afterEach);
+		beforeEach((done) => {
+			i.setup(done);
+		});
 
 		it("should return same instance", (done) => {
 			var checklist = Checklist.fromObject({
