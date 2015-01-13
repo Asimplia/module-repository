@@ -15,10 +15,18 @@ class IntegrationPreparer {
 			return;
 		}
 		this.connecting = true;
-		Repository.connectMongoDB('mongodb://localhost:27017/farfalia_test', () => {
-			this.connected = true;
-			done();
-		});
+		try {
+			Repository.connectMongoDB('mongodb://localhost:27017/farfalia_test', () => {
+				this.connected = true;
+				done();
+			});
+		} catch (e) {
+			if (e.state === 1) {
+				this.connected = true;
+			} else {
+				throw e;
+			}
+		}
 	}
 
 	setup(done: Function) {
