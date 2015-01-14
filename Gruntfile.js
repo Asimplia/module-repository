@@ -28,9 +28,7 @@ module.exports = function (grunt) {
 	});
 	grunt.registerTask('postinstall', function () {
 		grunt.task.run('default');
-		if (typeof process.env.NODE_ENV === 'undefined') {
-			grunt.task.run('shell:link_module_util');
-		}
+		grunt.task.run('shell:link_module:asimplia-util');
 	});
 	grunt.registerTask('test', [
 		'jasmine_node:unit', 'jasmine_node:integration'
