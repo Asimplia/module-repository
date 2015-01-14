@@ -6,25 +6,25 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "mongoose/mongoose.d.ts": {
-      "commit": "4abbdff87f05616cfc421e0bf46c54a0ffdc06ce"
+      "commit": "2cc4331067a81e2ae6bc4590e7b33bf286c8f28f"
     },
     "underscore/underscore.d.ts": {
-      "commit": "4abbdff87f05616cfc421e0bf46c54a0ffdc06ce"
+      "commit": "2cc4331067a81e2ae6bc4590e7b33bf286c8f28f"
     },
     "moment/moment.d.ts": {
-      "commit": "4abbdff87f05616cfc421e0bf46c54a0ffdc06ce"
+      "commit": "2cc4331067a81e2ae6bc4590e7b33bf286c8f28f"
     },
     "node/node.d.ts": {
-      "commit": "4abbdff87f05616cfc421e0bf46c54a0ffdc06ce"
+      "commit": "2cc4331067a81e2ae6bc4590e7b33bf286c8f28f"
     },
     "jasmine/jasmine.d.ts": {
-      "commit": "4abbdff87f05616cfc421e0bf46c54a0ffdc06ce"
+      "commit": "2cc4331067a81e2ae6bc4590e7b33bf286c8f28f"
     },
     "each/each.d.ts": {
-      "commit": "4abbdff87f05616cfc421e0bf46c54a0ffdc06ce"
+      "commit": "2cc4331067a81e2ae6bc4590e7b33bf286c8f28f"
     },
     "traceback/traceback.d.ts": {
-      "commit": "4abbdff87f05616cfc421e0bf46c54a0ffdc06ce"
+      "commit": "2cc4331067a81e2ae6bc4590e7b33bf286c8f28f"
     }
   }
 }
