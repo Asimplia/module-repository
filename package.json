@@ -31,7 +31,8 @@
     "jasmine": "~2.0.1"
   },
   "peerDependencies": {
-    "mongodb": "~2.4.6"
+    "mongodb": "~2.4.6",
+    "postgresql": "~9.3.5"
   },
   "scripts": {
     "prepublish": "./node_modules/.bin/grunt prepublish",
