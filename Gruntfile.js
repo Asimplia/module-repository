@@ -16,7 +16,7 @@ module.exports = function (grunt) {
 	GruntConfiguration.loadParentNpmTasks(grunt, 'grunt-wait');
 
 	grunt.registerTask('default', [
-		'tsd:reinstall', 'wait:typings', 'typescript:build', 'jasmine_node:unit'
+		'shell:link_module:asimplia-util', 'tsd:reinstall', 'wait:typings', 'typescript:build', 'jasmine_node:unit'
 	]);
 	grunt.registerTask('dev', function () {
 		GruntConfiguration.typescriptReferences(__dirname + '/build/references.ts', [
@@ -24,11 +24,10 @@ module.exports = function (grunt) {
 			__dirname + '/tests', 
 			__dirname + '/typings'
 		]);
-		grunt.task.run('typescript:build', 'jasmine_node:unit', 'watch:ts');
+		grunt.task.run('default', 'watch:ts');
 	});
-	grunt.registerTask('postinstall', function () {
+	grunt.registerTask('prepublish', function () {
 		grunt.task.run('default');
-		grunt.task.run('shell:link_module:asimplia-util');
 	});
 	grunt.registerTask('test', [
 		'jasmine_node:unit', 'jasmine_node:integration'

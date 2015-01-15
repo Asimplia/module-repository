@@ -1,6 +1,6 @@
 {
   "name": "asimplia-repository",
-  "version": "0.4.15",
+  "version": "0.4.16",
   "description": "Repository",
   "main": "build/src/index.js",
   "author": {
@@ -17,8 +17,8 @@
     "traceback": "git+https://github.com/misak113/traceback.git",
     "googleapis": "~1.0.19"
   },
-  "buildDependencies": {
-    "asimplia-util": "git+https://github.com/Asimplia/module-util.git",
+  "devDependencies": {
+    "asimplia-util": ">=0.2.18",
     "tsd": "^0.5.7",
     "grunt": "^0.4.5",
     "grunt-contrib-watch": "^0.6.1",
@@ -30,9 +30,11 @@
     "grunt-shell": "~1.1.1",
     "jasmine": "~2.0.1"
   },
+  "peerDependencies": {
+    "mongodb": "~2.4.6"
+  },
   "scripts": {
-    "preinstall": "node preinstall.js",
-    "postinstall": "./node_modules/.bin/grunt postinstall",
+    "prepublish": "./node_modules/.bin/grunt prepublish",
     "test": "./node_modules/.bin/grunt test"
   },
   "keywords": [],
