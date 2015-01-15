@@ -30,7 +30,7 @@
     "grunt-shell": "~1.1.1",
     "jasmine": "~2.0.1"
   },
-  "peerDependencies": {
+  "systemRequirements": {
     "mongodb": "~2.4.6",
     "postgresql": "~9.3.5"
   },
