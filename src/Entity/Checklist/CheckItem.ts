@@ -1,49 +1,36 @@
 
 import IEntity = require('../IEntity');
 import ICheckItemObject = require('./ICheckItemObject');
-import EntityPreparer = require('../EntityPreparer');
-import CheckTypeEnum = require('./CheckTypeEnum');
 import LocalizedString = require('../Locale/LocalizedString');
+import ValueList = require('./ValueList');
+import Value = require('./Value');
 
 export = CheckItem;
 class CheckItem implements IEntity {
-
-	private checkTypeNames: {[checkType: number]: LocalizedString};
 	
-	get CheckType() { return this.checkType; }
-	get DateChecked() { return this.dateChecked; }
+	get Label() { return this.label; }
+	get ValueList() { return this.valueList; }
 
 	constructor(
-		private checkType: CheckTypeEnum,
-		private dateChecked: Date
-	) {
-		this.checkTypeNames = {};
-		this.checkTypeNames[CheckTypeEnum.EAN] = new LocalizedString({ cs: 'EAN', en: 'EAN' });
-		this.checkTypeNames[CheckTypeEnum.DESCRIPTION] = new LocalizedString({ cs: 'Popis', en: 'Description' });
-		this.checkTypeNames[CheckTypeEnum.PRICE] = new LocalizedString({ cs: 'Cena', en: 'Price' });
-		this.checkTypeNames[CheckTypeEnum.TRAFIC] = new LocalizedString({ cs: 'Návštěvnost', en: 'Trafic' });
-		this.checkTypeNames[CheckTypeEnum.MAIN_IMAGE] = new LocalizedString({ cs: 'Obrázek', en: 'Image' });
-	}
-
-	getCheckTypeName() {
-		return this.checkTypeNames[this.checkType];
-	}
+		private label: LocalizedString,
+		private valueList: ValueList
+	) {}
 
 	isChecked() {
-		return this.dateChecked !== null;
+		return this.valueList.areAllChecked();
 	}
 
 	static fromObject(object: ICheckItemObject) {
 		return new CheckItem(
-			EntityPreparer.enum<CheckTypeEnum>(CheckTypeEnum, object.checkType),
-			EntityPreparer.dateOrNull(object.dateChecked)
+			new LocalizedString(object.label),
+			new ValueList(object.values, Value.fromObject)
 		);
 	}
 
 	static toObject(entity: CheckItem): ICheckItemObject {
 		return {
-			checkType: CheckTypeEnum[entity.checkType],
-			dateChecked: entity.dateChecked
+			label: entity.label.toObject(),
+			values: entity.valueList.toArray(Value.toObject)
 		};
 	}
 

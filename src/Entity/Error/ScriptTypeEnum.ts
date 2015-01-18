@@ -5,5 +5,6 @@ enum ScriptTypeEnum {
 	FLOAT,
 	STRING,
 	DATE,
-	BOOLEAN
+	BOOLEAN,
+	ENUM
 }

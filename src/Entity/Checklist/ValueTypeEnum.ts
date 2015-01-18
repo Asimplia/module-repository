@@ -1,6 +1,6 @@
 
-export = CheckTypeEnum;
-enum CheckTypeEnum {
+export = ValueTypeEnum;
+enum ValueTypeEnum {
 	EAN,
 	DESCRIPTION,
 	PRICE,

@@ -13,8 +13,11 @@ var Definition = {
 	section: String,
 	name: LocalizedString,
 	checkItems: [{
-		checkType: String,
-		dateChecked: Date
+		label: LocalizedString,
+		values: [{
+			valueType: String,
+			dateChecked: Date
+		}]
 	}],
 	mainImage: Image,
 	dateResolved: Date
