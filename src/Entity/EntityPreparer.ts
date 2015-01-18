@@ -28,6 +28,16 @@ class EntityPreparer {
 		return this.string(value);
 	}
 
+	static enum<Enum>(EnumStatic: any, value: any): Enum {
+		if (_.isNumber(value)) {
+			if (typeof EnumStatic[value] === 'undefined') {
+				console.warn(new Error('Enum value is not in ' + EnumStatic));
+			}
+			return value;
+		}
+		return EnumStatic[value];
+	}
+
 	static date(value: any): Date {
 		if (EntityPreparer.isNull(value)) {
 			console.warn(new NotAllowedNullError(ScriptTypeEnum.DATE));
