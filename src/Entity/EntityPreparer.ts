@@ -11,8 +11,7 @@ class EntityPreparer {
 	
 	static string(value: any): string {
 		if (EntityPreparer.isNull(value)) {
-			console.warn(new NotAllowedNullError(ScriptTypeEnum.STRING));
-			return null;
+			throw new NotAllowedNullError(ScriptTypeEnum.STRING);
 		}
 		return ""+value;
 	}
@@ -25,23 +24,28 @@ class EntityPreparer {
 	}
 
 	static id(value: any) {
-		return this.string(value);
+		return this.stringOrNull(value);
 	}
 
 	static enum<Enum>(EnumStatic: any, value: any): Enum {
 		if (_.isNumber(value)) {
 			if (typeof EnumStatic[value] === 'undefined') {
-				console.warn(new Error('Enum value is not in ' + EnumStatic));
+				throw new Error('Enum value is not in ' + EnumStatic);
+			}
+			if (EntityPreparer.isNull(value)) {
+				throw new NotAllowedNullError(ScriptTypeEnum.ENUM);
 			}
 			return value;
+		}
+		if (EntityPreparer.isNull(value)) {
+			throw new NotAllowedNullError(ScriptTypeEnum.ENUM);
 		}
 		return EnumStatic[value];
 	}
 
 	static date(value: any): Date {
 		if (EntityPreparer.isNull(value)) {
-			console.warn(new NotAllowedNullError(ScriptTypeEnum.DATE));
-			return null;
+			throw new NotAllowedNullError(ScriptTypeEnum.DATE);
 		}
 		return moment(value).toDate();
 	}
@@ -55,7 +59,7 @@ class EntityPreparer {
 	
 	static boolean(value: any): boolean {
 		if (EntityPreparer.isNull(value)) {
-			console.warn(new NotAllowedNullError(ScriptTypeEnum.BOOLEAN));
+			throw new NotAllowedNullError(ScriptTypeEnum.BOOLEAN);
 			return null;
 		}
 		return !!value;
@@ -70,8 +74,7 @@ class EntityPreparer {
 	
 	static int(value: any): number {
 		if (EntityPreparer.isNull(value)) {
-			console.warn(new NotAllowedNullError(ScriptTypeEnum.INT));
-			return null;
+			throw new NotAllowedNullError(ScriptTypeEnum.INT);
 		}
 		return parseInt(value);
 	}
@@ -85,8 +88,7 @@ class EntityPreparer {
 	
 	static float(value: any): number {
 		if (EntityPreparer.isNull(value)) {
-			console.warn(new NotAllowedNullError(ScriptTypeEnum.FLOAT));
-			return null;
+			throw new NotAllowedNullError(ScriptTypeEnum.FLOAT);
 		}
 		return parseFloat(value);
 	}
