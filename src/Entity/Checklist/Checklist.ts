@@ -15,6 +15,7 @@ class Checklist implements IHashIdentificableEntity {
 	get Id() { return this.id; }
 	get Section() { return this.section; }
 	get Name() { return this.name; }
+	get CheckItemList() { return this.checkItemList; }
 
 	constructor(
 		private id: string,
