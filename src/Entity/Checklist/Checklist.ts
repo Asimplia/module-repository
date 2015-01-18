@@ -2,6 +2,7 @@
 import IEntity = require('../IEntity');
 import IHashIdentificableEntity = require('../Common/IHashIdentificableEntity');
 import SectionEnum = require('../Section/SectionEnum');
+import SectionFactory = require('../Section/SectionFactory');
 import LocalizedString = require('../Locale/LocalizedString');
 import CheckItemList = require("./CheckItemList");
 import CheckItem = require("./CheckItem");
@@ -28,14 +29,18 @@ class Checklist implements IHashIdentificableEntity {
 		private dateResolved: Date
 	) {}
 
+	getSectionName() {
+		return SectionFactory.getLabel(this.section);
+	}
+
 	static fromObject(object: IChecklistObject) {
 		return new Checklist(
 			EntityPreparer.id(object.id),
 			EntityPreparer.int(object.eShopId),
 			EntityPreparer.date(object.dateCreated),
-			SectionEnum[object.section],
+			EntityPreparer.enum<SectionEnum>(SectionEnum, object.section),
 			new LocalizedString(object.name),
-			new CheckItemList(object.checkItems),
+			new CheckItemList(object.checkItems, CheckItem.fromObject),
 			Image.fromObject(object.mainImage),
 			EntityPreparer.dateOrNull(object.dateResolved)
 		);

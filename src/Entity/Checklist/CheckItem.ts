@@ -3,35 +3,39 @@ import IEntity = require('../IEntity');
 import ICheckItemObject = require('./ICheckItemObject');
 import EntityPreparer = require('../EntityPreparer');
 import CheckTypeEnum = require('./CheckTypeEnum');
-import ILocalizedStringObject = require('../Locale/ILocalizedStringObject');
+import LocalizedString = require('../Locale/LocalizedString');
 
 export = CheckItem;
 class CheckItem implements IEntity {
 
-	private checkTypeNames: {[checkType: number]: ILocalizedStringObject};
+	private checkTypeNames: {[checkType: number]: LocalizedString};
+	
+	get CheckType() { return this.checkType; }
+	get DateChecked() { return this.dateChecked; }
 
 	constructor(
 		private checkType: CheckTypeEnum,
 		private dateChecked: Date
 	) {
 		this.checkTypeNames = {};
-		this.checkTypeNames[CheckTypeEnum.EAN] = { cs: 'EAN', en: 'EAN' };
-		this.checkTypeNames[CheckTypeEnum.DESCRIPTION] = { cs: 'Popis', en: 'Description' };
-		this.checkTypeNames[CheckTypeEnum.PRICE] = { cs: 'Cena', en: 'Price' };
-		this.checkTypeNames[CheckTypeEnum.TRAFIC] = { cs: 'Návštěvnost', en: 'Trafic' };
-		this.checkTypeNames[CheckTypeEnum.MAIN_IMAGE] = { cs: 'Obrázek', en: 'Image' };
+		this.checkTypeNames[CheckTypeEnum.EAN] = new LocalizedString({ cs: 'EAN', en: 'EAN' });
+		this.checkTypeNames[CheckTypeEnum.DESCRIPTION] = new LocalizedString({ cs: 'Popis', en: 'Description' });
+		this.checkTypeNames[CheckTypeEnum.PRICE] = new LocalizedString({ cs: 'Cena', en: 'Price' });
+		this.checkTypeNames[CheckTypeEnum.TRAFIC] = new LocalizedString({ cs: 'Návštěvnost', en: 'Trafic' });
+		this.checkTypeNames[CheckTypeEnum.MAIN_IMAGE] = new LocalizedString({ cs: 'Obrázek', en: 'Image' });
 	}
-	
-	get CheckType() { return this.checkType; }
-	get DateChecked() { return this.dateChecked; }
 
-	getTypeName() {
+	getCheckTypeName() {
 		return this.checkTypeNames[this.checkType];
+	}
+
+	isChecked() {
+		return this.dateChecked !== null;
 	}
 
 	static fromObject(object: ICheckItemObject) {
 		return new CheckItem(
-			CheckTypeEnum[object.checkType],
+			EntityPreparer.enum<CheckTypeEnum>(CheckTypeEnum, object.checkType),
 			EntityPreparer.dateOrNull(object.dateChecked)
 		);
 	}
