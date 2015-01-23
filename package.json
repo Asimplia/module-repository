@@ -7,6 +7,7 @@
     "name": "misak113"
   },
   "dependencies": {
+    "asimplia-util": ">=0.2.29",
     "mongoose": "^3.8.8",
     "underscore": "^1.6.0",
     "moment": "^2.6.0",
@@ -18,17 +19,17 @@
     "googleapis": "~1.0.19"
   },
   "devDependencies": {
-    "asimplia-util": ">=0.2.18",
     "tsd": "^0.5.7",
     "grunt": "^0.4.5",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-typescript": "~0.4.4",
+    "grunt-typescript": "~0.6.1",
     "grunt-cli": "^0.1.13",
     "grunt-jasmine-node": "~0.2.1",
     "grunt-tsd": "git+https://github.com/misak113/grunt-tsd.git#master",
     "grunt-wait": "~0.1.0",
     "grunt-shell": "~1.1.1",
-    "jasmine": "~2.0.1"
+    "jasmine": "~2.0.1",
+    "typescript": "~1.4.1"
   },
   "systemRequirements": {
     "mongodb": "~2.4.6",

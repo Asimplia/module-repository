@@ -1,65 +1,29 @@
 ﻿
-import mongoose = require('mongoose');
-var pg = require('pg');
-var neo4j = require('neo4j');
+import services = require('./config/services');
+import Util = require('asimplia-util');
+import DependencyInjection = Util.DependencyInjection;
+import ConnectionDispatcher = require('./ConnectionDispatcher');
 
-export function connectMongoDB(dsn: string, callback?: Function) {
-	mongoose.connect(dsn, (e) => {
-		if (e) {
-			throw e;
-		}
-		console.log('Connected MongoDB');
-		if (callback) {
-			callback();
-		}
-	});
-}
+var di = getDependencyInjection();
+var connectionDispatcher: ConnectionDispatcher = di.service('ConnectionDispatcher');
 
-var connectionListeners = [];
-export function connectPostgres(connectionString: string) {
-	var schema = 'public'; // TODO
-	var client = new pg.Client(connectionString);
-	client.connect((e) => {
-		if (e) {
-			throw e;
-			return;
-		}
-		console.log('Connected Postgres');
-		pgClient = client;
-		connectionListeners.forEach((callback) => {
-			callback(pgClient);
-		});
-	});
-	client.query('SET search_path TO '+schema+';');
-}
-var neo4jListeners = [];
-export function connectNeo4j(dsn: string) {
-	var db = new neo4j.GraphDatabase(dsn);
-	db.query('RETURN 1;', {}, (e: Error, res: any) => {
-		if (e) {
-			throw e;
-		}
-		console.log('Connected Neo4j');
-		neo4jDatabase = db;
-		neo4jListeners.forEach((callback) => {
-			callback(neo4jDatabase);
-		});
-	});
-}
-export function getConnection(callback: (connection: any) => void) {
-	connectionListeners.push(callback);
-	if (pgClient) {
-		callback(pgClient);
+/** @deprecated Use ConnectionDispatcher */
+export var connectMongoDB = (...args: any[]) => connectionDispatcher.connectMongoDB.apply(connectionDispatcher, args);
+/** @deprecated Use ConnectionDispatcher */
+export var connectPostgres = (...args: any[]) => connectionDispatcher.connectPostgres.apply(connectionDispatcher, args);
+/** @deprecated Use ConnectionDispatcher */
+export var connectNeo4j = (...args: any[]) => connectionDispatcher.connectNeo4j.apply(connectionDispatcher, args);
+/** @deprecated Use ConnectionDispatcher */
+export var getConnection = (...args: any[]) => connectionDispatcher.getConnection.apply(connectionDispatcher, args);
+/** @deprecated Use ConnectionDispatcher */
+export var getGraphDatabase = (...args: any[]) => connectionDispatcher.getGraphDatabase.apply(connectionDispatcher, args);
+var _di;
+export function getDependencyInjection(): DependencyInjection {
+	if (!_di) {
+		_di = new DependencyInjection(services);
 	}
+	return _di;
 }
-export function getGraphDatabase(callback: (db: any) => void) {
-	neo4jListeners.push(callback);
-	if (neo4jDatabase) {
-		callback(neo4jDatabase);
-	}
-}
-export var pgClient;
-export var neo4jDatabase;
 export import Suggestion = require('./Suggestion/index');
 export import Factor = require('./Factor/index');
 export import Entity = require('./Entity/index');
