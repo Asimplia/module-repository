@@ -118,6 +118,10 @@ class List<Entity extends IEntity> {
 		return this.entities[0];
 	}
 
+	last(): Entity {
+		return this.entities[this.entities.length - 1];
+	}
+
 	firstList(n: number): List<Entity> {
 		return new List<Entity>(_.first(this.entities, n), this.returnValue);
 	}

@@ -28,8 +28,8 @@ class DocumentExecutor {
 				return;
 			}
 			list.forEach((entity: IIdentificableEntity) => {
-				if (entity.Id) {
-					entity['id'] = nextId++;
+				if (entity.Id === null) {
+					entity['id'] = '' + nextId++;
 				}
 			});
 			var objects = list.toArray(this.EntityStatic.toObject);
@@ -177,7 +177,7 @@ class DocumentExecutor {
 					callback(e);
 					return;
 				}
-				entity['id'] = id;
+				entity['id'] = '' + id;
 				this.insertWithId(entity, callback);
 			});
 		}

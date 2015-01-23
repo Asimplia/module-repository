@@ -1,6 +1,9 @@
 
+import ILocalizedStringObject = require('../Locale/ILocalizedStringObject');
+import IValueObject = require('./IValueObject');
+
 export = ICheckItemObject;
 interface ICheckItemObject {
-	checkType: string;
-	dateChecked: Date
+	label: ILocalizedStringObject;
+	values: IValueObject[];
 }

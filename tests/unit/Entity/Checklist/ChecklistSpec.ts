@@ -4,7 +4,7 @@ import Checklist = Repository.Entity.Checklist.Checklist;
 import SectionEnum = Repository.Entity.Section.SectionEnum;
 Repository;
 
-describe('Checklist', () => {
+describe('Entity.Checklist.Checklist', () => {
 	describe("fromObject", () => {
 		it("should return instance with section enum like integer", () => {
 			var checklist = Checklist.fromObject({
@@ -18,6 +18,7 @@ describe('Checklist', () => {
 				dateResolved: null
 			});
 			expect(checklist.Section).toBe(2);
+			expect(checklist.Id).toBe('1');
 			expect(checklist.toObject().section).toBe('MP1');
 			switch (checklist.Section) {
 				case SectionEnum.MP1:

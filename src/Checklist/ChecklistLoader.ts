@@ -27,8 +27,10 @@ class ChecklistLoader {
 	}
 
 	getList(eShopId: number, filter: ChecklistFilter, callback: (e: Error, ChecklistList?: List<Checklist>) => void) {
-		var conditions = filter.toObject();
+		var conditions = {};
 		conditions['eShopId'] = eShopId;
-		this.model.find(conditions, (e, objects) => this.documentExecutor.createListByObjects(e, objects, callback));
+		var sort = {};
+		filter.OrderByDateCreated && (sort['dateCreated'] = filter.OrderByDateCreated);
+		this.model.find(conditions).sort(sort).exec((e, objects) => this.documentExecutor.createListByObjects(e, objects, callback));
 	}
 }

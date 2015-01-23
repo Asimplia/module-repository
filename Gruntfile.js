@@ -4,7 +4,8 @@ module.exports = function (grunt) {
 	var typescriptBuildFiles = ["src/**/*.ts", "tests/**/*.ts", "!node_modules/**/*.ts"];
 	// Project configuration.
 	var config = GruntConfiguration([], [], [], typescriptBuildFiles, typescriptBuildFiles, [
-		'typings/tsd.d.ts'
+		'typings/tsd.d.ts',
+		GruntConfiguration.resolveNodeModulePath('asimplia-util/asimplia-util.d.ts')
 	], __dirname);
 	grunt.initConfig(config);
 
@@ -22,7 +23,8 @@ module.exports = function (grunt) {
 		GruntConfiguration.typescriptReferences(__dirname + '/build/references.ts', [
 			__dirname + '/src', 
 			__dirname + '/tests', 
-			__dirname + '/typings'
+			__dirname + '/typings',
+			__dirname + '/node_modules/asimplia-util/asimplia-util.d.ts'
 		]);
 		grunt.task.run('default', 'watch:ts');
 	});

@@ -1,20 +1,26 @@
 
 import Repository = require("../../../../src/index");
 import CheckItem = Repository.Entity.Checklist.CheckItem;
-import CheckTypeEnum = Repository.Entity.Checklist.CheckTypeEnum;
+import ValueTypeEnum = Repository.Entity.Checklist.ValueTypeEnum;
 Repository;
 
-describe('CheckItem', () => {
+describe('Entity.Checklist.CheckItem', () => {
 	describe("fromObject", () => {
-		it("should return instance with checkType enum like integer", () => {
-			var checklist = CheckItem.fromObject({
-				dateChecked: new Date(),
-				checkType: 'EAN',
+		it("should return instance with valueType enum like integer", () => {
+			var checkItem = CheckItem.fromObject({
+				label: { cs: 'Produkt peněženka', en: 'Product wallet' },
+				values: [{
+					valueType: 'EAN',
+					dateChecked: null
+				}]
 			});
-			expect(checklist.CheckType).toBe(0);
-			expect(checklist.toObject().checkType).toBe('EAN');
-			switch (checklist.CheckType) {
-				case CheckTypeEnum.EAN:
+			expect(checkItem.Label.Cs).toBe('Produkt peněženka');
+			expect(checkItem.Label.En).toBe('Product wallet');
+			expect(checkItem.ValueList.count()).toBe(1);
+			var value = checkItem.ValueList.first();
+			expect(value.toObject().valueType).toBe('EAN');
+			switch (value.ValueType) {
+				case ValueTypeEnum.EAN:
 					expect(true).toBeTruthy();
 					break;
 				default:

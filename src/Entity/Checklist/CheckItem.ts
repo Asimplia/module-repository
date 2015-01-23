@@ -1,31 +1,36 @@
 
 import IEntity = require('../IEntity');
 import ICheckItemObject = require('./ICheckItemObject');
-import EntityPreparer = require('../EntityPreparer');
-import CheckTypeEnum = require('./CheckTypeEnum');
+import LocalizedString = require('../Locale/LocalizedString');
+import ValueList = require('./ValueList');
+import Value = require('./Value');
 
 export = CheckItem;
 class CheckItem implements IEntity {
+	
+	get Label() { return this.label; }
+	get ValueList() { return this.valueList; }
 
 	constructor(
-		private checkType: CheckTypeEnum,
-		private dateChecked: Date
+		private label: LocalizedString,
+		private valueList: ValueList
 	) {}
-	
-	get CheckType() { return this.checkType; }
-	get DateChecked() { return this.dateChecked; }
+
+	isChecked() {
+		return this.valueList.areAllChecked();
+	}
 
 	static fromObject(object: ICheckItemObject) {
 		return new CheckItem(
-			CheckTypeEnum[object.checkType],
-			EntityPreparer.dateOrNull(object.dateChecked)
+			new LocalizedString(object.label),
+			new ValueList(object.values, Value.fromObject)
 		);
 	}
 
 	static toObject(entity: CheckItem): ICheckItemObject {
 		return {
-			checkType: CheckTypeEnum[entity.checkType],
-			dateChecked: entity.dateChecked
+			label: entity.label.toObject(),
+			values: entity.valueList.toArray(Value.toObject)
 		};
 	}
 
