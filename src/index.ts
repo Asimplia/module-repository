@@ -20,7 +20,7 @@ export var getGraphDatabase = (...args: any[]) => connectionDispatcher.getGraphD
 var _di;
 export function getDependencyInjection(): DependencyInjection {
 	if (!_di) {
-		_di = new DependencyInjection(services);
+		_di = new DependencyInjection('asimplia-repository', services);
 	}
 	return _di;
 }
