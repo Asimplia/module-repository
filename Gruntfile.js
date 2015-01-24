@@ -31,8 +31,11 @@ module.exports = function (grunt) {
 	grunt.registerTask('prepublish', function () {
 		grunt.task.run('default');
 	});
-	grunt.registerTask('test', [
-		'jasmine_node:unit', 'jasmine_node:integration'
-	]);
+	grunt.registerTask('test', function () {
+		process.env.NODE_ENV = 'unit';
+		grunt.task.run('jasmine_node:unit');
+		process.env.NODE_ENV = 'integration';
+		grunt.task.run('jasmine_node:integration');
+	});
 
 };

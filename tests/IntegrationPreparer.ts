@@ -1,13 +1,20 @@
 
 import mongoose = require('mongoose');
 import Repository = require('../src/index');
+import ConnectionDispatcher = Repository.ConnectionDispatcher;
 
-export = integrationPreparer;
-
+export = IntegrationPreparer;
 class IntegrationPreparer {
 
 	private connecting = false;
 	private connected = false;
+
+	static $inject = [
+		'ConnectionDispatcher'
+	];
+	constructor(
+		private connectionDispatcher: ConnectionDispatcher
+	) {}
 
 	startup(done: Function) {
 		if (this.connecting || this.connected) {
@@ -16,7 +23,7 @@ class IntegrationPreparer {
 		}
 		this.connecting = true;
 		try {
-			Repository.connectMongoDB('mongodb://localhost:27017/farfalia_test', () => {
+			this.connectionDispatcher.connectMongoDB('mongodb://localhost:27017/farfalia_test', () => {
 				this.connected = true;
 				done();
 			});
@@ -40,7 +47,4 @@ class IntegrationPreparer {
 			done();
 		});
 	}
-	
 }
-
-var integrationPreparer = new IntegrationPreparer();

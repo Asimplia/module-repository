@@ -1,6 +1,6 @@
 
 import Repository = require("../../../src/index");
-import i = require('../../IntegrationPreparer');
+import IntegrationPreparer = require('../../IntegrationPreparer');
 import ChecklistLoader = Repository.Checklist.ChecklistLoader;
 import ChecklistRecorder = Repository.Checklist.ChecklistRecorder;
 import Checklist = Repository.Entity.Checklist.Checklist;
@@ -8,14 +8,16 @@ import List = Repository.Entity.List;
 Repository;
 
 describe('ChecklistModel', () => {
+	var di = Repository.getDependencyInjection();
+	var i: IntegrationPreparer = di.service('tests.IntegrationPreparer');
 	beforeEach((done) => {
 		i.startup(done);
 	});
-	var checklistModel = Repository.getDependencyInjection().service('Definition.Checklist.ChecklistModel');
-	var checklistRecorder = new ChecklistRecorder(checklistModel);
-	var checklistLoader = new ChecklistLoader(checklistModel);
 
 	describe("load recorded checklist", () => {
+		var checklistModel = di.service('Definition.Checklist.ChecklistModel');
+		var checklistRecorder = new ChecklistRecorder(checklistModel);
+		var checklistLoader = new ChecklistLoader(checklistModel);
 		beforeEach((done) => {
 			i.setup(done);
 		});
