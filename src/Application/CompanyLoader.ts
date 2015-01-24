@@ -7,11 +7,12 @@ import CompanyModel = require('../Definition/Application/CompanyModel');
 export = CompanyLoader;
 class CompanyLoader {
 
-	private model: mongoose.Model<mongoose.Document>;
-
-	constructor() {
-		this.model = CompanyModel;
-	}
+	static $inject = [
+		'Definition.Application.CompanyModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {}
 
 	getById(id: number, callback: (e: Error, company?: Company) => void) {
 		this.model.findOne({ "id": id }, (e, object: mongoose.Document) => {

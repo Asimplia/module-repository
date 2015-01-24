@@ -7,11 +7,12 @@ import MatrixLoadModel = require('../Definition/Application/MatrixLoadModel');
 export = MatrixLoadLoader;
 class MatrixLoadLoader {
 
-	private model: mongoose.Model<mongoose.Document>;
-
-	constructor() {
-		this.model = MatrixLoadModel;
-	}
+	static $inject = [
+		'Definition.Application.MatrixLoadModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {}
 
 	getById(eShopId: number, id: number, callback: (e: Error, matrixLoad?: MatrixLoad) => void) {
 		this.model.findOne({ "id": id, "eShopId": eShopId }, (e, object: mongoose.Document) => {

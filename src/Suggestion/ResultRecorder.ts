@@ -1,42 +1,32 @@
 ﻿
-import AbstractRecorder = require('../AbstractRecorder');
 import Result = require('../Entity/Suggestion/Result');
 import List = require('../Entity/List');
 import mongoose = require('mongoose');
-import ResultModel = require('./ResultModel');
+import ResultModel = require('../Definition/Suggestion/ResultModel');
+import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = ResultRecorder;
-class ResultRecorder extends AbstractRecorder {
+class ResultRecorder {
 
-	private ResultModel: mongoose.Model<mongoose.Document>;
+	private documentExecutor: DocumentExecutor;
 
-	constructor() {
-		super();
-		this.ResultModel = ResultModel;
+	static $inject = [
+		'Definition.Suggestion.ResultModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
+		this.documentExecutor = new DocumentExecutor(this.model, Result);
 	}
 
-	insertOrUpdate(result: Result, callback: (e: Error, result?: Result) => void): void {
-		this.ResultModel.findOne({ id: result.Id }, (e, resultDocument: mongoose.Document) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			if (!resultDocument) {
-				resultDocument = new this.ResultModel({});
-				this.getNextId(this.ResultModel, (id) => {
-					result.Id = id;
-					this.update(resultDocument, Result.fromObject, result, callback);
-				});
-				return;
-			}
-			this.update(resultDocument, Result.fromObject, result, callback);
-		});
+	insertOrUpdate(result: Result, callback: (e: Error, result?: Result) => void) {
+		this.documentExecutor.insertOrUpdate(result, callback);
 	}
 
 	removeBySituationIds(situationIds: number[], callback: (e: Error) => void) {
 		var conditions: any = {};
 		conditions.situationId = { $in: situationIds };
-		this.ResultModel.remove(conditions).exec((e: Error) => {
+		this.model.remove(conditions).exec((e: Error) => {
 			callback(e);
 		});
 	}

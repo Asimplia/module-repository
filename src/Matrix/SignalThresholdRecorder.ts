@@ -1,71 +1,39 @@
 
-import AbstractRecorder = require('../AbstractRecorder');
 import SignalThreshold = require('../Entity/Matrix/SignalThreshold');
 import SectionEnum = require('../Entity/Section/SectionEnum');
 import mongoose = require('mongoose');
 import SignalThresholdModel = require('../Definition/Matrix/SignalThresholdModel');
+import DocumentExecutor = require('../Util/DocumentExecutor');
 import List = require('../Entity/List');
 
 export = SignalThresholdRecorder;
-class SignalThresholdRecorder extends AbstractRecorder {
+class SignalThresholdRecorder {
+	
+	private documentExecutor: DocumentExecutor;
 
-	private model: mongoose.Model<mongoose.Document>;
-
-	constructor() {
-		super();
-		this.model = SignalThresholdModel;
+	static $inject = [
+		'Definition.Matrix.SignalThresholdModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
+		this.documentExecutor = new DocumentExecutor(this.model, SignalThreshold);
 	}
 
 	insertOrUpdateList(signalThresholdList: List<SignalThreshold>, callback: (e: Error, signalThresholdList?: List<SignalThreshold>) => void) {
-		signalThresholdList.createEach().on('item', (signalThreshold: SignalThreshold, next) => {
-			this.insertOrUpdate(signalThreshold, next);
-		})
-		.on('error', (e: Error) => {
-			callback(e);
-		})
-		.on('end', () => {
-			callback(null, signalThresholdList);
-		});
+		this.documentExecutor.insertOrUpdateList(signalThresholdList, callback);
 	}
 
-	insertOrUpdate(threshold: SignalThreshold, callback: (e: Error, threshold?: SignalThreshold) => void): void {
-		this.model.findOne({ section: SectionEnum[threshold.Section] }, (e, thresholdDocument: mongoose.Document) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			if (!thresholdDocument) {
-				thresholdDocument = new this.model({});
-			}
-			this.update(thresholdDocument, SignalThreshold.fromObject, threshold, callback);
-		});
+	insertOrUpdate(signalThreshold: SignalThreshold, callback: (e: Error, signalThreshold?: SignalThreshold) => void) {
+		this.documentExecutor.insertOrUpdate(signalThreshold, callback);
 	}
 
 	insertList(signalThresholdList: List<SignalThreshold>, callback: (e: Error, signalThresholdList?: List<SignalThreshold>) => void) {
-		signalThresholdList.createEach().on('item', (signalThreshold: SignalThreshold, next) => {
-			this.insert(signalThreshold, next);
-		})
-		.on('error', (e: Error) => {
-			callback(e);
-		})
-		.on('end', () => {
-			callback(null, signalThresholdList);
-		});
+		this.documentExecutor.insertList(signalThresholdList, callback);
 	}
 
-	insert(threshold: SignalThreshold, callback: (e: Error, threshold?: SignalThreshold) => void): void {
-		this.model.findOne({ section: SectionEnum[threshold.Section] }, (e, thresholdDocument: mongoose.Document) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			if (thresholdDocument) {
-				callback(null, null);
-				return;
-			}
-			thresholdDocument = new this.model({});
-			this.update(thresholdDocument, SignalThreshold.fromObject, threshold, callback);
-		});
+	insert(signalThreshold: SignalThreshold, callback: (e: Error, signalThreshold?: SignalThreshold) => void) {
+		this.documentExecutor.insert(signalThreshold, callback);
 	}
 
 }

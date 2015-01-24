@@ -9,14 +9,15 @@ import SqlExecutor = require('../Util/SqlExecutor');
 export = CategoryLoader;
 class CategoryLoader {
 	
-	private connection;
 	private sqlExecutor: SqlExecutor;
 
-	constructor() {
-		Repository.getConnection((connection) => {
-			this.connection = connection;
-			this.sqlExecutor = new SqlExecutor(connection, Category, Category.COLUMN_CATEGORY_ID, 'id');
-		});
+	static $inject = [
+		'connection.postgres'
+	];
+	constructor(
+		private connection: any
+	) {
+		this.sqlExecutor = new SqlExecutor(connection, Category, Category.COLUMN_CATEGORY_ID, 'id');
 	}
 
 	getListByEShopIdAndLoadIdInMatrixes(eShopId: number, loadId: number, callback: (e: Error, categoryList?: List<Category>) => void) {

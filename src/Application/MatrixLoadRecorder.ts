@@ -1,47 +1,29 @@
 
 import mongoose = require('mongoose');
-import AbstractRecorder = require('../AbstractRecorder');
 import MatrixLoad = require('../Entity/Application/MatrixLoad');
 import List = require('../Entity/List');
 import MatrixLoadModel = require('../Definition/Application/MatrixLoadModel');
+import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = MatrixLoadRecorder;
-class MatrixLoadRecorder extends AbstractRecorder {
+class MatrixLoadRecorder {
 	
-	private model: mongoose.Model<mongoose.Document>;
+	private documentExecutor: DocumentExecutor;
 
-	constructor() {
-		super();
-		this.model = MatrixLoadModel;
+	static $inject = [
+		'Definition.Application.MatrixLoadModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
+		this.documentExecutor = new DocumentExecutor(this.model, MatrixLoad);
 	}
 
 	insertOrUpdateList(matrixLoadList: List<MatrixLoad>, callback: (e: Error, matrixLoadList?: List<MatrixLoad>) => void) {
-		matrixLoadList.createEach().on('item', (matrixLoad: MatrixLoad, next) => {
-			this.insertOrUpdate(matrixLoad, next);
-		})
-		.on('error', (e: Error) => {
-			callback(e);
-		})
-		.on('end', () => {
-			callback(null, matrixLoadList);
-		});
+		this.documentExecutor.insertOrUpdateList(matrixLoadList, callback);
 	}
 
 	insertOrUpdate(matrixLoad: MatrixLoad, callback: (e: Error, matrixLoad?: MatrixLoad) => void) {
-		this.model.findOne({ id: matrixLoad.Id, eShopId: matrixLoad.EShopId }, (e, doc: mongoose.Document) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			if (!doc) {
-				doc = new this.model({});
-				this.getNextId(this.model, (id) => {
-					matrixLoad.Id = id;
-					this.update(doc, MatrixLoad.fromObject, matrixLoad, callback);
-				});
-				return;
-			}
-			this.update(doc, MatrixLoad.fromObject, matrixLoad, callback);
-		});
+		this.documentExecutor.insertOrUpdate(matrixLoad, callback);
 	}
 }

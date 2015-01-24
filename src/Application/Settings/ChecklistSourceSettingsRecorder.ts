@@ -8,11 +8,13 @@ import List = require('../../Entity/List');
 export = ChecklistSourceSettingsRecorder;
 class ChecklistSourceSettingsRecorder {
 	
-	private model: mongoose.Model<mongoose.Document>;
 	private documentExecutor: DocumentExecutor;
-
-	constructor() {
-		this.model = ChecklistSourceSettingsModel;
+	static $inject = [
+		'Definition.Application.Settings.ChecklistSourceSettingsModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
 		this.documentExecutor = new DocumentExecutor(this.model, ChecklistSourceSettings);
 	}
 

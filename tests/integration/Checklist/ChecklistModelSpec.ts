@@ -11,8 +11,9 @@ describe('ChecklistModel', () => {
 	beforeEach((done) => {
 		i.startup(done);
 	});
-	var checklistRecorder = new ChecklistRecorder();
-	var checklistLoader = new ChecklistLoader();
+	var checklistModel = Repository.getDependencyInjection().service('Definition.Checklist.ChecklistModel');
+	var checklistRecorder = new ChecklistRecorder(checklistModel);
+	var checklistLoader = new ChecklistLoader(checklistModel);
 
 	describe("load recorded checklist", () => {
 		beforeEach((done) => {

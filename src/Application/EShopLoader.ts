@@ -8,11 +8,12 @@ import List = require('../Entity/List');
 export = EShopLoader;
 class EShopLoader {
 
-	private model: mongoose.Model<mongoose.Document>;
-
-	constructor() {
-		this.model = EShopModel;
-	}
+	static $inject = [
+		'Definition.Application.EShopModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {}
 
 	getById(id: number, callback: (e: Error, eShop?: EShop) => void) {
 		this.model.findOne({ "id": id }, (e, object: any) => {

@@ -9,11 +9,14 @@ import DocumentExecutor = require('../Util/DocumentExecutor');
 export = CategoryLoader;
 class CategoryLoader {
 
-	private model: mongoose.Model<mongoose.Document>;
 	private documentExecutor: DocumentExecutor;
 
-	constructor() {
-		this.model = CategoryModel;
+	static $inject = [
+		'Definition.Application.CategoryModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
 		this.documentExecutor = new DocumentExecutor(this.model, Category);
 	}
 

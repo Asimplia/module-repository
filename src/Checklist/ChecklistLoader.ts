@@ -10,11 +10,14 @@ import IChecklistDocument = require('../Definition/Checklist/IChecklistDocument'
 export = ChecklistLoader;
 class ChecklistLoader {
 
-	private model: mongoose.Model<IChecklistDocument>;
 	private documentExecutor: DocumentExecutor;
 
-	constructor() {
-		this.model = ChecklistModel;
+	static $inject = [
+		'Definition.Checklist.ChecklistModel'
+	];
+	constructor(
+		private model: mongoose.Model<IChecklistDocument>
+	) {
 		this.documentExecutor = new DocumentExecutor(this.model, Checklist);
 	}
 

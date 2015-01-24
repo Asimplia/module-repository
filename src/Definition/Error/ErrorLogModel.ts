@@ -1,7 +1,7 @@
 
 import mongoose = require('mongoose');
 import Schema = mongoose.Schema;
-import Definition = require('../Definition/Error/ErrorLog');
+import Definition = require('./ErrorLog');
 
 export = ErrorLogModel;
 

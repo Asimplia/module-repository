@@ -1,20 +1,21 @@
 
 import mongoose = require('mongoose');
-import AbstractRecorder = require('../AbstractRecorder');
 import Category = require('../Entity/Application/Category');
 import List = require('../Entity/List');
 import CategoryModel = require('../Definition/Application/CategoryModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = CategoryRecorder;
-class CategoryRecorder extends AbstractRecorder {
+class CategoryRecorder {
 	
-	private model: mongoose.Model<mongoose.Document>;
 	private documentExecutor: DocumentExecutor;
 
-	constructor() {
-		super();
-		this.model = CategoryModel;
+	static $inject = [
+		'Definition.Application.CategoryModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
 		this.documentExecutor = new DocumentExecutor(this.model, Category);
 	}
 

@@ -1,5 +1,5 @@
 ﻿
-import IEntity = require('../IEntity');
+import IIdentificableEntity = require('../Common/IIdentificableEntity');
 import Matrix = require('./Matrix');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 import SectionEnum = require('../Section/SectionEnum');
@@ -9,13 +9,15 @@ import ColumnEnum = require('../Matrix/ColumnEnum');
 import ColumnFactory = require('../Matrix/ColumnFactory');
 
 export = SignalThreshold;
-class SignalThreshold implements IEntity {
+class SignalThreshold implements IIdentificableEntity {
 
+	get Id() { return this.id; }
 	get Section(): SectionEnum { return this.section; }
 	get Name(): string { return this.name; }
 	get Column(): ColumnEnum { return this.column; }
 
 	constructor(
+		private id: string,
 		private section: SectionEnum,
 		private name: string,
 		private column: ColumnEnum,
@@ -36,6 +38,7 @@ class SignalThreshold implements IEntity {
 
 	static fromObject(o: any) {
 		return new SignalThreshold(
+			EntityPreparer.id(o.id),
 			SectionFactory.createSectionEnum(o.section),
 			EntityPreparer.stringOrNull(o.name),
 			ColumnFactory.createColumnEnum(o.column),
@@ -61,6 +64,7 @@ class SignalThreshold implements IEntity {
 
 	static toObject(e: SignalThreshold) {
 		return {
+			id: e.id,
 			section: SectionEnum[e.section],
 			name: e.name,
 			column: ColumnEnum[e.column],

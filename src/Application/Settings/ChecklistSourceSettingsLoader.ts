@@ -6,12 +6,15 @@ import ChecklistSourceSettingsModel = require('../../Definition/Application/Sett
 
 export = ChecklistSourceSettingsLoader;
 class ChecklistSourceSettingsLoader {
-	
-	private model: mongoose.Model<mongoose.Document>;
-	private documentExecutor: DocumentExecutor;
 
-	constructor() {
-		this.model = ChecklistSourceSettingsModel;
+	private documentExecutor: DocumentExecutor;
+	
+	static $inject = [
+		'Definition.Application.Settings.ChecklistSourceSettingsModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
 		this.documentExecutor = new DocumentExecutor(this.model, ChecklistSourceSettings);
 	}
 

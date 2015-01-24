@@ -8,11 +8,12 @@ import ProductModel = require('../Definition/Application/ProductModel');
 export = ProductLoader;
 class ProductLoader {
 
-	private model: mongoose.Model<mongoose.Document>;
-
-	constructor() {
-		this.model = ProductModel;
-	}
+	static $inject = [
+		'Definition.Application.ProductModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {}
 
 	getById(eShopId: number, id: number, callback: (e: Error, product?: Product) => void) {
 		this.model.findOne({ "id": id, "eShopId": eShopId }, (e, object: mongoose.Document) => {

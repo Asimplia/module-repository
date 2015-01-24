@@ -4,14 +4,20 @@ import List = require('../Entity/List');
 import SectionEnum = require('../Entity/Section/SectionEnum');
 import mongoose = require('mongoose');
 import SignalThresholdModel = require('../Definition/Matrix/SignalThresholdModel');
+import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = SignalThresholdLoader;
 class SignalThresholdLoader {
 
-	private model: mongoose.Model<mongoose.Document>;
+	private documentExecutor: DocumentExecutor;
 
-	constructor() {
-		this.model = SignalThresholdModel;
+	static $inject = [
+		'Definition.Matrix.SignalThresholdModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
+		this.documentExecutor = new DocumentExecutor(this.model, SignalThreshold);
 	}
 
 	getByMatrixType(section: SectionEnum, callback: (e: Error, signalThreshold?: SignalThreshold) => void): void {

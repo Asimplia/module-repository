@@ -1,35 +1,29 @@
 
 import mongoose = require('mongoose');
-import AbstractRecorder = require('../AbstractRecorder');
 import User = require('../Entity/Application/User');
-import AuthTypeEnum = require('../Entity/Application/AuthTypeEnum');
+import List = require('../Entity/List');
 import UserModel = require('../Definition/Application/UserModel');
+import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = UserRecorder;
-class UserRecorder extends AbstractRecorder {
+class UserRecorder {
 
-	private model: mongoose.Model<mongoose.Document>;
+	private documentExecutor: DocumentExecutor;
 
-	constructor() {
-		super();
-		this.model = UserModel;
+	static $inject = [
+		'Definition.Application.UserModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
+		this.documentExecutor = new DocumentExecutor(this.model, User);
+	}
+
+	insertOrUpdateList(userList: List<User>, callback: (e: Error, userList?: List<User>) => void) {
+		this.documentExecutor.insertOrUpdateList(userList, callback);
 	}
 
 	insertOrUpdate(user: User, callback: (e: Error, user?: User) => void) {
-		this.model.findOne({ id: user.Id }, (e, userDocument: mongoose.Document) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			if (!userDocument) {
-				userDocument = new this.model({});
-				this.getNextId(this.model, (id) => {
-					user.Id = id;
-					this.update(userDocument, User.fromObject, user, callback);
-				});
-				return;
-			}
-			this.update(userDocument, User.fromObject, user, callback);
-		});
+		this.documentExecutor.insertOrUpdate(user, callback);
 	}
 }

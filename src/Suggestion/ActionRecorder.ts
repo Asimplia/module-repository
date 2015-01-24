@@ -1,36 +1,26 @@
 ﻿
-import AbstractRecorder = require('../AbstractRecorder');
 import SuggestionAction = require('../Entity/Suggestion/Action');
 import List = require('../Entity/List');
 import mongoose = require('mongoose');
-import ActionModel = require('./ActionModel');
+import ActionModel = require('../Definition/Suggestion/ActionModel');
+import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = ActionRecorder;
-class ActionRecorder extends AbstractRecorder {
+class ActionRecorder {
+	
+	private documentExecutor: DocumentExecutor;
 
-	private model: mongoose.Model<mongoose.Document>;
-
-	constructor() {
-		super();
-		this.model = ActionModel;
+	static $inject = [
+		'Definition.Suggestion.ActionModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
+		this.documentExecutor = new DocumentExecutor(this.model, SuggestionAction);
 	}
 
-	insertOrUpdate(suggestionAction: SuggestionAction, callback: (e: Error, action?: SuggestionAction) => void): void {
-		this.model.findOne({ id: suggestionAction.Id }, (e, actionDocument: mongoose.Document) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			if (!actionDocument) {
-				actionDocument = new this.model({});
-				this.getNextId(this.model, (id) => {
-					suggestionAction.Id = id;
-					this.update(actionDocument, SuggestionAction.fromObject, suggestionAction, callback);
-				});
-				return;
-			}
-			this.update(actionDocument, SuggestionAction.fromObject, suggestionAction, callback);
-		});
+	insertOrUpdate(action: SuggestionAction, callback: (e: Error, action?: SuggestionAction) => void) {
+		this.documentExecutor.insertOrUpdate(action, callback);
 	}
 
 	remove(id: number, callback: (e: Error) => void): void {

@@ -3,14 +3,20 @@ import mongoose = require('mongoose');
 import List = require('../Entity/List');
 import MatrixDescription = require('../Entity/Matrix/MatrixDescription');
 import MatrixDescriptionModel = require('../Definition/Matrix/MatrixDescriptionModel');
+import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = MatrixDescriptionLoader;
 class MatrixDescriptionLoader {
 
-	private model: mongoose.Model<mongoose.Document>;
+	private documentExecutor: DocumentExecutor;
 
-	constructor() {
-		this.model = MatrixDescriptionModel;
+	static $inject = [
+		'Definition.Matrix.MatrixDescriptionModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
+		this.documentExecutor = new DocumentExecutor(this.model, MatrixDescription);
 	}
 
 	getList(callback: (e: Error, list?: List<MatrixDescription>) => void) {

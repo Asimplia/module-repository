@@ -1,47 +1,29 @@
 
 import mongoose = require('mongoose');
-import AbstractRecorder = require('../AbstractRecorder');
 import EShop = require('../Entity/Application/EShop');
 import List = require('../Entity/List');
 import EShopModel = require('../Definition/Application/EShopModel');
+import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = EShopRecorder;
-class EShopRecorder extends AbstractRecorder {
+class EShopRecorder {
 	
-	private model: mongoose.Model<mongoose.Document>;
+	private documentExecutor: DocumentExecutor;
 
-	constructor() {
-		super();
-		this.model = EShopModel;
+	static $inject = [
+		'Definition.Application.EShopModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
+		this.documentExecutor = new DocumentExecutor(this.model, EShop);
 	}
 
 	insertOrUpdateList(eShopList: List<EShop>, callback: (e: Error, eShopList?: List<EShop>) => void) {
-		eShopList.createEach().on('item', (eShop: EShop, next) => {
-			this.insertOrUpdate(eShop, next);
-		})
-		.on('error', (e: Error) => {
-			callback(e);
-		})
-		.on('end', () => {
-			callback(null, eShopList);
-		});
+		this.documentExecutor.insertOrUpdateList(eShopList, callback);
 	}
 
 	insertOrUpdate(eShop: EShop, callback: (e: Error, eShop?: EShop) => void) {
-		this.model.findOne({ id: eShop.Id }, (e, eShopDocument: mongoose.Document) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			if (!eShopDocument) {
-				eShopDocument = new this.model({});
-				this.getNextId(this.model, (id) => {
-					eShop.Id = id;
-					this.update(eShopDocument, EShop.fromObject, eShop, callback);
-				});
-				return;
-			}
-			this.update(eShopDocument, EShop.fromObject, eShop, callback);
-		});
+		this.documentExecutor.insertOrUpdate(eShop, callback);
 	}
 }

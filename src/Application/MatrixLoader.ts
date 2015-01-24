@@ -12,11 +12,14 @@ import IMatrixDocument = require('../Definition/Application/IMatrixDocument');
 export = MatrixLoader;
 class MatrixLoader {
 
-	private model: mongoose.Model<IMatrixDocument>;
 	private documentExecutor: DocumentExecutor;
-
-	constructor() {
-		this.model = MatrixModel;
+	
+	static $inject = [
+		'Definition.Application.MatrixModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
 		this.documentExecutor = new DocumentExecutor(this.model, Matrix);
 	}
 

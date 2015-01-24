@@ -8,12 +8,15 @@ import IMatrixDocument = require('../Definition/Application/IMatrixDocument');
 
 export = MatrixRecorder;
 class MatrixRecorder {
-	
-	private model: mongoose.Model<IMatrixDocument>;
-	private documentExecutor: DocumentExecutor;
 
-	constructor() {
-		this.model = MatrixModel;
+	private documentExecutor: DocumentExecutor;
+	
+	static $inject = [
+		'Definition.Application.MatrixModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
 		this.documentExecutor = new DocumentExecutor(this.model, Matrix);
 	}
 

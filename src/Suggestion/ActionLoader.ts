@@ -3,15 +3,21 @@ import SuggestionAction = require('../Entity/Suggestion/Action');
 import List = require('../Entity/List');
 import Factor = require('../Entity/Factor/Factor');
 import mongoose = require('mongoose');
-import ActionModel = require('./ActionModel');
+import ActionModel = require('../Definition/Suggestion/ActionModel');
+import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = ActionLoader;
 class ActionLoader {
 
-	private model: mongoose.Model<mongoose.Document>;
+	private documentExecutor: DocumentExecutor;
 
-	constructor() {
-		this.model = ActionModel;
+	static $inject = [
+		'Definition.Suggestion.ActionModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
+		this.documentExecutor = new DocumentExecutor(this.model, SuggestionAction);
 	}
 
 	getList(callback: (e: Error, actionList?: List<SuggestionAction>) => void) {

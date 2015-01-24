@@ -1,21 +1,23 @@
 
 import mongoose = require('mongoose');
-import AbstractRecorder = require('../AbstractRecorder');
 import ErrorLog = require('../Entity/Error/ErrorLog');
-import ErrorLogModel = require('./ErrorLogModel');
+import DocumentExecutor = require('../Util/DocumentExecutor');
+import ErrorLogModel = require('../Definition/Error/ErrorLogModel');
 
 export = ErrorLogRecorder;
-class ErrorLogRecorder extends AbstractRecorder {
-	
-	private model: mongoose.Model<mongoose.Document>;
+class ErrorLogRecorder {
+	private documentExecutor: DocumentExecutor;
 
-	constructor() {
-		super();
-		this.model = ErrorLogModel;
+	static $inject = [
+		'Definition.Error.ErrorLogModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
+		this.documentExecutor = new DocumentExecutor(this.model, ErrorLog);
 	}
 
 	insert(errorLog: ErrorLog, callback: (e: Error, errorLog?: ErrorLog) => void) {
-		var errorLogDocument = new this.model({});
-		this.update(errorLogDocument, ErrorLog.fromObject, errorLog, callback);
+		this.documentExecutor.insertOrUpdate(errorLog, callback);
 	}
 }

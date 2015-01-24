@@ -1,47 +1,29 @@
 
 import mongoose = require('mongoose');
-import AbstractRecorder = require('../AbstractRecorder');
 import Channel = require('../Entity/Application/Channel');
 import List = require('../Entity/List');
 import ChannelModel = require('../Definition/Application/ChannelModel');
+import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = ChannelRecorder;
-class ChannelRecorder extends AbstractRecorder {
-	
-	private model: mongoose.Model<mongoose.Document>;
+class ChannelRecorder {
 
-	constructor() {
-		super();
-		this.model = ChannelModel;
+	private documentExecutor: DocumentExecutor;
+	
+	static $inject = [
+		'Definition.Application.ChannelModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
+		this.documentExecutor = new DocumentExecutor(this.model, Channel);
 	}
 
 	insertOrUpdateList(channelList: List<Channel>, callback: (e: Error, channelList?: List<Channel>) => void) {
-		channelList.createEach().on('item', (channel: Channel, next) => {
-			this.insertOrUpdate(channel, next);
-		})
-		.on('error', (e: Error) => {
-			callback(e);
-		})
-		.on('end', () => {
-			callback(null, channelList);
-		});
+		this.documentExecutor.insertOrUpdateList(channelList, callback);
 	}
 
 	insertOrUpdate(channel: Channel, callback: (e: Error, channel?: Channel) => void) {
-		this.model.findOne({ id: channel.Id, eShopId: channel.EShopId }, (e, doc: mongoose.Document) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			if (!doc) {
-				doc = new this.model({});
-				this.getNextId(this.model, (id) => {
-					channel.Id = id;
-					this.update(doc, Channel.fromObject, channel, callback);
-				});
-				return;
-			}
-			this.update(doc, Channel.fromObject, channel, callback);
-		});
+		this.documentExecutor.insertOrUpdate(channel, callback);
 	}
 }

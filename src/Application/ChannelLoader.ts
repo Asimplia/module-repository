@@ -8,11 +8,12 @@ import ChannelModel = require('../Definition/Application/ChannelModel');
 export = ChannelLoader;
 class ChannelLoader {
 
-	private model: mongoose.Model<mongoose.Document>;
-
-	constructor() {
-		this.model = ChannelModel;
-	}
+	static $inject = [
+		'Definition.Application.ChannelModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {}
 
 	getById(eShopId: number, id: number, callback: (e: Error, channel?: Channel) => void) {
 		this.model.findOne({ "id": id, "eShopId": eShopId }, (e, object: mongoose.Document) => {

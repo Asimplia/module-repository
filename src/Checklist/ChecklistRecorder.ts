@@ -8,12 +8,15 @@ import IChecklistDocument = require('../Definition/Checklist/IChecklistDocument'
 
 export = ChecklistRecorder;
 class ChecklistRecorder {
-	
-	private model: mongoose.Model<IChecklistDocument>;
+
 	private documentExecutor: DocumentExecutor;
 
-	constructor() {
-		this.model = ChecklistModel;
+	static $inject = [
+		'Definition.Checklist.ChecklistModel'
+	];
+	constructor(
+		private model: mongoose.Model<IChecklistDocument>
+	) {
 		this.documentExecutor = new DocumentExecutor(this.model, Checklist);
 	}
 

@@ -2,26 +2,32 @@
 import SuggestionResult = require('../Entity/Suggestion/Result');
 import List = require('../Entity/List');
 import ResultTypeEnum = require('./ResultTypeEnum');
-import ResultModel = require('./ResultModel');
+import ResultModel = require('../Definition/Suggestion/ResultModel');
 import ResultStateEnum = require('../Entity/Suggestion/ResultStateEnum');
 import SectionEnum = require('../Entity/Section/SectionEnum');
 import mongoose = require('mongoose');
 import moment = require('moment');
 import EntityPreparer = require('../Entity/EntityPreparer');
+import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = ResultLoader;
 class ResultLoader {
 
-	private ResultModel: mongoose.Model<mongoose.Document>;
+	private documentExecutor: DocumentExecutor;
 
-	constructor() {
-		this.ResultModel = ResultModel;
+	static $inject = [
+		'Definition.Suggestion.ResultModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
+		this.documentExecutor = new DocumentExecutor(this.model, SuggestionResult);
 	}
 
 	getById(eShopId: number, id: number, callback: (e: Error, suggestion?: SuggestionResult) => void) {
 		var conditions: any = { id: id };
 		conditions.eShopId = eShopId;
-		this.ResultModel.findOne(conditions, (e, suggestion: mongoose.Document) => {
+		this.model.findOne(conditions, (e, suggestion: mongoose.Document) => {
 			if (e) {
 				callback(e);
 				return
@@ -36,7 +42,7 @@ class ResultLoader {
 	getListByType(eShopId: number, limit: number, offset: number, type: ResultTypeEnum, callback: (e: Error, suggestion?: List<SuggestionResult>) => void): void {
 		var conditions = this.getConditionsByType(type);
 		conditions.eShopId = eShopId;
-		this.ResultModel.find(conditions).skip(offset).limit(limit).sort("-dateCreated").exec((e, suggestions: mongoose.Document[]) => {
+		this.model.find(conditions).skip(offset).limit(limit).sort("-dateCreated").exec((e, suggestions: mongoose.Document[]) => {
 			if (e) {
 				callback(e);
 				return;
@@ -54,7 +60,7 @@ class ResultLoader {
 			conditions.section = SectionEnum[section];
 		}
 		conditions.main = isMain;
-		this.ResultModel.find(conditions).skip(offset).limit(limit).sort("-dateCreated").exec((e, suggestions: mongoose.Document[]) => {
+		this.model.find(conditions).skip(offset).limit(limit).sort("-dateCreated").exec((e, suggestions: mongoose.Document[]) => {
 			if (e) {
 				callback(e);
 				return;
@@ -70,7 +76,7 @@ class ResultLoader {
 		if (eShopId) {
 			conditions.eShopId = eShopId;
 		}
-		this.ResultModel.count(conditions, (e, count: number) => {
+		this.model.count(conditions, (e, count: number) => {
 			if (e) {
 				callback(e);
 				return;
@@ -83,7 +89,7 @@ class ResultLoader {
 		var conditions = this.getConditionsByType(type);
 		conditions.eShopId = eShopId;
 		conditions.main = isMain;
-		this.ResultModel.count(conditions, (e, count: number) => {
+		this.model.count(conditions, (e, count: number) => {
 			if (e) {
 				callback(e);
 				return;
@@ -95,7 +101,7 @@ class ResultLoader {
 	getListBySituationIdsLimited(situationIds: number[], limit: number, offset: number, callback: (e: Error, recordList?: List<SuggestionResult>) => void) {
 		var conditions: any = {};
 		conditions.situationId = { $in: situationIds };
-		this.ResultModel.find(conditions).skip(offset).limit(limit).exec((e, suggestions: mongoose.Document[]) => {
+		this.model.find(conditions).skip(offset).limit(limit).exec((e, suggestions: mongoose.Document[]) => {
 			if (e) {
 				callback(e);
 				return;
@@ -107,7 +113,7 @@ class ResultLoader {
 	}
 
 	getDailyCount(countDays: number, callback: (e: Error, data?: { date: Date; count: number }[]) => void) {
-		this.ResultModel.aggregate([
+		this.model.aggregate([
 			{ $group: { 
 				_id: { 
 					year: { $year: '$dateCreated' },
@@ -163,7 +169,7 @@ class ResultLoader {
 	}
 
 	private getList(conditions: any, callback: (e: Error, list?: List<SuggestionResult>) => void) {
-		this.ResultModel.find(conditions).sort("-dateCreated").exec((e, suggestions: mongoose.Document[]) => {
+		this.model.find(conditions).sort("-dateCreated").exec((e, suggestions: mongoose.Document[]) => {
 			if (e) {
 				callback(e);
 				return;

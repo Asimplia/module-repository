@@ -1,7 +1,7 @@
-﻿
+
 import mongoose = require('mongoose');
 import Schema = mongoose.Schema;
-import Definition = require('../Definition/Suggestion/Result');
+import Definition = require('./Result');
 
 export = ResultModel;
 

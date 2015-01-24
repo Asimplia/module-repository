@@ -1,47 +1,29 @@
 
 import mongoose = require('mongoose');
-import AbstractRecorder = require('../AbstractRecorder');
 import Product = require('../Entity/Application/Product');
 import List = require('../Entity/List');
 import ProductModel = require('../Definition/Application/ProductModel');
+import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = ProductRecorder;
-class ProductRecorder extends AbstractRecorder {
-	
-	private model: mongoose.Model<mongoose.Document>;
+class ProductRecorder {
 
-	constructor() {
-		super();
-		this.model = ProductModel;
+	private documentExecutor: DocumentExecutor;
+
+	static $inject = [
+		'Definition.Application.ProductModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
+		this.documentExecutor = new DocumentExecutor(this.model, Product);
 	}
 
 	insertOrUpdateList(productList: List<Product>, callback: (e: Error, productList?: List<Product>) => void) {
-		productList.createEach().on('item', (product: Product, next) => {
-			this.insertOrUpdate(product, next);
-		})
-		.on('error', (e: Error) => {
-			callback(e);
-		})
-		.on('end', () => {
-			callback(null, productList);
-		});
+		this.documentExecutor.insertOrUpdateList(productList, callback);
 	}
 
 	insertOrUpdate(product: Product, callback: (e: Error, product?: Product) => void) {
-		this.model.findOne({ id: product.Id, eShopId: product.EShopId }, (e, doc: mongoose.Document) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			if (!doc) {
-				doc = new this.model({});
-				this.getNextId(this.model, (id) => {
-					product.Id = id;
-					this.update(doc, Product.fromObject, product, callback);
-				});
-				return;
-			}
-			this.update(doc, Product.fromObject, product, callback);
-		});
+		this.documentExecutor.insertOrUpdate(product, callback);
 	}
 }

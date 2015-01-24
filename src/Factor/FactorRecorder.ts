@@ -1,40 +1,30 @@
 ﻿
-import AbstractRecorder = require('../AbstractRecorder');
 import Factor = require('../Entity/Factor/Factor');
 import List = require('../Entity/List');
 import mongoose = require('mongoose');
-import FactorModel = require('./FactorModel');
+import FactorModel = require('../Definition/Factor/FactorModel');
+import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = FactorRecorder;
-class FactorRecorder extends AbstractRecorder {
+class FactorRecorder {
 
-	private FactorModel: mongoose.Model<mongoose.Document>;
+	private documentExecutor: DocumentExecutor;
 
-	constructor() {
-		super();
-		this.FactorModel = FactorModel;
+	static $inject = [
+		'Definition.Factor.FactorModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {
+		this.documentExecutor = new DocumentExecutor(this.model, Factor);
 	}
 
-	insertOrUpdate(factor: Factor, callback: (e: Error, action?: Factor) => void): void {
-		this.FactorModel.findOne({ id: factor.Id }, (e, factorDocument: mongoose.Document) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			if (!factorDocument) {
-				factorDocument = new this.FactorModel({});
-				this.getNextId(this.FactorModel, (id) => {
-					factor.Id = id;
-					this.update(factorDocument, Factor.fromObject, factor, callback);
-				})
-				return;
-			}
-			this.update(factorDocument, Factor.fromObject, factor, callback);
-		});
+	insertOrUpdate(factor: Factor, callback: (e: Error, factor?: Factor) => void) {
+		this.documentExecutor.insertOrUpdate(factor, callback);
 	}
 
 	remove(id: number, callback: (e: Error) => void): void {
-		this.FactorModel.findOneAndRemove({ id: id }, (e: Error) => {
+		this.model.findOneAndRemove({ id: id }, (e: Error) => {
 			callback(e);
 		});
 	}

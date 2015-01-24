@@ -8,11 +8,12 @@ import CustomerModel = require('../Definition/Application/CustomerModel');
 export = CustomerLoader;
 class CustomerLoader {
 
-	private model: mongoose.Model<mongoose.Document>;
-
-	constructor() {
-		this.model = CustomerModel;
-	}
+	static $inject = [
+		'Definition.Application.CustomerModel'
+	];
+	constructor(
+		private model: mongoose.Model<mongoose.Document>
+	) {}
 
 	getById(eShopId: number, id: number, callback: (e: Error, customer?: Customer) => void) {
 		this.model.findOne({ "id": id, "eShopId": eShopId }, (e, object: mongoose.Document) => {

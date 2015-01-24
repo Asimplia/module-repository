@@ -1,7 +1,7 @@
-﻿
+
 import mongoose = require('mongoose');
 import Schema = mongoose.Schema;
-import Definition = require('../Definition/Suggestion/Action');
+import Definition = require('./Action');
 
 export = ActionModel;
 

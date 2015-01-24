@@ -4,6 +4,7 @@ import Schema = mongoose.Schema;
 
 export = SignalThresholdModel;
 var Definition = {
+	id: String,
 	section: String,
 	name: String,
 	column: String,
