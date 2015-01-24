@@ -15,6 +15,8 @@ export import Load = require('./Load/index');
 export import External = require('./External/index');
 export import Site = require('./Site/index');
 export import Checklist = require('./Checklist/index');
+export import IntegrationPreparer = require('../tests/IntegrationPreparer');
+
 ConnectionDispatcher;
 Suggestion;
 Factor;
@@ -29,6 +31,7 @@ Load;
 External;
 Site;
 Checklist;
+IntegrationPreparer;
 
 var services = () => {
 	if (process.env.NODE_ENV === 'integration') {
