@@ -25,7 +25,7 @@ class ConnectionDispatcher {
 				throw e;
 			}
 			this.di.addService('connection.mongoose', this.mongooseConnection);
-			console.log('Connected MongoDB');
+			console.log('Connected MongoDB to ' + dsn);
 			if (typeof callback === 'function') {
 				callback(this.mongooseConnection);
 			}
@@ -41,7 +41,7 @@ class ConnectionDispatcher {
 				return;
 			}
 			this.di.addService('connection.postgres', this.mongooseConnection);
-			console.log('Connected Postgres');
+			console.log('Connected Postgres to ' + connectionString);
 			this.pgClient = client;
 			this.connectionListeners.forEach((callback) => {
 				callback(this.pgClient);
@@ -60,7 +60,7 @@ class ConnectionDispatcher {
 				throw e;
 			}
 			this.di.addService('connection.neo4j', this.neo4jDatabase);
-			console.log('Connected Neo4j');
+			console.log('Connected Neo4j to ' + dsn);
 			this.neo4jDatabase = db;
 			this.neo4jListeners.forEach((callback) => {
 				callback(this.neo4jDatabase);
