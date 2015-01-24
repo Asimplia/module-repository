@@ -10,16 +10,20 @@ import List = require('../Entity/List');
 import Category = require('../Entity/EShop/Category');
 import EntityPreparer = require('../Entity/EntityPreparer');
 import LoadLog = require('../Entity/Load/LoadLog');
+import SqlExecutor = require('../Util/SqlExecutor');
 
 export = SignalLoader;
 class SignalLoader {
+	
+	private sqlExecutor: SqlExecutor;
 
-	private connection;
-
-	constructor() {
-		AsimpliaRepository.getConnection((connection) => {
-			this.connection = connection;
-		});
+	static $inject = [
+		'connection.postgres'
+	];
+	constructor(
+		private connection: any
+	) {
+		this.sqlExecutor = new SqlExecutor(connection, Signal, Signal.COLUMN_SIGNAL_ID, 'id');
 	}
 
 	getListByEShopId(eShopId: number, callback: (e: Error, signalList?: List<Signal>) => void) {

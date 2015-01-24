@@ -4,16 +4,20 @@ import List = require('../Entity/List');
 import Product = require('../Entity/EShop/Product');
 import Matrix = require('../Entity/Matrix/Matrix');
 import EntityPreparer = require('../Entity/EntityPreparer');
+import SqlExecutor = require('../Util/SqlExecutor');
 
 export = ProductLoader;
 class ProductLoader {
 	
-	private connection;
+	private sqlExecutor: SqlExecutor;
 
-	constructor() {
-		Repository.getConnection((connection) => {
-			this.connection = connection;
-		});
+	static $inject = [
+		'connection.postgres'
+	];
+	constructor(
+		private connection: any
+	) {
+		this.sqlExecutor = new SqlExecutor(connection, Product, Product.COLUMN_PRODUCT_ID, 'id');
 	}
 
 	getListByEShopIdAndLoadIdInMatrixes(eShopId: number, loadId: number, callback: (e: Error, productList?: List<Product>) => void) {

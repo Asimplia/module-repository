@@ -6,15 +6,16 @@ import List = require('../Entity/List');
 
 export = VisitRecordRecorder;
 class VisitRecordRecorder {
-
-	private connection;
+	
 	private sqlExecutor: SqlExecutor;
 
-	constructor() {
-		Repository.getConnection((connection) => {
-			this.connection = connection;
-			this.sqlExecutor = new SqlExecutor(connection, VisitRecord, VisitRecord.COLUMN_VISIT_RECORD_ID, 'id');
-		});
+	static $inject = [
+		'connection.postgres'
+	];
+	constructor(
+		private connection: any
+	) {
+		this.sqlExecutor = new SqlExecutor(connection, VisitRecord, VisitRecord.COLUMN_VISIT_RECORD_ID, 'id');
 	}
 	
 	insertList(list: List<VisitRecord>, callback: (e: Error, list?: List<VisitRecord>) => void) {

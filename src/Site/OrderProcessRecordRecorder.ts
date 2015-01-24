@@ -6,15 +6,16 @@ import List = require('../Entity/List');
 
 export = OrderProcessRecordRecorder;
 class OrderProcessRecordRecorder {
-
-	private connection;
+	
 	private sqlExecutor: SqlExecutor;
 
-	constructor() {
-		Repository.getConnection((connection) => {
-			this.connection = connection;
-			this.sqlExecutor = new SqlExecutor(connection, OrderProcessRecord, OrderProcessRecord.COLUMN_ORDER_PROCESS_RECORD_ID, 'id');
-		});
+	static $inject = [
+		'connection.postgres'
+	];
+	constructor(
+		private connection: any
+	) {
+		this.sqlExecutor = new SqlExecutor(connection, OrderProcessRecord, OrderProcessRecord.COLUMN_ORDER_PROCESS_RECORD_ID, 'id');
 	}
 	
 	insertList(list: List<OrderProcessRecord>, callback: (e: Error, list?: List<OrderProcessRecord>) => void) {

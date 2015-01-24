@@ -16,15 +16,16 @@ import SqlExecutor = require('../Util/SqlExecutor');
 
 export = MatrixLoader;
 class MatrixLoader {
-
-	private connection;
+	
 	private sqlExecutor: SqlExecutor;
 
-	constructor() {
-		Repository.getConnection((connection) => {
-			this.connection = connection;
-			this.sqlExecutor = new SqlExecutor(connection, Matrix, Matrix.COLUMN_CATEGORY_ID, 'id');
-		});
+	static $inject = [
+		'connection.postgres'
+	];
+	constructor(
+		private connection: any
+	) {
+		this.sqlExecutor = new SqlExecutor(connection, Matrix, Matrix.COLUMN_MATRIX_ID, 'id');
 	}
 
 	getListNotSignal(eShopId: number, loadId: number, callback: (e: Error, recordList?: List<Matrix>) => void) {

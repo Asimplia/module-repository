@@ -5,16 +5,20 @@ import Matrix = require('../Entity/Matrix/Matrix');
 import Signal = require('../Entity/Matrix/Signal');
 import Factor = require('../Entity/Factor/Factor');
 import MatrixFactory = require('../Entity/Matrix/MatrixFactory');
+import SqlExecutor = require('../Util/SqlExecutor');
 
 export = MatrixRecorder;
 class MatrixRecorder {
+	
+	private sqlExecutor: SqlExecutor;
 
-	private connection;
-
-	constructor() {
-		AsimpliaRepository.getConnection((connection) => {
-			this.connection = connection;
-		});
+	static $inject = [
+		'connection.postgres'
+	];
+	constructor(
+		private connection: any
+	) {
+		this.sqlExecutor = new SqlExecutor(connection, Matrix, Matrix.COLUMN_MATRIX_ID, 'id');
 	}
 
 	removeByEShopIdAndLoadId(eShopId: number, loadId: number, callback: (e: Error) => void) {

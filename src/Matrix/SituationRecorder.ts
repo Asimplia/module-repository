@@ -5,16 +5,20 @@ import Repository = require('../index');
 import List = require('../Entity/List');
 import Matrix = require('../Entity/Matrix/Matrix');
 import Signal = require('../Entity/Matrix/Signal');
+import SqlExecutor = require('../Util/SqlExecutor');
 
 export = SituationRecorder;
 class SituationRecorder {
+	
+	private sqlExecutor: SqlExecutor;
 
-	private connection;
-
-	constructor() {
-		Repository.getConnection((connection) => {
-			this.connection = connection;
-		});
+	static $inject = [
+		'connection.postgres'
+	];
+	constructor(
+		private connection: any
+	) {
+		this.sqlExecutor = new SqlExecutor(connection, Situation, Situation.COLUMN_SITUATION_ID, 'id');
 	}
 
 	insert(situation: Situation, callback: (e: Error, situation?: Situation) => void) {

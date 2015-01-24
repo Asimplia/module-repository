@@ -4,16 +4,20 @@ import AsimpliaRepository = require('../index');
 import Signal = require('../Entity/Matrix/Signal');
 import Matrix = require('../Entity/Matrix/Matrix');
 import List = require('../Entity/List');
+import SqlExecutor = require('../Util/SqlExecutor');
 
 export = SignalRecorder;
 class SignalRecorder {
+	
+	private sqlExecutor: SqlExecutor;
 
-	private connection;
-
-	constructor() {
-		AsimpliaRepository.getConnection((connection) => {
-			this.connection = connection;
-		});
+	static $inject = [
+		'connection.postgres'
+	];
+	constructor(
+		private connection: any
+	) {
+		this.sqlExecutor = new SqlExecutor(connection, Signal, Signal.COLUMN_SIGNAL_ID, 'id');
 	}
 
 	insertList(signalList: List<Signal>, callback: (e: Error, signalList?: List<Signal>) => void): void {

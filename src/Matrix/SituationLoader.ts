@@ -10,17 +10,21 @@ import EShop = require('../Entity/EShop/EShop');
 import List = require('../Entity/List');
 import Category = require('../Entity/EShop/Category');
 import EntityPreparer = require('../Entity/EntityPreparer');
+import SqlExecutor = require('../Util/SqlExecutor');
 import moment = require('moment');
 
 export = SituationLoader;
 class SituationLoader {
+	
+	private sqlExecutor: SqlExecutor;
 
-	private connection;
-
-	constructor() {
-		Repository.getConnection((connection) => {
-			this.connection = connection;
-		});
+	static $inject = [
+		'connection.postgres'
+	];
+	constructor(
+		private connection: any
+	) {
+		this.sqlExecutor = new SqlExecutor(connection, Situation, Situation.COLUMN_SITUATION_ID, 'id');
 	}
 
 	getListNotSuggested(eShopId: number, loadId: number, callback: (e: Error, situationList?: List<Situation>) => void) {

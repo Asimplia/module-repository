@@ -3,16 +3,20 @@ import Repository = require('../index');
 import List = require('../Entity/List');
 import LoadLog = require('../Entity/Load/LoadLog');
 import EntityPreparer = require('../Entity/EntityPreparer');
+import SqlExecutor = require('../Util/SqlExecutor');
 
 export = LoadLogLoader;
 class LoadLogLoader {
 	
-	private connection;
+	private sqlExecutor: SqlExecutor;
 
-	constructor() {
-		Repository.getConnection((connection) => {
-			this.connection = connection;
-		});
+	static $inject = [
+		'connection.postgres'
+	];
+	constructor(
+		private connection: any
+	) {
+		this.sqlExecutor = new SqlExecutor(connection, LoadLog, LoadLog.COLUMN_LOAD_LOG_ID, 'id');
 	}
 
 	getListByEShopId(eShopId: number, callback: (e: Error, list: List<LoadLog>) => void) {

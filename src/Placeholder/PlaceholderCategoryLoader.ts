@@ -3,14 +3,13 @@ import Repository = require('../index');
 
 export = PlaceholderCategoryLoader;
 class PlaceholderCategoryLoader {
-
-	private db;
-
-	constructor() {
-		Repository.getGraphDatabase((db: any) => {
-			this.db = db;
-		});
-	}
+	
+	static $inject = [
+		'connection.neo4j'
+	];
+	constructor(
+		private db: any
+	) {}
 
 	getName(categoryId: number, callback: (e: Error, categoryName?: string) => void): void {
 		this.db.query('MATCH (a:CATEGORY) WHERE (a.categoryId = {categoryId} ) RETURN a.name', {

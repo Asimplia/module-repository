@@ -4,14 +4,13 @@ import _ = require('underscore');
 
 export = PlaceholderProductLoader;
 class PlaceholderProductLoader {
-
-	private db;
-
-	constructor() {
-		Repository.getGraphDatabase((db: any) => {
-			this.db = db;
-		});
-	}
+	
+	static $inject = [
+		'connection.neo4j'
+	];
+	constructor(
+		private db: any
+	) {}
 
 	getName(productId: number, callback: (e: Error, productName?: string) => void): void {
 		this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.name', {

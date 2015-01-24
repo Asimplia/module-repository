@@ -3,17 +3,20 @@ import Repository = require('../index');
 import EShop = require('../Entity/EShop/EShop');
 import List = require('../Entity/List');
 import EntityPreparer = require('../Entity/EntityPreparer');
+import SqlExecutor = require('../Util/SqlExecutor');
 
 export = EShopLoader;
 class EShopLoader {
 	
+	private sqlExecutor: SqlExecutor;
 
-	private connection;
-
-	constructor() {
-		Repository.getConnection((connection) => {
-			this.connection = connection;
-		});
+	static $inject = [
+		'connection.postgres'
+	];
+	constructor(
+		private connection: any
+	) {
+		this.sqlExecutor = new SqlExecutor(connection, EShop, EShop.COLUMN_E_SHOP_ID, 'id');
 	}
 
 	getList(callback: (e: Error, eShopList: List<EShop>) => void) {
