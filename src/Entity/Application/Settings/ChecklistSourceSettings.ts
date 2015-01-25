@@ -3,6 +3,7 @@ import IEntity = require('../../IEntity');
 import IChecklistSourcesObject = require('./IChecklistSourcesObject');
 import IChecklistSourceSettingsObject = require('./IChecklistSourceSettingsObject');
 import EntityPreparer = require('../../EntityPreparer');
+import ChecklistSourceTypeEnum = require('./ChecklistSourceTypeEnum');
 
 export = ChecklistSourceSettings;
 class ChecklistSourceSettings implements IEntity {
@@ -29,6 +30,24 @@ class ChecklistSourceSettings implements IEntity {
 		return this;
 	}
 
+	setSource(type: ChecklistSourceTypeEnum, uri: string) {
+		var typeString = ChecklistSourceSettings.getTypeString(type);
+		this.sources[typeString] = {
+			uri: uri,
+			createdAt: EntityPreparer.now()
+		};
+	}
+
+	static getTypeString(type: ChecklistSourceTypeEnum) {
+		switch (type) {
+			case ChecklistSourceTypeEnum.HEUREKA_XML:
+				return 'heurekaXml';
+			case ChecklistSourceTypeEnum.ZBOZI_XML:
+				return 'zboziXml';
+		}
+		throw new Error('Not implemented');
+	}
+
 	static fromObject(object: IChecklistSourceSettingsObject) {
 		return new ChecklistSourceSettings(
 			EntityPreparer.id(object.id),
@@ -36,11 +55,17 @@ class ChecklistSourceSettings implements IEntity {
 			{
 				heurekaXml: {
 					uri: EntityPreparer.stringOrNull(object.sources.heurekaXml.uri),
-					createdAt: EntityPreparer.dateOrNull(object.sources.heurekaXml.createdAt)
+					createdAt: EntityPreparer.dateOrNull(object.sources.heurekaXml.createdAt),
+					processingStartedAt: EntityPreparer.dateOrNull(object.sources.heurekaXml.processingStartedAt),
+					processedAt: EntityPreparer.dateOrNull(object.sources.heurekaXml.processedAt),
+					failedAt: EntityPreparer.dateOrNull(object.sources.heurekaXml.failedAt)
 				},
 				zboziXml: {
 					uri: EntityPreparer.stringOrNull(object.sources.zboziXml.uri),
-					createdAt: EntityPreparer.dateOrNull(object.sources.zboziXml.createdAt)
+					createdAt: EntityPreparer.dateOrNull(object.sources.zboziXml.createdAt),
+					processingStartedAt: EntityPreparer.dateOrNull(object.sources.zboziXml.processingStartedAt),
+					processedAt: EntityPreparer.dateOrNull(object.sources.zboziXml.processedAt),
+					failedAt: EntityPreparer.dateOrNull(object.sources.zboziXml.failedAt)
 				}
 			},
 			EntityPreparer.dateOrNull(object.closedAt)
