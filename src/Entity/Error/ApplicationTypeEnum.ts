@@ -9,5 +9,6 @@ enum ApplicationTypeEnum {
 	GRAPH,
 	FRONTEND,
 	ANALYTICS,
-	SYNC
+	SYNC,
+	CHECKLIST
 }
