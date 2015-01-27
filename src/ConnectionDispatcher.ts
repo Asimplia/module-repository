@@ -1,6 +1,6 @@
 
 import Util = require('asimplia-util');
-import DependencyInjection = Util.DependencyInjection;
+import DependencyInjection = Util.DI.DependencyInjection;
 import mongoose = require('mongoose');
 var pg = require('pg');
 var neo4j = require('neo4j');

@@ -1,6 +1,6 @@
 ﻿
 import Util = require('asimplia-util');
-import DependencyInjection = Util.DependencyInjection;
+import DependencyInjection = Util.DI.DependencyInjection;
 export import ConnectionDispatcher = require('./ConnectionDispatcher');
 export import Suggestion = require('./Suggestion/index');
 export import Factor = require('./Factor/index');
