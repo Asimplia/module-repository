@@ -1,4 +1,6 @@
 
+import Util = require('asimplia-util');
+
 var object = (object: any) => {
 	return {
 		$factory: () => { return object; }
@@ -76,4 +78,25 @@ var services: { [name: string]: any } = {
 	'Matrix.MatrixRecorder': require('../Matrix/MatrixRecorder'),
 	'Matrix.SignalRecorder': require('../Matrix/SignalRecorder'),
 	'Matrix.SituationRecorder': require('../Matrix/SituationRecorder'),
+	'Util:AOP.AspectInterception': {
+		$class: Util.AOP.AspectInterception,
+		$inject: [
+			Util.DI.ServiceAutoload
+		],
+		$factory: (
+			serviceAutoload: Util.DI.ServiceAutoload
+		) => {
+			return new Util.AOP.AspectInterception('Checklist', {
+				'Util:DI.ServiceAutoload': serviceAutoload,
+			})
+		}
+	},
+	'Util:AOP.AnnotationAspects': {
+		$class: Util.AOP.AnnotationAspects,
+		$args: [__dirname + '/..']
+	},
+	'Util:DI.ServiceAutoload': {
+		$class: Util.DI.ServiceAutoload,
+		$args: [__dirname + '/../Feed']
+	},
 };

@@ -15,6 +15,7 @@ export import Load = require('./Load/index');
 export import External = require('./External/index');
 export import Site = require('./Site/index');
 export import Checklist = require('./Checklist/index');
+export import Feed = require('./Feed/index');
 export import IntegrationPreparer = require('../tests/IntegrationPreparer');
 
 ConnectionDispatcher;
@@ -31,6 +32,7 @@ Load;
 External;
 Site;
 Checklist;
+Feed;
 IntegrationPreparer;
 
 var services = () => {
