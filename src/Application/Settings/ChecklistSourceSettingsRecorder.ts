@@ -25,4 +25,8 @@ class ChecklistSourceSettingsRecorder {
 	insertOrUpdate(checklistSourceSettings: ChecklistSourceSettings, callback: (e: Error, checklistSourceSettings?: ChecklistSourceSettings) => void) {
 		this.documentExecutor.insertOrUpdate(checklistSourceSettings, callback);
 	}
+
+	update(checklistSourceSettings: ChecklistSourceSettings, callback: (e: Error, checklistSourceSettings?: ChecklistSourceSettings) => void) {
+		this.documentExecutor.update(checklistSourceSettings, callback);
+	}
 }
