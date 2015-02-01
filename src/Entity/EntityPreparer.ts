@@ -27,6 +27,10 @@ class EntityPreparer {
 		return this.stringOrNull(value);
 	}
 
+	static idNumeric(value: any) {
+		return this.intOrNull(value);
+	}
+
 	static enum<Enum>(EnumStatic: any, value: any): Enum {
 		if (_.isNumber(value)) {
 			if (typeof EnumStatic[value] === 'undefined') {
