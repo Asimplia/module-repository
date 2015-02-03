@@ -33,16 +33,15 @@ class ConnectionDispatcher {
 	}
 
 	connectPostgres(connectionString: string, callback?: (client: any) => void) {
-		var schema = 'public'; // TODO
 		var client = new pg.Client(connectionString);
 		client.connect((e) => {
 			if (e) {
 				throw e;
 				return;
 			}
-			this.di.addService('connection.postgres', this.mongooseConnection);
-			console.log('Connected Postgres to ' + connectionString);
 			this.pgClient = client;
+			this.di.addService('connection.postgres', this.pgClient);
+			console.log('Connected Postgres to ' + connectionString);
 			this.connectionListeners.forEach((callback) => {
 				callback(this.pgClient);
 			});
@@ -50,7 +49,6 @@ class ConnectionDispatcher {
 				callback(this.pgClient);
 			}
 		});
-		client.query('SET search_path TO '+schema+';');
 	}
 
 	connectNeo4j(dsn: string, callback?: (db: any) => void) {

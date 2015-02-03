@@ -23,9 +23,11 @@ class IntegrationPreparer {
 		}
 		this.connecting = true;
 		try {
-			this.connectionDispatcher.connectMongoDB('mongodb://localhost:27017/farfalia_test', () => {
-				this.connected = true;
-				done();
+			this.connectionDispatcher.connectMongoDB(process.env.MONGODB_DSN_TEST || 'mongodb://localhost:27017/farfalia_test', () => { // TODO set dsn as contructor arg
+				this.connectionDispatcher.connectPostgres(process.env.POSTGRES_DSN_TEST || 'postgres://postgres@localhost:5432/farfalia_test', () => { // TODO set dsn as contructor arg
+					this.connected = true;
+					done();
+				});
 			});
 		} catch (e) {
 			if (e.state === 1) {
