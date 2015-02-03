@@ -10,6 +10,7 @@ class HeurekaProduct implements IIdentificableEntity {
 	static COLUMN_HEUREKA_PRODUCT_ID = 'heurekaid';
 
 	get Id() { return this.id; }
+	get ExternalId() { return this.externalId; }
 
 	constructor(
 		private id: number,
