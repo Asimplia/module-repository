@@ -15,6 +15,13 @@ class SqlExecutor {
 		private idColumnName: string,
 		private idKeyName: string
 	) {}
+
+	insert(entity: IEntity, callback: (e: Error, entity?: IEntity) => void) {
+		this.insertList(new List<any>([entity]), (e: Error, list?: List<IEntity>) => {
+			if (e) return callback(e);
+			callback(null, list.first());
+		});
+	}
 	
 	insertList(list: List<IEntity>, callback: (e: Error, list?: List<IEntity>) => void) {
 		if (list.isEmpty()) {
