@@ -25,6 +25,15 @@ class FeedLoad implements IIdentificableEntity {
 		return FeedLoad.toObject(this);
 	}
 
+	static fromRow(row: any) {
+		return FeedLoad.fromObject({
+			id: row[EntityPreparer.getTableColumnByKey(FeedLoad, 'id')],
+			eShopId: row[EntityPreparer.getTableColumnByKey(FeedLoad, 'eShopId')],
+			dateLoad: row[EntityPreparer.getTableColumnByKey(FeedLoad, 'dateLoad')],
+			feedCode: row[EntityPreparer.getTableColumnByKey(FeedLoad, 'feedCode')]
+		});
+	}
+
 	static toObject(entity: FeedLoad): IFeedLoadObject {
 		return {
 			id: EntityPreparer.idNumeric(entity.id),
@@ -36,10 +45,10 @@ class FeedLoad implements IIdentificableEntity {
 
 	static fromObject(object: IFeedLoadObject) {
 		return new FeedLoad(
-			object.id,
-			object.eShopId,
-			object.dateLoad,
-			object.feedCode
+			EntityPreparer.idNumeric(object.id),
+			EntityPreparer.int(object.eShopId),
+			EntityPreparer.date(object.dateLoad),
+			EntityPreparer.string(object.feedCode)
 		);
 	}
 }
