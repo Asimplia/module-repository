@@ -8,6 +8,25 @@ class HeurekaProduct implements IIdentificableEntity {
 
 	static TABLE_NAME = 'feed.heureka';
 	static COLUMN_HEUREKA_PRODUCT_ID = 'heurekaid';
+	static COLUMN_FEED_LOAD_ID = 'loadid';
+	static COLUMN_E_SHOP_ID = 'eshopid';
+	static COLUMN_EXTERNAL_ID = 'item_id';
+	static COLUMN_PRODUCT_NAME = 'productname';
+	static COLUMN_PRODUCT = 'product';
+	static COLUMN_DESCRIPTION = 'description';
+	static COLUMN_URL = 'url';
+	static COLUMN_IMAGE_URL = 'imgurl';
+	static COLUMN_IMAGE_URL_ALTERNATIVE = 'imgurl_alternative';
+	static COLUMN_VIDEO_URL = 'video_url';
+	static COLUMN_PRICE_VAT = 'price_vat';
+	static COLUMN_ITEM_TYPE = 'item_type';
+	static COLUMN_MANUFACTURER = 'manufacturer';
+	static COLUMN_CATEGORY_TEXT = 'categorytext';
+	static COLUMN_EAN = 'ean';
+	static COLUMN_ISBN = 'isbn';
+	static COLUMN_HEUREKA_CPC = 'heureka_cpc';
+	static COLUMN_DELIVERY_DATE = 'delivery_date';
+	static COLUMN_ITEM_GROUP_ID = 'itemgroup_id';
 
 	get Id() { return this.id; }
 	get ExternalId() { return this.externalId; }
