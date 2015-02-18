@@ -49,12 +49,18 @@ class SqlExecutor {
 		var noIdColumns = _.filter(columns, (column: string) => { 
 			return column !== this.idColumnName; 
 		});
-		var sql = "INSERT INTO " + this.EntityStatic.TABLE_NAME + ' (' + noIdColumns + ') VALUES (' + placeholderRows.join('),(') + ')';
+		var sql = "INSERT INTO " + this.EntityStatic.TABLE_NAME + ' (' + noIdColumns + ') '
+			+ 'VALUES (' + placeholderRows.join('),(') + ') '
+			+ 'RETURNING ' + this.idColumnName;
 		this.connection.query(sql, params, (e: Error, result) => {
 			if (e) {
 				callback(e);
 				return;
 			}
+			result.rows.forEach((row, i) => {
+				var entity = list.get(i);
+				entity['id'] = row[this.idColumnName];
+			});
 			callback(null, list);
 		});
 	}
