@@ -6,7 +6,7 @@ import EntityPreparer = require('../EntityPreparer');
 export = HeurekaAccessory;
 class HeurekaAccessory implements IIdentificableEntity {
 
-	static TABLE_NAME = 'feed.heurekaaccessory';
+	static TABLE_NAME = 'feed.heureka_accessory';
 	static COLUMN_HEUREKA_ACCESSORY_ID = 'accessoryid';
 	static COLUMN_HEUREKA_PRODUCT_ID = 'heurekaid';
 	static COLUMN_FEED_LOAD_ID = 'loadid';
@@ -42,8 +42,8 @@ class HeurekaAccessory implements IIdentificableEntity {
 	static toObject(entity: HeurekaAccessory): IHeurekaAccessoryObject {
 		return {
 			id: entity.id,
-			feedLoadId: entity.feedLoadId,
 			heurekaProductId: entity.heurekaProductId,
+			feedLoadId: entity.feedLoadId,
 			accessoryHeurekaProductExternalId: entity.accessoryHeurekaProductExternalId
 		};
 	}

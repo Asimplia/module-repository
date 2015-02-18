@@ -6,7 +6,7 @@ import EntityPreparer = require('../EntityPreparer');
 export = HeurekaParam;
 class HeurekaParam implements IIdentificableEntity {
 
-	static TABLE_NAME = 'feed.heurekaparam';
+	static TABLE_NAME = 'feed.heureka_param';
 	static COLUMN_HEUREKA_PARAM_ID = 'paramid';
 	static COLUMN_HEUREKA_PRODUCT_ID = 'heurekaid';
 	static COLUMN_FEED_LOAD_ID = 'loadid';

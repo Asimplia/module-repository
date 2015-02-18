@@ -6,11 +6,11 @@ import EntityPreparer = require('../EntityPreparer');
 export = HeurekaDelivery;
 class HeurekaDelivery implements IIdentificableEntity {
 
-	static TABLE_NAME = 'feed.heurekadelivery';
+	static TABLE_NAME = 'feed.heureka_delivery';
 	static COLUMN_HEUREKA_DELIVERY_ID = 'heurekadeliveryid';
 	static COLUMN_HEUREKA_PRODUCT_ID = 'heurekaid';
 	static COLUMN_FEED_LOAD_ID = 'loadid';
-	static COLUMN_HEUREKA_PRODUCT_EXTERNAL_ID = 'itemid';
+	static COLUMN_HEUREKA_PRODUCT_EXTERNAL_ID = 'item_id';
 	static COLUMN_EXTERNAL_ID = 'deliveryid';
 	static COLUMN_PRICE = 'deliveryprice';
 	static COLUMN_PRICE_COD = 'deliverypricecod';
