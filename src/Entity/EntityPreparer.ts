@@ -107,9 +107,9 @@ class EntityPreparer {
 	static getColumnsAsPrefixedAlias(EntityStatic: ITableEntityStatic) {
 		var columns = [];
 		for (var i in Object.keys(EntityStatic)) {
-			var keyName = Object.keys(EntityStatic)[i];
-			if(keyName.substring(0, 7) === 'COLUMN_') {
-				columns.push(EntityPreparer.getTableColumnByConstantName(EntityStatic, keyName) + ' AS "' + EntityPreparer.getTableColumnByConstantName(EntityStatic, keyName) + '"');
+			var constantName = Object.keys(EntityStatic)[i];
+			if(constantName.substring(0, 7) === 'COLUMN_') {
+				columns.push(EntityPreparer.getTableColumnByConstantName(EntityStatic, constantName) + ' AS "' + EntityPreparer.getTableColumnByConstantName(EntityStatic, constantName) + '"');
 			}
 		}
 		return columns;
@@ -118,9 +118,9 @@ class EntityPreparer {
 	static getTableColumns(EntityStatic: ITableEntityStatic) {
 		var columns = [];
 		for (var i in Object.keys(EntityStatic)) {
-			var keyName = Object.keys(EntityStatic)[i];
-			if(keyName.substring(0, 7) === 'COLUMN_') {
-				columns.push(EntityPreparer.getTableColumnByConstantName(EntityStatic, keyName));
+			var constantName = Object.keys(EntityStatic)[i];
+			if(constantName.substring(0, 7) === 'COLUMN_') {
+				columns.push(EntityPreparer.getTableColumnByConstantName(EntityStatic, constantName));
 			}
 		}
 		return columns;
@@ -129,22 +129,48 @@ class EntityPreparer {
 	static getTablePlainColumns(EntityStatic: ITableEntityStatic) {
 		var columns = [];
 		for (var i in Object.keys(EntityStatic)) {
-			var keyName = Object.keys(EntityStatic)[i];
-			if(keyName.substring(0, 7) === 'COLUMN_') {
-				columns.push(EntityStatic[keyName]);
+			var constantName = Object.keys(EntityStatic)[i];
+			if(constantName.substring(0, 7) === 'COLUMN_') {
+				columns.push(EntityStatic[constantName]);
 			}
 		}
 		return columns;
 	}
 
+	static getKeys(EntityStatic: ITableEntityStatic): string[] {
+		var keys = [];
+		for (var i in Object.keys(EntityStatic)) {
+			var constantName = Object.keys(EntityStatic)[i];
+			if(constantName.substring(0, 7) === 'COLUMN_') {
+				if (EntityPreparer.isIdColumn(EntityStatic, constantName)) {
+					var key = 'id';
+				} else {
+					var underscoredKeyName = constantName.substring(7);
+					var key = EntityPreparer.getCammelCaseByUnderscore(underscoredKeyName);
+				}
+				keys.push(key);
+			}
+		}
+		return keys;
+	}
+
+	private static isIdColumn(EntityStatic: ITableEntityStatic, constantName: string) {
+		var underscoredKeyName = constantName.substring(7);
+		var cammeledKeyName = EntityPreparer.getCammelCaseByUnderscore(underscoredKeyName);
+		return cammeledKeyName.substring((<any>EntityStatic).name.length).toLowerCase() == 'id';
+	}
+
 	static getTableColumnByKey(EntityStatic: ITableEntityStatic, key: string): string {
 		for (var i in Object.keys(EntityStatic)) {
-			var keyName = Object.keys(EntityStatic)[i];
-			if(keyName.substring(0, 7) === 'COLUMN_') {
-				var underscoredKeyName = keyName.substring(7);
+			var constantName = Object.keys(EntityStatic)[i];
+			if(constantName.substring(0, 7) === 'COLUMN_') {
+				var underscoredKeyName = constantName.substring(7);
 				var cammeledKeyName = EntityPreparer.getCammelCaseByUnderscore(underscoredKeyName);
-				if (cammeledKeyName == key || (key == 'id' && cammeledKeyName.substring((<any>EntityStatic).name.length).toLowerCase() == 'id')) {
-					return EntityPreparer.getTableColumnByConstantName(EntityStatic, keyName)
+				if (
+					cammeledKeyName == key 
+					|| (key == 'id' && EntityPreparer.isIdColumn(EntityStatic, constantName))
+				) {
+					return EntityPreparer.getTableColumnByConstantName(EntityStatic, constantName)
 				}
 			}
 		}
@@ -159,7 +185,7 @@ class EntityPreparer {
 		return EntityStatic.TABLE_NAME + '.' + plainColumn;
 	}
 
-	static getCammelCaseByUnderscore(underscored) {
+	static getCammelCaseByUnderscore(underscored): string {
 		return underscored.toLowerCase().replace(/[_]([a-z0-9])/g, function (g) { return g[1].toUpperCase(); })
 	}
 
