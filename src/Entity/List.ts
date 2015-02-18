@@ -140,6 +140,10 @@ class List<Entity extends IEntity> {
 		return this.indexedBy[propertyName];
 	}
 
+	get(i: number) {
+		return this.entities[i];
+	}
+
 	private returnValue(entity: Entity) {
 		return entity;
 	}
