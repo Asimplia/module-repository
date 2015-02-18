@@ -34,7 +34,7 @@ class SqlExecutor {
 		list.forEach((entity: IEntity) => {
 			var placeholders = [];
 			var object = entity.toObject();
-			_.each(Object.keys(object), (key: string) => {
+			_.each(EntityPreparer.getKeys(this.EntityStatic), (key: string) => {
 				if (key === this.idKeyName) {
 					return;
 				}
