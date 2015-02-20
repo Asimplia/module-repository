@@ -4,5 +4,5 @@ interface IZboziVariantObject {
 	id: number;
 	zboziProductId: number;
 	feedLoadId: number;
-	parentZboziProductExternalId: string;
+	parentZboziProductId: number;
 }

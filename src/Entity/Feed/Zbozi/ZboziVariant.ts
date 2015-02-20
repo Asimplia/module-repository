@@ -11,7 +11,7 @@ class ZboziVariant {
 	static COLUMN_ZBOZI_VARIANT_ID = 'variantid';
 	static COLUMN_ZBOZI_PRODUCT_ID = 'zboziid';
 	static COLUMN_FEED_LOAD_ID = 'loadid';
-	static COLUMN_PARENT_ZBOZI_PRODUCT_EXTERNAL_ID = 'eshopid';
+	static COLUMN_PARENT_ZBOZI_PRODUCT_ID = 'variantzboziid';
 
 	get Id() { return this.id; }
 
@@ -19,7 +19,7 @@ class ZboziVariant {
 		private id: number,
 		private zboziProductId: number,
 		private feedLoadId: number,
-		private parentZboziProductExternalId: number
+		private parentZboziProductId: number
 	) {}
 
 	static fromRow(row: any) {
@@ -31,7 +31,7 @@ class ZboziVariant {
 			EntityPreparer.idNumeric(object.id),
 			EntityPreparer.int(object.zboziProductId),
 			EntityPreparer.int(object.feedLoadId),
-			EntityPreparer.int(object.parentZboziProductExternalId)
+			EntityPreparer.int(object.parentZboziProductId)
 		);
 	}
 
