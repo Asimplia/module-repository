@@ -86,4 +86,14 @@ describe('EntityPreparer', () => {
       expect(typeof EntityPreparer.id('113')).toBe('string');
     });
   });
+
+  describe('isIdColumn', () => {
+    it('should true on COLUMN corresponds to entity class name', () => {
+      expect(EntityPreparer.isIdColumn(MockEntity, 'COLUMN_MOCK_ENTITY_ID')).toBeTruthy();
+      expect(EntityPreparer.isIdColumn(MockEntity, 'COLUMN_MOCK_NOENTI_ID')).toBeFalsy();
+      expect(EntityPreparer.isIdColumn(MockEntity, 'COLUMN_MOCK_ENTITY')).toBeFalsy();
+      expect(EntityPreparer.isIdColumn(MockEntity, 'COLUMN_MOCK_ENTITY_OD')).toBeFalsy();
+      expect(EntityPreparer.isIdColumn(MockEntity, 'COLUMN_ID')).toBeFalsy();
+    });
+  });
 });

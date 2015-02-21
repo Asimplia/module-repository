@@ -173,10 +173,16 @@ class EntityPreparer {
 		return keys;
 	}
 
-	private static isIdColumn(EntityStatic: ITableEntityStatic, constantName: string) {
+	static isIdColumn(EntityStatic: ITableEntityStatic, constantName: string) {
 		var underscoredKeyName = constantName.substring(7);
 		var cammeledKeyName = EntityPreparer.getCammelCaseByUnderscore(underscoredKeyName);
-		return cammeledKeyName.substring((<any>EntityStatic).name.length).toLowerCase() == 'id';
+		var entityNameFirstLower = EntityPreparer.toFirstLower((<any>EntityStatic).name);
+		return entityNameFirstLower === cammeledKeyName.substr(0, entityNameFirstLower.length)
+			&& cammeledKeyName.substring(entityNameFirstLower.length).toLowerCase() == 'id';
+	}
+
+	static toFirstLower(str: string) {
+		return str.substring(0, 1).toLowerCase() + str.substring(1);
 	}
 
 	static getTableColumnByKey(EntityStatic: ITableEntityStatic, key: string): string {
