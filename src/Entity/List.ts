@@ -101,7 +101,7 @@ class List<Entity extends IEntity> {
 		return _.all(this.entities, cb);
 	}
 
-	forEach(cb: (entity: Entity) => any) {
+	forEach(cb: (entity: Entity, i?: number) => any) {
 		this.entities.forEach(cb);
 		return this;
 	}

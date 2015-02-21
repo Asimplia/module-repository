@@ -3,6 +3,7 @@ import ScriptTypeEnum = require('./Error/ScriptTypeEnum');
 import NotAllowedNullError = require('./Error/Error/NotAllowedNullError');
 import ColumnNotExistsInEntityError = require('./Error/Error/ColumnNotExistsInEntityError');
 import ITableEntityStatic = require('./Common/ITableEntityStatic');
+import IEntity = require('./IEntity');
 import moment = require('moment');
 import _ = require('underscore');
 
@@ -104,6 +105,24 @@ class EntityPreparer {
 		return EntityPreparer.float(value);
 	}
 
+	static fromRow<Entity extends IEntity>(EntityStatic: ITableEntityStatic, row: any): Entity {
+		var keys = EntityPreparer.getKeys(EntityStatic);
+		var object = {};
+		keys.forEach((key: string) => {
+			object[key] = row[EntityPreparer.getTableColumnByKey(EntityStatic, key)];
+		});
+		return <Entity>EntityStatic.fromObject(object);
+	}
+
+	static tableEntityToObject<Entity>(EntityStatic: ITableEntityStatic, entity: Entity): any {
+		var keys = EntityPreparer.getKeys(EntityStatic);
+		var object = {};
+		keys.forEach((key: string) => {
+			object[key] = entity[key];
+		});
+		return object;
+	}
+
 	static getColumnsAsPrefixedAlias(EntityStatic: ITableEntityStatic) {
 		var columns = [];
 		for (var i in Object.keys(EntityStatic)) {
@@ -154,10 +173,16 @@ class EntityPreparer {
 		return keys;
 	}
 
-	private static isIdColumn(EntityStatic: ITableEntityStatic, constantName: string) {
+	static isIdColumn(EntityStatic: ITableEntityStatic, constantName: string) {
 		var underscoredKeyName = constantName.substring(7);
 		var cammeledKeyName = EntityPreparer.getCammelCaseByUnderscore(underscoredKeyName);
-		return cammeledKeyName.substring((<any>EntityStatic).name.length).toLowerCase() == 'id';
+		var entityNameFirstLower = EntityPreparer.toFirstLower((<any>EntityStatic).name);
+		return entityNameFirstLower === cammeledKeyName.substr(0, entityNameFirstLower.length)
+			&& cammeledKeyName.substring(entityNameFirstLower.length).toLowerCase() == 'id';
+	}
+
+	static toFirstLower(str: string) {
+		return str.substring(0, 1).toLowerCase() + str.substring(1);
 	}
 
 	static getTableColumnByKey(EntityStatic: ITableEntityStatic, key: string): string {

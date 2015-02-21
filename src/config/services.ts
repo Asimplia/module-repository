@@ -70,6 +70,7 @@ var services: { [name: string]: any } = {
 	'EShop.CompanyLoader': require('../EShop/CompanyLoader'),
 	'EShop.CustomerLoader': require('../EShop/CustomerLoader'),
 	'EShop.EShopLoader': require('../EShop/EShopLoader'),
+	'EShop.EShopRecorder': require('../EShop/EShopRecorder'),
 	'EShop.ProductLoader': require('../EShop/ProductLoader'),
 	'Load.LoadLogLoader': require('../Load/LoadLogLoader'),
 	'Matrix.MatrixLoader': require('../Matrix/MatrixLoader'),

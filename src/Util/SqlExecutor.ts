@@ -35,21 +35,19 @@ class SqlExecutor {
 			var placeholders = [];
 			var object = entity.toObject();
 			_.each(EntityPreparer.getKeys(this.EntityStatic), (key: string) => {
-				if (key === this.idKeyName) {
-					return;
-				}
 				var value = object[key];
-				placeholderIndex++;
-				params.push(value);
-				placeholders.push('$' + placeholderIndex);
+				if (key === this.idKeyName && (value === null || typeof value === 'undefined')) {
+					placeholders.push('DEFAULT');
+				} else {
+					placeholderIndex++;
+					params.push(value);
+					placeholders.push('$' + placeholderIndex);
+				}
 			});
 			placeholderRows.push(placeholders.join(','));
 		});
 		var columns = EntityPreparer.getTablePlainColumns(this.EntityStatic);
-		var noIdColumns = _.filter(columns, (column: string) => { 
-			return column !== this.idColumnName; 
-		});
-		var sql = "INSERT INTO " + this.EntityStatic.TABLE_NAME + ' (' + noIdColumns + ') '
+		var sql = "INSERT INTO " + this.EntityStatic.TABLE_NAME + ' (' + columns.join(',') + ') '
 			+ 'VALUES (' + placeholderRows.join('),(') + ') '
 			+ 'RETURNING ' + this.idColumnName;
 		this.connection.query(sql, params, (e: Error, result) => {

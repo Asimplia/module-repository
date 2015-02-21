@@ -98,7 +98,7 @@ class HeurekaProduct implements IIdentificableEntity {
 			EntityPreparer.stringOrNull(object.categoryText),
 			EntityPreparer.stringOrNull(object.ean),
 			EntityPreparer.stringOrNull(object.isbn),
-			EntityPreparer.intOrNull(object.heurekaCpc),
+			EntityPreparer.floatOrNull(object.heurekaCpc),
 			EntityPreparer.stringOrNull(object.deliveryDate),
 			EntityPreparer.stringOrNull(object.itemGroupId)
 		);
