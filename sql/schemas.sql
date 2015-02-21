@@ -1035,7 +1035,7 @@ create table feed.zbozi (
    dues                 REAL                 null,
    delivery_date        VARCHAR(50)          null,
    shop_depots          VARCHAR(50)          null,
-   unfeatured           INT                  null,
+   unfeatured           BOOLEAN              null,
    item_type            VARCHAR(50)          null,
    extra_message        VARCHAR(50)          null,
    manufacturer         VARCHAR(255)         null,
@@ -1051,6 +1051,7 @@ create table feed.zbozi (
 /*==============================================================*/
 create table feed.zbozi_variant (
    variantid            SERIAL               not null,
+   loadid               INT8                 not null,
    zboziid              INT8                 null,
    variantzboziid       INT8                 null,
    constraint PK_ZBOZI_VARIANT primary key (variantid)

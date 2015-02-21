@@ -7,7 +7,7 @@ export = ZboziVariant;
 class ZboziVariant {
 	
 	
-	static TABLE_NAME = 'feed.zbozi';
+	static TABLE_NAME = 'feed.zbozi_variant';
 	static COLUMN_ZBOZI_VARIANT_ID = 'variantid';
 	static COLUMN_ZBOZI_PRODUCT_ID = 'zboziid';
 	static COLUMN_FEED_LOAD_ID = 'loadid';
