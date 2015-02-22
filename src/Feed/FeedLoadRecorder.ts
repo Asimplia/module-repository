@@ -1,11 +1,13 @@
 
 import FeedLoad = require('../Entity/Feed/FeedLoad');
-import SqlExecutor = require('../Util/SqlExecutor');
+import IFeedLoadObject = require('../Entity/Feed/IFeedLoadObject');
+import Util = require('asimplia-util');
+import Manager = Util.ODBM.Repository.PostgreSql.Manager;
 
 export = FeedLoadRecorder;
 class FeedLoadRecorder {
 	
-	private sqlExecutor: SqlExecutor;
+	private manager: Manager<FeedLoad, IFeedLoadObject>;
 
 	static $service = 'Feed.FeedLoadRecorder';
 	static $inject = [
@@ -14,10 +16,10 @@ class FeedLoadRecorder {
 	constructor(
 		private connection: any
 	) {
-		this.sqlExecutor = new SqlExecutor(connection, FeedLoad, FeedLoad.COLUMN_FEED_LOAD_ID, 'id');
+		this.manager = new Manager<FeedLoad, IFeedLoadObject>(FeedLoad, connection);
 	}
 
 	insert(feedLoad: FeedLoad, callback: (e: Error, feedLoad?: FeedLoad) => void) {
-		this.sqlExecutor.insert(feedLoad, callback);
+		this.manager.insert(feedLoad, callback);
 	}
 }
