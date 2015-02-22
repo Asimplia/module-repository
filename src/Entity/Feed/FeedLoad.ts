@@ -20,6 +20,7 @@ class FeedLoad implements IIdentificableEntity {
 		dateLoad: { $name: 'loaddate', $type: Type.Date },
 		feedCode: { $name: 'feedcode', $type: new Type.String(25) }
 	};
+	private static converter = new Converter<FeedLoad, IFeedLoadObject>(FeedLoad);
 	
 	get Id() { return this.object.id; }
 
@@ -30,15 +31,14 @@ class FeedLoad implements IIdentificableEntity {
 	}
 
 	static fromRow(row: any): FeedLoad {
-		return converter.fromRow(row);
+		return FeedLoad.converter.fromRow(row);
 	}
 
 	static toObject(entity: FeedLoad): IFeedLoadObject {
-		return converter.toObject(entity);
+		return FeedLoad.converter.toObject(entity);
 	}
 
 	static fromObject(object: IFeedLoadObject): FeedLoad {
-		return converter.fromObject(object);
+		return FeedLoad.converter.fromObject(object);
 	}
 }
-var converter = new Converter<FeedLoad, IFeedLoadObject>(FeedLoad);
