@@ -2,10 +2,12 @@
 import mongoose = require('mongoose');
 import each = require('each');
 import _ = require('underscore');
+import Util = require('asimplia-util');
 import IIdentificableEntity = require('../Entity/Common/IIdentificableEntity');
 import IEntity = require('../Entity/IEntity');
 import IEntityStatic = require('../Entity/Common/IEntityStatic');
 import List = require('../Entity/List');
+import EntityList = Util.ODBM.Entity.List;
 import EntityPreparer = require('../Entity/EntityPreparer');
 
 // TODO move it to mongoose.d.ts & DefinitelyTyped repo
@@ -21,7 +23,7 @@ class DocumentExecutor {
 		private EntityStatic: IEntityStatic
 	) { }
 
-	insertList(list: List<IIdentificableEntity>, callback: (e: Error, list?: List<IEntity>) => void) {
+	insertList(list: EntityList<IIdentificableEntity>, callback: (e: Error, list?: EntityList<IEntity>) => void) {
 		this.getNextId((e: Error, nextId?: number) => {
 			if (e) {
 				callback(e);
@@ -43,7 +45,7 @@ class DocumentExecutor {
 		});
 	}
 
-	updateList(list: List<IIdentificableEntity>, callback: (e: Error, list?: List<IEntity>) => void) {
+	updateList(list: EntityList<IIdentificableEntity>, callback: (e: Error, list?: EntityList<IEntity>) => void) {
 		var ids = list.map((entity: IIdentificableEntity) => {
 			return entity.Id;
 		}).filter((id: number) => {
