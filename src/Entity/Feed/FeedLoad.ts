@@ -2,53 +2,42 @@
 import IIdentificableEntity = require('../Common/IIdentificableEntity');
 import IFeedLoadObject = require('./IFeedLoadObject');
 import EntityPreparer = require('../EntityPreparer');
+import Util = require('asimplia-util');
+import DatabaseSystem = Util.ODBM.DBS.DatabaseSystem;
+import Type = Util.ODBM.Mapping.Type;
+import Converter = Util.ODBM.Entity.Converter;
+import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
 
 export = FeedLoad;
 class FeedLoad implements IIdentificableEntity {
 
-	static TABLE_NAME = 'feed.feedload';
-	static COLUMN_FEED_LOAD_ID = 'loadid';
-	static COLUMN_E_SHOP_ID = 'eshopid';
-	static COLUMN_DATE_LOAD = 'loaddate';
-	static COLUMN_FEED_CODE = 'feedcode';
+	static $entity: IEntityAnnotation = {
+		$dbs: DatabaseSystem.POSTGRE_SQL,
+		$name: 'feed.feedload',
+		id: { $name: 'loadid', $type: new Type.Id(Type.Integer) },
+		eShopId: { $name: 'eshopid', $type: Type.Integer },
+		dateLoad: { $name: 'loaddate', $type: Type.Date },
+		feedCode: { $name: 'feedcode', $type: new Type.String(25) }
+	};
+	private static converter = new Converter<FeedLoad, IFeedLoadObject>(FeedLoad);
 	
-	get Id() { return this.id; }
+	get Id() { return this.object.id; }
 
-	constructor(
-		private id: number,
-		private eShopId: number,
-		private dateLoad: Date,
-		private feedCode: string
-	) {}
+	constructor(private object: IFeedLoadObject) {}
 
 	toObject(): IFeedLoadObject {
 		return FeedLoad.toObject(this);
 	}
 
-	static fromRow(row: any) {
-		return FeedLoad.fromObject({
-			id: row[EntityPreparer.getTableColumnByKey(FeedLoad, 'id')],
-			eShopId: row[EntityPreparer.getTableColumnByKey(FeedLoad, 'eShopId')],
-			dateLoad: row[EntityPreparer.getTableColumnByKey(FeedLoad, 'dateLoad')],
-			feedCode: row[EntityPreparer.getTableColumnByKey(FeedLoad, 'feedCode')]
-		});
+	static fromRow(row: any): FeedLoad {
+		return FeedLoad.converter.fromRow(row);
 	}
 
 	static toObject(entity: FeedLoad): IFeedLoadObject {
-		return {
-			id: EntityPreparer.idNumeric(entity.id),
-			eShopId: EntityPreparer.int(entity.eShopId),
-			dateLoad: EntityPreparer.date(entity.dateLoad),
-			feedCode: EntityPreparer.string(entity.feedCode)
-		};
+		return FeedLoad.converter.toObject(entity);
 	}
 
-	static fromObject(object: IFeedLoadObject) {
-		return new FeedLoad(
-			EntityPreparer.idNumeric(object.id),
-			EntityPreparer.int(object.eShopId),
-			EntityPreparer.date(object.dateLoad),
-			EntityPreparer.string(object.feedCode)
-		);
+	static fromObject(object: IFeedLoadObject): FeedLoad {
+		return FeedLoad.converter.fromObject(object);
 	}
 }

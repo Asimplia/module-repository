@@ -1,38 +1,63 @@
 
 import IEntity = require('../../IEntity');
-import IChecklistSourcesObject = require('./IChecklistSourcesObject');
 import IChecklistSourceSettingsObject = require('./IChecklistSourceSettingsObject');
 import EntityPreparer = require('../../EntityPreparer');
 import ChecklistSourceTypeEnum = require('./ChecklistSourceTypeEnum');
+import Util = require('asimplia-util');
+import DatabaseSystem = Util.ODBM.DBS.DatabaseSystem;
+import Type = Util.ODBM.Mapping.Type;
+import Converter = Util.ODBM.Entity.Converter;
+import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
 
 export = ChecklistSourceSettings;
 class ChecklistSourceSettings implements IEntity {
 
-	get Id() { return this.id; }
-	get EShopId() { return this.eShopId; }
-	get Sources() { return this.sources; }
-	get ClosedAt() { return this.closedAt; }
-	set ClosedAt(value) { this.closedAt = value; }
+	static $entity: IEntityAnnotation = {
+		$dbs: DatabaseSystem.MONGO_DB,
+		id: new Type.Id(Type.String),
+		eShopId: Type.Integer,
+		sources: {
+			heurekaXml: {
+				createdAt: Type.Date,
+				uri: new Type.String(2048, true),
+				processingStartedAt: new Type.Date(true, true),
+				processedAt: new Type.Date(true, true),
+				failedAt: new Type.Date(true, true)
+			},
+			zboziXml: {
+				createdAt: Type.Date,
+				uri: new Type.String(2048, true),
+				processingStartedAt: new Type.Date(true, true),
+				processedAt: new Type.Date(true, true),
+				failedAt: new Type.Date(true, true)
+			}
+		},
+		closedAt: new Type.Date(true, true)
+	};
+	private static converter = new Converter<ChecklistSourceSettings, IChecklistSourceSettingsObject>(ChecklistSourceSettings);
+
+	get Id() { return this.object.id; }
+	get EShopId() { return this.object.eShopId; }
+	get Sources() { return this.object.sources; }
+	get ClosedAt() { return this.object.closedAt; }
+	set ClosedAt(value) { this.object.closedAt = value; }
 
 	constructor(
-		private id: string,
-		private eShopId: number,
-		private sources: IChecklistSourcesObject,
-		private closedAt: Date
+		private object: IChecklistSourceSettingsObject
 	) {}
 
 	isClosed() {
-		return this.closedAt !== null;
+		return this.object.closedAt !== null;
 	}
 
 	toggleClosed() {
-		this.closedAt = this.isClosed() ? null : EntityPreparer.now();
+		this.object.closedAt = this.isClosed() ? null : EntityPreparer.now();
 		return this;
 	}
 
 	setSource(type: ChecklistSourceTypeEnum, uri: string) {
 		var typeString = ChecklistSourceSettings.getTypeString(type);
-		this.sources[typeString] = {
+		this.object.sources[typeString] = {
 			uri: uri,
 			createdAt: EntityPreparer.now()
 		};
@@ -49,36 +74,11 @@ class ChecklistSourceSettings implements IEntity {
 	}
 
 	static fromObject(object: IChecklistSourceSettingsObject) {
-		return new ChecklistSourceSettings(
-			EntityPreparer.id(object.id),
-			EntityPreparer.int(object.eShopId),
-			{
-				heurekaXml: {
-					uri: EntityPreparer.stringOrNull(object.sources.heurekaXml.uri),
-					createdAt: EntityPreparer.dateOrNull(object.sources.heurekaXml.createdAt),
-					processingStartedAt: EntityPreparer.dateOrNull(object.sources.heurekaXml.processingStartedAt),
-					processedAt: EntityPreparer.dateOrNull(object.sources.heurekaXml.processedAt),
-					failedAt: EntityPreparer.dateOrNull(object.sources.heurekaXml.failedAt)
-				},
-				zboziXml: {
-					uri: EntityPreparer.stringOrNull(object.sources.zboziXml.uri),
-					createdAt: EntityPreparer.dateOrNull(object.sources.zboziXml.createdAt),
-					processingStartedAt: EntityPreparer.dateOrNull(object.sources.zboziXml.processingStartedAt),
-					processedAt: EntityPreparer.dateOrNull(object.sources.zboziXml.processedAt),
-					failedAt: EntityPreparer.dateOrNull(object.sources.zboziXml.failedAt)
-				}
-			},
-			EntityPreparer.dateOrNull(object.closedAt)
-		);
+		return ChecklistSourceSettings.converter.fromObject(object);
 	}
 
 	static toObject(entity: ChecklistSourceSettings): IChecklistSourceSettingsObject {
-		return {
-			id: entity.id,
-			eShopId: entity.eShopId,
-			sources: entity.sources,
-			closedAt: entity.closedAt
-		};
+		return ChecklistSourceSettings.converter.toObject(entity);
 	}
 
 	toObject() {

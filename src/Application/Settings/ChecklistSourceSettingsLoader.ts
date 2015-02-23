@@ -1,26 +1,28 @@
 
 import mongoose = require('mongoose');
 import ChecklistSourceSettings = require('../../Entity/Application/Settings/ChecklistSourceSettings');
-import DocumentExecutor = require('../../Util/DocumentExecutor');
-import ChecklistSourceSettingsModel = require('../../Definition/Application/Settings/ChecklistSourceSettingsModel');
+import IChecklistSourceSettingsObject = require('../../Entity/Application/Settings/IChecklistSourceSettingsObject');
+import Util = require('asimplia-util');
+import Manager = Util.ODBM.Repository.MongoDB.Manager;
 
 export = ChecklistSourceSettingsLoader;
 class ChecklistSourceSettingsLoader {
 
-	private documentExecutor: DocumentExecutor;
-	
+	private manager: Manager<ChecklistSourceSettings, IChecklistSourceSettingsObject>;
+
 	static $inject = [
-		'Definition.Application.Settings.ChecklistSourceSettingsModel'
+		'connection.mongoose'
 	];
 	constructor(
-		private model: mongoose.Model<mongoose.Document>
+		private connection: mongoose.Mongoose
 	) {
-		this.documentExecutor = new DocumentExecutor(this.model, ChecklistSourceSettings);
+		this.manager = new Manager<ChecklistSourceSettings, IChecklistSourceSettingsObject>(ChecklistSourceSettings, connection);
 	}
 
 	getByEShopId(eShopId: number, callback: (e: Error, checklistSourceSettings?: ChecklistSourceSettings) => void) {
-		this.model.findOne({ "eShopId": eShopId }, (e, object: mongoose.Document) => {
-			this.documentExecutor.createByObject(e, object, callback);
+		this.manager.Model.findOne({ "eShopId": eShopId }, (e, doc: mongoose.Document) => {
+			if (e) return callback(e);
+			callback(null, this.manager.Converter.fromRow(doc.toObject()));
 		});
 	}
 
