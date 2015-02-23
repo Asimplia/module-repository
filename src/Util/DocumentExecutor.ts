@@ -93,10 +93,10 @@ class DocumentExecutor {
 				var loadedEntity = <IIdentificableEntity>this.EntityStatic.fromObject(doc.toObject()); // TODO create IdentificableEntityStatic
 				return loadedEntity.Id;
 			});
-			var listToInsert = list.filter((entity: IIdentificableEntity) => {
+			var listToInsert = <EntityList<IIdentificableEntity>>list.filter((entity: IIdentificableEntity) => {
 				return loadedIds.indexOf(entity.Id) === -1
 			});
-			var listToUpdate = list.filter((entity: IIdentificableEntity) => {
+			var listToUpdate = <EntityList<IIdentificableEntity>>list.filter((entity: IIdentificableEntity) => {
 				return loadedIds.indexOf(entity.Id) !== -1
 			});
 
