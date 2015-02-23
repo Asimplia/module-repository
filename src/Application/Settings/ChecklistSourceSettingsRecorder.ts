@@ -1,32 +1,34 @@
 
 import mongoose = require('mongoose');
 import ChecklistSourceSettings = require('../../Entity/Application/Settings/ChecklistSourceSettings');
-import DocumentExecutor = require('../../Util/DocumentExecutor');
-import ChecklistSourceSettingsModel = require('../../Definition/Application/Settings/ChecklistSourceSettingsModel');
+import IChecklistSourceSettingsObject = require('../../Entity/Application/Settings/IChecklistSourceSettingsObject');
 import List = require('../../Entity/List');
+import Util = require('asimplia-util');
+import Manager = Util.ODBM.Repository.MongoDB.Manager;
 
 export = ChecklistSourceSettingsRecorder;
 class ChecklistSourceSettingsRecorder {
 	
-	private documentExecutor: DocumentExecutor;
+	private manager: Manager<ChecklistSourceSettings, IChecklistSourceSettingsObject>;
+
 	static $inject = [
-		'Definition.Application.Settings.ChecklistSourceSettingsModel'
+		'connection.mongoose'
 	];
 	constructor(
-		private model: mongoose.Model<mongoose.Document>
+		private connection: mongoose.Mongoose
 	) {
-		this.documentExecutor = new DocumentExecutor(this.model, ChecklistSourceSettings);
+		this.manager = new Manager<ChecklistSourceSettings, IChecklistSourceSettingsObject>(ChecklistSourceSettings, connection);
 	}
 
 	insertOrUpdateList(checklistSourceSettingsList: List<ChecklistSourceSettings>, callback: (e: Error, checklistSourceSettingsList?: List<ChecklistSourceSettings>) => void) {
-		this.documentExecutor.insertOrUpdateList(checklistSourceSettingsList, callback);
+		this.manager.insertOrUpdateList(checklistSourceSettingsList, callback);
 	}
 
 	insertOrUpdate(checklistSourceSettings: ChecklistSourceSettings, callback: (e: Error, checklistSourceSettings?: ChecklistSourceSettings) => void) {
-		this.documentExecutor.insertOrUpdate(checklistSourceSettings, callback);
+		this.manager.insertOrUpdate(checklistSourceSettings, callback);
 	}
 
 	update(checklistSourceSettings: ChecklistSourceSettings, callback: (e: Error, checklistSourceSettings?: ChecklistSourceSettings) => void) {
-		this.documentExecutor.update(checklistSourceSettings, callback);
+		this.manager.update(checklistSourceSettings, callback);
 	}
 }

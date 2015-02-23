@@ -14,7 +14,6 @@ class FeedLoad implements IIdentificableEntity {
 	static $entity: IEntityAnnotation = {
 		$dbs: DatabaseSystem.POSTGRE_SQL,
 		$name: 'feed.feedload',
-		$object: 'object',
 		id: { $name: 'loadid', $type: new Type.Id(Type.Integer) },
 		eShopId: { $name: 'eshopid', $type: Type.Integer },
 		dateLoad: { $name: 'loaddate', $type: Type.Date },

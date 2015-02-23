@@ -10,7 +10,6 @@ var object = (object: any) => {
 export = services;
 var services: { [name: string]: any } = {
 	'ConnectionDispatcher': require('../ConnectionDispatcher'),
-	'Definition.Application.Settings.ChecklistSourceSettingsModel': object(require('../Definition/Application/Settings/ChecklistSourceSettingsModel')),
 	'Definition.Application.CategoryModel': object(require('../Definition/Application/CategoryModel')),
 	'Definition.Application.ChannelModel': object(require('../Definition/Application/ChannelModel')),
 	'Definition.Application.CompanyModel': object(require('../Definition/Application/CompanyModel')),
