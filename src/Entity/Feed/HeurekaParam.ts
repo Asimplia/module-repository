@@ -1,65 +1,28 @@
 
-import IIdentificableEntity = require('../Common/IIdentificableEntity');
 import IHeurekaParamObject = require('./IHeurekaParamObject');
 import EntityPreparer = require('../EntityPreparer');
+import Util = require('asimplia-util');
+import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
+import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
+import Type = Util.ODBM.Mapping.Type;
 
 export = HeurekaParam;
-class HeurekaParam implements IIdentificableEntity {
+class HeurekaParam {
 
-	static TABLE_NAME = 'feed.heureka_param';
-	static COLUMN_HEUREKA_PARAM_ID = 'paramid';
-	static COLUMN_HEUREKA_PRODUCT_ID = 'heurekaid';
-	static COLUMN_FEED_LOAD_ID = 'loadid';
-	static COLUMN_HEUREKA_PRODUCT_EXTERNAL_ID = 'item_id';
-	static COLUMN_NAME = 'paramname';
-	static COLUMN_VALUE = 'value';
+	static $entity: IEntityAnnotation = {
+		$dbs: DatabaseSystem.POSTGRE_SQL,
+		$name: 'feed.heureka_param',
+		id: { $type: new Type.Id(new Type.Integer(4)), $name: 'paramid' },
+		heurekaProductId: { $type: Type.Integer, $name: 'heurekaid' },
+		feedLoadId: { $type: Type.Integer, $name: 'loadid' },
+		heurekaProductExternalId: { $type: new Type.String(36), $name: 'item_id' },
+		name: { $type: new Type.String(50, true), $name: 'paramname' },
+		value: { $type: new Type.String(50, true), $name: 'value' }
+	};
 
-	get Id() { return this.id; }
+	get Id() { return this.object.id; }
 
 	constructor(
-		private id: number,
-		private heurekaProductId: number,
-		private feedLoadId: number,
-		private heurekaProductExternalId: string,
-		private name: string,
-		private value: string
+		private object: IHeurekaParamObject
 	) {}
-
-	static fromRow(row: any) {
-		return HeurekaParam.fromObject({
-			id: row[EntityPreparer.getTableColumnByKey(HeurekaParam, 'id')],
-			heurekaProductId: row[EntityPreparer.getTableColumnByKey(HeurekaParam, 'heurekaProductId')],
-			feedLoadId: row[EntityPreparer.getTableColumnByKey(HeurekaParam, 'feedLoadId')],
-			heurekaProductExternalId: row[EntityPreparer.getTableColumnByKey(HeurekaParam, 'heurekaProductExternalId')],
-			name: row[EntityPreparer.getTableColumnByKey(HeurekaParam, 'name')],
-			value: row[EntityPreparer.getTableColumnByKey(HeurekaParam, 'value')]
-		});
-	}
-
-	static fromObject(object: IHeurekaParamObject) {
-		return new HeurekaParam(
-			EntityPreparer.idNumeric(object.id),
-			EntityPreparer.int(object.heurekaProductId),
-			EntityPreparer.int(object.feedLoadId),
-			EntityPreparer.stringOrNull(object.heurekaProductExternalId),
-			EntityPreparer.stringOrNull(object.name),
-			EntityPreparer.stringOrNull(object.value)
-		);
-	}
-
-	static toObject(entity: HeurekaParam): IHeurekaParamObject {
-		return {
-			id: entity.id,
-			heurekaProductId: entity.heurekaProductId,
-			feedLoadId: entity.feedLoadId,
-			heurekaProductExternalId: entity.heurekaProductExternalId,
-			name: entity.name,
-			value: entity.value
-		};
-	}
-
-	toObject(): IHeurekaParamObject {
-		return HeurekaParam.toObject(this);
-	}
-	
 }

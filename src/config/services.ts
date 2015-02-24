@@ -97,6 +97,11 @@ var services: { [name: string]: any } = {
 	},
 	'Util:DI.ServiceAutoload': {
 		$class: Util.DI.ServiceAutoload,
-		$args: [__dirname + '/../Feed']
+		$args: [
+			[
+				__dirname + '/../Entity',
+				__dirname + '/../Feed'
+			]
+		]
 	},
 };

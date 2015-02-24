@@ -1,55 +1,27 @@
 
-import IIdentificableEntity = require('../Common/IIdentificableEntity');
 import IHeurekaAccessoryObject = require('./IHeurekaAccessoryObject');
 import EntityPreparer = require('../EntityPreparer');
+import Util = require('asimplia-util');
+import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
+import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
+import Type = Util.ODBM.Mapping.Type;
 
 export = HeurekaAccessory;
-class HeurekaAccessory implements IIdentificableEntity {
+class HeurekaAccessory {
 
-	static TABLE_NAME = 'feed.heureka_accessory';
-	static COLUMN_HEUREKA_ACCESSORY_ID = 'accessoryid';
-	static COLUMN_HEUREKA_PRODUCT_ID = 'heurekaid';
-	static COLUMN_FEED_LOAD_ID = 'loadid';
-	static COLUMN_ACCESSORY_HEUREKA_PRODUCT_EXTERNAL_ID = 'accessory';
+	static $entity: IEntityAnnotation = {
+		$dbs: DatabaseSystem.POSTGRE_SQL,
+		$name: 'feed.heureka_accessory',
+		id: { $type: new Type.Id(new Type.Integer(4)), $name: 'accessoryid' },
+		heurekaProductId: { $type: Type.Integer, $name: 'heurekaid' },
+		feedLoadId: { $type: Type.Integer, $name: 'loadid' },
+		name: { $type: new Type.String(36), $name: 'accessory' }
+	};
 
-	get Id() { return this.id; }
+	get Id() { return this.object.id; }
 
 	constructor(
-		private id: number,
-		private heurekaProductId: number,
-		private feedLoadId: number,
-		private accessoryHeurekaProductExternalId: string
+		private object: IHeurekaAccessoryObject
 	) {}
-
-	static fromRow(row: any) {
-		return HeurekaAccessory.fromObject({
-			id: row[EntityPreparer.getTableColumnByKey(HeurekaAccessory, 'id')],
-			heurekaProductId: row[EntityPreparer.getTableColumnByKey(HeurekaAccessory, 'heurekaProductId')],
-			feedLoadId: row[EntityPreparer.getTableColumnByKey(HeurekaAccessory, 'feedLoadId')],
-			accessoryHeurekaProductExternalId: row[EntityPreparer.getTableColumnByKey(HeurekaAccessory, 'accessoryHeurekaProductExternalId')]
-		});
-	}
-
-	static fromObject(object: IHeurekaAccessoryObject) {
-		return new HeurekaAccessory(
-			EntityPreparer.idNumeric(object.id),
-			EntityPreparer.int(object.heurekaProductId),
-			EntityPreparer.int(object.feedLoadId),
-			EntityPreparer.stringOrNull(object.accessoryHeurekaProductExternalId)
-		);
-	}
-
-	static toObject(entity: HeurekaAccessory): IHeurekaAccessoryObject {
-		return {
-			id: entity.id,
-			heurekaProductId: entity.heurekaProductId,
-			feedLoadId: entity.feedLoadId,
-			accessoryHeurekaProductExternalId: entity.accessoryHeurekaProductExternalId
-		};
-	}
-
-	toObject(): IHeurekaAccessoryObject {
-		return HeurekaAccessory.toObject(this);
-	}
 	
 }

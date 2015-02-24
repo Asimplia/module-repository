@@ -1,12 +1,14 @@
 
 import HeurekaParam = require('../Entity/Feed/HeurekaParam');
-import List = require('../Entity/List');
-import SqlExecutor = require('../Util/SqlExecutor');
+import IHeurekaParamObject = require('../Entity/Feed/IHeurekaParamObject');
+import Util = require('asimplia-util');
+import List = Util.ODBM.Entity.List;
+import Manager = Util.ODBM.Repository.PostgreSql.Manager;
 
 export = HeurekaParamRecorder;
 class HeurekaParamRecorder {
 	
-	private sqlExecutor: SqlExecutor;
+	private manager: Manager<HeurekaParam, IHeurekaParamObject>;
 
 	static $service = 'Feed.HeurekaParamRecorder';
 	static $inject = [
@@ -15,14 +17,14 @@ class HeurekaParamRecorder {
 	constructor(
 		private connection: any
 	) {
-		this.sqlExecutor = new SqlExecutor(connection, HeurekaParam, HeurekaParam.COLUMN_HEUREKA_PARAM_ID, 'id');
+		this.manager = new Manager<HeurekaParam, IHeurekaParamObject>(HeurekaParam, connection);
+	}
+
+	insertList(heurekaParamList: List<HeurekaParam>, callback: (e: Error, heurekaParamList?: List<HeurekaParam>) => void) {
+		this.manager.insertList(heurekaParamList, callback);
 	}
 
 	insert(heurekaParam: HeurekaParam, callback: (e: Error, heurekaParam?: HeurekaParam) => void) {
-		this.sqlExecutor.insert(heurekaParam, callback);
-	}
-
-	insertList(list: List<HeurekaParam>, callback: (e: Error, list?: List<HeurekaParam>) => void) {
-		this.sqlExecutor.insertList(list, callback);
+		this.manager.insert(heurekaParam, callback);
 	}
 }

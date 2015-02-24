@@ -1,12 +1,14 @@
 
 import HeurekaProduct = require('../Entity/Feed/HeurekaProduct');
-import SqlExecutor = require('../Util/SqlExecutor');
-import List = require('../Entity/List');
+import IHeurekaProductObject = require('../Entity/Feed/IHeurekaProductObject');
+import Util = require('asimplia-util');
+import List = Util.ODBM.Entity.List;
+import Manager = Util.ODBM.Repository.PostgreSql.Manager;
 
 export = HeurekaProductRecorder;
 class HeurekaProductRecorder {
 	
-	private sqlExecutor: SqlExecutor;
+	private manager: Manager<HeurekaProduct, IHeurekaProductObject>;
 
 	static $service = 'Feed.HeurekaProductRecorder';
 	static $inject = [
@@ -15,10 +17,10 @@ class HeurekaProductRecorder {
 	constructor(
 		private connection: any
 	) {
-		this.sqlExecutor = new SqlExecutor(connection, HeurekaProduct, HeurekaProduct.COLUMN_HEUREKA_PRODUCT_ID, 'id');
+		this.manager = new Manager<HeurekaProduct, IHeurekaProductObject>(HeurekaProduct, connection);
 	}
 
 	insertList(heurekaProductList: List<HeurekaProduct>, callback: (e: Error, heurekaProductList?: List<HeurekaProduct>) => void) {
-		this.sqlExecutor.insertList(heurekaProductList, callback);
+		this.manager.insertList(heurekaProductList, callback);
 	}
 }
