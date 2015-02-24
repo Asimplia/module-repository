@@ -17,7 +17,11 @@ class ValueFailure {
 		eShopId: { $type: Type.Integer, $name: 'eshopid' },
 		formerValue: { $type: new Type.String(Infinity), $name: 'formervalue' },
 		lengthFaliedAt: { $type: new Type.Date(true, true), $name: 'lengthfailedat' },
-		dataTypeFailedAt: { $type: new Type.Date(true, true), $name: 'datatypefailedat' }
+		dataTypeFailedAt: { $type: new Type.Date(true, true), $name: 'datatypefailedat' },
+		heurekaProductId: { $type: new Type.Integer(4, true), $name: 'heurekaid' },
+		heurekaParamId: { $type: new Type.Integer(4, true), $name: 'paramid' },
+		heurekaDeliveryId: { $type: new Type.Integer(4, true), $name: 'heurekadeliveryid' },
+		zboziProductId: { $type: new Type.Integer(4, true), $name: 'zboziid' }
 	};
 
 	get Id() { return this.object.id; }

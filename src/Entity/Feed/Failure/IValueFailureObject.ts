@@ -6,6 +6,10 @@ interface IValueFailureObject {
 	columnId: number;
 	eShopId: number;
 	formerValue: string;
-	lengthFailedAt: Date;
-	dataTypeFailedAt: Date;
+	lengthFailedAt?: Date;
+	dataTypeFailedAt?: Date;
+	heurekaProductId?: number;
+	heurekaParamId?: number;
+	heurekaDeliveryId?: number;
+	zboziProductId?: number;
 }
