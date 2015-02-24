@@ -22,6 +22,7 @@ class ChecklistSourceSettingsLoader {
 	getByEShopId(eShopId: number, callback: (e: Error, checklistSourceSettings?: ChecklistSourceSettings) => void) {
 		this.manager.Model.findOne({ "eShopId": eShopId }, (e, doc: mongoose.Document) => {
 			if (e) return callback(e);
+			if (!doc) return callback(null, null);
 			callback(null, this.manager.Converter.fromRow(doc.toObject()));
 		});
 	}
