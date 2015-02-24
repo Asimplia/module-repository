@@ -32,7 +32,7 @@ class ZboziProduct {
 		extraMessage: { $type: new Type.String(50, true), $name: 'extra_message' },
 		manufacturer: { $type: new Type.String(255, true), $name: 'manufacturer' },
 		categoryText: { $type: new Type.String(255, true), $name: 'categorytext' },
-		ean: { $type: new Type.String(13, true), $name: 'ean' },
+		ean: { $type: new Type.String(14, true), $name: 'ean' },
 		productNumber: { $type: new Type.String(50, true), $name: 'productno' },
 		variantName: { $type: new Type.String(255, true), $name: 'productnameext' }
 	};
