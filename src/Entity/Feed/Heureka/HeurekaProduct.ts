@@ -1,5 +1,4 @@
 
-import IIdentificableEntity = require('../Common/IIdentificableEntity');
 import IHeurekaProductObject = require('./IHeurekaProductObject');
 import Util = require('asimplia-util');
 import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;

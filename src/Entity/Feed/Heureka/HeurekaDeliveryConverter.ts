@@ -7,7 +7,7 @@ import IHeurekaDeliveryObject = require('./IHeurekaDeliveryObject');
 export = HeurekaDeliveryConverter;
 class HeurekaDeliveryConverter extends Converter<HeurekaDelivery, IHeurekaDeliveryObject> {
 	
-	static $service = 'Entity.Feed.HeurekaDeliveryConverter';
+	static $service = 'Entity.Feed.Heureka.HeurekaDeliveryConverter';
 	constructor() {
 		super(HeurekaDelivery);
 	}

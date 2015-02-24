@@ -1,6 +1,6 @@
 
-import HeurekaAccessory = require('../Entity/Feed/HeurekaAccessory');
-import IHeurekaAccessoryObject = require('../Entity/Feed/IHeurekaAccessoryObject');
+import HeurekaAccessory = require('../../Entity/Feed/Heureka/HeurekaAccessory');
+import IHeurekaAccessoryObject = require('../../Entity/Feed/Heureka/IHeurekaAccessoryObject');
 import Util = require('asimplia-util');
 import List = Util.ODBM.Entity.List;
 import Manager = Util.ODBM.Repository.PostgreSql.Manager;
@@ -10,7 +10,7 @@ class HeurekaAccessoryRecorder {
 	
 	private manager: Manager<HeurekaAccessory, IHeurekaAccessoryObject>;
 
-	static $service = 'Feed.HeurekaAccessoryRecorder';
+	static $service = 'Feed.Heureka.HeurekaAccessoryRecorder';
 	static $inject = [
 		'connection.postgres'
 	];

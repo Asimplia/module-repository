@@ -7,7 +7,7 @@ import IHeurekaAccessoryObject = require('./IHeurekaAccessoryObject');
 export = HeurekaAccessoryConverter;
 class HeurekaAccessoryConverter extends Converter<HeurekaAccessory, IHeurekaAccessoryObject> {
 	
-	static $service = 'Entity.Feed.HeurekaAccessoryConverter';
+	static $service = 'Entity.Feed.Heureka.HeurekaAccessoryConverter';
 	constructor() {
 		super(HeurekaAccessory);
 	}

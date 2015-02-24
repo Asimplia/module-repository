@@ -7,7 +7,7 @@ import IHeurekaParamObject = require('./IHeurekaParamObject');
 export = HeurekaParamConverter;
 class HeurekaParamConverter extends Converter<HeurekaParam, IHeurekaParamObject> {
 	
-	static $service = 'Entity.Feed.HeurekaParamConverter';
+	static $service = 'Entity.Feed.Heureka.HeurekaParamConverter';
 	constructor() {
 		super(HeurekaParam);
 	}
