@@ -18,14 +18,14 @@ class ChecklistSourceSettings implements IEntity {
 		eShopId: Type.Integer,
 		sources: {
 			heurekaXml: {
-				createdAt: Type.Date,
+				createdAt: new Type.Date(true, true),
 				uri: new Type.String(2048, true),
 				processingStartedAt: new Type.Date(true, true),
 				processedAt: new Type.Date(true, true),
 				failedAt: new Type.Date(true, true)
 			},
 			zboziXml: {
-				createdAt: Type.Date,
+				createdAt: new Type.Date(true, true),
 				uri: new Type.String(2048, true),
 				processingStartedAt: new Type.Date(true, true),
 				processedAt: new Type.Date(true, true),
