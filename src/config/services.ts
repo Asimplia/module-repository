@@ -104,4 +104,5 @@ var services: { [name: string]: any } = {
 			]
 		]
 	},
+	'Util:DateTime.DateFactory': Util.DateTime.DateFactory,
 };
