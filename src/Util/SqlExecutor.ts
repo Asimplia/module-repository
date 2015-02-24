@@ -24,6 +24,7 @@ class SqlExecutor {
 	}
 	
 	insertList(list: List<IEntity>, callback: (e: Error, list?: List<IEntity>) => void) {
+		console.info('SqlExecutor is deprecated. Use ODBM mapping of asimplia-util instead.');
 		if (list.isEmpty()) {
 			callback(null, list);
 			return;
@@ -64,6 +65,7 @@ class SqlExecutor {
 	}
 
 	getListBy(conditions: any, callback: (e: Error, list: List<IEntity>) => void) {
+		console.info('SqlExecutor is deprecated. Use ODBM mapping of asimplia-util instead.');
 		var where = this.getWhereByConditions(conditions);
 		var sql = 'SELECT ' + EntityPreparer.getColumnsAsPrefixedAlias(this.EntityStatic).join(', ') + ' '
 			+ ' FROM ' + this.EntityStatic.TABLE_NAME + ' '
@@ -74,6 +76,7 @@ class SqlExecutor {
 	}
 
 	removeBy(conditions: any, callback: (e: Error) => void) {
+		console.info('SqlExecutor is deprecated. Use ODBM mapping of asimplia-util instead.');
 		var where = this.getWhereByConditions(conditions);
 		var sql = 'DELETE FROM ' + this.EntityStatic.TABLE_NAME + ' '
 			+ ' WHERE ' + where.sql;
