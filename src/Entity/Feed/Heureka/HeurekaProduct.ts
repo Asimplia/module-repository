@@ -26,7 +26,7 @@ class HeurekaProduct {
 		itemType: { $type: new Type.String(50, true), $name: 'item_type' },
 		manufacturer: { $type: new Type.String(255, true), $name: 'manufacturer' },
 		categoryText: { $type: new Type.String(255, true), $name: 'categorytext' },
-		ean: { $type: new Type.String(13, true), $name: 'ean' },
+		ean: { $type: new Type.String(14, true), $name: 'ean' },
 		isbn: { $type: new Type.String(20, true), $name: 'isbn' },
 		heurekaCpc: { $type: new Type.Float(4, true), $name: 'heureka_cpc' },
 		deliveryDate: { $type: new Type.String(20, true), $name: 'delivery_date' },
