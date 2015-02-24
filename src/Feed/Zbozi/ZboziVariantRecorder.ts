@@ -1,12 +1,14 @@
 
+import IZboziVariantObject = require('../../Entity/Feed/Zbozi/IZboziVariantObject');
 import ZboziVariant = require('../../Entity/Feed/Zbozi/ZboziVariant');
-import List = require('../../Entity/List');
-import SqlExecutor = require('../../Util/SqlExecutor');
+import Util = require('asimplia-util');
+import List = Util.ODBM.Entity.List;
+import Manager = Util.ODBM.Repository.PostgreSql.Manager;
 
 export = ZboziVariantRecorder;
 class ZboziVariantRecorder {
 	
-	private sqlExecutor: SqlExecutor;
+	private manager: Manager<ZboziVariant, IZboziVariantObject>;
 
 	static $service = 'Feed.Zbozi.ZboziVariantRecorder';
 	static $inject = [
@@ -15,14 +17,14 @@ class ZboziVariantRecorder {
 	constructor(
 		private connection: any
 	) {
-		this.sqlExecutor = new SqlExecutor(connection, ZboziVariant, ZboziVariant.COLUMN_ZBOZI_VARIANT_ID, 'id');
+		this.manager = new Manager<ZboziVariant, IZboziVariantObject>(ZboziVariant, connection);
+	}
+
+	insertList(zboziVariantList: List<ZboziVariant>, callback: (e: Error, zboziVariantList?: List<ZboziVariant>) => void) {
+		this.manager.insertList(zboziVariantList, callback);
 	}
 
 	insert(zboziVariant: ZboziVariant, callback: (e: Error, zboziVariant?: ZboziVariant) => void) {
-		this.sqlExecutor.insert(zboziVariant, callback);
-	}
-
-	insertList(list: List<ZboziVariant>, callback: (e: Error, list?: List<ZboziVariant>) => void) {
-		this.sqlExecutor.insertList(list, callback);
+		this.manager.insert(zboziVariant, callback);
 	}
 }

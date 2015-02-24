@@ -1,12 +1,14 @@
 
 import ZboziProduct = require('../../Entity/Feed/Zbozi/ZboziProduct');
-import List = require('../../Entity/List');
-import SqlExecutor = require('../../Util/SqlExecutor');
+import IZboziProductObject = require('../../Entity/Feed/Zbozi/IZboziProductObject');
+import Util = require('asimplia-util');
+import List = Util.ODBM.Entity.List;
+import Manager = Util.ODBM.Repository.PostgreSql.Manager;
 
 export = ZboziProductRecorder;
 class ZboziProductRecorder {
 	
-	private sqlExecutor: SqlExecutor;
+	private manager: Manager<ZboziProduct, IZboziProductObject>;
 
 	static $service = 'Feed.Zbozi.ZboziProductRecorder';
 	static $inject = [
@@ -15,14 +17,14 @@ class ZboziProductRecorder {
 	constructor(
 		private connection: any
 	) {
-		this.sqlExecutor = new SqlExecutor(connection, ZboziProduct, ZboziProduct.COLUMN_ZBOZI_PRODUCT_ID, 'id');
+		this.manager = new Manager<ZboziProduct, IZboziProductObject>(ZboziProduct, connection);
+	}
+
+	insertList(zboziProductList: List<ZboziProduct>, callback: (e: Error, zboziProductList?: List<ZboziProduct>) => void) {
+		this.manager.insertList(zboziProductList, callback);
 	}
 
 	insert(zboziProduct: ZboziProduct, callback: (e: Error, zboziProduct?: ZboziProduct) => void) {
-		this.sqlExecutor.insert(zboziProduct, callback);
-	}
-
-	insertList(list: List<ZboziProduct>, callback: (e: Error, list?: List<ZboziProduct>) => void) {
-		this.sqlExecutor.insertList(list, callback);
+		this.manager.insert(zboziProduct, callback);
 	}
 }
