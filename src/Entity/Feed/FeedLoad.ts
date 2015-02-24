@@ -1,7 +1,6 @@
 
 import IIdentificableEntity = require('../Common/IIdentificableEntity');
 import IFeedLoadObject = require('./IFeedLoadObject');
-import EntityPreparer = require('../EntityPreparer');
 import Util = require('asimplia-util');
 import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
 import Type = Util.ODBM.Mapping.Type;
