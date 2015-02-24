@@ -15,7 +15,7 @@ class HeurekaAccessory {
 		id: { $type: new Type.Id(new Type.Integer(4)), $name: 'accessoryid' },
 		heurekaProductId: { $type: Type.Integer, $name: 'heurekaid' },
 		feedLoadId: { $type: Type.Integer, $name: 'loadid' },
-		name: { $type: new Type.String(36), $name: 'accessory' }
+		accessoryHeurekaProductExternalId: { $type: new Type.String(36), $name: 'accessory' }
 	};
 
 	get Id() { return this.object.id; }
