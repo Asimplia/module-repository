@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
-/* Created on:     18.2.2015 20:39:53                           */
+/* Created on:     24.2.2015 16:30:45                           */
 /*==============================================================*/
 
 
@@ -54,6 +54,8 @@ drop table if exists warehouse.eshoplocalization CASCADE;
 
 drop table if exists warehouse.eshopsettings CASCADE;
 
+drop table if exists feed.feedcolumn CASCADE;
+
 drop table if exists feed.feedload CASCADE;
 
 drop table if exists feed.ga_pageview CASCADE;
@@ -100,7 +102,9 @@ drop table if exists feed.priceapi CASCADE;
 
 drop table if exists feed.priceapigtin CASCADE;
 
-drop table if exists feed.priceapioffers CASCADE;
+drop table if exists feed.priceapijob CASCADE;
+
+drop table if exists feed.priceapioffer CASCADE;
 
 drop index if exists warehouse.inproductkeys;
 
@@ -109,6 +113,8 @@ drop table if exists warehouse.product CASCADE;
 drop table if exists warehouse.productcategory CASCADE;
 
 drop table if exists warehouse.productcategoryrelation CASCADE;
+
+drop table if exists warehouse.productpreference CASCADE;
 
 drop index if exists warehouse.inproductspecialpricekeys;
 
@@ -126,24 +132,32 @@ drop index if exists warehouse.instockkeepingunitkeys;
 
 drop table if exists warehouse.stockkeepingunit CASCADE;
 
+drop table if exists feed.valuefailure CASCADE;
+
 drop table if exists feed.zbozi CASCADE;
 
 drop table if exists feed.zbozi_variant CASCADE;
 
+drop schema if exists analytical CASCADE;
+
+drop schema if exists feed CASCADE;
+
+drop schema if exists warehouse CASCADE;
+
 /*==============================================================*/
-/* User: analytical                                         */
+/* User: analytical                                             */
 /*==============================================================*/
-create schema if not exists analytical;
+create schema analytical;
 
 /*==============================================================*/
 /* User: feed                                                   */
 /*==============================================================*/
-create schema if not exists feed;
+create schema feed;
 
 /*==============================================================*/
-/* User: warehouse                                          */
+/* User: warehouse                                              */
 /*==============================================================*/
-create schema if not exists warehouse;
+create schema warehouse;
 
 /*==============================================================*/
 /* Table: address                                               */
@@ -426,7 +440,7 @@ create table warehouse.eshop (
    companyid            int8                 null,
    eshopurl             VARCHAR(100)         not null,
    eshopname            VARCHAR(200)         not null,
-   datecreated          TIMESTAMPTZ        not null,
+   datecreated          timestamptz          not null,
    constraint PK_ESHOP primary key (eshopid)
 );
 
@@ -462,13 +476,26 @@ create table warehouse.eshopsettings (
 );
 
 /*==============================================================*/
+/* Table: feedcolumn                                            */
+/*==============================================================*/
+create table feed.feedcolumn (
+   feedcolumnid         SERIAL               not null,
+   feedcode             VARCHAR(25)          not null,
+   entity               VARCHAR(50)          not null,
+   property             VARCHAR(50)          not null,
+   datatype             VARCHAR(25)          null,
+   maxlength            int                  null,
+   constraint PK_FEEDCOLUMN primary key (feedcolumnid)
+);
+
+/*==============================================================*/
 /* Table: feedload                                              */
 /*==============================================================*/
 create table feed.feedload (
    loadid               SERIAL               not null,
    eshopid              INT8                 not null,
    loaddate             TIMESTAMPTZ          not null,
-   feedcode             VARCHAR(10)          null,
+   feedcode             VARCHAR(25)          not null,
    constraint PK_FEEDLOAD primary key (loadid)
 );
 
@@ -496,6 +523,7 @@ create table feed.ga_revenue (
    productsku           VARCHAR(100)         null,
    itemquantity         INT4                 null,
    itemrevenue          REAL                 null,
+   uri                  VARCHAR(2048)        null,
    constraint PK_GA_REVENUE primary key (revenuesid)
 );
 
@@ -617,6 +645,8 @@ create table feed.heureka (
    heureka_cpc          REAL                 null,
    delivery_date        VARCHAR(20)          null,
    itemgroup_id         VARCHAR(36)          null,
+   dues                 REAL                 null,
+   uri                  VARCHAR(2048)        null,
    constraint PK_HEUREKA primary key (heurekaid)
 );
 
@@ -820,10 +850,14 @@ create table feed.priceapi (
    priceapiid           SERIAL               not null,
    loadid               INT8                 not null,
    eshopid              INT8                 not null,
+   priceapijobid        INT8                 null,
+   job_id               VARCHAR(50)          not null,
    source               VARCHAR(50)          null,
    country              VARCHAR(50)          null,
    key                  VARCHAR(50)          null,
    value                VARCHAR(50)          null,
+   has_offers           boolean              null,
+   updated              TIMESTAMPTZ          null,
    id                   VARCHAR(50)          null,
    name                 VARCHAR(255)         null,
    brandname            VARCHAR(255)         null,
@@ -831,6 +865,8 @@ create table feed.priceapi (
    reviewcount          INT8                 null,
    reviewrating         INT8                 null,
    url                  VARCHAR(2048)        null,
+   image_url            VARCHAR(2048)        null,
+   description          text                 null,
    constraint PK_PRICEAPI primary key (priceapiid)
 );
 
@@ -840,22 +876,37 @@ create table feed.priceapi (
 create table feed.priceapigtin (
    gtinid               SERIAL               not null,
    priceapiid           INT8                 null,
-   gtin                 INT8                 not null,
+   gtin                 VARCHAR(14)          not null,
    constraint PK_PRICEAPIGTIN primary key (gtinid)
 );
 
 /*==============================================================*/
-/* Table: priceapioffers                                        */
+/* Table: priceapijob                                           */
 /*==============================================================*/
-create table feed.priceapioffers (
-   offersid             SERIAL               not null,
+create table feed.priceapijob (
+   priceapijobid        serial               not null,
+   eshopid              INT8                 not null,
+   loadid               INT8                 not null,
+   job_id               VARCHAR(30)          not null,
+   constraint PK_PRICEAPIJOB primary key (priceapijobid)
+);
+
+/*==============================================================*/
+/* Table: priceapioffer                                         */
+/*==============================================================*/
+create table feed.priceapioffer (
+   offerid              SERIAL               not null,
    priceapiid           INT8                 null,
+   shopid               VARCHAR(500)         null,
    shopname             VARCHAR(500)         null,
+   shopurl              VARCHAR(1024)        null,
    price                REAL                 null,
    pricewithshipping    REAL                 null,
    shippingcosts        REAL                 null,
    currency             VARCHAR(10)          null,
-   constraint PK_PRICEAPIOFFERS primary key (offersid)
+   details              text                 null,
+   url                  VARCHAR(2048)        null,
+   constraint PK_PRICEAPIOFFER primary key (offerid)
 );
 
 /*==============================================================*/
@@ -908,6 +959,22 @@ create table warehouse.productcategoryrelation (
    productid            INT8                 not null,
    productcategoryid    INT8                 not null,
    constraint PK_PRODUCTCATEGORYRELATION primary key (productid, productcategoryid)
+);
+
+/*==============================================================*/
+/* Table: productpreference                                     */
+/*==============================================================*/
+create table warehouse.productpreference (
+   preferenceid         SERIAL not null,
+   eshopid              bigint               null,
+   ean                  varchar(13)          null,
+   uri                  varchar(2048)        null,
+   getprice             boolean              null,
+   importancelevel      int                  null,
+   created              timestamptz          null,
+   valid_from           timestamptz          null,
+   valid_to             timestamptz          null,
+   constraint PK_PRODUCTPREFERENCE primary key (preferenceid)
 );
 
 /*==============================================================*/
@@ -972,10 +1039,11 @@ create table feed.sitemap (
    sitemapid            SERIAL               not null,
    eshopid              INT8                 not null,
    loadid               INT8                 not null,
-   loc                  VARCHAR(2048)        not null,
+   loc                  VARCHAR(2048)        null,
    lastmod              TIMESTAMPTZ          null,
    changefreq           VARCHAR(20)          null,
    priority             REAL                 null,
+   uri                  VARCHAR(2048)        null,
    constraint PK_SITEMAP primary key (sitemapid)
 );
 
@@ -1016,6 +1084,20 @@ datechanged
 );
 
 /*==============================================================*/
+/* Table: valuefailure                                          */
+/*==============================================================*/
+create table feed.valuefailure (
+   valuefailureid       SERIAL not null,
+   loadid               INT8                 null,
+   feedcolumnid         INT8                 null,
+   eshopid              INT8                 null,
+   formervalue          text                 not null,
+   lengthfailedat       timestamptz          null,
+   datatypefailedat     timestamptz          null,
+   constraint PK_VALUEFAILURE primary key (valuefailureid)
+);
+
+/*==============================================================*/
 /* Table: zbozi                                                 */
 /*==============================================================*/
 create table feed.zbozi (
@@ -1035,7 +1117,7 @@ create table feed.zbozi (
    dues                 REAL                 null,
    delivery_date        VARCHAR(50)          null,
    shop_depots          VARCHAR(50)          null,
-   unfeatured           BOOLEAN              null,
+   unfeatured           INT                  null,
    item_type            VARCHAR(50)          null,
    extra_message        VARCHAR(50)          null,
    manufacturer         VARCHAR(255)         null,
@@ -1052,8 +1134,8 @@ create table feed.zbozi (
 create table feed.zbozi_variant (
    variantid            SERIAL               not null,
    loadid               INT8                 not null,
-   zboziid              INT8                 null,
-   variantzboziid       INT8                 null,
+   zboziid              INT8                 not null,
+   variantzboziid       INT8                 not null,
    constraint PK_ZBOZI_VARIANT primary key (variantid)
 );
 
@@ -1344,6 +1426,11 @@ alter table warehouse.orderdiscountrelation
       references  warehouse."order" (orderid);
 
 alter table feed.priceapi
+   add constraint FK_PRICEAPI_REFERENCE_PRICEAPI foreign key (priceapijobid)
+      references  feed.priceapijob (priceapijobid)
+      on delete restrict on update restrict;
+
+alter table feed.priceapi
    add constraint FK_PRICEAPI_REFERENCE_FEEDLOAD foreign key (loadid)
       references  feed.feedload (loadid)
       on delete restrict on update restrict;
@@ -1358,7 +1445,17 @@ alter table feed.priceapigtin
       references  feed.priceapi (priceapiid)
       on delete restrict on update restrict;
 
-alter table feed.priceapioffers
+alter table feed.priceapijob
+   add constraint FK_PRICEAPI_REFERENCE_FEEDLOAD foreign key (loadid)
+      references  feed.feedload (loadid)
+      on delete restrict on update restrict;
+
+alter table feed.priceapijob
+   add constraint FK_PRICEAPI_REFERENCE_ESHOP foreign key (eshopid)
+      references  warehouse.eshop (eshopid)
+      on delete restrict on update restrict;
+
+alter table feed.priceapioffer
    add constraint FK_PRICEAPI_REFERENCE_PRICEAPI foreign key (priceapiid)
       references  feed.priceapi (priceapiid)
       on delete restrict on update restrict;
@@ -1383,6 +1480,11 @@ alter table warehouse.productcategoryrelation
 alter table warehouse.productcategoryrelation
    add constraint FK_PRODUCT_REF_PROD_CAT foreign key (productid)
       references  warehouse.product (productid)
+      on delete restrict on update restrict;
+
+alter table warehouse.productpreference
+   add constraint FK_PRODUCTP_REFERENCE_ESHOP foreign key (eshopid)
+      references  warehouse.eshop (eshopid)
       on delete restrict on update restrict;
 
 alter table warehouse.productspecialprice
@@ -1450,6 +1552,21 @@ alter table warehouse.stockkeepingunit
       references  warehouse.eshop (eshopid)
       on delete restrict on update restrict;
 
+alter table feed.valuefailure
+   add constraint FK_VALUEFAI_REFERENCE_FEEDCOLU foreign key (feedcolumnid)
+      references  feed.feedcolumn (feedcolumnid)
+      on delete restrict on update restrict;
+
+alter table feed.valuefailure
+   add constraint FK_VALUEFAI_REFERENCE_FEEDLOAD foreign key (loadid)
+      references  feed.feedload (loadid)
+      on delete restrict on update restrict;
+
+alter table feed.valuefailure
+   add constraint FK_VALUEFAI_REFERENCE_ESHOP foreign key (eshopid)
+      references  warehouse.eshop (eshopid)
+      on delete restrict on update restrict;
+
 alter table feed.zbozi
    add constraint FK_ZBOZI_REFERENCE_ESHOP foreign key (eshopid)
       references  warehouse.eshop (eshopid)
@@ -1468,4 +1585,9 @@ alter table feed.zbozi_variant
 alter table feed.zbozi_variant
    add constraint FK_ZBOZI_VA_REFERENCE_ZBOZI2 foreign key (variantzboziid)
       references  feed.zbozi (zboziid)
+      on delete restrict on update restrict;
+
+alter table feed.zbozi_variant
+   add constraint FK_ZBOZI_VA_REFERENCE_FEEDLOAD foreign key (loadid)
+      references  feed.feedload (loadid)
       on delete restrict on update restrict;
