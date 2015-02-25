@@ -13,7 +13,7 @@
     "moment": "^2.6.0",
     "util": "^0.10.3",
     "each": "^0.4.9",
-    "pg": "^4.2.0",
+    "pg": "^4.3.0",
     "neo4j": "~1.1.0",
     "traceback": "git+https://github.com/misak113/traceback.git",
     "googleapis": "~1.0.19"
