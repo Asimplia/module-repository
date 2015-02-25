@@ -11,5 +11,6 @@ interface IValueFailureObject {
 	heurekaProductId?: number;
 	heurekaParamId?: number;
 	heurekaDeliveryId?: number;
+	heurekaAccessoryId?: number;
 	zboziProductId?: number;
 }

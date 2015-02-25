@@ -21,6 +21,7 @@ class ValueFailure {
 		heurekaProductId: { $type: new Type.Integer(4, true), $name: 'heurekaid' },
 		heurekaParamId: { $type: new Type.Integer(4, true), $name: 'paramid' },
 		heurekaDeliveryId: { $type: new Type.Integer(4, true), $name: 'heurekadeliveryid' },
+		heurekaAccessoryId: { $type: new Type.Integer(4, true), $name: 'accessoryid' },
 		zboziProductId: { $type: new Type.Integer(4, true), $name: 'zboziid' }
 	};
 
