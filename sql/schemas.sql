@@ -1117,7 +1117,7 @@ create table feed.zbozi (
    dues                 REAL                 null,
    delivery_date        VARCHAR(50)          null,
    shop_depots          VARCHAR(50)          null,
-   unfeatured           INT                  null,
+   unfeatured           BOOLEAN              null,
    item_type            VARCHAR(50)          null,
    extra_message        VARCHAR(50)          null,
    manufacturer         VARCHAR(255)         null,
