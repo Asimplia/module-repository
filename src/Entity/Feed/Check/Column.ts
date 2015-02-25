@@ -19,7 +19,7 @@ class Column {
 	static $entity: IEntityAnnotation = {
 		$dbs: DatabaseSystem.POSTGRE_SQL,
 		$name: 'feed.feedcolumn',
-		id: { $name: 'loadid', $type: new Type.Id(new Type.Integer(4)) },
+		id: { $name: 'feedcolumnid', $type: new Type.Id(new Type.Integer(4)) },
 		feedCode: { $name: 'feedcode', $type: new Type.String(25) },
 		entity: { $name: 'entity', $type: new Type.String(50) },
 		property: { $name: 'property', $type: new Type.String(50) },
