@@ -7,18 +7,15 @@ import Manager = Util.ODBM.Repository.PostgreSql.Manager;
 
 export = HeurekaDeliveryRecorder;
 class HeurekaDeliveryRecorder {
-	
-	private manager: Manager<HeurekaDelivery, IHeurekaDeliveryObject>;
 
 	static $service = 'Feed.Heureka.HeurekaDeliveryRecorder';
 	static $inject = [
 		'connection.postgres'
 	];
 	constructor(
-		private connection: any
-	) {
-		this.manager = new Manager<HeurekaDelivery, IHeurekaDeliveryObject>(HeurekaDelivery, connection);
-	}
+		private connection: any,
+		private manager = new Manager<HeurekaDelivery, IHeurekaDeliveryObject, List<HeurekaDelivery>>(HeurekaDelivery, List, connection)
+	) {}
 
 	insertList(heurekaDeliveryList: List<HeurekaDelivery>, callback: (e: Error, heurekaDeliveryList?: List<HeurekaDelivery>) => void) {
 		this.manager.insertList(heurekaDeliveryList, callback);

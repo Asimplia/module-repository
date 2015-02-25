@@ -1,26 +1,23 @@
 
 import Column = require('../../Entity/Feed/Check/Column');
+import ColumnList = require('../../Entity/Feed/Check/ColumnList');
 import IColumnObject = require('../../Entity/Feed/Check/IColumnObject');
 import Util = require('asimplia-util');
-import List = Util.ODBM.Entity.List;
 import Manager = Util.ODBM.Repository.PostgreSql.Manager;
 
 export = ColumnRecorder;
 class ColumnRecorder {
 	
-	private manager: Manager<Column, IColumnObject>;
-
 	static $service = 'Feed.Check.ColumnRecorder';
 	static $inject = [
 		'connection.postgres'
 	];
 	constructor(
-		private connection: any
-	) {
-		this.manager = new Manager<Column, IColumnObject>(Column, connection);
-	}
+		private connection: any,
+		private manager = new Manager<Column, IColumnObject, ColumnList>(Column, ColumnList, connection)
+	) {}
 
-	insertList(columnList: List<Column>, callback: (e: Error, columnList?: List<Column>) => void) {
+	insertList(columnList: ColumnList, callback: (e: Error, columnList?: ColumnList) => void) {
 		this.manager.insertList(columnList, callback);
 	}
 

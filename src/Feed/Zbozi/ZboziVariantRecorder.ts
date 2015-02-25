@@ -7,18 +7,15 @@ import Manager = Util.ODBM.Repository.PostgreSql.Manager;
 
 export = ZboziVariantRecorder;
 class ZboziVariantRecorder {
-	
-	private manager: Manager<ZboziVariant, IZboziVariantObject>;
 
 	static $service = 'Feed.Zbozi.ZboziVariantRecorder';
 	static $inject = [
 		'connection.postgres'
 	];
 	constructor(
-		private connection: any
-	) {
-		this.manager = new Manager<ZboziVariant, IZboziVariantObject>(ZboziVariant, connection);
-	}
+		private connection: any,
+		private manager = new Manager<ZboziVariant, IZboziVariantObject, List<ZboziVariant>>(ZboziVariant, List, connection)
+	) {}
 
 	insertList(zboziVariantList: List<ZboziVariant>, callback: (e: Error, zboziVariantList?: List<ZboziVariant>) => void) {
 		this.manager.insertList(zboziVariantList, callback);

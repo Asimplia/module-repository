@@ -10,19 +10,19 @@ import Manager = Util.ODBM.Repository.PostgreSql.Manager;
 export = ColumnLoader;
 class ColumnLoader {
 	
-	private manager: Manager<Column, IColumnObject>;
-
 	static $service = 'Feed.Check.ColumnLoader';
 	static $inject = [
 		'connection.postgres'
 	];
 	constructor(
-		private connection: any
-	) {
-		this.manager = new Manager<Column, IColumnObject>(Column, connection);
-	}
+		private connection: any,
+		private manager = new Manager<Column, IColumnObject, ColumnList>(Column, ColumnList, connection)
+	) {}
 
 	getListByEntity(entity: ColumnEntityName, callback: (e: Error, columnList?: ColumnList) => void) {
-		throw new Error('Not implemented getListByEntity');
+		var conditions = {
+			entity: ColumnEntityName[entity]
+		};
+		this.manager.getListBy(conditions, callback);
 	}
 }

@@ -7,18 +7,15 @@ import Manager = Util.ODBM.Repository.PostgreSql.Manager;
 
 export = HeurekaProductRecorder;
 class HeurekaProductRecorder {
-	
-	private manager: Manager<HeurekaProduct, IHeurekaProductObject>;
 
 	static $service = 'Feed.Heureka.HeurekaProductRecorder';
 	static $inject = [
 		'connection.postgres'
 	];
 	constructor(
-		private connection: any
-	) {
-		this.manager = new Manager<HeurekaProduct, IHeurekaProductObject>(HeurekaProduct, connection);
-	}
+		private connection: any,
+		private manager = new Manager<HeurekaProduct, IHeurekaProductObject, List<HeurekaProduct>>(HeurekaProduct, List, connection)
+	) {}
 
 	insertList(heurekaProductList: List<HeurekaProduct>, callback: (e: Error, heurekaProductList?: List<HeurekaProduct>) => void) {
 		this.manager.insertList(heurekaProductList, callback);

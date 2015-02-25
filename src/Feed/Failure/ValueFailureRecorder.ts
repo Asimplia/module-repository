@@ -8,17 +8,14 @@ import Manager = Util.ODBM.Repository.PostgreSql.Manager;
 export = ValueFailureRecorder;
 class ValueFailureRecorder {
 	
-	private manager: Manager<ValueFailure, IValueFailureObject>;
-
 	static $service = 'Feed.Failure.ValueFailureRecorder';
 	static $inject = [
 		'connection.postgres'
 	];
 	constructor(
-		private connection: any
-	) {
-		this.manager = new Manager<ValueFailure, IValueFailureObject>(ValueFailure, connection);
-	}
+		private connection: any,
+		private manager = new Manager<ValueFailure, IValueFailureObject, List<ValueFailure>>(ValueFailure, List, connection)
+	) {}
 
 	insertList(valueFailureList: List<ValueFailure>, callback: (e: Error, valueFailureList?: List<ValueFailure>) => void) {
 		this.manager.insertList(valueFailureList, callback);

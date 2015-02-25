@@ -9,16 +9,13 @@ import Manager = Util.ODBM.Repository.MongoDB.Manager;
 export = ChecklistSourceSettingsRecorder;
 class ChecklistSourceSettingsRecorder {
 	
-	private manager: Manager<ChecklistSourceSettings, IChecklistSourceSettingsObject>;
-
 	static $inject = [
 		'connection.mongoose'
 	];
 	constructor(
-		private connection: mongoose.Mongoose
-	) {
-		this.manager = new Manager<ChecklistSourceSettings, IChecklistSourceSettingsObject>(ChecklistSourceSettings, connection);
-	}
+		private connection: mongoose.Mongoose,
+		private manager = new Manager<ChecklistSourceSettings, IChecklistSourceSettingsObject, List<ChecklistSourceSettings>>(ChecklistSourceSettings, List, connection)
+	) {}
 
 	insertOrUpdateList(checklistSourceSettingsList: List<ChecklistSourceSettings>, callback: (e: Error, checklistSourceSettingsList?: List<ChecklistSourceSettings>) => void) {
 		this.manager.insertOrUpdateList(checklistSourceSettingsList, callback);
