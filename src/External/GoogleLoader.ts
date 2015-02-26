@@ -118,7 +118,7 @@ class GoogleLoader {
 			}
 			if (!result.rows) {
 				console.warn('In key rows is not valid array response');
-				callback(null, result);
+				return callback(null, result);
 			}
 			if (result.rows.length == 10000) {
 				console.error('Result has more then 10000 rows, but it is not implemented yet');
