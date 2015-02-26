@@ -7,4 +7,5 @@ interface IPageViewObject {
 	pagePath?: string;
 	pageViews?: number;
 	entrances?: number;
+	viewedAt: Date;
 }

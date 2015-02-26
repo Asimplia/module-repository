@@ -17,7 +17,8 @@ class PageView {
 		eShopId: { $name: 'eshopid', $type: new Type.Integer() },
 		pagePath: { $name: 'pagepath', $type: new Type.String(2048, true) },
 		pageViews: { $name: 'pageviews', $type: new Type.Integer(8, true) },
-		entrances: { $name: 'entrances', $type: new Type.Integer(8, true) }
+		entrances: { $name: 'entrances', $type: new Type.Integer(8, true) },
+		viewedAt: { $name: 'viewedat', $type: new Type.Date() }
 	};
 	
 	get Id() { return this.object.id; }
