@@ -24,4 +24,14 @@ class PageViewRecorder {
 	insert(pageView: PageView, callback: (e: Error, pageView?: PageView) => void) {
 		this.manager.insert(pageView, callback);
 	}
+
+	removeByViewedAtBetween(eShopId: number, dateFrom: Date, dateTo: Date, callback: (e: Error) => void): void {
+		var conditions = {
+			viewedAt: {
+				$gte: dateFrom,
+				$lte: dateTo
+			}
+		};
+		this.manager.removeBy(conditions, callback);
+	}
 }
