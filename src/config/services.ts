@@ -86,7 +86,7 @@ var services: { [name: string]: any } = {
 		$factory: (
 			serviceAutoload: Util.DI.ServiceAutoload
 		) => {
-			return new Util.AOP.AspectInterception('Checklist', {
+			return new Util.AOP.AspectInterception('module-repository', {
 				'Util:DI.ServiceAutoload': serviceAutoload,
 			})
 		}
@@ -100,7 +100,8 @@ var services: { [name: string]: any } = {
 		$args: [
 			[
 				__dirname + '/../Entity',
-				__dirname + '/../Feed'
+				__dirname + '/../Feed',
+				__dirname + '/../Site',
 			]
 		]
 	},
