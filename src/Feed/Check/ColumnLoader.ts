@@ -23,6 +23,6 @@ class ColumnLoader {
 		var conditions = {
 			entity: ColumnEntityName[entity]
 		};
-		this.manager.getListBy(conditions, callback);
+		this.manager.fetchListBy(conditions, callback);
 	}
 }
