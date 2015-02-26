@@ -24,4 +24,14 @@ class RevenueRecorder {
 	insert(revenue: Revenue, callback: (e: Error, revenue?: Revenue) => void) {
 		this.manager.insert(revenue, callback);
 	}
+
+	removeByReceivedAtBetween(eShopId: number, dateFrom: Date, dateTo: Date, callback: (e: Error) => void): void {
+		var conditions = {
+			receivedAt: {
+				$gte: dateFrom,
+				$lte: dateTo
+			}
+		};
+		this.manager.removeBy(conditions, callback);
+	}
 }
