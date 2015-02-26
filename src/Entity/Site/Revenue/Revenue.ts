@@ -18,7 +18,8 @@ class Revenue {
 		productName: { $name: 'productname', $type: new Type.String(1000, true) },
 		productSku: { $name: 'productsku', $type: new Type.String(100, true) },
 		itemQuantity: { $name: 'itemquantity', $type: new Type.Integer(4, true) },
-		itemRevenue: { $name: 'itemrevenue', $type: new Type.Float(4, true) }
+		itemRevenue: { $name: 'itemrevenue', $type: new Type.Float(4, true) },
+		receivedAt: { $name: 'receivedat', $type: new Type.Date() }
 	};
 	
 	get Id() { return this.object.id; }

@@ -8,4 +8,5 @@ interface IRevenueObject {
 	productSku?: string;
 	itemQuantity?: number;
 	itemRevenue?: number;
+	receivedAt: Date;
 }
