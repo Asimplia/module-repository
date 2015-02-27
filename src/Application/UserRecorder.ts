@@ -39,6 +39,14 @@ class UserRecorder {
 		this.documentExecutor.update(user, callback);
 	}
 
+	activateAuthHashBySessionId(user: User, sessionId: string, callback: UserCallback) {
+		var foundAuthHash = user.AuthHashList.find((findAuthHash: AuthHash) => {
+			return findAuthHash.SessionId == sessionId;
+		});
+		foundAuthHash.Active = true;
+		this.documentExecutor.update(user, callback);
+	}
+
 	addAuthHash(user: User, authHash: AuthHash, callback: UserCallback) {
 		user.AuthHashList.push(authHash);
 		this.documentExecutor.update(user, callback);
