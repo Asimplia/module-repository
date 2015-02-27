@@ -34,6 +34,19 @@ class ConnectionDispatcher {
 			if (typeof callback === 'function') {
 				callback(this.mongooseConnection);
 			}
+			this.bindMongoDBLogging();
+		});
+	}
+
+	private bindMongoDBLogging() {
+		this.mongooseConnection.connection.on('connected', () => {
+			console.info('MongoDB connected');
+		});
+		this.mongooseConnection.connection.on('disconnected', () => {
+			console.warn('MongoDB disconnected');
+		});
+		this.mongooseConnection.connection.on('error', (e: Error) => {
+			console.error('MongoDB throw error', e);
 		});
 	}
 
