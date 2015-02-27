@@ -14,7 +14,25 @@ class Todo {
 	
 	static $entity: IEntityAnnotation = {
 		$dbs: DatabaseSystem.MONGO_DB,
-		id: new Type.Id(Type.String)
+		id: new Type.Id(Type.String),
+		eShopId: Type.Integer,
+		title: {
+			cs: new Type.String(256),
+			en: new Type.String(256),
+		},
+		shortTitle: {
+			cs: new Type.String(),
+			en: new Type.String(),
+		},
+		label: {
+			cs: new Type.String(),
+			en: new Type.String(),
+		},
+		text: {
+			cs: new Type.String(65000),
+			en: new Type.String(65000),
+		},
+		createdAt: Type.Date
 	};
 	
 	get Id() { return this.object.id; }
