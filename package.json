@@ -29,7 +29,8 @@
     "grunt-wait": "~0.1.0",
     "grunt-shell": "~1.1.1",
     "jasmine": "~2.0.1",
-    "typescript": "~1.4.1"
+    "typescript": "~1.4.1",
+    "grunt-contrib-clean": "~0.6.0"
   },
   "systemRequirements": {
     "mongodb": "~2.4.6",
