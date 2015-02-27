@@ -21,7 +21,7 @@ class ConnectionDispatcher {
 	constructor(
 		private di: DependencyInjection
 	) {
-		this.bindDisconnection();
+		this.bindTermination();
 	}
 
 	connectMongoDB(dsn: string, callback?: (mongoose: mongoose.Mongoose) => void) {
@@ -74,20 +74,23 @@ class ConnectionDispatcher {
 		});
 	}
 
-	private bindDisconnection() {
-		process.on('SIGINT', () => {
-			each([
-				(next: Function) => this.disconnectMongoDB(next),
-				(next: Function) => this.disconnectPostgres(next),
-			])
-			.on('item', (fn: (cb: Function) => void, next: Function) => fn(next))
-			.on('error', (e: Error) => console.error(e))
-			.on('end', () => {
-				console.info('Termination handled & exiting');
-				process.exit(0);
-			})
-			.parallel(true);
-		});
+	private bindTermination() {
+		process.on('SIGINT', () => this.handleTermination());
+		process.on('SIGTERM', () => this.handleTermination());
+	}
+
+	private handleTermination() {
+		each([
+			(next: Function) => this.disconnectMongoDB(next),
+			(next: Function) => this.disconnectPostgres(next),
+		])
+		.on('item', (fn: (cb: Function) => void, next: Function) => fn(next))
+		.on('error', (e: Error) => console.error(e))
+		.on('end', () => {
+			console.info('Termination handled & exiting');
+			process.exit(0);
+		})
+		.parallel(true);
 	}
 
 	private disconnectMongoDB(next: Function) {
