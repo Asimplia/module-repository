@@ -16,13 +16,9 @@ class UserLoader {
 
 	getByCredentials(identity: string, authType: AuthTypeEnum, callback: (e: Error, user?: User) => void) {
 		this.model.findOne({ "authenticates.identity": identity, "authenticates.authType": AuthTypeEnum[authType] }, (e, userObject: mongoose.Document) => {
-			if (e) {
-				callback(e);
-				return;
-			}
+			if (e) return callback(e);
 			if (!userObject) {
-				callback(null, null);
-				return;
+				return callback(null, null);
 			}
 			callback(null, User.fromObject(userObject));
 		});
@@ -30,13 +26,9 @@ class UserLoader {
 
 	getActiveBySessionId(sessionId: string, callback: (e: Error, user?: User) => void) {
 		this.model.findOne({ "authHashes.sessionId": sessionId, "authHashes.active": true }, (e, userObject: mongoose.Document) => {
-			if (e) {
-				callback(e);
-				return;
-			}
+			if (e) return callback(e);
 			if (!userObject) {
-				callback(null, null);
-				return;
+				return callback(null, null);
 			}
 			callback(null, User.fromObject(userObject));
 		});
@@ -44,13 +36,9 @@ class UserLoader {
 
 	getActiveByAuthHash(authHash: string, callback: (e: Error, user?: User) => void) {
 		this.model.findOne({ "authHashes.authHash": authHash, "authHashes.active": true }, (e, userObject: mongoose.Document) => {
-			if (e) {
-				callback(e);
-				return;
-			}
+			if (e) return callback(e);
 			if (!userObject) {
-				callback(null, null);
-				return;
+				return callback(null, null);
 			}
 			callback(null, User.fromObject(userObject));
 		});
@@ -58,11 +46,8 @@ class UserLoader {
 
 	getCount(callback: (e: Error, count?: number) => void): void {
 		this.model.count({}, (e, count: number) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			callback(e, count);
+			if (e) return callback(e);
+			callback(null, count);
 		});
 	}
 }
