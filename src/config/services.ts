@@ -81,13 +81,16 @@ var services: { [name: string]: any } = {
 	'Util:AOP.AspectInterception': {
 		$class: Util.AOP.AspectInterception,
 		$inject: [
-			Util.DI.ServiceAutoload
+			Util.DI.ServiceAutoload,
+			Util.Env.EnvConfigOverrider,
 		],
 		$factory: (
-			serviceAutoload: Util.DI.ServiceAutoload
+			serviceAutoload: Util.DI.ServiceAutoload,
+			envConfigOverrider: Util.Env.EnvConfigOverrider
 		) => {
 			return new Util.AOP.AspectInterception('asimplia-repository', {
 				'Util:DI.ServiceAutoload': serviceAutoload,
+				'Util:Env.EnvConfigOverrider': envConfigOverrider,
 			})
 		}
 	},
@@ -106,4 +109,8 @@ var services: { [name: string]: any } = {
 		]
 	},
 	'Util:DateTime.DateFactory': Util.DateTime.DateFactory,
+	'Util:Env.EnvConfigOverrider': {
+		$class: Util.Env.EnvConfigOverrider,
+		$args: [__dirname + '/../../..'],
+	},
 };
