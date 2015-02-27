@@ -12,12 +12,13 @@ module.exports = function (grunt) {
 	GruntConfiguration.loadParentNpmTasks(grunt, 'grunt-typescript');
 	GruntConfiguration.loadParentNpmTasks(grunt, 'grunt-jasmine-node');
 	GruntConfiguration.loadParentNpmTasks(grunt, 'grunt-contrib-watch');
+	GruntConfiguration.loadParentNpmTasks(grunt, 'grunt-contrib-clean');
 	GruntConfiguration.loadParentNpmTasks(grunt, 'grunt-tsd');
 	GruntConfiguration.loadParentNpmTasks(grunt, 'grunt-shell');
 	GruntConfiguration.loadParentNpmTasks(grunt, 'grunt-wait');
 
 	grunt.registerTask('default', [
-		'shell:link_module:asimplia-util', 'tsd:reinstall', 'wait:typings', 'typescript:build', 'jasmine_node:unit'
+		'clean:build', 'shell:link_module:asimplia-util', 'tsd:reinstall', 'wait:typings', 'typescript:build', 'jasmine_node:unit'
 	]);
 	grunt.registerTask('dev', function () {
 		GruntConfiguration.typescriptReferences(__dirname + '/build/references.ts', [
@@ -26,7 +27,7 @@ module.exports = function (grunt) {
 			__dirname + '/typings',
 			__dirname + '/node_modules/asimplia-util/asimplia-util.d.ts'
 		]);
-		grunt.task.run('default', 'watch:ts');
+		grunt.task.run('typescript:build', 'jasmine_node:unit', 'watch:ts');
 	});
 	grunt.registerTask('prepublish', function () {
 		grunt.task.run('default');

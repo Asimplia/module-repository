@@ -31,6 +31,9 @@
     },
     "hooker/hooker.d.ts": {
       "commit": "f9341f81d08e9f8d778a2cc944060321f325e28c"
+    },
+    "pg/pg.d.ts": {
+      "commit": "f9341f81d08e9f8d778a2cc944060321f325e28c"
     }
   }
 }

@@ -8,15 +8,16 @@
   },
   "dependencies": {
     "asimplia-util": ">=0.3.5",
-    "mongoose": "^3.8.8",
-    "underscore": "^1.6.0",
-    "moment": "^2.6.0",
-    "util": "^0.10.3",
     "each": "^0.4.9",
-    "pg": "^4.3.0",
+    "googleapis": "~1.0.19",
+    "grunt-contrib-clean": "^0.6.0",
+    "moment": "^2.6.0",
+    "mongoose": "^3.8.8",
     "neo4j": "~1.1.0",
+    "pg": "^4.3.0",
     "traceback": "git+https://github.com/misak113/traceback.git",
-    "googleapis": "~1.0.19"
+    "underscore": "^1.6.0",
+    "util": "^0.10.3"
   },
   "devDependencies": {
     "tsd": "^0.5.7",
