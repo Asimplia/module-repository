@@ -86,7 +86,7 @@ var services: { [name: string]: any } = {
 		$factory: (
 			serviceAutoload: Util.DI.ServiceAutoload
 		) => {
-			return new Util.AOP.AspectInterception('module-repository', {
+			return new Util.AOP.AspectInterception('asimplia-repository', {
 				'Util:DI.ServiceAutoload': serviceAutoload,
 			})
 		}
