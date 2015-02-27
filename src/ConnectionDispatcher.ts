@@ -2,6 +2,7 @@
 import Util = require('asimplia-util');
 import DependencyInjection = Util.DI.DependencyInjection;
 import mongoose = require('mongoose');
+import each = require('each');
 var pg = require('pg');
 var neo4j = require('neo4j');
 
@@ -14,10 +15,14 @@ class ConnectionDispatcher {
 	private pgClient;
 	private neo4jDatabase;
 
-	static $inject = ['DependencyInjection'];
+	static $inject = [
+		DependencyInjection
+	];
 	constructor(
 		private di: DependencyInjection
-	) {}
+	) {
+		this.bindDisconnection();
+	}
 
 	connectMongoDB(dsn: string, callback?: (mongoose: mongoose.Mongoose) => void) {
 		this.mongooseConnection = mongoose.connect(dsn, (e) => {
@@ -25,7 +30,7 @@ class ConnectionDispatcher {
 				throw e;
 			}
 			this.di.addService('connection.mongoose', this.mongooseConnection);
-			console.log('Connected MongoDB to ' + dsn);
+			console.info('Connected MongoDB to ' + dsn);
 			if (typeof callback === 'function') {
 				callback(this.mongooseConnection);
 			}
@@ -41,7 +46,7 @@ class ConnectionDispatcher {
 			}
 			this.pgClient = client;
 			this.di.addService('connection.postgres', this.pgClient);
-			console.log('Connected Postgres to ' + connectionString);
+			console.info('Connected Postgres to ' + connectionString);
 			this.connectionListeners.forEach((callback) => {
 				callback(this.pgClient);
 			});
@@ -58,7 +63,7 @@ class ConnectionDispatcher {
 				throw e;
 			}
 			this.di.addService('connection.neo4j', this.neo4jDatabase);
-			console.log('Connected Neo4j to ' + dsn);
+			console.info('Connected Neo4j to ' + dsn);
 			this.neo4jDatabase = db;
 			this.neo4jListeners.forEach((callback) => {
 				callback(this.neo4jDatabase);
@@ -67,6 +72,41 @@ class ConnectionDispatcher {
 				callback(this.neo4jDatabase);
 			}
 		});
+	}
+
+	private bindDisconnection() {
+		process.on('SIGINT', () => {
+			each([
+				(next: Function) => this.disconnectMongoDB(next),
+				(next: Function) => this.disconnectPostgres(next),
+			])
+			.on('item', (fn: (cb: Function) => void, next: Function) => fn(next))
+			.on('error', (e: Error) => console.error(e))
+			.on('end', () => {
+				console.info('Termination handled & exiting');
+				process.exit(0);
+			})
+			.parallel(true);
+		});
+	}
+
+	private disconnectMongoDB(next: Function) {
+		if (this.mongooseConnection) {
+			this.mongooseConnection.connection.close(() => {
+				console.info('MongoDB connection disconnected through app termination');
+				next();
+			});
+		} else {
+			next();
+		}
+	}
+
+	private disconnectPostgres(next: Function) {
+		if (this.pgClient) {
+			this.pgClient.end();
+			console.info('Postgres connection disconnected through app termination');
+		}
+		next();
 	}
 
 	/** @deprecated Use DI $inject */
