@@ -4,6 +4,10 @@ import User = require('../Entity/Application/User');
 import List = require('../Entity/List');
 import UserModel = require('../Definition/Application/UserModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
+import AuthHash = require('../Entity/Application/AuthHash');
+
+type UserCallback = (e: Error, user?: User) => void;
+type UserListCallback = (e: Error, userList?: List<User>) => void;
 
 export = UserRecorder;
 class UserRecorder {
@@ -19,11 +23,24 @@ class UserRecorder {
 		this.documentExecutor = new DocumentExecutor(this.model, User);
 	}
 
-	insertOrUpdateList(userList: List<User>, callback: (e: Error, userList?: List<User>) => void) {
+	insertOrUpdateList(userList: List<User>, callback: UserListCallback) {
 		this.documentExecutor.insertOrUpdateList(userList, callback);
 	}
 
-	insertOrUpdate(user: User, callback: (e: Error, user?: User) => void) {
+	insertOrUpdate(user: User, callback: UserCallback) {
 		this.documentExecutor.insertOrUpdate(user, callback);
+	}
+
+	deactivateAuthHash(user: User, authHash: string, callback: UserCallback) {
+		var foundAuthHash = user.AuthHashList.find((findAuthHash: AuthHash) => {
+			return findAuthHash.AuthHash == authHash;
+		});
+		foundAuthHash.Active = false;
+		this.documentExecutor.update(user, callback);
+	}
+
+	addAuthHash(user: User, authHash: AuthHash, callback: UserCallback) {
+		user.AuthHashList.push(authHash);
+		this.documentExecutor.update(user, callback);
 	}
 }
