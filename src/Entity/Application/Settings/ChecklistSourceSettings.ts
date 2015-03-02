@@ -1,6 +1,7 @@
 
 import IEntity = require('../../IEntity');
 import IChecklistSourceSettingsObject = require('./IChecklistSourceSettingsObject');
+import IChecklistSourcesObject = require('./IChecklistSourcesObject');
 import EntityPreparer = require('../../EntityPreparer');
 import ChecklistSourceTypeEnum = require('./ChecklistSourceTypeEnum');
 import Util = require('asimplia-util');
@@ -38,7 +39,7 @@ class ChecklistSourceSettings implements IEntity {
 
 	get Id() { return this.object.id; }
 	get EShopId() { return this.object.eShopId; }
-	get Sources() { return this.object.sources; }
+	get Sources(): IChecklistSourcesObject { return this.object.sources; }
 	get ClosedAt() { return this.object.closedAt; }
 	set ClosedAt(value) { this.object.closedAt = value; }
 

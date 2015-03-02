@@ -1,5 +1,5 @@
 ﻿
 declare module "asimplia-repository" {
-	import index = require('src/index');
+	import index = require('build/src/index');
 	export = index;
 }

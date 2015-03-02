@@ -5,9 +5,8 @@ import List = require('../Entity/List');
 import UserModel = require('../Definition/Application/UserModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 import AuthHash = require('../Entity/Application/AuthHash');
-
-type UserCallback = (e: Error, user?: User) => void;
-type UserListCallback = (e: Error, userList?: List<User>) => void;
+import UserCallback = require('./UserCallback');
+import UserListCallback = require('./UserListCallback');
 
 export = UserRecorder;
 class UserRecorder {

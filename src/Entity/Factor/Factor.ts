@@ -7,6 +7,7 @@ import ColumnFactory = require('../Matrix/ColumnFactory');
 import ShiftValueEnum = require('../Factor/ShiftValueEnum');
 import LocalizedString = require('../Locale/LocalizedString');
 import EntityPreparer = require('../EntityPreparer');
+import ILocalizedStringObject = require('../Locale/ILocalizedStringObject');
 
 export = Factor;
 class Factor {

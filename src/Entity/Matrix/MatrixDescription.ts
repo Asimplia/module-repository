@@ -7,6 +7,7 @@ import QuadrantValueEnum = require('./QuadrantValueEnum');
 import QuadrantDescription = require('./QuadrantDescription');
 import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
+import ILocalizedStringObject = require('../Locale/ILocalizedStringObject');
 
 export = MatrixDescription;
 class MatrixDescription implements IEntity {

@@ -2,6 +2,7 @@
 import IEntity = require('../IEntity');
 import ReasonTypeEnum = require('./ReasonTypeEnum');
 import LocalizedString = require('../Locale/LocalizedString');
+import ILocalizedStringObject = require('../Locale/ILocalizedStringObject');
 
 export = Reason;
 class Reason implements IEntity {

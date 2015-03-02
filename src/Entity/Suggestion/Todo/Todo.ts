@@ -2,6 +2,7 @@
 import ITodoObject = require('./ITodoObject');
 import Reason = require('../Reason');
 import IReasonObject = require('../IReasonObject');
+import ILocalizedStringObject = require('../../Locale/ILocalizedStringObject');
 import Util = require('asimplia-util');
 import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
 import List = Util.ODBM.Entity.List;

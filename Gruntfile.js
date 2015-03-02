@@ -1,7 +1,7 @@
 module.exports = function (grunt) {
 	var GruntConfiguration = require('asimplia-util').GruntConfiguration;
 
-	var typescriptBuildFiles = ["src/**/*.ts", "tests/**/*.ts", "!node_modules/**/*.ts"];
+	var typescriptBuildFiles = ["src/**/*.ts", "tests/**/*.ts", "!node_modules/**/*.js"];
 	// Project configuration.
 	var config = GruntConfiguration([], [], [], typescriptBuildFiles, typescriptBuildFiles, [
 		'typings/tsd.d.ts',

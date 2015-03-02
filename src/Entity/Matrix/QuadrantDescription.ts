@@ -3,6 +3,7 @@ import IEntity = require('../IEntity');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 import QuadrantValueFactory = require('./QuadrantValueFactory');
 import LocalizedString = require('../Locale/LocalizedString');
+import ILocalizedStringObject = require('../Locale/ILocalizedStringObject');
 
 export = QuadrantDescription;
 class QuadrantDescription implements IEntity {

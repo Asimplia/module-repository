@@ -11,6 +11,7 @@ import EntityPreparer = require('../EntityPreparer');
 import PlaceholderValue = require('./PlaceholderValue');
 import PriorityTypeEnum = require('./PriorityTypeEnum');
 import PriorityTypeFactory = require('./PriorityTypeFactory');
+import ILocalizedStringObject = require('../Locale/ILocalizedStringObject');
 
 export = Result;
 class Result implements IEntity {
