@@ -1,9 +1,13 @@
 module.exports = function (grunt) {
 	var GruntConfiguration = require('asimplia-util').GruntConfiguration;
 
-	var typescriptBuildFiles = ["src/**/*.ts", "tests/**/*.ts", "!node_modules/**/*.js"];
+	var typescriptPublicFiles = ["src/**/*.ts"];
+	var typescriptBuildFiles = ["tests/**/*.ts"].concat(typescriptPublicFiles);
 	// Project configuration.
-	var config = GruntConfiguration([], [], [], typescriptBuildFiles, typescriptBuildFiles, [
+	var config = GruntConfiguration(typescriptPublicFiles, [
+		'typings/tsd.d.ts',
+		GruntConfiguration.resolveNodeModulePath('asimplia-util/asimplia-util.d.ts')
+	], [], typescriptBuildFiles, typescriptBuildFiles, [
 		'typings/tsd.d.ts',
 		GruntConfiguration.resolveNodeModulePath('asimplia-util/asimplia-util.d.ts')
 	], __dirname);
@@ -18,7 +22,7 @@ module.exports = function (grunt) {
 	GruntConfiguration.loadParentNpmTasks(grunt, 'grunt-wait');
 
 	grunt.registerTask('default', [
-		'clean:build', 'shell:link_module:asimplia-util', 'tsd:reinstall', 'wait:typings', 'typescript:build', 'jasmine_node:unit'
+		'clean:build', 'shell:link_module:asimplia-util', 'tsd:reinstall', 'wait:typings', 'typescript:build', 'typescript:public', 'jasmine_node:unit'
 	]);
 	grunt.registerTask('dev', function () {
 		GruntConfiguration.typescriptReferences(__dirname + '/build/references.ts', [

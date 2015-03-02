@@ -1,4 +1,3 @@
-/// <reference path="../../../asimplia-repository.d.ts" />
 
 import Repository = require("../../../src/index");
 import EntityPreparer = Repository.Entity.EntityPreparer;
