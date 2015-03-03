@@ -6,3 +6,4 @@ bower_components/
 Gruntfile.js
 bower.json
 tsd.json
+.env.json
