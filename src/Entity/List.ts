@@ -10,8 +10,8 @@ class List<Entity extends IEntity> extends EntityList<Entity> {
 
 	constructor(items?: any[], entityFactory?: (o: any) => Entity) {
 		super(items);
+		this.Entities = [];
 		if (typeof items !== 'undefined') {
-			this.Entities = [];
 			this.pushArray(items, entityFactory);
 		}
 	}
