@@ -25,7 +25,7 @@ class Checklist implements IHashIdentificableEntity {
 		private section: SectionEnum,
 		private name: LocalizedString,
 		private checkItemList: CheckItemList,
-		private mainImage: Image,
+		private mainImage: Image, // TODO move to checkItem
 		private dateResolved: Date
 	) {}
 
