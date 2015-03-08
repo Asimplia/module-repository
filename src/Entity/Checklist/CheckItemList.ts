@@ -1,5 +1,6 @@
 
-import List = require('../List');
+import Util = require('asimplia-util');
+import List = Util.ODBM.Entity.List;
 import CheckItem = require('./CheckItem');
 
 export = CheckItemList;

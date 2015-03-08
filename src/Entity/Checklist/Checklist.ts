@@ -40,7 +40,7 @@ class Checklist implements IHashIdentificableEntity {
 			EntityPreparer.date(object.dateCreated),
 			EntityPreparer.enum<SectionEnum>(SectionEnum, object.section),
 			new LocalizedString(object.name),
-			new CheckItemList(object.checkItems, CheckItem.fromObject),
+			new CheckItemList(_.map(object.checkItems, CheckItem.fromObject)),
 			Image.fromObject(object.mainImage),
 			EntityPreparer.dateOrNull(object.dateResolved)
 		);
