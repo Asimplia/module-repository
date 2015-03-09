@@ -3,7 +3,8 @@ import moment = require('moment');
 import AsimpliaRepository = require('../index');
 import Signal = require('../Entity/Matrix/Signal');
 import Matrix = require('../Entity/Matrix/Matrix');
-import List = require('../Entity/List');
+import Util = require('asimplia-util');
+import List = Util.ODBM.Entity.List;
 import SqlExecutor = require('../Util/SqlExecutor');
 
 export = SignalRecorder;
