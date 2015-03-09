@@ -1,4 +1,5 @@
 
+import _ = require('underscore');
 import IEntity = require('../IEntity');
 import IHashIdentificableEntity = require('../Common/IHashIdentificableEntity');
 import SectionEnum = require('../Section/SectionEnum');
