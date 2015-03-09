@@ -1056,6 +1056,7 @@ create table analytical.situation (
    situationid          SERIAL not null,
    datecreated          timestamptz          not null,
    datesuggestionresultcreated timestamptz          null,
+   datesuggestionresultprocessed timestamptz        null,
    constraint PK_SITUATION primary key (situationid)
 );
 
