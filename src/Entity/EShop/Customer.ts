@@ -14,7 +14,7 @@ class Customer implements IEntity {
 	public static COLUMN_GENDER = 'gender';
 	public static COLUMN_BIRTHDAY = 'birthday';
 	public static COLUMN_ANONYMOUS = 'flaganonymous';
-	public static COLUMN_DATE_CREATED = 'dateadded';
+	public static COLUMN_DATE_CREATED = 'datechanged';
 
 	get Id(): number { return this.id; }
 	get EShopId(): number { return this.eShopId; }

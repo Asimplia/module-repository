@@ -313,6 +313,7 @@ create table warehouse.channel (
    channelname          VARCHAR(100)         not null,
    paidchannel          INT                  not null,
    flagrefferalorganic  INT                  not null,
+   datecreated          TIMESTAMPTZ          not null,
    constraint PK_CHANNEL primary key (channelid, eshopid)
 );
 
@@ -948,6 +949,7 @@ create table warehouse.productcategory (
    eshopid              INT8                 not null,
    parentcategory       INT8                 null,
    categoryname         VARCHAR(100)         not null,
+   datecreated          TIMESTAMPTZ          not null,
    constraint PK_PRODUCTCATEGORY primary key (productcategoryid),
    constraint AK_KEY_2_PRODUCTC unique (originalid, eshopid)
 );
