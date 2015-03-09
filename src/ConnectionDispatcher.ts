@@ -75,9 +75,9 @@ class ConnectionDispatcher {
 			if (e) {
 				throw e;
 			}
+			this.neo4jDatabase = db;
 			this.di.addService('connection.neo4j', this.neo4jDatabase);
 			console.info('Connected Neo4j to ' + dsn);
-			this.neo4jDatabase = db;
 			this.neo4jListeners.forEach((callback) => {
 				callback(this.neo4jDatabase);
 			});
