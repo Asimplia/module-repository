@@ -1594,3 +1594,15 @@ alter table feed.zbozi_variant
    add constraint FK_ZBOZI_VA_REFERENCE_FEEDLOAD foreign key (loadid)
       references  feed.feedload (loadid)
       on delete restrict on update restrict;
+
+
+-- Views
+
+CREATE VIEW "eshopmatrixloads" AS
+ SELECT a.eshopid,
+    rank() OVER (PARTITION BY a.eshopid ORDER BY a.period) AS loadid,
+    a.period
+   FROM ( SELECT s.eshopid,
+            t.period
+           FROM eshopsettings s,
+            LATERAL generate_series(s.datestart, now(), (s.datarefreshperiod)::interval) t(period)) a;
