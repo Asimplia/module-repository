@@ -10,7 +10,7 @@ class HeurekaDelivery {
 
 	static $entity: IEntityAnnotation = {
 		$dbs: DatabaseSystem.POSTGRE_SQL,
-		$name: 'feed.heureka_delivery',
+		$name: 'feed.heurekadelivery',
 		id: { $type: new Type.Id(new Type.Integer(4)), $name: 'heurekadeliveryid' },
 		heurekaProductId: { $type: Type.Integer, $name: 'heurekaid' },
 		feedLoadId: { $type: Type.Integer, $name: 'loadid' },
