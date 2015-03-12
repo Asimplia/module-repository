@@ -12,6 +12,7 @@ class SectionFactory {
 		[SectionEnum.CATEGORY, {cs: 'Kategorie', en: 'Category'}],
 		[SectionEnum.CHANNEL, {cs: 'Kanál', en: 'Channel'}],
 		[SectionEnum.E_SHOP, {cs: 'e-shop', en: 'e-shop'}],
+		[SectionEnum.CHECKLIST, {cs: 'Checklist', en: 'Checklist'}],
 	];
 
 	static createSectionEnum(section: string): SectionEnum {
@@ -57,6 +58,13 @@ class SectionFactory {
 		return false;
 	}
 
+	static isChecklist(section: SectionEnum) {
+		if (section == SectionEnum.CHECKLIST || SectionEnum[section].substr(0, 3) == 'MLC') {
+			return true;
+		}
+		return false;
+	}
+
 	static getLabel(section: SectionEnum): LocalizedString {
 		var groupSection = SectionFactory.getGroupSection(section);
 		var labelsByGroupSection = _.object(SectionFactory.labels);
@@ -78,6 +86,9 @@ class SectionFactory {
 		}
 		if (this.isEShop(section)) {
 			return SectionEnum.E_SHOP;
+		}
+		if (this.isChecklist(section)) {
+			return SectionEnum.CHECKLIST;
 		}
 		return null;
 	}
