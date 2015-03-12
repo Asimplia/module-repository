@@ -1,349 +1,66 @@
 
 import SectionEnum = require('./SectionEnum');
 import LocalizedString = require('../Locale/LocalizedString');
+import _ = require('underscore');
 
 export = SectionFactory;
 class SectionFactory {
 
-	static createSectionEnum(section: string) {
-		switch (section) {
-			case SectionEnum[SectionEnum.CUSTOMER]:
-				return SectionEnum.CUSTOMER;
-			case SectionEnum[SectionEnum.MC1]:
-				return SectionEnum.MC1;
-			case SectionEnum[SectionEnum.MC2]:
-				return SectionEnum.MC2;
-			case SectionEnum[SectionEnum.MC3]:
-				return SectionEnum.MC3;
-			case SectionEnum[SectionEnum.MC4]:
-				return SectionEnum.MC4;
-			case SectionEnum[SectionEnum.MC5]:
-				return SectionEnum.MC5;
-			case SectionEnum[SectionEnum.MC6]:
-				return SectionEnum.MC6;
-			case SectionEnum[SectionEnum.MC7]:
-				return SectionEnum.MC7;
-			case SectionEnum[SectionEnum.MC8]:
-				return SectionEnum.MC8;
-			case SectionEnum[SectionEnum.MC9]:
-				return SectionEnum.MC9;
-			case SectionEnum[SectionEnum.MC10]:
-				return SectionEnum.MC10;
-			case SectionEnum[SectionEnum.MC11]:
-				return SectionEnum.MC11;
-			case SectionEnum[SectionEnum.MC12]:
-				return SectionEnum.MC12;
-			case SectionEnum[SectionEnum.MC13]:
-				return SectionEnum.MC13;
-			case SectionEnum[SectionEnum.MC14]:
-				return SectionEnum.MC14;
-			case SectionEnum[SectionEnum.MC15]:
-				return SectionEnum.MC16;
-			case SectionEnum[SectionEnum.MC17]:
-				return SectionEnum.MC17;
-			case SectionEnum[SectionEnum.MC18]:
-				return SectionEnum.MC18;
-			case SectionEnum[SectionEnum.MC19]:
-				return SectionEnum.MC19;
-			case SectionEnum[SectionEnum.MC20]:
-				return SectionEnum.MC20;
-			case SectionEnum[SectionEnum.PRODUCT]:
-				return SectionEnum.PRODUCT;
-			case SectionEnum[SectionEnum.MP1]:
-				return SectionEnum.MP1;
-			case SectionEnum[SectionEnum.MP2]:
-				return SectionEnum.MP2;
-			case SectionEnum[SectionEnum.MP3]:
-				return SectionEnum.MP3;
-			case SectionEnum[SectionEnum.MP4]:
-				return SectionEnum.MP4;
-			case SectionEnum[SectionEnum.MP5]:
-				return SectionEnum.MP5;
-			case SectionEnum[SectionEnum.MP6]:
-				return SectionEnum.MP6;
-			case SectionEnum[SectionEnum.MP7]:
-				return SectionEnum.MP7;
-			case SectionEnum[SectionEnum.MP8]:
-				return SectionEnum.MP8;
-			case SectionEnum[SectionEnum.MP9]:
-				return SectionEnum.MP9;
-			case SectionEnum[SectionEnum.MP10]:
-				return SectionEnum.MP10;
-			case SectionEnum[SectionEnum.MP11]:
-				return SectionEnum.MP11;
-			case SectionEnum[SectionEnum.MP12]:
-				return SectionEnum.MP12;
-			case SectionEnum[SectionEnum.MP13]:
-				return SectionEnum.MP13;
-			case SectionEnum[SectionEnum.MP14]:
-				return SectionEnum.MP14;
-			case SectionEnum[SectionEnum.MP15]:
-				return SectionEnum.MP15;
-			case SectionEnum[SectionEnum.MP16]:
-				return SectionEnum.MP16;
-			case SectionEnum[SectionEnum.MP17]:
-				return SectionEnum.MP17;
-			case SectionEnum[SectionEnum.MP18]:
-				return SectionEnum.MP18;
-			case SectionEnum[SectionEnum.MP19]:
-				return SectionEnum.MP19;
-			case SectionEnum[SectionEnum.MP20]:
-				return SectionEnum.MP20;
-			case SectionEnum[SectionEnum.CATEGORY]:
-				return SectionEnum.CATEGORY;
-			case SectionEnum[SectionEnum.MGP1]:
-				return SectionEnum.MGP1;
-			case SectionEnum[SectionEnum.MGP2]:
-				return SectionEnum.MGP2;
-			case SectionEnum[SectionEnum.MGP3]:
-				return SectionEnum.MGP3;
-			case SectionEnum[SectionEnum.MGP4]:
-				return SectionEnum.MGP4;
-			case SectionEnum[SectionEnum.MGP5]:
-				return SectionEnum.MGP5;
-			case SectionEnum[SectionEnum.MGP6]:
-				return SectionEnum.MGP6;
-			case SectionEnum[SectionEnum.MGP7]:
-				return SectionEnum.MGP7;
-			case SectionEnum[SectionEnum.MGP8]:
-				return SectionEnum.MGP8;
-			case SectionEnum[SectionEnum.MGP9]:
-				return SectionEnum.MGP9;
-			case SectionEnum[SectionEnum.MGP10]:
-				return SectionEnum.MGP10;
-			case SectionEnum[SectionEnum.CHANNEL]:
-				return SectionEnum.CHANNEL;
-			case SectionEnum[SectionEnum.MM1]:
-				return SectionEnum.MM1;
-			case SectionEnum[SectionEnum.MM2]:
-				return SectionEnum.MM2;
-			case SectionEnum[SectionEnum.MM3]:
-				return SectionEnum.MM3;
-			case SectionEnum[SectionEnum.MM4]:
-				return SectionEnum.MM4;
-			case SectionEnum[SectionEnum.MM5]:
-				return SectionEnum.MM5;
-			case SectionEnum[SectionEnum.MM6]:
-				return SectionEnum.MM6;
-			case SectionEnum[SectionEnum.MM7]:
-				return SectionEnum.MM7;
-			case SectionEnum[SectionEnum.MM8]:
-				return SectionEnum.MM8;
-			case SectionEnum[SectionEnum.MM9]:
-				return SectionEnum.MM9;
-			case SectionEnum[SectionEnum.MM10]:
-				return SectionEnum.MM10;
-			case SectionEnum[SectionEnum.MM11]:
-				return SectionEnum.MM11;
-			case SectionEnum[SectionEnum.MM12]:
-				return SectionEnum.MM12;
-			case SectionEnum[SectionEnum.MM13]:
-				return SectionEnum.MM13;
-			case SectionEnum[SectionEnum.MM14]:
-				return SectionEnum.MM14;
-			case SectionEnum[SectionEnum.MM15]:
-				return SectionEnum.MM15;
-			case SectionEnum[SectionEnum.MM16]:
-				return SectionEnum.MM16;
-			case SectionEnum[SectionEnum.MM17]:
-				return SectionEnum.MM17;
-			case SectionEnum[SectionEnum.MM18]:
-				return SectionEnum.MM18;
-			case SectionEnum[SectionEnum.MM19]:
-				return SectionEnum.MM19;
-			case SectionEnum[SectionEnum.MM20]:
-				return SectionEnum.MM20;
-			case SectionEnum[SectionEnum.E_SHOP]:
-				return SectionEnum.E_SHOP;
-			case SectionEnum[SectionEnum.MS1]:
-				return SectionEnum.MS1;
-			case SectionEnum[SectionEnum.MS2]:
-				return SectionEnum.MS2;
-			case SectionEnum[SectionEnum.MS3]:
-				return SectionEnum.MS3;
-			case SectionEnum[SectionEnum.MS4]:
-				return SectionEnum.MS4;
-			case SectionEnum[SectionEnum.MS5]:
-				return SectionEnum.MS5;
-			case SectionEnum[SectionEnum.MS6]:
-				return SectionEnum.MS6;
-			case SectionEnum[SectionEnum.MS7]:
-				return SectionEnum.MS7;
-			case SectionEnum[SectionEnum.MS8]:
-				return SectionEnum.MS8;
-			case SectionEnum[SectionEnum.MS9]:
-				return SectionEnum.MS9;
-			case SectionEnum[SectionEnum.MS10]:
-				return SectionEnum.MS10;
-			case SectionEnum[SectionEnum.MS11]:
-				return SectionEnum.MS11;
-			case SectionEnum[SectionEnum.MS12]:
-				return SectionEnum.MS12;
-			case SectionEnum[SectionEnum.MS13]:
-				return SectionEnum.MS13;
-			case SectionEnum[SectionEnum.MS14]:
-				return SectionEnum.MS14;
-			case SectionEnum[SectionEnum.MS15]:
-				return SectionEnum.MS15;
-			case SectionEnum[SectionEnum.MS16]:
-				return SectionEnum.MS16;
-			case SectionEnum[SectionEnum.MS17]:
-				return SectionEnum.MS17;
-			case SectionEnum[SectionEnum.MS18]:
-				return SectionEnum.MS18;
-			case SectionEnum[SectionEnum.MS19]:
-				return SectionEnum.MS19;
-			case SectionEnum[SectionEnum.MS20]:
-				return SectionEnum.MS20;
+	private static labels = [
+		[SectionEnum.PRODUCT, {cs: 'Produkt', en: 'Product'}],
+		[SectionEnum.CUSTOMER, {cs: 'Zákazník', en: 'Customer'}],
+		[SectionEnum.CATEGORY, {cs: 'Kategorie', en: 'Category'}],
+		[SectionEnum.CHANNEL, {cs: 'Kanál', en: 'Channel'}],
+		[SectionEnum.E_SHOP, {cs: 'e-shop', en: 'e-shop'}],
+	];
+
+	static createSectionEnum(section: string): SectionEnum {
+		var sectionInstance: SectionEnum = <any>SectionEnum[section];
+		if (typeof sectionInstance !== 'undefined') {
+			return sectionInstance;
 		}
 		return SectionEnum.UNKNOWN;
 	}
 
 	static isProduct(section: SectionEnum) {
-		switch (section) {
-			case SectionEnum.PRODUCT:
-			case SectionEnum.MP1:
-			case SectionEnum.MP2:
-			case SectionEnum.MP3:
-			case SectionEnum.MP4:
-			case SectionEnum.MP5:
-			case SectionEnum.MP6:
-			case SectionEnum.MP7:
-			case SectionEnum.MP8:
-			case SectionEnum.MP9:
-			case SectionEnum.MP10:
-			case SectionEnum.MP11:
-			case SectionEnum.MP12:
-			case SectionEnum.MP13:
-			case SectionEnum.MP14:
-			case SectionEnum.MP15:
-			case SectionEnum.MP16:
-			case SectionEnum.MP17:
-			case SectionEnum.MP18:
-			case SectionEnum.MP19:
-			case SectionEnum.MP20:
-				return true;
+		if (section == SectionEnum.PRODUCT || SectionEnum[section].substr(0, 2) == 'MP') {
+			return true;
 		}
 		return false;
 	}
 
 	static isCustomer(section: SectionEnum) {
-		switch (section) {
-			case SectionEnum.CUSTOMER:
-			case SectionEnum.MC1:
-			case SectionEnum.MC2:
-			case SectionEnum.MC3:
-			case SectionEnum.MC4:
-			case SectionEnum.MC5:
-			case SectionEnum.MC6:
-			case SectionEnum.MC7:
-			case SectionEnum.MC8:
-			case SectionEnum.MC9:
-			case SectionEnum.MC10:
-			case SectionEnum.MC11:
-			case SectionEnum.MC12:
-			case SectionEnum.MC13:
-			case SectionEnum.MC14:
-			case SectionEnum.MC15:
-			case SectionEnum.MC16:
-			case SectionEnum.MC17:
-			case SectionEnum.MC18:
-			case SectionEnum.MC19:
-			case SectionEnum.MC20:
-				return true;
+		if (section == SectionEnum.CUSTOMER || SectionEnum[section].substr(0, 2) == 'MC') {
+			return true;
 		}
 		return false;
 	}
 
 	static isCategory(section: SectionEnum) {
-		switch (section) {
-			case SectionEnum.CATEGORY:
-			case SectionEnum.MGP1:
-			case SectionEnum.MGP2:
-			case SectionEnum.MGP3:
-			case SectionEnum.MGP4:
-			case SectionEnum.MGP5:
-			case SectionEnum.MGP6:
-			case SectionEnum.MGP7:
-			case SectionEnum.MGP8:
-			case SectionEnum.MGP9:
-			case SectionEnum.MGP10:
-				return true;
+		if (section == SectionEnum.CATEGORY || SectionEnum[section].substr(0, 3) == 'MGP') {
+			return true;
 		}
 		return false;
 	}
 
 	static isChannel(section: SectionEnum) {
-		switch (section) {
-			case SectionEnum.CHANNEL:
-			case SectionEnum.MM1:
-			case SectionEnum.MM2:
-			case SectionEnum.MM3:
-			case SectionEnum.MM4:
-			case SectionEnum.MM5:
-			case SectionEnum.MM6:
-			case SectionEnum.MM7:
-			case SectionEnum.MM8:
-			case SectionEnum.MM9:
-			case SectionEnum.MM10:
-			case SectionEnum.MM11:
-			case SectionEnum.MM12:
-			case SectionEnum.MM13:
-			case SectionEnum.MM14:
-			case SectionEnum.MM15:
-			case SectionEnum.MM16:
-			case SectionEnum.MM17:
-			case SectionEnum.MM18:
-			case SectionEnum.MM19:
-			case SectionEnum.MM20:
-				return true;
+		if (section == SectionEnum.CHANNEL || SectionEnum[section].substr(0, 2) == 'MM') {
+			return true;
 		}
 		return false;
 	}
 
 	static isEShop(section: SectionEnum) {
-		switch (section) {
-			case SectionEnum.E_SHOP:
-			case SectionEnum.MS1:
-			case SectionEnum.MS2:
-			case SectionEnum.MS3:
-			case SectionEnum.MS4:
-			case SectionEnum.MS5:
-			case SectionEnum.MS6:
-			case SectionEnum.MS7:
-			case SectionEnum.MS8:
-			case SectionEnum.MS9:
-			case SectionEnum.MS10:
-			case SectionEnum.MS11:
-			case SectionEnum.MS12:
-			case SectionEnum.MS13:
-			case SectionEnum.MS14:
-			case SectionEnum.MS15:
-			case SectionEnum.MS16:
-			case SectionEnum.MS17:
-			case SectionEnum.MS18:
-			case SectionEnum.MS19:
-			case SectionEnum.MS20:
-				return true;
+		if (section == SectionEnum.E_SHOP || SectionEnum[section].substr(0, 2) == 'MS') {
+			return true;
 		}
 		return false;
 	}
 
 	static getLabel(section: SectionEnum): LocalizedString {
-		switch (true) {
-			case SectionFactory.isProduct(section):
-				return new LocalizedString({cs: 'Produkt', en: 'Product'});
-			case SectionFactory.isCustomer(section):
-				return new LocalizedString({cs: 'Zákazník', en: 'Customer'});
-			case SectionFactory.isChannel(section):
-				return new LocalizedString({cs: 'Kanál', en: 'Channel'});
-			case SectionFactory.isCategory(section):
-				return new LocalizedString({cs: 'Kategorie', en: 'Category'});
-			case SectionFactory.isEShop(section):
-				return new LocalizedString({cs: 'e-shop', en: 'e-shop'});
-			default:
-				return null;
-		}
+		var groupSection = SectionFactory.getGroupSection(section);
+		var labelsByGroupSection = _.object(SectionFactory.labels);
+		return labelsByGroupSection[groupSection] ? new LocalizedString(labelsByGroupSection[groupSection]) : null;
 	}
 
 	static getGroupSection(section: SectionEnum) {
