@@ -66,7 +66,18 @@ class ConnectionDispatcher {
 			if (typeof callback === 'function') {
 				callback(this.pgClient);
 			}
+			this.keepAlivePostgresConnection();
 		});
+	}
+
+	private keepAlivePostgresConnection() {
+		setInterval(() => {
+			this.pgClient.query('SELECT 1;', (e: Error) => {
+				if (e) {
+					console.error('Error happened during keep alive Postgres connection');
+				}
+			});
+		}, 3000);
 	}
 
 	connectNeo4j(dsn: string, callback?: (db: any) => void) {
