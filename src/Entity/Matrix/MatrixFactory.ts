@@ -5,6 +5,7 @@ import MatrixCustomer = require('./MatrixCustomer');
 import MatrixChannel = require('./MatrixChannel');
 import MatrixCategory = require('./MatrixCategory');
 import MatrixEShop = require('./MatrixEShop');
+import MatrixChecklist = require('./MatrixChecklist');
 import SectionFactory = require('../Section/SectionFactory');
 import EntityPreparer = require('../EntityPreparer');
 import Product = require('../EShop/Product');
@@ -53,6 +54,30 @@ class MatrixFactory {
 		} else
 		if (SectionFactory.isEShop(section)) {
 			matrix = MatrixEShop.fromRow(row);
+		} else
+		if (SectionFactory.isChecklist(section)) {
+			matrix = new MatrixChecklist(
+				EntityPreparer.intOrNull(row[column(Matrix, 'id')]),
+				EntityPreparer.int(row[column(Matrix, 'eShopId')]),
+				SectionFactory.createSectionEnum(row[column(Matrix, 'section')]),
+				EntityPreparer.int(row[column(Matrix, 'loadId')]),
+				EntityPreparer.float(row[column(Matrix, 'scoreAbsolute')]),
+				EntityPreparer.float(row[column(Matrix, 'scoreRelative')]),
+				EntityPreparer.float(row[column(Matrix, 'scoreWeight')]),
+				EntityPreparer.float(row[column(Matrix, 'changeAbsolute')]),
+				EntityPreparer.float(row[column(Matrix, 'changeRelative')]),
+				EntityPreparer.float(row[column(Matrix, 'changeWeight')]),
+				EntityPreparer.floatOrNull(row[column(Matrix, 'prediction')]),
+				QuadrantValueFactory.createQuadrantValueEnum(row[column(Matrix, 'quadrant')]),
+				EntityPreparer.date(row[column(Matrix, 'dateValid')]),
+				EntityPreparer.floatOrNull(row[column(Matrix, 'inputValueX')]),
+				EntityPreparer.floatOrNull(row[column(Matrix, 'inputValueY')]),
+				EntityPreparer.floatOrNull(row[column(Matrix, 'changeValueX')]),
+				EntityPreparer.floatOrNull(row[column(Matrix, 'changeValueY')]),
+				EntityPreparer.floatOrNull(row[column(Matrix, 'tangens')]),
+				EntityPreparer.floatOrNull(row[column(Matrix, 'changeTangens')]),
+				Product.fromRow(row)
+			);
 		} else {
 			throw new Error('Not implemented section "' + row[sectionColumn] + '"');
 		}
