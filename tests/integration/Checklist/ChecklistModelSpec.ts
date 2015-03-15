@@ -5,7 +5,8 @@ import ChecklistLoader = Repository.Checklist.ChecklistLoader;
 import ChecklistRecorder = Repository.Checklist.ChecklistRecorder;
 import Checklist = Repository.Entity.Checklist.Checklist;
 import List = Repository.Entity.List;
-Repository;
+import Util = require('asimplia-util');
+import DateFactory = Util.DateTime.DateFactory;
 
 describe('ChecklistModel', () => {
 	var di = Repository.getDependencyInjection();
@@ -16,7 +17,7 @@ describe('ChecklistModel', () => {
 
 	describe("load recorded checklist", () => {
 		var checklistModel = di.service('Definition.Checklist.ChecklistModel');
-		var checklistRecorder = new ChecklistRecorder(checklistModel);
+		var checklistRecorder = new ChecklistRecorder(checklistModel, new DateFactory);
 		var checklistLoader = new ChecklistLoader(checklistModel);
 		beforeEach((done) => {
 			i.setup(done);
