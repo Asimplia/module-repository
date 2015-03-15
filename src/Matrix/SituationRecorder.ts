@@ -6,6 +6,8 @@ import List = require('../Entity/List');
 import Matrix = require('../Entity/Matrix/Matrix');
 import Signal = require('../Entity/Matrix/Signal');
 import SqlExecutor = require('../Util/SqlExecutor');
+import Util = require('asimplia-util');
+import DateFactory = Util.DateTime.DateFactory;
 
 export = SituationRecorder;
 class SituationRecorder {
@@ -13,10 +15,12 @@ class SituationRecorder {
 	private sqlExecutor: SqlExecutor;
 
 	static $inject = [
-		'connection.postgres'
+		'connection.postgres',
+		DateFactory,
 	];
 	constructor(
-		private connection: any
+		private connection: any,
+		private dateFactory: DateFactory
 	) {
 		this.sqlExecutor = new SqlExecutor(connection, Situation, Situation.COLUMN_SITUATION_ID, 'id');
 	}
@@ -36,6 +40,14 @@ class SituationRecorder {
 			situation.Id = res.rows[0][Situation.COLUMN_SITUATION_ID];
 			callback(null, situation);
 		});
+	}
+
+	setProcessed(situation: Situation, created: boolean, callback: (e: Error, situation?: Situation) => void) {
+		situation.DateSuggestionResultProcessed = this.dateFactory.now();
+		if (created) {
+			situation.DateSuggestionResultCreated = this.dateFactory.now();
+		}
+		this.update(situation, callback);
 	}
 
 	update(situation: Situation, callback: (e: Error, situation?: Situation) => void) {
