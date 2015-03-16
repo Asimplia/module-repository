@@ -42,10 +42,18 @@ class SituationRecorder {
 		});
 	}
 
-	setProcessed(situation: Situation, created: boolean, callback: (e: Error, situation?: Situation) => void) {
+	setSuggestionResultProcessed(situation: Situation, created: boolean, callback: (e: Error, situation?: Situation) => void) {
 		situation.DateSuggestionResultProcessed = this.dateFactory.now();
 		if (created) {
 			situation.DateSuggestionResultCreated = this.dateFactory.now();
+		}
+		this.update(situation, callback);
+	}
+
+	setChecklistProcessed(situation: Situation, created: boolean, callback: (e: Error, situation?: Situation) => void) {
+		situation.DateChecklistProcessed = this.dateFactory.now();
+		if (created) {
+			situation.DateChecklistCreated = this.dateFactory.now();
 		}
 		this.update(situation, callback);
 	}
@@ -55,10 +63,14 @@ class SituationRecorder {
 			+' SET '+Situation.COLUMN_DATE_CREATED+' = $1::timestamp '
 			+' , '+Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED+' = $2 '
 			+' , '+Situation.COLUMN_DATE_SUGGESTION_RESULT_PROCESSED+' = $3 '
-			+' WHERE '+Situation.COLUMN_SITUATION_ID+' = $4 ', [
+			+' , '+Situation.COLUMN_DATE_CHECKLIST_CREATED+' = $4 '
+			+' , '+Situation.COLUMN_DATE_CHECKLIST_PROCESSED+' = $5 '
+			+' WHERE '+Situation.COLUMN_SITUATION_ID+' = $6 ', [
 			moment(situation.DateCreated).format('YYYY-MM-DD HH:mm:ss'),
 			situation.DateSuggestionResultCreated ? moment(situation.DateSuggestionResultCreated).format('YYYY-MM-DD HH:mm:ss') : null,
 			situation.DateSuggestionResultProcessed ? moment(situation.DateSuggestionResultProcessed).format('YYYY-MM-DD HH:mm:ss') : null,
+			situation.DateChecklistCreated ? moment(situation.DateChecklistCreated).format('YYYY-MM-DD HH:mm:ss') : null,
+			situation.DateChecklistProcessed ? moment(situation.DateChecklistProcessed).format('YYYY-MM-DD HH:mm:ss') : null,
 			situation.Id
 		], (e, res) => {
 			if (e) {

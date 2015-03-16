@@ -18,6 +18,8 @@ class Situation implements IEntity {
 	public static COLUMN_DATE_CREATED = 'datecreated';
 	public static COLUMN_DATE_SUGGESTION_RESULT_CREATED = 'datesuggestionresultcreated';
 	public static COLUMN_DATE_SUGGESTION_RESULT_PROCESSED = 'datesuggestionresultprocessed';
+	public static COLUMN_DATE_CHECKLIST_CREATED = 'datechecklistcreated';
+	public static COLUMN_DATE_CHECKLIST_PROCESSED = 'datechecklistprocessed';
 
 	get Id(): number { return this.id; }
 	set Id(id: number) { this.id = id; }
@@ -27,6 +29,10 @@ class Situation implements IEntity {
 	set DateSuggestionResultCreated(value) { this.dateSuggestionResultCreated = value; }
 	get DateSuggestionResultProcessed() { return this.dateSuggestionResultProcessed; }
 	set DateSuggestionResultProcessed(value) { this.dateSuggestionResultProcessed = value; }
+	get DateChecklistCreated() { return this.dateChecklistCreated; }
+	set DateChecklistCreated(value) { this.dateChecklistCreated = value; }
+	get DateChecklistProcessed() { return this.dateChecklistProcessed; }
+	set DateChecklistProcessed(value) { this.dateChecklistProcessed = value; }
 	get EShopId() {
 		return this.signalList.first().Matrix.EShopId;
 	}
@@ -68,7 +74,9 @@ class Situation implements IEntity {
 		private signalList: List<Signal>,
 		private dateCreated: Date,
 		private dateSuggestionResultCreated: Date,
-		private dateSuggestionResultProcessed: Date
+		private dateSuggestionResultProcessed: Date,
+		private dateChecklistCreated: Date,
+		private dateChecklistProcessed: Date
 	) {	}
 
 	static toObject(entity: Situation) {
@@ -77,6 +85,8 @@ class Situation implements IEntity {
 			dateCreated: entity.dateCreated,
 			dateSuggestionResultCreated: entity.dateSuggestionResultCreated,
 			dateSuggestionResultProcessed: entity.dateSuggestionResultProcessed,
+			dateChecklistCreated: entity.dateChecklistCreated,
+			dateChecklistProcessed: entity.dateChecklistProcessed,
 			signals: entity.signalList.toArray(Signal.toObject)
 		};
 	}
@@ -91,7 +101,9 @@ class Situation implements IEntity {
 			new List<Signal>(),
 			EntityPreparer.date(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_CREATED]),
 			EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED]),
-			EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_PROCESSED])
+			EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_PROCESSED]),
+			EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_CHECKLIST_CREATED]),
+			EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_CHECKLIST_PROCESSED])
 		);
 	}
 
@@ -101,7 +113,9 @@ class Situation implements IEntity {
 			new List<Signal>(),
 			EntityPreparer.date(object.dateCreated),
 			EntityPreparer.dateOrNull(object.dateSuggestionResultCreated),
-			EntityPreparer.dateOrNull(object.dateSuggestionResultProcessed)
+			EntityPreparer.dateOrNull(object.dateSuggestionResultProcessed),
+			EntityPreparer.dateOrNull(object.dateChecklistCreated),
+			EntityPreparer.dateOrNull(object.dateChecklistProcessed)
 		);
 	}
 

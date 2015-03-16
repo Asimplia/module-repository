@@ -27,11 +27,22 @@ class SituationLoader {
 		this.sqlExecutor = new SqlExecutor(connection, Situation, Situation.COLUMN_SITUATION_ID, 'id');
 	}
 
-	getListNotSuggested(eShopId: number, loadId: number, callback: (e: Error, situationList?: List<Situation>) => void) {
+	getListNotProcessedSuggestionResult(eShopId: number, loadId: number, callback: (e: Error, situationList?: List<Situation>) => void) {
 		this.connection.query('SELECT '+this.getSelect()+' FROM '+this.getFrom()
 			+' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 '
 			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_LOAD_ID+' = $2 '
 			+' AND '+Situation.TABLE_NAME+'.'+Situation.COLUMN_DATE_SUGGESTION_RESULT_PROCESSED+' IS NULL', [
+			eShopId, loadId
+		], (e, result) => {
+			this.createListByResult(e, result, callback);
+		});
+	}
+
+	getListNotProcessedChecklist(eShopId: number, loadId: number, callback: (e: Error, situationList?: List<Situation>) => void) {
+		this.connection.query('SELECT '+this.getSelect()+' FROM '+this.getFrom()
+			+' WHERE '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_E_SHOP_ID+' = $1 '
+			+' AND '+Matrix.TABLE_NAME+'.'+Matrix.COLUMN_LOAD_ID+' = $2 '
+			+' AND '+Situation.TABLE_NAME+'.'+Situation.COLUMN_DATE_CHECKLIST_PROCESSED+' IS NULL', [
 			eShopId, loadId
 		], (e, result) => {
 			this.createListByResult(e, result, callback);
