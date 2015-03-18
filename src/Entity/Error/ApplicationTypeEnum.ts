@@ -10,5 +10,6 @@ enum ApplicationTypeEnum {
 	FRONTEND,
 	ANALYTICS,
 	SYNC,
-	CHECKLIST
+	CHECKLIST,
+	ERROR
 }
