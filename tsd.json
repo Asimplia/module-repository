@@ -6,31 +6,31 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "mongoose/mongoose.d.ts": {
-      "commit": "231eb882c1e98876d329753f8b7133a6f4536f50"
+      "commit": "5eaec89c7cfcb02732c62e59184bdf6b6181507b"
     },
     "underscore/underscore.d.ts": {
-      "commit": "231eb882c1e98876d329753f8b7133a6f4536f50"
+      "commit": "5eaec89c7cfcb02732c62e59184bdf6b6181507b"
     },
     "moment/moment.d.ts": {
-      "commit": "231eb882c1e98876d329753f8b7133a6f4536f50"
+      "commit": "5eaec89c7cfcb02732c62e59184bdf6b6181507b"
     },
     "node/node.d.ts": {
-      "commit": "231eb882c1e98876d329753f8b7133a6f4536f50"
+      "commit": "5eaec89c7cfcb02732c62e59184bdf6b6181507b"
     },
     "jasmine/jasmine.d.ts": {
-      "commit": "231eb882c1e98876d329753f8b7133a6f4536f50"
+      "commit": "5eaec89c7cfcb02732c62e59184bdf6b6181507b"
     },
     "each/each.d.ts": {
-      "commit": "231eb882c1e98876d329753f8b7133a6f4536f50"
+      "commit": "5eaec89c7cfcb02732c62e59184bdf6b6181507b"
     },
     "traceback/traceback.d.ts": {
-      "commit": "231eb882c1e98876d329753f8b7133a6f4536f50"
+      "commit": "5eaec89c7cfcb02732c62e59184bdf6b6181507b"
     },
     "express/express.d.ts": {
-      "commit": "231eb882c1e98876d329753f8b7133a6f4536f50"
+      "commit": "5eaec89c7cfcb02732c62e59184bdf6b6181507b"
     },
     "hooker/hooker.d.ts": {
-      "commit": "f9341f81d08e9f8d778a2cc944060321f325e28c"
+      "commit": "5eaec89c7cfcb02732c62e59184bdf6b6181507b"
     }
   }
 }
