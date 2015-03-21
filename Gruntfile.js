@@ -23,7 +23,7 @@ module.exports = function (grunt) {
 	GruntConfiguration.loadParentNpmTasks(grunt, 'grunt-tslint');
 
 	grunt.registerTask('default', [
-		'clean:build', 'shell:link_module:asimplia-util', 'tsd:reinstall', 'wait:typings', 'typescript:build', 'typescript:public', 'jasmine_node:unit'
+		'clean:build', 'shell:link_module:asimplia-util', 'tsd:reinstall', 'wait:typings', 'typescript:build', 'typescript:public', 'tslint:all', 'jasmine_node:unit'
 	]);
 	grunt.registerTask('dev', function () {
 		GruntConfiguration.typescriptReferences(__dirname + '/build/references.ts', [
