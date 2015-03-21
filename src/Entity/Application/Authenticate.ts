@@ -48,9 +48,9 @@ class Authenticate implements IEntity {
 
 	static fromObject(o: any) {
 		return new Authenticate(
-			EntityPreparer.string(o.identity), 
-			EntityPreparer.stringOrNull(o.verification), 
-			Authenticate.createAuthTypeEnum(o.authType), 
+			EntityPreparer.string(o.identity),
+			EntityPreparer.stringOrNull(o.verification),
+			Authenticate.createAuthTypeEnum(o.authType),
 			EntityPreparer.stringOrNull(o.salt)
 		);
 	}

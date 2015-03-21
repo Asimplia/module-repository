@@ -1,4 +1,4 @@
-
+/* tslint:disable */
 import mongoose = require('mongoose');
 import each = require('each');
 import _ = require('underscore');
@@ -16,6 +16,7 @@ interface MongooseCollection {
 }
 
 export = DocumentExecutor;
+/** @deprecated */
 class DocumentExecutor {
 
 	constructor(

@@ -7,6 +7,7 @@ export import HeurekaProductConverter = require('./HeurekaProductConverter');
 export import HeurekaAccessoryConverter = require('./HeurekaAccessoryConverter');
 export import HeurekaDeliveryConverter = require('./HeurekaDeliveryConverter');
 export import HeurekaParamConverter = require('./HeurekaParamConverter');
+/* tslint:disable */
 HeurekaProduct;
 HeurekaAccessory;
 HeurekaDelivery;

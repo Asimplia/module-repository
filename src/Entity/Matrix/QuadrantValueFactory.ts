@@ -5,7 +5,7 @@ export = QuadrantValueFactory;
 class QuadrantValueFactory {
 
 	public static createQuadrantValueEnum(quadrant: any) {
-		switch (parseInt(quadrant)) {
+		switch (parseInt(quadrant, 10)) {
 			case QuadrantValueEnum.RIGHT_TOP:
 				return QuadrantValueEnum.RIGHT_TOP;
 			case QuadrantValueEnum.LEFT_TOP:

@@ -2,7 +2,6 @@
 import IEntity = require('../IEntity');
 import ServiceTypeEnum = require('./ServiceTypeEnum');
 import ServiceTypeFactory = require('./ServiceTypeFactory');
-import moment = require('moment');
 import EntityPreparer = require('../EntityPreparer');
 
 export = ServiceConnection;
@@ -10,14 +9,14 @@ class ServiceConnection implements IEntity {
 
 	get ServiceType() { return this.serviceType; }
 	get Info() { return this.info; }
-	set Info(value) { this.info = value; }
+	set Info(value: any) { this.info = value; }
 
 	constructor(
 		private serviceType: ServiceTypeEnum,
 		private dateCreated: Date,
 		private info: any
 	) {}
-	
+
 	toObject() {
 		return ServiceConnection.toObject(this);
 	}

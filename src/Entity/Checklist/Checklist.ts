@@ -1,13 +1,12 @@
 
 import _ = require('underscore');
-import IEntity = require('../IEntity');
 import IHashIdentificableEntity = require('../Common/IHashIdentificableEntity');
 import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
 import LocalizedString = require('../Locale/LocalizedString');
-import CheckItemList = require("./CheckItemList");
-import CheckItem = require("./CheckItem");
-import Image = require("../Image/Image");
+import CheckItemList = require('./CheckItemList');
+import CheckItem = require('./CheckItem');
+import Image = require('../Image/Image');
 import IChecklistObject = require('./IChecklistObject');
 import EntityPreparer = require('../EntityPreparer');
 

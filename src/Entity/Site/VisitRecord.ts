@@ -23,7 +23,7 @@ class VisitRecord implements IEntity {
 	public static COLUMN_NEW_USERS = 'newusers';
 	public static COLUMN_LANDING_PAGE_PATH = 'landingpagepath';
 	public static COLUMN_COUNTRY = 'country';
-	
+
 	constructor(
 		private id: number,
 		private eShopId: number,

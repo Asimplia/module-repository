@@ -4,6 +4,9 @@ import Util = require('asimplia-util');
 import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
 import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
 import Type = Util.ODBM.Mapping.Type;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = ZboziVariant;
 class ZboziVariant {
@@ -16,7 +19,7 @@ class ZboziVariant {
 		zboziProductId: { $type: new Type.Integer(8, true), $name: 'zboziid' },
 		parentZboziProductId: { $type: new Type.Integer(8, true), $name: 'variantzboziid' }
 	};
-	
+
 	get Id() { return this.object.id; }
 
 	constructor(

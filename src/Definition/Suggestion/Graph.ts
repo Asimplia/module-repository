@@ -1,6 +1,6 @@
-﻿
+﻿/* tslint:disable */
 export = GraphDefinition;
 var GraphDefinition = {
-	type: String, //pie, chart,...
+	type: String, // pie, chart,...
 	data: String
 };

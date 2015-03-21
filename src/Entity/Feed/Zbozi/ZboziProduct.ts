@@ -4,6 +4,9 @@ import Util = require('asimplia-util');
 import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
 import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
 import Type = Util.ODBM.Mapping.Type;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = ZboziProduct;
 class ZboziProduct {
@@ -36,7 +39,6 @@ class ZboziProduct {
 		productNumber: { $type: new Type.String(50, true), $name: 'productno' },
 		variantName: { $type: new Type.String(255, true), $name: 'productnameext' }
 	};
-	
 
 	get Id() { return this.object.id; }
 

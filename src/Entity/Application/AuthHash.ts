@@ -1,6 +1,5 @@
 
 import IEntity = require('../IEntity');
-import moment = require('moment');
 import EntityPreparer = require('../EntityPreparer');
 
 export = AuthHash;
@@ -10,7 +9,7 @@ class AuthHash implements IEntity {
 	get AuthHash() { return this.authHash; }
 	get SessionId() { return this.sessionId; }
 	get Active() { return this.active; }
-	set Active(value) { this.active = value; }
+	set Active(value: boolean) { this.active = value; }
 
 	constructor(
 		private dateAuthenticated: Date,
@@ -34,9 +33,9 @@ class AuthHash implements IEntity {
 
 	static fromObject(o: any) {
 		return new AuthHash(
-			EntityPreparer.date(o.dateAuthenticated), 
-			EntityPreparer.string(o.authHash), 
-			EntityPreparer.string(o.sessionId), 
+			EntityPreparer.date(o.dateAuthenticated),
+			EntityPreparer.string(o.authHash),
+			EntityPreparer.string(o.sessionId),
 			EntityPreparer.boolean(o.active)
 		);
 	}

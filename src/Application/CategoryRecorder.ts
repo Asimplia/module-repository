@@ -2,12 +2,11 @@
 import mongoose = require('mongoose');
 import Category = require('../Entity/Application/Category');
 import List = require('../Entity/List');
-import CategoryModel = require('../Definition/Application/CategoryModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = CategoryRecorder;
 class CategoryRecorder {
-	
+
 	private documentExecutor: DocumentExecutor;
 
 	static $inject = [

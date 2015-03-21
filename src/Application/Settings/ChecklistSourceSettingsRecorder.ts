@@ -8,10 +8,13 @@ import Util = require('asimplia-util');
 import List = Util.ODBM.Entity.List;
 import Manager = Util.ODBM.Repository.MongoDB.Manager;
 import DateFactory = Util.DateTime.DateFactory;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = ChecklistSourceSettingsRecorder;
 class ChecklistSourceSettingsRecorder {
-	
+
 	static $inject = [
 		'connection.mongoose',
 		DateFactory,
@@ -21,14 +24,22 @@ class ChecklistSourceSettingsRecorder {
 		private connection: mongoose.Mongoose,
 		private dateFactory: DateFactory,
 		private checklistSourceSettingsLoader: ChecklistSourceSettingsLoader,
-		private manager = new Manager<ChecklistSourceSettings, IChecklistSourceSettingsObject, List<ChecklistSourceSettings>>(ChecklistSourceSettings, List, connection)
+		private manager: Manager<ChecklistSourceSettings, IChecklistSourceSettingsObject, List<ChecklistSourceSettings>>
+			= new Manager<ChecklistSourceSettings, IChecklistSourceSettingsObject, List<ChecklistSourceSettings>>(
+				ChecklistSourceSettings, List, connection
+			)
 	) {}
 
-	insertOrUpdateList(checklistSourceSettingsList: List<ChecklistSourceSettings>, callback: (e: Error, checklistSourceSettingsList?: List<ChecklistSourceSettings>) => void) {
+	insertOrUpdateList(
+		checklistSourceSettingsList: List<ChecklistSourceSettings>,
+		callback: (e: Error, checklistSourceSettingsList?: List<ChecklistSourceSettings>) => void
+	) {
 		this.manager.insertOrUpdateList(checklistSourceSettingsList, callback);
 	}
 
-	insertOrUpdate(checklistSourceSettings: ChecklistSourceSettings, callback: (e: Error, checklistSourceSettings?: ChecklistSourceSettings) => void) {
+	insertOrUpdate(
+		checklistSourceSettings: ChecklistSourceSettings, callback: (e: Error, checklistSourceSettings?: ChecklistSourceSettings) => void
+	) {
 		this.manager.insertOrUpdate(checklistSourceSettings, callback);
 	}
 
@@ -50,7 +61,12 @@ class ChecklistSourceSettingsRecorder {
 		});
 	}
 
-	setSourceUri(eShopId: number, sourceType: ChecklistSourceTypeEnum, uri: string, callback: (e: Error, checklistSourceSettings?: ChecklistSourceSettings) => void) {
+	setSourceUri(
+		eShopId: number,
+		sourceType: ChecklistSourceTypeEnum,
+		uri: string,
+		callback: (e: Error, checklistSourceSettings?: ChecklistSourceSettings) => void
+	) {
 		this.checklistSourceSettingsLoader.getByEShopId(eShopId, (e: Error, checklistSourceSettings?: ChecklistSourceSettings) => {
 			if (e) return callback(e);
 			if (!checklistSourceSettings) {

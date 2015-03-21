@@ -2,7 +2,6 @@
 import mongoose = require('mongoose');
 import List = require('../Entity/List');
 import MatrixDescription = require('../Entity/Matrix/MatrixDescription');
-import MatrixDescriptionModel = require('../Definition/Matrix/MatrixDescriptionModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = MatrixDescriptionLoader;
@@ -20,7 +19,7 @@ class MatrixDescriptionLoader {
 	}
 
 	getList(callback: (e: Error, list?: List<MatrixDescription>) => void) {
-		this.model.find({}, (e, docs: any[]) => {
+		this.model.find({}, (e: Error, docs: any[]) => {
 			if (e) {
 				return callback(e);
 			}
@@ -28,5 +27,4 @@ class MatrixDescriptionLoader {
 			callback(null, list);
 		});
 	}
-	
 }

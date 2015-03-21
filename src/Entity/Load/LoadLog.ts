@@ -13,7 +13,7 @@ class LoadLog implements IEntity {
 	get Id() { return this.id; }
 	get EShopId() { return this.eShopId; }
 	get DateLoaded() { return this.dateLoaded; }
-	
+
 	constructor(
 		private id: number,
 		private eShopId: number,

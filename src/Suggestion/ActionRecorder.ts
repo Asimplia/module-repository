@@ -1,13 +1,11 @@
 ﻿
 import SuggestionAction = require('../Entity/Suggestion/Action');
-import List = require('../Entity/List');
 import mongoose = require('mongoose');
-import ActionModel = require('../Definition/Suggestion/ActionModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = ActionRecorder;
 class ActionRecorder {
-	
+
 	private documentExecutor: DocumentExecutor;
 
 	static $inject = [

@@ -2,12 +2,11 @@
 import mongoose = require('mongoose');
 import EShop = require('../Entity/Application/EShop');
 import List = require('../Entity/List');
-import EShopModel = require('../Definition/Application/EShopModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = EShopRecorder;
 class EShopRecorder {
-	
+
 	private documentExecutor: DocumentExecutor;
 
 	static $inject = [

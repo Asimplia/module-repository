@@ -1,4 +1,4 @@
-
+/* tslint:disable */
 export = Email;
 var Email = {
 	dateCreated: Date,

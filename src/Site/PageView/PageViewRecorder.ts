@@ -4,17 +4,21 @@ import PageViewList = require('../../Entity/Site/PageView/PageViewList');
 import IPageViewObject = require('../../Entity/Site/PageView/IPageViewObject');
 import Util = require('asimplia-util');
 import Manager = Util.ODBM.Repository.PostgreSql.Manager;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = PageViewRecorder;
 class PageViewRecorder {
-	
+
 	static $service = 'Site.PageView.PageViewRecorder';
 	static $inject = [
 		'connection.postgres'
 	];
 	constructor(
 		private connection: any,
-		private manager = new Manager<PageView, IPageViewObject, PageViewList>(PageView, PageViewList, connection)
+		private manager: Manager<PageView, IPageViewObject, PageViewList>
+			= new Manager<PageView, IPageViewObject, PageViewList>(PageView, PageViewList, connection)
 	) {}
 
 	insertList(pageViewList: PageViewList, callback: (e: Error, pageViewList?: PageViewList) => void) {

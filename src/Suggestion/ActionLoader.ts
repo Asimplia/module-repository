@@ -3,7 +3,6 @@ import SuggestionAction = require('../Entity/Suggestion/Action');
 import List = require('../Entity/List');
 import Factor = require('../Entity/Factor/Factor');
 import mongoose = require('mongoose');
-import ActionModel = require('../Definition/Suggestion/ActionModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 import SectionEnum = require('../Entity/Section/SectionEnum');
 import _ = require('underscore');
@@ -23,7 +22,7 @@ class ActionLoader {
 	}
 
 	getList(callback: (e: Error, actionList?: List<SuggestionAction>) => void) {
-		this.model.find({}, null, { sort: 'id' }, (e, actions: mongoose.Document[]) => {
+		this.model.find({}, null, { sort: 'id' }, (e: Error, actions: mongoose.Document[]) => {
 			if (e) {
 				return callback(e);
 			}
@@ -41,7 +40,7 @@ class ActionLoader {
 				})
 			}
 		};
-		this.model.find(conditions, null, { sort: 'id' }, (e, actions: mongoose.Document[]) => {
+		this.model.find(conditions, null, { sort: 'id' }, (e: Error, actions: mongoose.Document[]) => {
 			if (e) {
 				return callback(e);
 			}
@@ -53,9 +52,9 @@ class ActionLoader {
 
 	getListByFactor(factor: Factor, callback: (e: Error, actionList?: List<SuggestionAction>) => void) {
 		var condition = {
-			"factorDefinitions.factor.id": factor.Id
+			'factorDefinitions.factor.id': factor.Id
 		};
-		this.model.find(condition, null, { sort: 'id' }, (e, actions: mongoose.Document[]) => {
+		this.model.find(condition, null, { sort: 'id' }, (e: Error, actions: mongoose.Document[]) => {
 			if (e) {
 				return callback(e);
 			}

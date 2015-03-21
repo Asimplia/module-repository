@@ -3,8 +3,11 @@ import Util = require('asimplia-util');
 import DependencyInjection = Util.DI.DependencyInjection;
 import mongoose = require('mongoose');
 import each = require('each');
+/* tslint:disable */
 var pg = require('pg');
 var neo4j = require('neo4j');
+Util;
+/* tslint:enable */
 
 export = ConnectionDispatcher;
 class ConnectionDispatcher {
@@ -25,7 +28,7 @@ class ConnectionDispatcher {
 	}
 
 	connectMongoDB(dsn: string, callback?: (mongoose: mongoose.Mongoose) => void) {
-		this.mongooseConnection = mongoose.connect(dsn, (e) => {
+		this.mongooseConnection = mongoose.connect(dsn, (e: Error) => {
 			if (e) {
 				throw e;
 			}
@@ -52,15 +55,14 @@ class ConnectionDispatcher {
 
 	connectPostgres(connectionString: string, callback?: (client: any) => void) {
 		var client = new pg.Client(connectionString);
-		client.connect((e) => {
+		client.connect((e: Error) => {
 			if (e) {
 				throw e;
-				return;
 			}
 			this.pgClient = client;
 			this.di.addService('connection.postgres', this.pgClient);
 			console.info('Connected Postgres to ' + connectionString);
-			this.connectionListeners.forEach((callback) => {
+			this.connectionListeners.forEach((callback: (client: any) => void) => {
 				callback(this.pgClient);
 			});
 			if (typeof callback === 'function') {
@@ -89,7 +91,7 @@ class ConnectionDispatcher {
 			this.neo4jDatabase = db;
 			this.di.addService('connection.neo4j', this.neo4jDatabase);
 			console.info('Connected Neo4j to ' + dsn);
-			this.neo4jListeners.forEach((callback) => {
+			this.neo4jListeners.forEach((callback: (database: any) => void) => {
 				callback(this.neo4jDatabase);
 			});
 			if (typeof callback === 'function') {

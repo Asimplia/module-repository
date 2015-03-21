@@ -10,6 +10,7 @@ export import CurrencyEnum = require('./CurrencyEnum');
 export import TerritoryEnum = require('./TerritoryEnum');
 export import Locale = require('./Locale');
 export import ILocalizedStringObject = require('./ILocalizedStringObject');
+/* tslint:disable */
 LocalizedString;
 Domain;
 DomainEnum;

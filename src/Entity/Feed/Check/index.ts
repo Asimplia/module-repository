@@ -6,6 +6,7 @@ export import DataType = require('./DataType');
 export import ColumnEntityName = require('./ColumnEntityName');
 export import IColumnObject = require('./IColumnObject');
 export import Traffic = require('./Traffic/index');
+/* tslint:disable */
 Column;
 ColumnList;
 ColumnConverter;

@@ -18,6 +18,7 @@ export import CustomerRecorder = require('./CustomerRecorder');
 export import MatrixLoadLoader = require('./MatrixLoadLoader');
 export import MatrixLoadRecorder = require('./MatrixLoadRecorder');
 export import Settings = require('./Settings/index');
+/* tslint:disable */
 UserLoader;
 UserRecorder;
 EShopLoader;

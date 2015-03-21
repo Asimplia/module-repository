@@ -46,6 +46,7 @@ class Factor {
 	}
 
 	static toObject(entity: Factor) {
+		var label: ILocalizedStringObject = entity.label.toObject();
 		return {
 			id: entity.id,
 			name: entity.name,
@@ -54,7 +55,7 @@ class Factor {
 			weight: entity.weight,
 			factorType: FactorTypeEnum[entity.factorType],
 			column: ColumnEnum[entity.column],
-			label: entity.label.toObject()
+			label: label
 		};
 	}
 

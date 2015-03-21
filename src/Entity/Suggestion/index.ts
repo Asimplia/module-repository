@@ -15,6 +15,7 @@ export import Result = require('./Result');
 export import ResultStateEnum = require('./ResultStateEnum');
 export import Status = require('./Status');
 export import Todo = require('./Todo/index');
+/* tslint:disable */
 Action;
 ActionPlaceholderEnum;
 ActionPlaceholderFactory;

@@ -4,17 +4,21 @@ import IHeurekaAccessoryObject = require('../../Entity/Feed/Heureka/IHeurekaAcce
 import Util = require('asimplia-util');
 import List = Util.ODBM.Entity.List;
 import Manager = Util.ODBM.Repository.PostgreSql.Manager;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = HeurekaAccessoryRecorder;
 class HeurekaAccessoryRecorder {
-	
+
 	static $service = 'Feed.Heureka.HeurekaAccessoryRecorder';
 	static $inject = [
 		'connection.postgres'
 	];
 	constructor(
 		private connection: any,
-		private manager = new Manager<HeurekaAccessory, IHeurekaAccessoryObject, List<HeurekaAccessory>>(HeurekaAccessory, List, connection)
+		private manager: Manager<HeurekaAccessory, IHeurekaAccessoryObject, List<HeurekaAccessory>>
+			= new Manager<HeurekaAccessory, IHeurekaAccessoryObject, List<HeurekaAccessory>>(HeurekaAccessory, List, connection)
 	) {}
 
 	insertList(heurekaAccessoryList: List<HeurekaAccessory>, callback: (e: Error, heurekaAccessoryList?: List<HeurekaAccessory>) => void) {

@@ -16,6 +16,7 @@ export import Site = require('./Site/index');
 export import Checklist = require('./Checklist/index');
 export import Image = require('./Image/index');
 export import Feed = require('./Feed/index');
+/* tslint:disable */
 List;
 EntityPreparer;
 Factor;

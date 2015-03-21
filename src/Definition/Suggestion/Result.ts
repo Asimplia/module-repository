@@ -1,4 +1,4 @@
-﻿
+﻿/* tslint:disable */
 import LocalizedString = require('../Locale/LocalizedString');
 import Status = require('./Status');
 import Graph = require('./Graph');

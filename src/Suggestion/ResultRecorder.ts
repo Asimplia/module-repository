@@ -1,8 +1,6 @@
 ﻿
 import Result = require('../Entity/Suggestion/Result');
-import List = require('../Entity/List');
 import mongoose = require('mongoose');
-import ResultModel = require('../Definition/Suggestion/ResultModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = ResultRecorder;

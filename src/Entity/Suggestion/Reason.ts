@@ -17,14 +17,15 @@ class Reason implements IEntity {
 
 	static fromObject(o: any) {
 		return new Reason(
-			new LocalizedString(o.label), 
+			new LocalizedString(o.label),
 			Reason.createReasonTypeEnum(o.reasonType)
 		);
 	}
 
 	static toObject(e: Reason) {
+		var label: ILocalizedStringObject = e.label.toObject();
 		return {
-			label: e.label.toObject(),
+			label: label,
 			reasonType: ReasonTypeEnum[e.reasonType]
 		};
 	}

@@ -1,13 +1,16 @@
 
-import Repository = require("../../../../src/index");
+import Repository = require('../../../../src/index');
 import SectionFactory = Repository.Entity.Section.SectionFactory;
 import SectionEnum = Repository.Entity.Section.SectionEnum;
+/* tslint:disable */
+Repository;
+/* tslint:enable */
 
 describe('Entity.Section.SectionFactory', () => {
 
-	describe("createSectionEnum", () => {
-		
-		it("should return enum instance by string", () => {
+	describe('createSectionEnum', () => {
+
+		it('should return enum instance by string', () => {
 			expect(SectionFactory.createSectionEnum('CUSTOMER')).toBe(SectionEnum.CUSTOMER);
 			expect(SectionFactory.createSectionEnum('MC10')).toBe(SectionEnum.MC10);
 			expect(SectionFactory.createSectionEnum(SectionEnum[SectionEnum.PRODUCT])).toBe(SectionEnum.PRODUCT);
@@ -15,9 +18,9 @@ describe('Entity.Section.SectionFactory', () => {
 		});
 	});
 
-	describe("isProduct", () => {
-		
-		it("should return only on right section or group section", () => {
+	describe('isProduct', () => {
+
+		it('should return only on right section or group section', () => {
 			expect(SectionFactory.isProduct(SectionEnum.PRODUCT)).toBeTruthy();
 			expect(SectionFactory.isProduct(SectionEnum.MP1)).toBeTruthy();
 			expect(SectionFactory.isProduct(SectionEnum.MP10)).toBeTruthy();
@@ -34,9 +37,9 @@ describe('Entity.Section.SectionFactory', () => {
 		});
 	});
 
-	describe("isCustomer", () => {
-		
-		it("should return only on right section or group section", () => {
+	describe('isCustomer', () => {
+
+		it('should return only on right section or group section', () => {
 			expect(SectionFactory.isCustomer(SectionEnum.PRODUCT)).toBeFalsy();
 			expect(SectionFactory.isCustomer(SectionEnum.MP1)).toBeFalsy();
 			expect(SectionFactory.isCustomer(SectionEnum.MP10)).toBeFalsy();
@@ -53,9 +56,9 @@ describe('Entity.Section.SectionFactory', () => {
 		});
 	});
 
-	describe("isCategory", () => {
-		
-		it("should return only on right section or group section", () => {
+	describe('isCategory', () => {
+
+		it('should return only on right section or group section', () => {
 			expect(SectionFactory.isCategory(SectionEnum.PRODUCT)).toBeFalsy();
 			expect(SectionFactory.isCategory(SectionEnum.MP1)).toBeFalsy();
 			expect(SectionFactory.isCategory(SectionEnum.MP10)).toBeFalsy();
@@ -72,9 +75,9 @@ describe('Entity.Section.SectionFactory', () => {
 		});
 	});
 
-	describe("isChannel", () => {
-		
-		it("should return only on right section or group section", () => {
+	describe('isChannel', () => {
+
+		it('should return only on right section or group section', () => {
 			expect(SectionFactory.isChannel(SectionEnum.PRODUCT)).toBeFalsy();
 			expect(SectionFactory.isChannel(SectionEnum.MP1)).toBeFalsy();
 			expect(SectionFactory.isChannel(SectionEnum.MP10)).toBeFalsy();
@@ -91,9 +94,9 @@ describe('Entity.Section.SectionFactory', () => {
 		});
 	});
 
-	describe("isEShop", () => {
-		
-		it("should return only on right section or group section", () => {
+	describe('isEShop', () => {
+
+		it('should return only on right section or group section', () => {
 			expect(SectionFactory.isEShop(SectionEnum.PRODUCT)).toBeFalsy();
 			expect(SectionFactory.isEShop(SectionEnum.MP1)).toBeFalsy();
 			expect(SectionFactory.isEShop(SectionEnum.MP10)).toBeFalsy();
@@ -110,9 +113,9 @@ describe('Entity.Section.SectionFactory', () => {
 		});
 	});
 
-	describe("isChecklist", () => {
-		
-		it("should return only on right section or group section", () => {
+	describe('isChecklist', () => {
+
+		it('should return only on right section or group section', () => {
 			expect(SectionFactory.isChecklist(SectionEnum.PRODUCT)).toBeFalsy();
 			expect(SectionFactory.isChecklist(SectionEnum.MP1)).toBeFalsy();
 			expect(SectionFactory.isChecklist(SectionEnum.MP10)).toBeFalsy();
@@ -129,9 +132,9 @@ describe('Entity.Section.SectionFactory', () => {
 		});
 	});
 
-	describe("getLabel", () => {
-		
-		it("should return localized string of section group", () => {
+	describe('getLabel', () => {
+
+		it('should return localized string of section group', () => {
 			expect(SectionFactory.getLabel(SectionEnum.PRODUCT).toObject()).toEqual({cs: 'Produkt', en: 'Product'});
 			expect(SectionFactory.getLabel(SectionEnum.MP1).toObject()).toEqual({cs: 'Produkt', en: 'Product'});
 			expect(SectionFactory.getLabel(SectionEnum.CUSTOMER).toObject()).toEqual({cs: 'Zákazník', en: 'Customer'});
@@ -147,9 +150,9 @@ describe('Entity.Section.SectionFactory', () => {
 		});
 	});
 
-	describe("getGroupSection", () => {
-		
-		it("should return group of specified Section", () => {
+	describe('getGroupSection', () => {
+
+		it('should return group of specified Section', () => {
 			expect(SectionFactory.getGroupSection(SectionEnum.PRODUCT)).toBe(SectionEnum.PRODUCT);
 			expect(SectionFactory.getGroupSection(SectionEnum.MP1)).toBe(SectionEnum.PRODUCT);
 			expect(SectionFactory.getGroupSection(SectionEnum.CUSTOMER)).toBe(SectionEnum.CUSTOMER);

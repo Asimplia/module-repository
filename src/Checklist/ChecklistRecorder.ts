@@ -2,7 +2,6 @@
 import mongoose = require('mongoose');
 import Checklist = require('../Entity/Checklist/Checklist');
 import List = require('../Entity/List');
-import ChecklistModel = require('../Definition/Checklist/ChecklistModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 import IChecklistDocument = require('../Definition/Checklist/IChecklistDocument');
 import CheckItemList = require('../Entity/Checklist/CheckItemList');
@@ -11,6 +10,9 @@ import Util = require('asimplia-util');
 import DateFactory = Util.DateTime.DateFactory;
 import Image = require('../Entity/Image/Image');
 import SectionEnum = require('../Entity/Section/SectionEnum');
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = ChecklistRecorder;
 class ChecklistRecorder {
@@ -40,7 +42,9 @@ class ChecklistRecorder {
 		this.documentExecutor.insert(entity, callback);
 	}
 
-	createProductChecklist(eShopId: number, name: LocalizedString, checkItemList: CheckItemList, callback: (e: Error, entity?: Checklist) => void) {
+	createProductChecklist(
+		eShopId: number, name: LocalizedString, checkItemList: CheckItemList, callback: (e: Error, entity?: Checklist) => void
+	) {
 		var checklist = new Checklist(
 			null,
 			eShopId,

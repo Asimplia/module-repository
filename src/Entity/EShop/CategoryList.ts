@@ -9,5 +9,4 @@ class CategoryList extends List<Category> {
 		var index = this.indexBy('Id');
 		return index[id];
 	}
-	
 }

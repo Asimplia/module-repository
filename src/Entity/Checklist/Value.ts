@@ -12,7 +12,7 @@ class Value implements IEntity {
 
 	get ValueType() { return this.valueType; }
 	get DateChecked() { return this.dateChecked; }
-	
+
 	constructor(
 		private valueType: ValueTypeEnum,
 		private dateChecked: Date

@@ -7,7 +7,7 @@ import ILocalizedStringObject = require('../Locale/ILocalizedStringObject');
 
 export = QuadrantDescription;
 class QuadrantDescription implements IEntity {
-	
+
 	get Quadrant() { return this.quadrant; }
 	get Description() { return this.description; }
 	get Icon() { return this.icon; }
@@ -23,9 +23,10 @@ class QuadrantDescription implements IEntity {
 	}
 
 	static toObject(entity: QuadrantDescription) {
+		var description: ILocalizedStringObject = entity.description.toObject();
 		return {
 			quadrant: QuadrantValueEnum[entity.quadrant],
-			description: entity.description.toObject(),
+			description: description,
 			icon: entity.icon
 		};
 	}

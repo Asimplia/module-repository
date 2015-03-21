@@ -1,14 +1,12 @@
 
 import SignalThreshold = require('../Entity/Matrix/SignalThreshold');
-import SectionEnum = require('../Entity/Section/SectionEnum');
 import mongoose = require('mongoose');
-import SignalThresholdModel = require('../Definition/Matrix/SignalThresholdModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 import List = require('../Entity/List');
 
 export = SignalThresholdRecorder;
 class SignalThresholdRecorder {
-	
+
 	private documentExecutor: DocumentExecutor;
 
 	static $inject = [

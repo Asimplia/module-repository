@@ -1,4 +1,4 @@
-﻿
+﻿/* tslint:disable */
 import LocalizedString = require('../Locale/LocalizedString');
 
 export = Factor;

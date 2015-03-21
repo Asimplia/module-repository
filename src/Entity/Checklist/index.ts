@@ -9,6 +9,7 @@ export import ChecklistFilter = require('./ChecklistFilter');
 export import IChecklistObject = require('./IChecklistObject');
 export import ICheckItemObject = require('./ICheckItemObject');
 export import IValueObject = require('./IValueObject');
+/* tslint:disable */
 Checklist;
 CheckItem;
 CheckItemList;

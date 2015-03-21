@@ -4,6 +4,9 @@ import IFeedLoadObject = require('../Entity/Feed/IFeedLoadObject');
 import Util = require('asimplia-util');
 import Manager = Util.ODBM.Repository.PostgreSql.Manager;
 import List = Util.ODBM.Entity.List;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = FeedLoadRecorder;
 class FeedLoadRecorder {
@@ -14,7 +17,8 @@ class FeedLoadRecorder {
 	];
 	constructor(
 		private connection: any,
-		private manager = new Manager<FeedLoad, IFeedLoadObject, List<FeedLoad>>(FeedLoad, List, connection)
+		private manager: Manager<FeedLoad, IFeedLoadObject, List<FeedLoad>>
+			= new Manager<FeedLoad, IFeedLoadObject, List<FeedLoad>>(FeedLoad, List, connection)
 	) {}
 
 	insert(feedLoad: FeedLoad, callback: (e: Error, feedLoad?: FeedLoad) => void) {

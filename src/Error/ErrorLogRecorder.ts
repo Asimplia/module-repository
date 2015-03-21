@@ -2,7 +2,6 @@
 import mongoose = require('mongoose');
 import ErrorLog = require('../Entity/Error/ErrorLog');
 import DocumentExecutor = require('../Util/DocumentExecutor');
-import ErrorLogModel = require('../Definition/Error/ErrorLogModel');
 
 export = ErrorLogRecorder;
 class ErrorLogRecorder {

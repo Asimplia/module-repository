@@ -29,8 +29,8 @@ class Signal implements IEntity {
 
 	static fromRow(o: any): Signal {
 		return new Signal(
-			EntityPreparer.intOrNull(o[Signal.TABLE_NAME + '.' + Signal.COLUMN_SIGNAL_ID]), 
-			Matrix.fromRow(o), 
+			EntityPreparer.intOrNull(o[Signal.TABLE_NAME + '.' + Signal.COLUMN_SIGNAL_ID]),
+			Matrix.fromRow(o),
 			EntityPreparer.date(o[Signal.TABLE_NAME + '.' + Signal.COLUMN_DATE_CREATED]),
 			EntityPreparer.intOrNull(o[Signal.TABLE_NAME + '.' + Signal.COLUMN_SITUATION_ID])
 		);
@@ -38,8 +38,8 @@ class Signal implements IEntity {
 
 	static fromObject(object: any): Signal {
 		return new Signal(
-			EntityPreparer.intOrNull(object.id), 
-			Matrix.fromObject(object), 
+			EntityPreparer.intOrNull(object.id),
+			Matrix.fromObject(object),
 			EntityPreparer.date(object.dateCreated),
 			EntityPreparer.intOrNull(object.situationId)
 		);

@@ -6,6 +6,7 @@ export import ChannelLoader = require('./ChannelLoader');
 export import CustomerLoader = require('./CustomerLoader');
 export import CategoryLoader = require('./CategoryLoader');
 export import CompanyLoader = require('./CompanyLoader');
+/* tslint:disable */
 EShopLoader;
 EShopRecorder;
 ProductLoader;

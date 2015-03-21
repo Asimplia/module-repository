@@ -3,8 +3,10 @@ import IProductTrafficObject = require('./IProductTrafficObject');
 import Util = require('asimplia-util');
 import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
 import Type = Util.ODBM.Mapping.Type;
-import Converter = Util.ODBM.Entity.Converter;
 import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = ProductTraffic;
 class ProductTraffic {
@@ -22,6 +24,6 @@ class ProductTraffic {
 		checkLabel: { $name: 'check_label', $type: new Type.String(Infinity) },
 		checkDescription: { $name: 'check_description', $type: new Type.String(Infinity) }
 	};
-	
+
 	constructor(private object: IProductTrafficObject) {}
 }

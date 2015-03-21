@@ -1,5 +1,4 @@
 
-import IEntity = require('../../IEntity');
 import IChecklistSourceSettingsObject = require('./IChecklistSourceSettingsObject');
 import IChecklistSourcesObject = require('./IChecklistSourcesObject');
 import EntityPreparer = require('../../EntityPreparer');
@@ -9,9 +8,12 @@ import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
 import Type = Util.ODBM.Mapping.Type;
 import Converter = Util.ODBM.Entity.Converter;
 import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = ChecklistSourceSettings;
-class ChecklistSourceSettings implements IEntity {
+class ChecklistSourceSettings {
 
 	static $entity: IEntityAnnotation = {
 		$dbs: DatabaseSystem.MONGO_DB,
@@ -41,7 +43,7 @@ class ChecklistSourceSettings implements IEntity {
 	get EShopId() { return this.object.eShopId; }
 	get Sources(): IChecklistSourcesObject { return this.object.sources; }
 	get ClosedAt() { return this.object.closedAt; }
-	set ClosedAt(value) { this.object.closedAt = value; }
+	set ClosedAt(value: Date) { this.object.closedAt = value; }
 
 	constructor(
 		private object: IChecklistSourceSettingsObject

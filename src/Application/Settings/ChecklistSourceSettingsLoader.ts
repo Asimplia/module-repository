@@ -5,6 +5,9 @@ import IChecklistSourceSettingsObject = require('../../Entity/Application/Settin
 import Util = require('asimplia-util');
 import Manager = Util.ODBM.Repository.MongoDB.Manager;
 import List = Util.ODBM.Entity.List;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = ChecklistSourceSettingsLoader;
 class ChecklistSourceSettingsLoader {
@@ -14,11 +17,14 @@ class ChecklistSourceSettingsLoader {
 	];
 	constructor(
 		private connection: mongoose.Mongoose,
-		private manager = new Manager<ChecklistSourceSettings, IChecklistSourceSettingsObject, List<ChecklistSourceSettings>>(ChecklistSourceSettings, List, connection)
+		private manager: Manager<ChecklistSourceSettings, IChecklistSourceSettingsObject, List<ChecklistSourceSettings>>
+			= new Manager<ChecklistSourceSettings, IChecklistSourceSettingsObject, List<ChecklistSourceSettings>>(
+				ChecklistSourceSettings, List, connection
+			)
 	) {}
 
 	getByEShopId(eShopId: number, callback: (e: Error, checklistSourceSettings?: ChecklistSourceSettings) => void) {
-		this.manager.Model.findOne({ "eShopId": eShopId }, (e, doc: mongoose.Document) => {
+		this.manager.Model.findOne({ eShopId: eShopId }, (e: Error, doc: mongoose.Document) => {
 			if (e) return callback(e);
 			if (!doc) return callback(null, null);
 			callback(null, this.manager.Converter.fromRow(doc.toObject()));

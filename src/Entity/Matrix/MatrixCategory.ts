@@ -1,7 +1,5 @@
 
-import IEntity = require('../IEntity');
 import Matrix = require('./Matrix');
-import moment = require('moment');
 import Category = require('../EShop/Category');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 import QuadrantValueFactory = require('./QuadrantValueFactory');

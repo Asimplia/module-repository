@@ -8,6 +8,7 @@ export import SituationLoader = require('./SituationLoader');
 export import SignalThresholdLoader = require('./SignalThresholdLoader');
 export import SignalThresholdRecorder = require('./SignalThresholdRecorder');
 export import MatrixDescriptionLoader = require('./MatrixDescriptionLoader');
+/* tslint:disable */
 MatrixLoader;
 MatrixRecorder;
 SignalRecorder;

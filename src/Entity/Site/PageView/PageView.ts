@@ -3,12 +3,14 @@ import IPageViewObject = require('./IPageViewObject');
 import Util = require('asimplia-util');
 import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
 import Type = Util.ODBM.Mapping.Type;
-import Converter = Util.ODBM.Entity.Converter;
 import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = PageView;
 class PageView {
-	
+
 	static $entity: IEntityAnnotation = {
 		$dbs: DatabaseSystem.POSTGRE_SQL,
 		$name: 'feed.ga_pageview',
@@ -20,7 +22,7 @@ class PageView {
 		entrances: { $name: 'entrances', $type: new Type.Integer(8, true) },
 		viewedAt: { $name: 'viewedat', $type: new Type.Date() }
 	};
-	
+
 	get Id() { return this.object.id; }
 
 	constructor(private object: IPageViewObject) {}

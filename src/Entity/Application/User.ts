@@ -4,8 +4,8 @@ import List = require('../List');
 import Authenticate = require('./Authenticate');
 import AuthTypeEnum = require('./AuthTypeEnum');
 import AuthHash = require('./AuthHash');
-import LanguageEnum = require('../Locale/LanguageEnum')
-import Language = require('../Locale/Language')
+import LanguageEnum = require('../Locale/LanguageEnum');
+import Language = require('../Locale/Language');
 import EntityPreparer = require('../EntityPreparer');
 
 export = User;
@@ -22,16 +22,16 @@ class User implements IEntity {
 	get CompanyId() { return this.companyId; }
 	get Email() { return this.email; }
 	get PhoneNumber() { return this.phoneNumber; }
-	set Id(value) { this.id = value; }
-	set FirstName(value) { this.firstName = value; }
-	set LastName(value) { this.lastName = value; }
-	set AuthenticateList(value) { this.authenticateList = value; }
-	set AuthHashList(value) { this.authHashList = value; }
-	set EShopId(value) { this.eShopId = value; }
-	set CompanyId(value) { this.companyId = value; }
-	set Email(value) { this.email = value; }
-	set PhoneNumber(value) { this.phoneNumber = value; }
-	set ActiveLanguage(value) { this.activeLanguage = value; }
+	set Id(value: number) { this.id = value; }
+	set FirstName(value: string) { this.firstName = value; }
+	set LastName(value: string) { this.lastName = value; }
+	set AuthenticateList(value: List<Authenticate>) { this.authenticateList = value; }
+	set AuthHashList(value: List<AuthHash>) { this.authHashList = value; }
+	set EShopId(value: number) { this.eShopId = value; }
+	set CompanyId(value: number) { this.companyId = value; }
+	set Email(value: string) { this.email = value; }
+	set PhoneNumber(value: string) { this.phoneNumber = value; }
+	set ActiveLanguage(value: LanguageEnum) { this.activeLanguage = value; }
 
 	constructor(
 		private id: number,

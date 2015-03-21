@@ -1,4 +1,4 @@
-﻿
+﻿/* tslint:disable */
 export = StatusDefinition;
 var StatusDefinition = {
 	dateCreated: Date,
