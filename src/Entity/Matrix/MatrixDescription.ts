@@ -2,7 +2,6 @@
 import IEntity = require('../IEntity');
 import List = require('../List');
 import LocalizedString = require('../Locale/LocalizedString');
-import Language = require('../Locale/Language');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 import QuadrantDescription = require('./QuadrantDescription');
 import SectionEnum = require('../Section/SectionEnum');
@@ -15,7 +14,7 @@ class MatrixDescription implements IEntity {
 	get Section() { return this.section; }
 	get Description() { return this.description; }
 	get Icon() { return this.icon; }
-	
+
 	constructor(
 		private section: SectionEnum,
 		private icon: string,
@@ -34,10 +33,11 @@ class MatrixDescription implements IEntity {
 	}
 
 	static toObject(entity: MatrixDescription) {
+		var description: ILocalizedStringObject = entity.description.toObject();
 		return {
 			section: SectionEnum[entity.section],
 			icon: entity.icon,
-			description: entity.description.toObject(),
+			description: description,
 			quadrantDescriptions: entity.quadrantDescriptionList.toArray(QuadrantDescription.toObject)
 		};
 	}

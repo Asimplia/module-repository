@@ -2,12 +2,11 @@
 import mongoose = require('mongoose');
 import Company = require('../Entity/Application/Company');
 import List = require('../Entity/List');
-import CompanyModel = require('../Definition/Application/CompanyModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = CompanyRecorder;
 class CompanyRecorder {
-	
+
 	private documentExecutor: DocumentExecutor;
 
 	static $inject = [

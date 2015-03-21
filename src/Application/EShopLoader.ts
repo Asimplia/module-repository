@@ -1,8 +1,6 @@
 
 import mongoose = require('mongoose');
 import EShop = require('../Entity/Application/EShop');
-import AuthTypeEnum = require('../Entity/Application/AuthTypeEnum');
-import EShopModel = require('../Definition/Application/EShopModel');
 import List = require('../Entity/List');
 
 export = EShopLoader;
@@ -16,7 +14,7 @@ class EShopLoader {
 	) {}
 
 	getById(id: number, callback: (e: Error, eShop?: EShop) => void) {
-		this.model.findOne({ "id": id }, (e, object: any) => {
+		this.model.findOne({ 'id': id }, (e: Error, object: any) => {
 			if (e) {
 				callback(e);
 				return;
@@ -30,7 +28,7 @@ class EShopLoader {
 	}
 
 	getCount(callback: (e: Error, count?: number) => void): void {
-		this.model.count({}, (e, count: number) => {
+		this.model.count({}, (e: Error, count: number) => {
 			if (e) {
 				callback(e);
 				return;
@@ -40,7 +38,7 @@ class EShopLoader {
 	}
 
 	getMaxDateCreated(callback: (e: Error, maxDateCreated?: Date) => void) {
-		this.model.findOne({}).sort({ 'dateCreated': -1 }).exec((e, object: any) => {
+		this.model.findOne({}).sort({ dateCreated: -1 }).exec((e: Error, object: any) => {
 			if (e) {
 				callback(e);
 				return;

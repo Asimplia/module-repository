@@ -9,5 +9,4 @@ class ChannelList extends List<Channel> {
 		var index = this.indexBy('Id');
 		return index[id];
 	}
-	
 }

@@ -2,14 +2,13 @@
 import mongoose = require('mongoose');
 import Channel = require('../Entity/Application/Channel');
 import List = require('../Entity/List');
-import ChannelModel = require('../Definition/Application/ChannelModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = ChannelRecorder;
 class ChannelRecorder {
 
 	private documentExecutor: DocumentExecutor;
-	
+
 	static $inject = [
 		'Definition.Application.ChannelModel'
 	];

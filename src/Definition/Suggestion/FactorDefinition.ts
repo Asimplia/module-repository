@@ -1,4 +1,4 @@
-﻿
+﻿/* tslint:disable */
 import Factor = require('../Factor/Factor');
 
 export = FactorDefinition;

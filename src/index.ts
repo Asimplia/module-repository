@@ -17,7 +17,8 @@ export import Site = require('./Site/index');
 export import Checklist = require('./Checklist/index');
 export import Feed = require('./Feed/index');
 export import IntegrationPreparer = require('../tests/IntegrationPreparer');
-
+/* tslint:disable */
+Util;
 ConnectionDispatcher;
 Suggestion;
 Factor;
@@ -34,20 +35,23 @@ Site;
 Checklist;
 Feed;
 IntegrationPreparer;
+/* tslint:enable */
 
-var services = () => {
+var getServices = () => {
+	var services: any;
 	if (process.env.NODE_ENV === 'integration') {
-		var services = require('./config/services.integration');
+		services = require('./config/services.integration');
 	} else {
-		var services = require('./config/services');
+		services = require('./config/services');
 	}
 	return services;
 };
 
-var _di;
+var di: any;
 export function getDependencyInjection(): DependencyInjection {
-	if (!_di) {
-		_di = new DependencyInjection('asimplia-repository', services());
+	'use strict';
+	if (!di) {
+		di = new DependencyInjection('asimplia-repository', getServices());
 	}
-	return _di;
+	return di;
 }

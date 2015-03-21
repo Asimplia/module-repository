@@ -9,12 +9,12 @@ import _ = require('underscore');
 
 export = EntityPreparer;
 class EntityPreparer {
-	
+
 	static string(value: any): string {
 		if (EntityPreparer.isNull(value)) {
 			throw new NotAllowedNullError(ScriptTypeEnum.STRING);
 		}
-		return ""+value;
+		return '' + value;
 	}
 
 	static stringOrNull(value: any): string {
@@ -61,11 +61,10 @@ class EntityPreparer {
 		}
 		return EntityPreparer.date(value);
 	}
-	
+
 	static boolean(value: any): boolean {
 		if (EntityPreparer.isNull(value)) {
 			throw new NotAllowedNullError(ScriptTypeEnum.BOOLEAN);
-			return null;
 		}
 		return !!value;
 	}
@@ -76,12 +75,12 @@ class EntityPreparer {
 		}
 		return EntityPreparer.boolean(value);
 	}
-	
+
 	static int(value: any): number {
 		if (EntityPreparer.isNull(value)) {
 			throw new NotAllowedNullError(ScriptTypeEnum.INT);
 		}
-		return parseInt(value);
+		return parseInt(value, 10);
 	}
 
 	static intOrNull(value: any): number {
@@ -90,7 +89,7 @@ class EntityPreparer {
 		}
 		return EntityPreparer.int(value);
 	}
-	
+
 	static float(value: any): number {
 		if (EntityPreparer.isNull(value)) {
 			throw new NotAllowedNullError(ScriptTypeEnum.FLOAT);
@@ -127,8 +126,11 @@ class EntityPreparer {
 		var columns = [];
 		for (var i in Object.keys(EntityStatic)) {
 			var constantName = Object.keys(EntityStatic)[i];
-			if(constantName.substring(0, 7) === 'COLUMN_') {
-				columns.push(EntityPreparer.getTableColumnByConstantName(EntityStatic, constantName) + ' AS "' + EntityPreparer.getTableColumnByConstantName(EntityStatic, constantName) + '"');
+			if (constantName.substring(0, 7) === 'COLUMN_') {
+				columns.push(
+					EntityPreparer.getTableColumnByConstantName(EntityStatic, constantName)
+					+ ' AS "' + EntityPreparer.getTableColumnByConstantName(EntityStatic, constantName) + '"'
+				);
 			}
 		}
 		return columns;
@@ -138,7 +140,7 @@ class EntityPreparer {
 		var columns = [];
 		for (var i in Object.keys(EntityStatic)) {
 			var constantName = Object.keys(EntityStatic)[i];
-			if(constantName.substring(0, 7) === 'COLUMN_') {
+			if (constantName.substring(0, 7) === 'COLUMN_') {
 				columns.push(EntityPreparer.getTableColumnByConstantName(EntityStatic, constantName));
 			}
 		}
@@ -149,7 +151,7 @@ class EntityPreparer {
 		var columns = [];
 		for (var i in Object.keys(EntityStatic)) {
 			var constantName = Object.keys(EntityStatic)[i];
-			if(constantName.substring(0, 7) === 'COLUMN_') {
+			if (constantName.substring(0, 7) === 'COLUMN_') {
 				columns.push(EntityStatic[constantName]);
 			}
 		}
@@ -160,12 +162,13 @@ class EntityPreparer {
 		var keys = [];
 		for (var i in Object.keys(EntityStatic)) {
 			var constantName = Object.keys(EntityStatic)[i];
-			if(constantName.substring(0, 7) === 'COLUMN_') {
+			if (constantName.substring(0, 7) === 'COLUMN_') {
+				var key: string;
 				if (EntityPreparer.isIdColumn(EntityStatic, constantName)) {
-					var key = 'id';
+					key = 'id';
 				} else {
 					var underscoredKeyName = constantName.substring(7);
-					var key = EntityPreparer.getCammelCaseByUnderscore(underscoredKeyName);
+					key = EntityPreparer.getCammelCaseByUnderscore(underscoredKeyName);
 				}
 				keys.push(key);
 			}
@@ -188,14 +191,14 @@ class EntityPreparer {
 	static getTableColumnByKey(EntityStatic: ITableEntityStatic, key: string): string {
 		for (var i in Object.keys(EntityStatic)) {
 			var constantName = Object.keys(EntityStatic)[i];
-			if(constantName.substring(0, 7) === 'COLUMN_') {
+			if (constantName.substring(0, 7) === 'COLUMN_') {
 				var underscoredKeyName = constantName.substring(7);
 				var cammeledKeyName = EntityPreparer.getCammelCaseByUnderscore(underscoredKeyName);
 				if (
-					cammeledKeyName == key 
+					cammeledKeyName == key
 					|| (key == 'id' && EntityPreparer.isIdColumn(EntityStatic, constantName))
 				) {
-					return EntityPreparer.getTableColumnByConstantName(EntityStatic, constantName)
+					return EntityPreparer.getTableColumnByConstantName(EntityStatic, constantName);
 				}
 			}
 		}
@@ -210,8 +213,8 @@ class EntityPreparer {
 		return EntityStatic.TABLE_NAME + '.' + plainColumn;
 	}
 
-	static getCammelCaseByUnderscore(underscored): string {
-		return underscored.toLowerCase().replace(/[_]([a-z0-9])/g, function (g) { return g[1].toUpperCase(); })
+	static getCammelCaseByUnderscore(underscored: string): string {
+		return underscored.toLowerCase().replace(/[_]([a-z0-9])/g, function (g: string) { return g[1].toUpperCase(); });
 	}
 
 	static now() {

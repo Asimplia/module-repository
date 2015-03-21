@@ -3,7 +3,7 @@ import ServiceTypeEnum = require('./ServiceTypeEnum');
 
 export = ServiceTypeFactory;
 class ServiceTypeFactory {
-	
+
 	static createServiceTypeEnum(serviceType: string) {
 		switch (serviceType) {
 			case ServiceTypeEnum[ServiceTypeEnum.GOOGLE_ANALYTICS]:

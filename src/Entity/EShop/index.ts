@@ -8,6 +8,7 @@ export import Product = require('./Product');
 export import ProductList = require('./ProductList');
 export import Category = require('./Category');
 export import CategoryList = require('./CategoryList');
+/* tslint:disable */
 EShop;
 Channel;
 ChannelList;

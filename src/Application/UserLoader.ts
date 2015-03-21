@@ -2,7 +2,6 @@
 import mongoose = require('mongoose');
 import User = require('../Entity/Application/User');
 import AuthTypeEnum = require('../Entity/Application/AuthTypeEnum');
-import UserModel = require('../Definition/Application/UserModel');
 
 export = UserLoader;
 class UserLoader {
@@ -15,7 +14,11 @@ class UserLoader {
 	) {}
 
 	getByCredentials(identity: string, authType: AuthTypeEnum, callback: (e: Error, user?: User) => void) {
-		this.model.findOne({ "authenticates.identity": identity, "authenticates.authType": AuthTypeEnum[authType] }, (e, userObject: mongoose.Document) => {
+		var conditions = {
+			'authenticates.identity': identity,
+			'authenticates.authType': AuthTypeEnum[authType]
+		};
+		this.model.findOne(conditions, (e: Error, userObject: mongoose.Document) => {
 			if (e) return callback(e);
 			if (!userObject) {
 				return callback(null, null);
@@ -25,7 +28,7 @@ class UserLoader {
 	}
 
 	getActiveBySessionId(sessionId: string, callback: (e: Error, user?: User) => void) {
-		this.model.findOne({ "authHashes.sessionId": sessionId, "authHashes.active": true }, (e, userObject: mongoose.Document) => {
+		this.model.findOne({ 'authHashes.sessionId': sessionId, 'authHashes.active': true }, (e: Error, userObject: mongoose.Document) => {
 			if (e) return callback(e);
 			if (!userObject) {
 				return callback(null, null);
@@ -35,7 +38,7 @@ class UserLoader {
 	}
 
 	getActiveByAuthHash(authHash: string, callback: (e: Error, user?: User) => void) {
-		this.model.findOne({ "authHashes.authHash": authHash, "authHashes.active": true }, (e, userObject: mongoose.Document) => {
+		this.model.findOne({ 'authHashes.authHash': authHash, 'authHashes.active': true }, (e: Error, userObject: mongoose.Document) => {
 			if (e) return callback(e);
 			if (!userObject) {
 				return callback(null, null);
@@ -45,7 +48,7 @@ class UserLoader {
 	}
 
 	getCount(callback: (e: Error, count?: number) => void): void {
-		this.model.count({}, (e, count: number) => {
+		this.model.count({}, (e: Error, count: number) => {
 			if (e) return callback(e);
 			callback(null, count);
 		});

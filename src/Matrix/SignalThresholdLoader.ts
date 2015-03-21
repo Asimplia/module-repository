@@ -3,7 +3,6 @@ import SignalThreshold = require('../Entity/Matrix/SignalThreshold');
 import List = require('../Entity/List');
 import SectionEnum = require('../Entity/Section/SectionEnum');
 import mongoose = require('mongoose');
-import SignalThresholdModel = require('../Definition/Matrix/SignalThresholdModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = SignalThresholdLoader;
@@ -36,7 +35,7 @@ class SignalThresholdLoader {
 	}
 
 	getList(callback: (e: Error, signalThresholdList?: List<SignalThreshold>) => void) {
-		this.model.find({}, null, { sort: 'section' }, (e, thresholds: mongoose.Document[]) => {
+		this.model.find({}, null, { sort: 'section' }, (e: Error, thresholds: mongoose.Document[]) => {
 			if (e) {
 				return callback(e);
 			}
@@ -47,7 +46,7 @@ class SignalThresholdLoader {
 	}
 
 	getMaxDateValid(callback: (e: Error, maxDateValid?: Date) => void) {
-		this.model.findOne({}).sort({ 'dateValid': -1 }).exec((e, object: any) => {
+		this.model.findOne({}).sort({ 'dateValid': -1 }).exec((e: Error, object: any) => {
 			if (e) {
 				callback(e);
 				return;

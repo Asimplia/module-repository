@@ -15,7 +15,7 @@ class MatrixType implements IEntity {
 	get Section(): SectionEnum { return this.section; }
 	get Description(): string { return this.description; }
 	get DateCreated(): Date { return this.dateCreated; }
-	
+
 	constructor(
 		private section: SectionEnum,
 		private description: string,

@@ -20,7 +20,7 @@ class OrderProcessRecord implements IEntity {
 	public static COLUMN_BROWSER_VERSION = 'browserVersion';
 	public static COLUMN_OPERATING_SYSTEM = 'operatingSystem';
 	public static COLUMN_OPERATING_SYSTEM_VERSION = 'operatingSystemVersion';
-	
+
 	constructor(
 		private id: number,
 		private eShopId: number,

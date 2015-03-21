@@ -1,5 +1,4 @@
 
-import Repository = require('../index');
 import EShop = require('../Entity/EShop/EShop');
 import List = require('../Entity/List');
 import EntityPreparer = require('../Entity/EntityPreparer');
@@ -7,7 +6,7 @@ import SqlExecutor = require('../Util/SqlExecutor');
 
 export = EShopLoader;
 class EShopLoader {
-	
+
 	private sqlExecutor: SqlExecutor;
 
 	static $inject = [
@@ -21,8 +20,8 @@ class EShopLoader {
 
 	getList(callback: (e: Error, eShopList: List<EShop>) => void) {
 		this.connection.query(
-			'SELECT '+EntityPreparer.getColumnsAsPrefixedAlias(EShop).join(', ')+' FROM '+EShop.TABLE_NAME+' ', 
-			[], (e, result) => {
+			'SELECT ' + EntityPreparer.getColumnsAsPrefixedAlias(EShop).join(', ') + ' FROM ' + EShop.TABLE_NAME + ' ',
+			[], (e: Error, result: any) => {
 			this.createListByResult(e, result, callback);
 		});
 	}
@@ -31,13 +30,13 @@ class EShopLoader {
 		var where = ['TRUE'];
 		var parameters = [];
 		if (createdDateFrom) {
-			where.push(EShop.COLUMN_DATE_CREATED+' > $1::timestamp');
+			where.push(EShop.COLUMN_DATE_CREATED + ' > $1::timestamp');
 			parameters.push(createdDateFrom);
 		}
-		var sql = 'SELECT '+EntityPreparer.getColumnsAsPrefixedAlias(EShop).join(', ')+' '
-			+' FROM '+EShop.TABLE_NAME+' '
-			+' WHERE '+where.join(' AND ');
-		this.connection.query(sql, parameters, (e, result) => {
+		var sql = 'SELECT ' + EntityPreparer.getColumnsAsPrefixedAlias(EShop).join(', ') + ' '
+			+ ' FROM ' + EShop.TABLE_NAME + ' '
+			+ ' WHERE ' + where.join(' AND ');
+		this.connection.query(sql, parameters, (e: Error, result: any) => {
 			this.createListByResult(e, result, callback);
 		});
 	}
@@ -49,7 +48,7 @@ class EShopLoader {
 			return;
 		}
 		var list = new List<EShop>();
-		result.rows.forEach((row) => {
+		result.rows.forEach((row: any) => {
 			var record = EShop.fromRow(row);
 			list.push(record);
 		});

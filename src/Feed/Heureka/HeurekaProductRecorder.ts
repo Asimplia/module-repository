@@ -4,6 +4,9 @@ import IHeurekaProductObject = require('../../Entity/Feed/Heureka/IHeurekaProduc
 import Util = require('asimplia-util');
 import List = Util.ODBM.Entity.List;
 import Manager = Util.ODBM.Repository.PostgreSql.Manager;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = HeurekaProductRecorder;
 class HeurekaProductRecorder {
@@ -14,7 +17,8 @@ class HeurekaProductRecorder {
 	];
 	constructor(
 		private connection: any,
-		private manager = new Manager<HeurekaProduct, IHeurekaProductObject, List<HeurekaProduct>>(HeurekaProduct, List, connection)
+		private manager: Manager<HeurekaProduct, IHeurekaProductObject, List<HeurekaProduct>>
+			= new Manager<HeurekaProduct, IHeurekaProductObject, List<HeurekaProduct>>(HeurekaProduct, List, connection)
 	) {}
 
 	insertList(heurekaProductList: List<HeurekaProduct>, callback: (e: Error, heurekaProductList?: List<HeurekaProduct>) => void) {

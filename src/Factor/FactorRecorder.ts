@@ -1,8 +1,6 @@
 ﻿
 import Factor = require('../Entity/Factor/Factor');
-import List = require('../Entity/List');
 import mongoose = require('mongoose');
-import FactorModel = require('../Definition/Factor/FactorModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = FactorRecorder;

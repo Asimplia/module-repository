@@ -4,6 +4,9 @@ import Util = require('asimplia-util');
 import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
 import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
 import Type = Util.ODBM.Mapping.Type;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = HeurekaDelivery;
 class HeurekaDelivery {

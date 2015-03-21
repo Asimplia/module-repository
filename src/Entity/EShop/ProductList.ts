@@ -9,5 +9,4 @@ class ProductList extends List<Product> {
 		var index = this.indexBy('Id');
 		return index[id];
 	}
-	
 }

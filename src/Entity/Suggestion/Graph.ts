@@ -10,7 +10,7 @@ class Graph implements IEntity {
 
 	static fromObject(object: any): Graph {
 		return new Graph(
-			object.type, 
+			object.type,
 			object.data
 		);
 	}

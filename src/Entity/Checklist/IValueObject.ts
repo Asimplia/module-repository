@@ -1,5 +1,4 @@
 
-
 export = IValueObject;
 interface IValueObject {
 	valueType: string;

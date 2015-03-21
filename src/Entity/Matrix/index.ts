@@ -15,6 +15,7 @@ export import ColumnEnum = require('./ColumnEnum');
 export import ColumnFactory = require('./ColumnFactory');
 export import QuadrantDescription = require('./QuadrantDescription');
 export import MatrixDescription = require('./MatrixDescription');
+/* tslint:disable */
 QuadrantValueEnum;
 QuadrantValueFactory;
 Signal;

@@ -2,7 +2,6 @@
 import mongoose = require('mongoose');
 import User = require('../Entity/Application/User');
 import List = require('../Entity/List');
-import UserModel = require('../Definition/Application/UserModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 import AuthHash = require('../Entity/Application/AuthHash');
 import UserCallback = require('./UserCallback');

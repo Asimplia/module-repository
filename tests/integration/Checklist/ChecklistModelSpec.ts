@@ -1,5 +1,5 @@
 
-import Repository = require("../../../src/index");
+import Repository = require('../../../src/index');
 import IntegrationPreparer = require('../../IntegrationPreparer');
 import ChecklistLoader = Repository.Checklist.ChecklistLoader;
 import ChecklistRecorder = Repository.Checklist.ChecklistRecorder;
@@ -7,23 +7,26 @@ import Checklist = Repository.Entity.Checklist.Checklist;
 import List = Repository.Entity.List;
 import Util = require('asimplia-util');
 import DateFactory = Util.DateTime.DateFactory;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 describe('ChecklistModel', () => {
 	var di = Repository.getDependencyInjection();
 	var i: IntegrationPreparer = di.service('tests.IntegrationPreparer');
-	beforeEach((done) => {
+	beforeEach((done: Function) => {
 		i.startup(done);
 	});
 
-	describe("load recorded checklist", () => {
+	describe('load recorded checklist', () => {
 		var checklistModel = di.service('Definition.Checklist.ChecklistModel');
 		var checklistRecorder = new ChecklistRecorder(checklistModel, new DateFactory);
 		var checklistLoader = new ChecklistLoader(checklistModel);
-		beforeEach((done) => {
+		beforeEach((done: Function) => {
 			i.setup(done);
 		});
 
-		it("should return same instance", (done) => {
+		it('should return same instance', (done: Function) => {
 			var checklist = Checklist.fromObject({
 				id: null,
 				eShopId: 1,
@@ -53,7 +56,7 @@ describe('ChecklistModel', () => {
 			});
 		});
 
-		it("should return same instance by insert or update list", (done) => {
+		it('should return same instance by insert or update list', (done: Function) => {
 			var checklistList = new List<Checklist>([
 				Checklist.fromObject({
 					id: null,

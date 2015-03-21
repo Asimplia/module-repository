@@ -26,13 +26,13 @@ class Situation implements IEntity {
 	get DateCreated() { return this.dateCreated; }
 	get SignalList() { return this.signalList; }
 	get DateSuggestionResultCreated() { return this.dateSuggestionResultCreated; }
-	set DateSuggestionResultCreated(value) { this.dateSuggestionResultCreated = value; }
+	set DateSuggestionResultCreated(value: Date) { this.dateSuggestionResultCreated = value; }
 	get DateSuggestionResultProcessed() { return this.dateSuggestionResultProcessed; }
-	set DateSuggestionResultProcessed(value) { this.dateSuggestionResultProcessed = value; }
+	set DateSuggestionResultProcessed(value: Date) { this.dateSuggestionResultProcessed = value; }
 	get DateChecklistCreated() { return this.dateChecklistCreated; }
-	set DateChecklistCreated(value) { this.dateChecklistCreated = value; }
+	set DateChecklistCreated(value: Date) { this.dateChecklistCreated = value; }
 	get DateChecklistProcessed() { return this.dateChecklistProcessed; }
-	set DateChecklistProcessed(value) { this.dateChecklistProcessed = value; }
+	set DateChecklistProcessed(value: Date) { this.dateChecklistProcessed = value; }
 	get EShopId() {
 		return this.signalList.first().Matrix.EShopId;
 	}
@@ -70,7 +70,7 @@ class Situation implements IEntity {
 	}
 
 	constructor(
-		private id,
+		private id: number,
 		private signalList: List<Signal>,
 		private dateCreated: Date,
 		private dateSuggestionResultCreated: Date,

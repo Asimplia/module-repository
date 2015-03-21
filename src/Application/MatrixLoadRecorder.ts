@@ -2,12 +2,11 @@
 import mongoose = require('mongoose');
 import MatrixLoad = require('../Entity/Application/MatrixLoad');
 import List = require('../Entity/List');
-import MatrixLoadModel = require('../Definition/Application/MatrixLoadModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = MatrixLoadRecorder;
 class MatrixLoadRecorder {
-	
+
 	private documentExecutor: DocumentExecutor;
 
 	static $inject = [

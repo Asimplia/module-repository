@@ -2,7 +2,6 @@
 import Factor = require('../Entity/Factor/Factor');
 import List = require('../Entity/List');
 import mongoose = require('mongoose');
-import FactorModel = require('../Definition/Factor/FactorModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = FactorLoader;
@@ -20,7 +19,7 @@ class FactorLoader {
 	}
 
 	getList(callback: (e: Error, factorList?: List<Factor>) => void) {
-		this.model.find({}, null, { sort: 'id' }, (e, factors: mongoose.Document[]) => {
+		this.model.find({}, null, { sort: 'id' }, (e: Error, factors: mongoose.Document[]) => {
 			if (e) {
 				return callback(e);
 			}

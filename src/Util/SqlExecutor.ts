@@ -1,4 +1,4 @@
-
+/* tslint:disable */
 import EntityPreparer = require('../Entity/EntityPreparer');
 import List = require('../Entity/List');
 import IEntity = require('../Entity/IEntity');
@@ -7,6 +7,7 @@ import _ = require('underscore');
 import moment = require('moment');
 
 export = SqlExecutor;
+/** @deprecated */
 class SqlExecutor {
 
 	constructor(

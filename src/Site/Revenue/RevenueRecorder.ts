@@ -4,17 +4,21 @@ import RevenueList = require('../../Entity/Site/Revenue/RevenueList');
 import IRevenueObject = require('../../Entity/Site/Revenue/IRevenueObject');
 import Util = require('asimplia-util');
 import Manager = Util.ODBM.Repository.PostgreSql.Manager;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = RevenueRecorder;
 class RevenueRecorder {
-	
+
 	static $service = 'Site.Revenue.RevenueRecorder';
 	static $inject = [
 		'connection.postgres'
 	];
 	constructor(
 		private connection: any,
-		private manager = new Manager<Revenue, IRevenueObject, RevenueList>(Revenue, RevenueList, connection)
+		private manager: Manager<Revenue, IRevenueObject, RevenueList>
+			= new Manager<Revenue, IRevenueObject, RevenueList>(Revenue, RevenueList, connection)
 	) {}
 
 	insertList(revenueList: RevenueList, callback: (e: Error, revenueList?: RevenueList) => void) {

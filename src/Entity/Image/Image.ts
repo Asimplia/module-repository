@@ -9,7 +9,7 @@ class Image implements IEntity {
 	constructor(
 		private id: string
 	) {}
-	
+
 	get Id() { return this.id; }
 
 	static fromObject(object: IImageObject) {

@@ -15,6 +15,7 @@ export import Category = require('./Category');
 export import Channel = require('./Channel');
 export import MatrixLoad = require('./MatrixLoad');
 export import Settings = require('./Settings/index');
+/* tslint:disable */
 User;
 EShop;
 Company;

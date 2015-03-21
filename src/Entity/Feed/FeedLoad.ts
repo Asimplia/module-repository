@@ -6,6 +6,9 @@ import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
 import Type = Util.ODBM.Mapping.Type;
 import Converter = Util.ODBM.Entity.Converter;
 import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = FeedLoad;
 class FeedLoad implements IIdentificableEntity {
@@ -19,7 +22,7 @@ class FeedLoad implements IIdentificableEntity {
 		feedCode: { $name: 'feedcode', $type: new Type.String(25) }
 	};
 	private static converter = new Converter<FeedLoad, IFeedLoadObject>(FeedLoad);
-	
+
 	get Id() { return this.object.id; }
 
 	constructor(private object: IFeedLoadObject) {}

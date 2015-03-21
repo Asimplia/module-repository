@@ -4,7 +4,7 @@ import SqlExecutor = require('../Util/SqlExecutor');
 
 export = EShopRecorder;
 class EShopRecorder {
-	
+
 	private sqlExecutor: SqlExecutor;
 
 	static $service = 'EShop.EShopRecorder';

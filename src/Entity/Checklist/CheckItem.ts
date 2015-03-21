@@ -7,7 +7,7 @@ import Value = require('./Value');
 
 export = CheckItem;
 class CheckItem implements IEntity {
-	
+
 	get Label() { return this.label; }
 	get ValueList() { return this.valueList; }
 

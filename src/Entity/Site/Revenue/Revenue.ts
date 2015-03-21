@@ -3,12 +3,14 @@ import IRevenueObject = require('./IRevenueObject');
 import Util = require('asimplia-util');
 import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
 import Type = Util.ODBM.Mapping.Type;
-import Converter = Util.ODBM.Entity.Converter;
 import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = Revenue;
 class Revenue {
-	
+
 	static $entity: IEntityAnnotation = {
 		$dbs: DatabaseSystem.POSTGRE_SQL,
 		$name: 'feed.ga_revenue',
@@ -21,7 +23,7 @@ class Revenue {
 		itemRevenue: { $name: 'itemrevenue', $type: new Type.Float(4, true) },
 		receivedAt: { $name: 'receivedat', $type: new Type.Date() }
 	};
-	
+
 	get Id() { return this.object.id; }
 
 	constructor(private object: IRevenueObject) {}

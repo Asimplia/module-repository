@@ -1,12 +1,14 @@
 
-import Repository = require("../../../../src/index");
+import Repository = require('../../../../src/index');
 import Checklist = Repository.Entity.Checklist.Checklist;
 import SectionEnum = Repository.Entity.Section.SectionEnum;
+/* tslint:disable */
 Repository;
+/* tslint:enable */
 
 describe('Entity.Checklist.Checklist', () => {
-	describe("fromObject", () => {
-		it("should return instance with section enum like integer", () => {
+	describe('fromObject', () => {
+		it('should return instance with section enum like integer', () => {
 			var checklist = Checklist.fromObject({
 				id: '1',
 				eShopId: 1,

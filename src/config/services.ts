@@ -7,7 +7,6 @@ var object = (object: any) => {
 	};
 };
 
-export = services;
 var services: { [name: string]: any } = {
 	'ConnectionDispatcher': require('../ConnectionDispatcher'),
 	'Definition.Application.CategoryModel': object(require('../Definition/Application/CategoryModel')),
@@ -90,8 +89,8 @@ var services: { [name: string]: any } = {
 		) => {
 			return new Util.AOP.AspectInterception('asimplia-repository', {
 				'Util:DI.ServiceAutoload': serviceAutoload,
-				'Util:Env.EnvConfigOverrider': envConfigOverrider,
-			})
+				'Util:Env.EnvConfigOverrider': envConfigOverrider
+			});
 		}
 	},
 	'Util:AOP.AnnotationAspects': {
@@ -111,6 +110,7 @@ var services: { [name: string]: any } = {
 	'Util:DateTime.DateFactory': Util.DateTime.DateFactory,
 	'Util:Env.EnvConfigOverrider': {
 		$class: Util.Env.EnvConfigOverrider,
-		$args: [__dirname + '/../../..'],
-	},
+		$args: [__dirname + '/../../..']
+	}
 };
+export = services;

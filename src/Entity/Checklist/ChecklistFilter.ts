@@ -8,18 +8,18 @@ class ChecklistFilter extends EntityFilter<Checklist> implements IEntityFilter {
 
 	private orderByDateCreated: number;
 
-	set OrderByDateCreated(value) { this.orderByDateCreated = value; }
+	set OrderByDateCreated(value: number) { this.orderByDateCreated = value; }
 	get OrderByDateCreated() { return this.orderByDateCreated; }
 
 	static fromObject(object: any) {
 		var filter = new ChecklistFilter();
-		typeof object.orderByDateCreated !== 'undefined' && (filter.orderByDateCreated = object.orderByDateCreated);
+		if (typeof object.orderByDateCreated !== 'undefined') filter.orderByDateCreated = object.orderByDateCreated;
 		return filter;
 	}
-	
+
 	toObject() {
 		var object: any = {};
-		typeof this.orderByDateCreated !== 'undefined' && (object.orderByDateCreated = this.orderByDateCreated);
+		if (typeof this.orderByDateCreated !== 'undefined') object.orderByDateCreated = this.orderByDateCreated;
 		return object;
 	}
 }

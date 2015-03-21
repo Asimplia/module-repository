@@ -2,7 +2,6 @@
 import mongoose = require('mongoose');
 import Product = require('../Entity/Application/Product');
 import List = require('../Entity/List');
-import ProductModel = require('../Definition/Application/ProductModel');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 
 export = ProductRecorder;

@@ -4,10 +4,13 @@ import Util = require('asimplia-util');
 import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
 import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
 import Type = Util.ODBM.Mapping.Type;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = ValueFailure;
 class ValueFailure {
-	
+
 	static $entity: IEntityAnnotation = {
 		$dbs: DatabaseSystem.POSTGRE_SQL,
 		$name: 'feed.valuefailure',

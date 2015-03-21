@@ -1,12 +1,8 @@
 ﻿
-import IEntity = require('../IEntity');
 import Matrix = require('./Matrix');
-import moment = require('moment');
 import Product = require('../EShop/Product');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
 import SectionEnum = require('../Section/SectionEnum');
-import SectionFactory = require('../Section/SectionFactory');
-import EntityPreparer = require('../EntityPreparer');
 
 export = MatrixProduct;
 class MatrixProduct extends Matrix {

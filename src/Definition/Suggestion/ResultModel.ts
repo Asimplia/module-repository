@@ -1,4 +1,4 @@
-
+/* tslint:disable */
 import mongoose = require('mongoose');
 import Schema = mongoose.Schema;
 import Definition = require('./Result');

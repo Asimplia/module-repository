@@ -16,19 +16,19 @@ export = Action;
 class Action implements IEntity {
 
 	get Id() { return this.id; }
-	set Id(value) { this.id = value; }
+	set Id(value: number) { this.id = value; }
 	get Name() { return this.name; }
-	set Name(value) { this.name = value; }
+	set Name(value: LocalizedString) { this.name = value; }
 	get ShortName() { return this.shortName; }
-	set ShortName(value) { this.shortName = value; }
+	set ShortName(value: LocalizedString) { this.shortName = value; }
 	get Text() { return this.text; }
-	set Text(value) { this.text = value; }
+	set Text(value: LocalizedString) { this.text = value; }
 	get Section() { return this.section; }
-	set Section(value) { this.section = value; }
+	set Section(value: SectionEnum) { this.section = value; }
 	get FactorDefinitionList() { return this.factorDefinitionList; }
-	set FactorDefinitionList(value) { this.factorDefinitionList = value; }
+	set FactorDefinitionList(value: List<FactorDefinition>) { this.factorDefinitionList = value; }
 	get Placeholders() { return this.placeholders; }
-	set Placeholders(value) { this.placeholders = value; }
+	set Placeholders(value: ActionPlaceholderEnum[]) { this.placeholders = value; }
 	get PriorityType() { return this.priorityType; }
 	get Main() { return this.main; }
 
@@ -52,7 +52,9 @@ class Action implements IEntity {
 			new LocalizedString(o.text),
 			SectionFactory.getGroupSection(SectionFactory.createSectionEnum(o.section)),
 			new List<FactorDefinition>().pushArray(o.factorDefinitions, FactorDefinition.fromObject),
-			ArrayHelper.mapFilterNulls(o.placeholders, (placeholder: string) => { return ActionPlaceholderFactory.createActionPlaceholderEnum(placeholder); }),
+			ArrayHelper.mapFilterNulls(o.placeholders, (placeholder: string) => {
+				return ActionPlaceholderFactory.createActionPlaceholderEnum(placeholder);
+			}),
 			PriorityTypeFactory.createPriorityTypeEnum(o.priorityType),
 			EntityPreparer.boolean(o.main)
 		);
@@ -66,7 +68,9 @@ class Action implements IEntity {
 			text: entity.text.toObject(),
 			section: SectionEnum[entity.section],
 			factorDefinitions: entity.factorDefinitionList.toArray(FactorDefinition.toObject),
-			placeholders: ArrayHelper.mapFilterNulls(entity.placeholders, (placeholder: ActionPlaceholderEnum) => { return ActionPlaceholderEnum[placeholder]; }),
+			placeholders: ArrayHelper.mapFilterNulls(entity.placeholders, (placeholder: ActionPlaceholderEnum) => {
+				return ActionPlaceholderEnum[placeholder];
+			}),
 			priorityType: PriorityTypeEnum[entity.priorityType],
 			main: entity.main
 		};

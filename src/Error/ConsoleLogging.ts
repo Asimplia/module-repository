@@ -7,6 +7,9 @@ import ErrorLog = require('../Entity/Error/ErrorLog');
 import ErrorTypeEnum = require('../Entity/Error/ErrorTypeEnum');
 import EntityPreparer = require('../Entity/EntityPreparer');
 import ApplicationTypeEnum = require('../Entity/Error/ApplicationTypeEnum');
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = ConsoleLogging;
 class ConsoleLogging {
@@ -25,10 +28,10 @@ class ConsoleLogging {
 	intercept() {
 		this.errorLogger.setToObjectOnError();
 		this.errorLogger.catchErrors(
-			ErrorTypeEnum.UNCAUGHT_ERROR, 
-			ErrorTypeEnum.ERROR, 
-			ErrorTypeEnum.WARNING, 
-			(e, t) => this.saveErrorLog(e, t)
+			ErrorTypeEnum.UNCAUGHT_ERROR,
+			ErrorTypeEnum.ERROR,
+			ErrorTypeEnum.WARNING,
+			(e: IObjectableError, errorType: ErrorTypeEnum) => this.saveErrorLog(e, errorType)
 		);
 	}
 
@@ -47,5 +50,4 @@ class ConsoleLogging {
 			console.log('ErrorLog created');
 		});
 	}
-	
 }

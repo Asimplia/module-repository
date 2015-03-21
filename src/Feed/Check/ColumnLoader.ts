@@ -4,19 +4,22 @@ import ColumnList = require('../../Entity/Feed/Check/ColumnList');
 import ColumnEntityName = require('../../Entity/Feed/Check/ColumnEntityName');
 import IColumnObject = require('../../Entity/Feed/Check/IColumnObject');
 import Util = require('asimplia-util');
-import List = Util.ODBM.Entity.List;
 import Manager = Util.ODBM.Repository.PostgreSql.Manager;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = ColumnLoader;
 class ColumnLoader {
-	
+
 	static $service = 'Feed.Check.ColumnLoader';
 	static $inject = [
 		'connection.postgres'
 	];
 	constructor(
 		private connection: any,
-		private manager = new Manager<Column, IColumnObject, ColumnList>(Column, ColumnList, connection)
+		private manager: Manager<Column, IColumnObject, ColumnList>
+			= new Manager<Column, IColumnObject, ColumnList>(Column, ColumnList, connection)
 	) {}
 
 	getListByEntity(entity: ColumnEntityName, callback: (e: Error, columnList?: ColumnList) => void) {

@@ -8,13 +8,13 @@ export = FactorDefinition;
 class FactorDefinition implements IEntity {
 
 	get Value() { return this.value; }
-	set Value(value) { this.value = value; }
+	set Value(value: FactorValue) { this.value = value; }
 	get Weight() { return this.weight; }
-	set Weight(value) { this.weight = value; }
+	set Weight(value: number) { this.weight = value; }
 	get Factor() { return this.factor; }
-	set Factor(value) { this.factor = value; }
+	set Factor(value: Factor) { this.factor = value; }
 	get Reverse() { return this.reverse; }
-	set Reverse(value) { this.reverse = value; }
+	set Reverse(value: boolean) { this.reverse = value; }
 
 	constructor(
 		private value: FactorValue,

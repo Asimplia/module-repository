@@ -1,7 +1,6 @@
 ﻿
 import IEntity = require('../IEntity');
 import QuadrantValueEnum = require('./QuadrantValueEnum');
-import Product = require('../EShop/Product');
 import moment = require('moment');
 import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
@@ -74,7 +73,7 @@ class Matrix implements IEntity {
 			case SectionFactory.isCategory(this.section):
 				return this.categoryId;
 		}
-		throw new Error('Not supported section '+this.section);
+		throw new Error('Not supported section ' + this.section);
 	}
 
 	constructor(

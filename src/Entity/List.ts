@@ -1,9 +1,11 @@
 ﻿
-import each = require('each');
 import _ = require('underscore');
 import IEntity = require('./IEntity');
 import Util = require('asimplia-util');
 import EntityList = Util.ODBM.Entity.List;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = List;
 class List<Entity extends IEntity> extends EntityList<Entity> {
@@ -23,7 +25,7 @@ class List<Entity extends IEntity> extends EntityList<Entity> {
 		if (!items) {
 			return this;
 		}
-		items.forEach((item) => {
+		items.forEach((item: any) => {
 			try {
 				this.Entities.push(entityFactory(item));
 			} catch (e) {
@@ -44,9 +46,5 @@ class List<Entity extends IEntity> extends EntityList<Entity> {
 			throw new Error('Item ' + item + ' not exists in List');
 		}
 		this.Entities.splice(i, 1);
-	}
-
-	private returnValue(entity: Entity) {
-		return entity;
 	}
 }
