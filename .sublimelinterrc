@@ -1,0 +1,9 @@
+{
+	"linters": {
+        "tslint": {
+            "@disable": false,
+            "args": ["--config", "${project}/node_modules/asimplia-util/tslint.json"],
+            "excludes": []
+        }
+    }
+}
