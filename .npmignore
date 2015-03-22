@@ -4,6 +4,5 @@ bower_components/
 .sublimets
 .travis.yml
 Gruntfile.js
-bower.json
 tsd.json
 .env.json
