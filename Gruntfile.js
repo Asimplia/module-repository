@@ -10,6 +10,7 @@ module.exports = function (grunt) {
 		'typings/tsd.d.ts'
 	], __dirname);
 	grunt.initConfig(config);
+	GruntConfiguration.registerTasks(__dirname, grunt);
 
 	GruntConfiguration.loadParentNpmTasks(grunt, 'grunt-typescript');
 	GruntConfiguration.loadParentNpmTasks(grunt, 'grunt-jasmine-node');
@@ -21,13 +22,27 @@ module.exports = function (grunt) {
 	GruntConfiguration.loadParentNpmTasks(grunt, 'grunt-tslint');
 
 	grunt.registerTask('default', [
-		'clean:build', 'shell:link_module:asimplia-util', 'shell:link_tsd', 'tsd:reinstall', 'wait:typings', 'typescript:build', 'typescript:public', 'tslint:all', 'jasmine_node:unit'
+		'clean:build',
+		'shell:link_module:asimplia-util',
+		'tsd:link:build',
+		'tsd:reinstall',
+		'wait:typings',
+		'typescript:build',
+		'typescript:public',
+		'tslint:all',
+		'jasmine_node:unit',
 	]);
-	grunt.registerTask('dev', ['typescript:build', 'typescript:public', 'jasmine_node:unit', 'watch:ts']);
+	grunt.registerTask('dev', [
+		'typescript:build',
+		'typescript:public',
+		'jasmine_node:unit',
+		'watch:ts',
+	]);
 	grunt.registerTask('prepublish', ['default']);
 	grunt.registerTask('test', function () {
 		process.env.NODE_ENV = 'unit';
 		grunt.task.run('jasmine_node:unit');
+
 		process.env.NODE_ENV = 'integration';
 		grunt.task.run('jasmine_node:integration');
 	});
