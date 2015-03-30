@@ -12,10 +12,10 @@ CREATE VIEW warehouse.eshopmatrixloads AS
 
 
 CREATE VIEW analytical.matrixmlc1 AS
-	select
+    select
 	  feedload.eshopid as eshopid,
 	  'MLC1' as matrixtype,
-	  null::bigint as productid, -- TODO
+	  product.productid::bigint as productid,
 	  loadlog.loadid as loadid,
 	  0::real as scoreabs,
 	  0::real as scorerel,
@@ -23,6 +23,7 @@ CREATE VIEW analytical.matrixmlc1 AS
 	  0::real as changeabs,
 	  0::real as changerel,
 	  0::real as changewei,
+	  1::integer as quadrant,
 	  now() as datevalid,
 	  CASE
 	    WHEN ((heureka.productname IS NULL) OR ((heureka.productname)::text = ''::text)) THEN 1
@@ -30,6 +31,7 @@ CREATE VIEW analytical.matrixmlc1 AS
 	  END  as inputvaluex
 
 	from feed.heureka
+        join warehouse.product on product.originalid = heureka.item_id
 	join feed.feedload on feedload.loadid = heureka.loadid
 	join warehouse.eshopmatrixloads loadlog
 	  on feedload.eshopid = loadlog.eshopid
@@ -38,6 +40,7 @@ CREATE VIEW analytical.matrixmlc1 AS
 	left join analytical.matrix
 	  on matrix.matrixtype = 'MLC1'
 	  and matrix.loadid = loadlog.loadid
-	  and matrix.productid is null -- TODO
+	  and matrix.productid = product.productid
 	where matrix.matrixid is null
 	;
+
