@@ -980,7 +980,7 @@ create table warehouse.product (
    productid            SERIAL not null,
    originalid           VARCHAR(100)         not null,
    eshopid              INT8                 not null,
-   productname          VARCHAR(100)         null,
+   productname          VARCHAR(2048)        null,
    baseprice            REAL                 not null,
    url                  VARCHAR(1000)        null,
    vat                  REAL                 not null,
@@ -1128,6 +1128,8 @@ create table analytical.situation (
    datecreated          timestamptz          not null,
    datesuggestionresultcreated timestamptz          null,
    datesuggestionresultprocessed timestamptz          null,
+   datechecklistcreated timestamptz NULL,
+   datechecklistprocessed timestamptz NULL,
    constraint PK_SITUATION primary key (situationid)
 );
 
