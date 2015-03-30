@@ -2,6 +2,7 @@
 import Situation = require('../Entity/Matrix/Situation');
 import SqlExecutor = require('../Util/SqlExecutor');
 import Util = require('asimplia-util');
+import moment = require('moment');
 import DateFactory = Util.DateTime.DateFactory;
 /* tslint:disable */
 Util;
