@@ -1,7 +1,7 @@
 
 import mongoose = require('mongoose');
 import Checklist = require('../Entity/Checklist/Checklist');
-import List = require('../Entity/List');
+import ChecklistList = require('../Entity/Checklist/ChecklistList');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 import IChecklistDocument = require('../Definition/Checklist/IChecklistDocument');
 import CheckItemList = require('../Entity/Checklist/CheckItemList');
@@ -10,6 +10,7 @@ import Util = require('asimplia-util');
 import DateFactory = Util.DateTime.DateFactory;
 import Image = require('../Entity/Image/Image');
 import SectionEnum = require('../Entity/Section/SectionEnum');
+import List = require('../Entity/List');
 /* tslint:disable */
 Util;
 /* tslint:enable */
@@ -30,8 +31,9 @@ class ChecklistRecorder {
 		this.documentExecutor = new DocumentExecutor(this.model, Checklist);
 	}
 
-	insertOrUpdateList(list: List<Checklist>, callback: (e: Error, list?: List<Checklist>) => void) {
-		this.documentExecutor.insertOrUpdateList(list, callback);
+	insertOrUpdateList(list: ChecklistList, callback: (e: Error, list?: ChecklistList) => void) {
+		this.documentExecutor.insertOrUpdateList(new List<Checklist>(list.toArray()), (e: Error, list: List<Checklist>)
+			=> callback(e, new ChecklistList(list.toArray())));
 	}
 
 	insertOrUpdate(entity: Checklist, callback: (e: Error, entity?: Checklist) => void) {

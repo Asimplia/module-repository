@@ -20,6 +20,10 @@ class CheckItem implements IEntity {
 		return this.valueList.areAllChecked();
 	}
 
+	isDone() {
+		return this.isChecked() || this.valueList.areAllGreen();
+	}
+
 	static fromObject(object: ICheckItemObject) {
 		return new CheckItem(
 			new LocalizedString(object.label),

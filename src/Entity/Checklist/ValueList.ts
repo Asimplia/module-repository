@@ -12,6 +12,12 @@ class ValueList extends List<Value> {
 		});
 	}
 
+	areAllGreen() {
+		return this.all((value: Value) => {
+			return value.isGreen();
+		});
+	}
+
 	getByTypeEan() {
 		return this.findOneOnly((entity: Value) => {
 			return entity.ValueType == ValueTypeEnum.EAN;

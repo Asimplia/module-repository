@@ -4,6 +4,7 @@ import EntityPreparer = require('../EntityPreparer');
 import ValueTypeEnum = require('./ValueTypeEnum');
 import LocalizedString = require('../Locale/LocalizedString');
 import IValueObject = require('./IValueObject');
+import PriorityTypeEnum = require('../Suggestion/PriorityTypeEnum');
 
 export = Value;
 class Value implements IEntity {
@@ -12,10 +13,12 @@ class Value implements IEntity {
 
 	get ValueType() { return this.valueType; }
 	get DateChecked() { return this.dateChecked; }
+	get PriorityType() { return this.priorityType; }
 
 	constructor(
 		private valueType: ValueTypeEnum,
-		private dateChecked: Date
+		private dateChecked: Date,
+		private priorityType: PriorityTypeEnum
 	) {
 		this.valueTypeNames = {};
 		this.valueTypeNames[ValueTypeEnum.EAN] = new LocalizedString({ cs: 'EAN', en: 'EAN' });
@@ -33,17 +36,23 @@ class Value implements IEntity {
 		return this.dateChecked !== null;
 	}
 
+	isGreen() {
+		return this.priorityType == PriorityTypeEnum.GREEN;
+	}
+
 	static fromObject(object: IValueObject) {
 		return new Value(
 			EntityPreparer.enum<ValueTypeEnum>(ValueTypeEnum, object.valueType),
-			EntityPreparer.dateOrNull(object.dateChecked)
+			EntityPreparer.dateOrNull(object.dateChecked),
+			EntityPreparer.enum<PriorityTypeEnum>(PriorityTypeEnum, object.priorityType)
 		);
 	}
 
 	static toObject(entity: Value): IValueObject {
 		return {
 			valueType: ValueTypeEnum[entity.valueType],
-			dateChecked: entity.dateChecked
+			dateChecked: entity.dateChecked,
+			priorityType: PriorityTypeEnum[entity.priorityType]
 		};
 	}
 

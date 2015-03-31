@@ -4,7 +4,7 @@ import IntegrationPreparer = require('../../IntegrationPreparer');
 import ChecklistLoader = Repository.Checklist.ChecklistLoader;
 import ChecklistRecorder = Repository.Checklist.ChecklistRecorder;
 import Checklist = Repository.Entity.Checklist.Checklist;
-import List = Repository.Entity.List;
+import ChecklistList = Repository.Entity.Checklist.ChecklistList;
 import Util = require('asimplia-util');
 import DateFactory = Util.DateTime.DateFactory;
 /* tslint:disable */
@@ -57,7 +57,7 @@ describe('ChecklistModel', () => {
 		});
 
 		it('should return same instance by insert or update list', (done: Function) => {
-			var checklistList = new List<Checklist>([
+			var checklistList = new ChecklistList([
 				Checklist.fromObject({
 					id: null,
 					eShopId: 1,
@@ -79,7 +79,7 @@ describe('ChecklistModel', () => {
 					dateResolved: null
 				})
 			]);
-			checklistRecorder.insertOrUpdateList(checklistList, (e: Error, checklistList?: List<Checklist>) => {
+			checklistRecorder.insertOrUpdateList(checklistList, (e: Error, checklistList?: ChecklistList) => {
 				if (e) {
 					expect(false).toBeTruthy();
 					done();

@@ -13,7 +13,8 @@ describe('Entity.Checklist.CheckItem', () => {
 				label: { cs: 'Produkt peněženka', en: 'Product wallet' },
 				values: [{
 					valueType: 'EAN',
-					dateChecked: null
+					dateChecked: null,
+					priorityType: 'GREEN'
 				}]
 			});
 			expect(checkItem.Label.Cs).toBe('Produkt peněženka');
