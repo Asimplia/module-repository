@@ -9,9 +9,9 @@ Util;
 export = ChecklistList;
 class ChecklistList extends List<Checklist> {
 
-	isAllDone() {
+	areAllDone() {
 		return this.all((checklist: Checklist) => {
-			return checklist.CheckItemList.isAllDone();
+			return checklist.CheckItemList.areAllDone();
 		});
 	}
 }

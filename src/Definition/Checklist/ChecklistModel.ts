@@ -16,7 +16,8 @@ var Definition = {
 		label: LocalizedString,
 		values: [{
 			valueType: String,
-			dateChecked: Date
+			dateChecked: Date,
+			priorityType: String
 		}]
 	}],
 	mainImage: Image,

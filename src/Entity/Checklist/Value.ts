@@ -40,6 +40,10 @@ class Value implements IEntity {
 		return this.priorityType == PriorityTypeEnum.GREEN;
 	}
 
+	isDone() {
+		return this.isGreen() || this.isChecked();
+	}
+
 	static fromObject(object: IValueObject) {
 		return new Value(
 			EntityPreparer.enum<ValueTypeEnum>(ValueTypeEnum, object.valueType),

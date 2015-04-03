@@ -9,7 +9,7 @@ Util;
 export = CheckItemList;
 class CheckItemList extends List<CheckItem> {
 
-	isAllDone() {
+	areAllDone() {
 		return this.all((checkItem: CheckItem) => {
 			return checkItem.isDone();
 		});

@@ -21,7 +21,7 @@ class CheckItem implements IEntity {
 	}
 
 	isDone() {
-		return this.isChecked() || this.valueList.areAllGreen();
+		return this.valueList.areAllDone();
 	}
 
 	static fromObject(object: ICheckItemObject) {
