@@ -17,6 +17,8 @@ class Checklist implements IHashIdentificableEntity {
 	get Section() { return this.section; }
 	get Name() { return this.name; }
 	get CheckItemList() { return this.checkItemList; }
+	get DateCreated() { return this.dateCreated; }
+	get TotalCount() { return this.checkItemList.count(); } // TODO total count should be whole products, not only checkItems
 
 	constructor(
 		private id: string,
@@ -31,6 +33,10 @@ class Checklist implements IHashIdentificableEntity {
 
 	getSectionName() {
 		return SectionFactory.getLabel(this.section);
+	}
+
+	getDoneIndex() {
+		return Math.round(this.checkItemList.getCountDone() / this.checkItemList.count());
 	}
 
 	static fromObject(object: IChecklistObject) {

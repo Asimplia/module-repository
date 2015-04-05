@@ -14,4 +14,14 @@ class CheckItemList extends List<CheckItem> {
 			return checkItem.isDone();
 		});
 	}
+
+	getCountDone() {
+		return this.filterDone().count();
+	}
+
+	filterDone() {
+		return this.filter((checkItem: CheckItem) => {
+			return checkItem.isDone();
+		});
+	}
 }
