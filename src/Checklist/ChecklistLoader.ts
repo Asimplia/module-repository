@@ -29,6 +29,15 @@ class ChecklistLoader {
 		this.model.findOne(conditions, (e: Error, object: any) => this.documentExecutor.createByObject(e, object, callback));
 	}
 
+	getLast(eShopId: number, callback: (e: Error, entity?: Checklist) => void) {
+		var conditions = {
+			eShopId: eShopId
+		};
+		this.model.findOne(conditions)
+		.sort({ dateCreated: -1 })
+		.exec((e: Error, object: any) => this.documentExecutor.createByObject(e, object, callback));
+	}
+
 	getList(eShopId: number, filter: ChecklistFilter, callback: (e: Error, checklistList?: ChecklistList) => void) {
 		var conditions: any = {};
 		conditions.eShopId = eShopId;
