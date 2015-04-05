@@ -5,6 +5,8 @@ import ChecklistList = require('../Entity/Checklist/ChecklistList');
 import DocumentExecutor = require('../Util/DocumentExecutor');
 import IChecklistDocument = require('../Definition/Checklist/IChecklistDocument');
 import CheckItemList = require('../Entity/Checklist/CheckItemList');
+import ValueTypeEnum = require('../Entity/Checklist/ValueTypeEnum');
+import ICheckItemId = require('../Entity/Checklist/ICheckItemId');
 import LocalizedString = require('../Entity/Locale/LocalizedString');
 import Util = require('asimplia-util');
 import DateFactory = Util.DateTime.DateFactory;
@@ -63,5 +65,33 @@ class ChecklistRecorder {
 	setCheckItemList(entity: Checklist, checkItemList: CheckItemList, callback: (e: Error, entity?: Checklist) => void) {
 		entity.CheckItemList = checkItemList;
 		this.documentExecutor.update(entity, callback);
+	}
+
+	checkItem(
+		checklist: Checklist,
+		checkItemId: ICheckItemId,
+		valueType: ValueTypeEnum,
+		callback: (e: Error, checklist?: Checklist) => void
+	) {
+		var checkItem = checklist.CheckItemList.getById(checkItemId);
+		if (!checkItem) return callback(new Error('CheckItem ' + checkItemId + ' not found'));
+		var value = checkItem.ValueList.getByType(valueType);
+		if (!value) return callback(new Error('Value ' + valueType + ' not found'));
+		value.DateChecked = this.dateFactory.now();
+		this.insertOrUpdate(checklist, callback);
+	}
+
+	uncheckItem(
+		checklist: Checklist,
+		checkItemId: ICheckItemId,
+		valueType: ValueTypeEnum,
+		callback: (e: Error, checklist?: Checklist) => void
+	) {
+		var checkItem = checklist.CheckItemList.getById(checkItemId);
+		if (!checkItem) return callback(new Error('CheckItem ' + checkItemId + ' not found'));
+		var value = checkItem.ValueList.getByType(valueType);
+		if (!value) return callback(new Error('Value ' + valueType + ' not found'));
+		value.DateChecked = null;
+		this.insertOrUpdate(checklist, callback);
 	}
 }

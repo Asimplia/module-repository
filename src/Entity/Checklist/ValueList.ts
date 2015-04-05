@@ -24,6 +24,12 @@ class ValueList extends List<Value> {
 		});
 	}
 
+	getByType(valueType: ValueTypeEnum) {
+		return this.findOneOnly((entity: Value) => {
+			return entity.ValueType == valueType;
+		});
+	}
+
 	getByTypeEan() {
 		return this.findOneOnly((entity: Value) => {
 			return entity.ValueType == ValueTypeEnum.EAN;

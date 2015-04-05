@@ -16,9 +16,12 @@ var Definition = {
 		label: LocalizedString,
 		values: [{
 			valueType: String,
-			dateChecked: Date,
+			dateChecked: { type: Date, default: null },
 			priorityType: String
-		}]
+		}],
+		checkItemId: {
+			productId: Number
+		}
 	}],
 	mainImage: Image,
 	dateResolved: Date

@@ -2,35 +2,23 @@
 import IEntity = require('../IEntity');
 import EntityPreparer = require('../EntityPreparer');
 import ValueTypeEnum = require('./ValueTypeEnum');
-import LocalizedString = require('../Locale/LocalizedString');
 import IValueObject = require('./IValueObject');
 import PriorityTypeEnum = require('../Suggestion/PriorityTypeEnum');
 
 export = Value;
 class Value implements IEntity {
 
-	private valueTypeNames: {[valueType: number]: LocalizedString};
-
 	get ValueType() { return this.valueType; }
 	get DateChecked() { return this.dateChecked; }
 	get PriorityType() { return this.priorityType; }
+
+	set DateChecked(dateChecked: Date) { this.dateChecked = dateChecked; }
 
 	constructor(
 		private valueType: ValueTypeEnum,
 		private dateChecked: Date,
 		private priorityType: PriorityTypeEnum
-	) {
-		this.valueTypeNames = {};
-		this.valueTypeNames[ValueTypeEnum.EAN] = new LocalizedString({ cs: 'EAN', en: 'EAN' });
-		this.valueTypeNames[ValueTypeEnum.DESCRIPTION] = new LocalizedString({ cs: 'Popis', en: 'Description' });
-		this.valueTypeNames[ValueTypeEnum.PRICE] = new LocalizedString({ cs: 'Cena', en: 'Price' });
-		this.valueTypeNames[ValueTypeEnum.TRAFIC] = new LocalizedString({ cs: 'Návštěvnost', en: 'Trafic' });
-		this.valueTypeNames[ValueTypeEnum.MAIN_IMAGE] = new LocalizedString({ cs: 'Obrázek', en: 'Image' });
-	}
-
-	getValueTypeName() {
-		return this.valueTypeNames[this.valueType];
-	}
+	) {}
 
 	isChecked() {
 		return this.dateChecked !== null;

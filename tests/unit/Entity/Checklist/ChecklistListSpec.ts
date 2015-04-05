@@ -42,14 +42,20 @@ describe('Entity.Checklist.ChecklistList', () => {
 									dateChecked: new Date(),
 									priorityType: 'RED'
 								},
-							]
+							],
+							checkItemId: {
+								productId: 1
+							}
 						},
 						{
 							label: {
 								cs: 'Wtf',
 								en: 'Wtf'
 							},
-							values: []
+							values: [],
+							checkItemId: {
+								productId: 2
+							}
 						},
 					]
 				}),

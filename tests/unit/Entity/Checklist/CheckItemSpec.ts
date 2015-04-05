@@ -15,7 +15,10 @@ describe('Entity.Checklist.CheckItem', () => {
 					valueType: 'EAN',
 					dateChecked: null,
 					priorityType: 'GREEN'
-				}]
+				}],
+				checkItemId: {
+					productId: 1
+				}
 			});
 			expect(checkItem.Label.Cs).toBe('Produkt peněženka');
 			expect(checkItem.Label.En).toBe('Product wallet');
