@@ -33,6 +33,13 @@ class ChecklistSourceSettings {
 				processingStartedAt: new Type.Date(true, true),
 				processedAt: new Type.Date(true, true),
 				failedAt: new Type.Date(true, true)
+			},
+			sitemapXml: {
+				createdAt: new Type.Date(true, true),
+				uri: new Type.String(2048, true),
+				processingStartedAt: new Type.Date(true, true),
+				processedAt: new Type.Date(true, true),
+				failedAt: new Type.Date(true, true)
 			}
 		},
 		closedAt: new Type.Date(true, true)
@@ -72,6 +79,8 @@ class ChecklistSourceSettings {
 				return 'heurekaXml';
 			case ChecklistSourceTypeEnum.ZBOZI_XML:
 				return 'zboziXml';
+			case ChecklistSourceTypeEnum.SITEMAP_XML:
+				return 'sitemapXml';
 		}
 		throw new Error('Not implemented');
 	}

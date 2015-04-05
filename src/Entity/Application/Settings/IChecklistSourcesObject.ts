@@ -15,4 +15,11 @@ interface IChecklistSourcesObject {
 		processedAt: Date;
 		failedAt: Date;
 	};
+	sitemapXml: {
+		createdAt: Date;
+		uri: string;
+		processingStartedAt: Date;
+		processedAt: Date;
+		failedAt: Date;
+	};
 }

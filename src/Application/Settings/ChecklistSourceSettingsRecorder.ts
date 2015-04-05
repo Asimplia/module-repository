@@ -98,6 +98,13 @@ class ChecklistSourceSettingsRecorder {
 					processingStartedAt: null,
 					processedAt: null,
 					failedAt: null
+				},
+				sitemapXml: {
+					uri: null,
+					createdAt: null,
+					processingStartedAt: null,
+					processedAt: null,
+					failedAt: null
 				}
 			},
 			closedAt: null
