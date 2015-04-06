@@ -84,7 +84,7 @@ class ChecklistRecorder {
 		var value = checkItem.ValueList.getByType(valueType);
 		if (!value) return callback(new Error('Value ' + valueType + ' not found'));
 		value.DateChecked = this.dateFactory.now();
-		this.insertOrUpdate(checklist, callback);
+		this.update(checklist, callback);
 	}
 
 	uncheckItem(
@@ -98,6 +98,6 @@ class ChecklistRecorder {
 		var value = checkItem.ValueList.getByType(valueType);
 		if (!value) return callback(new Error('Value ' + valueType + ' not found'));
 		value.DateChecked = null;
-		this.insertOrUpdate(checklist, callback);
+		this.update(checklist, callback);
 	}
 }

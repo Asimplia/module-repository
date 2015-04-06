@@ -36,7 +36,7 @@ class Checklist {
 	get Id() { return this.object.id; }
 	get Section() { return SectionEnum[this.object.section]; }
 	get Name() { return new LocalizedString(this.object.name); }
-	get CheckItemList() { return new CheckItemList(_.map(this.object.checkItems, CheckItem.fromObject)); }
+	get CheckItemList() { return Checklist.converter.getList<CheckItemList, CheckItem>(CheckItemList, CheckItem, this.object.checkItems); }
 	get DateCreated() { return this.object.dateCreated; }
 	get TotalCount() { return this.CheckItemList.count(); } // TODO total count should be whole products, not only checkItems
 

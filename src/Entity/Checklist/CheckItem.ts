@@ -32,7 +32,7 @@ class CheckItem {
 
 	get Id() { return this.object.checkItemId; }
 	get Label() { return new LocalizedString(this.object.label); }
-	get ValueList() { return new ValueList(_.map(this.object.values, Value.fromObject)); }
+	get ValueList() { return CheckItem.converter.getList<ValueList, Value>(ValueList, Value, this.object.values); }
 
 	constructor(
 		private object: ICheckItemObject
