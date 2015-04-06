@@ -1,50 +1,61 @@
 
-import IEntity = require('../IEntity');
+import _ = require('underscore');
 import ICheckItemObject = require('./ICheckItemObject');
-import LocalizedString = require('../Locale/LocalizedString');
 import ValueList = require('./ValueList');
 import Value = require('./Value');
+import LocalizedString = require('../Locale/LocalizedString');
 import ICheckItemId = require('./ICheckItemId');
+import Util = require('asimplia-util');
+import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
+import Type = Util.ODBM.Mapping.Type;
+import Converter = Util.ODBM.Entity.Converter;
+import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = CheckItem;
-class CheckItem implements IEntity {
+class CheckItem {
 
-	get Id() { return this.checkItemId; }
-	get Label() { return this.label; }
-	get ValueList() { return this.valueList; }
+	static $entity: IEntityAnnotation = {
+		$dbs: DatabaseSystem.MONGO_DB,
+		label: {
+			cs: new Type.String(2048),
+			en: new Type.String(2048)
+		},
+		values: new Type.Array(Value.$entity),
+		checkItemId: {
+			productId: Type.Integer
+		}
+	};
+	private static converter = new Converter<CheckItem, ICheckItemObject>(CheckItem);
+
+	get Id() { return this.object.checkItemId; }
+	get Label() { return new LocalizedString(this.object.label); }
+	get ValueList() { return new ValueList(_.map(this.object.values, Value.fromObject)); }
 
 	constructor(
-		private label: LocalizedString,
-		private valueList: ValueList,
-		private checkItemId: ICheckItemId
+		private object: ICheckItemObject
 	) {}
 
 	isChecked() {
-		return this.valueList.areAllChecked();
+		return this.ValueList.areAllChecked();
 	}
 
 	isDone() {
-		return this.valueList.areAllDone();
+		return this.ValueList.areAllDone();
 	}
 
 	isIdEqual(checkItemId: ICheckItemId) {
-		return checkItemId.productId == this.checkItemId.productId;
+		return checkItemId.productId == this.Id.productId;
 	}
 
 	static fromObject(object: ICheckItemObject) {
-		return new CheckItem(
-			new LocalizedString(object.label),
-			new ValueList(object.values, Value.fromObject),
-			object.checkItemId
-		);
+		return CheckItem.converter.fromObject(object);
 	}
 
 	static toObject(entity: CheckItem): ICheckItemObject {
-		return {
-			label: entity.label.toObject(),
-			values: entity.valueList.toArray(Value.toObject),
-			checkItemId: entity.checkItemId
-		};
+		return CheckItem.converter.toObject(entity);
 	}
 
 	toObject() {

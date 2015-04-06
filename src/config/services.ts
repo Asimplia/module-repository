@@ -18,7 +18,6 @@ var services: { [name: string]: any } = {
 	'Definition.Application.MatrixModel': object(require('../Definition/Application/MatrixModel')),
 	'Definition.Application.ProductModel': object(require('../Definition/Application/ProductModel')),
 	'Definition.Application.UserModel': object(require('../Definition/Application/UserModel')),
-	'Definition.Checklist.ChecklistModel': object(require('../Definition/Checklist/ChecklistModel')),
 	'Definition.Error.ErrorLogModel': object(require('../Definition/Error/ErrorLogModel')),
 	'Definition.Factor.FactorModel': object(require('../Definition/Factor/FactorModel')),
 	'Definition.Matrix.SignalThresholdModel': object(require('../Definition/Matrix/SignalThresholdModel')),

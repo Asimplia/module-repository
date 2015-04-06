@@ -1,6 +1,7 @@
 
 export import Checklist = require('./Checklist');
 export import ChecklistList = require('./ChecklistList');
+export import ChecklistConverter = require('./ChecklistConverter');
 export import CheckItem = require('./CheckItem');
 export import CheckItemList = require('./CheckItemList');
 export import ValueTypeEnum = require('./ValueTypeEnum');
@@ -14,6 +15,7 @@ export import ICheckItemId = require('./ICheckItemId');
 /* tslint:disable */
 Checklist;
 ChecklistList;
+ChecklistConverter;
 CheckItem;
 CheckItemList;
 ValueTypeEnum;

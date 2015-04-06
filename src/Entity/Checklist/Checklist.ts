@@ -1,68 +1,63 @@
 
 import _ = require('underscore');
-import IHashIdentificableEntity = require('../Common/IHashIdentificableEntity');
 import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
-import LocalizedString = require('../Locale/LocalizedString');
 import CheckItemList = require('./CheckItemList');
 import CheckItem = require('./CheckItem');
-import Image = require('../Image/Image');
 import IChecklistObject = require('./IChecklistObject');
-import EntityPreparer = require('../EntityPreparer');
+import LocalizedString = require('../Locale/LocalizedString');
+import Util = require('asimplia-util');
+import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
+import Type = Util.ODBM.Mapping.Type;
+import Converter = Util.ODBM.Entity.Converter;
+import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = Checklist;
-class Checklist implements IHashIdentificableEntity {
+class Checklist {
 
-	get Id() { return this.id; }
-	get Section() { return this.section; }
-	get Name() { return this.name; }
-	get CheckItemList() { return this.checkItemList; }
-	get DateCreated() { return this.dateCreated; }
-	get TotalCount() { return this.checkItemList.count(); } // TODO total count should be whole products, not only checkItems
+	static $entity: IEntityAnnotation = {
+		$dbs: DatabaseSystem.MONGO_DB,
+		id: new Type.Id(Type.String),
+		eShopId: Type.Integer,
+		dateCreated: Type.Date,
+		section: Type.String,
+		name: {
+			cs: new Type.String(2048),
+			en: new Type.String(2048)
+		},
+		checkItems: new Type.Array(CheckItem.$entity),
+		dateResolved: new Type.Date(true, true)
+	};
+	private static converter = new Converter<Checklist, IChecklistObject>(Checklist);
+
+	get Id() { return this.object.id; }
+	get Section() { return SectionEnum[this.object.section]; }
+	get Name() { return new LocalizedString(this.object.name); }
+	get CheckItemList() { return new CheckItemList(_.map(this.object.checkItems, CheckItem.fromObject)); }
+	get DateCreated() { return this.object.dateCreated; }
+	get TotalCount() { return this.CheckItemList.count(); } // TODO total count should be whole products, not only checkItems
 
 	constructor(
-		private id: string,
-		private eShopId: number,
-		private dateCreated: Date,
-		private section: SectionEnum,
-		private name: LocalizedString,
-		private checkItemList: CheckItemList,
-		private mainImage: Image, // TODO move to checkItem
-		private dateResolved: Date
+		private object: IChecklistObject
 	) {}
 
 	getSectionName() {
-		return SectionFactory.getLabel(this.section);
+		return SectionFactory.getLabel(this.Section);
 	}
 
 	getDoneIndex() {
-		return Math.round(this.checkItemList.getCountDone() / this.checkItemList.count());
+		return Math.round(this.CheckItemList.getCountDone() / this.CheckItemList.count());
 	}
 
 	static fromObject(object: IChecklistObject) {
-		return new Checklist(
-			EntityPreparer.id(object.id),
-			EntityPreparer.int(object.eShopId),
-			EntityPreparer.date(object.dateCreated),
-			EntityPreparer.enum<SectionEnum>(SectionEnum, object.section),
-			new LocalizedString(object.name),
-			new CheckItemList(_.map(object.checkItems, CheckItem.fromObject)),
-			Image.fromObject(object.mainImage),
-			EntityPreparer.dateOrNull(object.dateResolved)
-		);
+		return this.converter.fromObject(object);
 	}
 
 	static toObject(entity: Checklist): IChecklistObject {
-		return {
-			id: entity.id,
-			eShopId: entity.eShopId,
-			dateCreated: entity.dateCreated,
-			section: SectionEnum[entity.section],
-			name: entity.name.toObject(),
-			checkItems: entity.checkItemList.toArray(CheckItem.toObject),
-			mainImage: entity.mainImage.toObject(),
-			dateResolved: entity.dateResolved
-		};
+		return this.converter.toObject(entity);
 	}
 
 	toObject() {

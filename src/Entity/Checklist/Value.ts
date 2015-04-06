@@ -1,31 +1,43 @@
 
-import IEntity = require('../IEntity');
-import EntityPreparer = require('../EntityPreparer');
 import ValueTypeEnum = require('./ValueTypeEnum');
 import IValueObject = require('./IValueObject');
 import PriorityTypeEnum = require('../Suggestion/PriorityTypeEnum');
+import Util = require('asimplia-util');
+import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
+import Type = Util.ODBM.Mapping.Type;
+import Converter = Util.ODBM.Entity.Converter;
+import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = Value;
-class Value implements IEntity {
+class Value {
 
-	get ValueType() { return this.valueType; }
-	get DateChecked() { return this.dateChecked; }
-	get PriorityType() { return this.priorityType; }
+	static $entity: IEntityAnnotation = {
+		$dbs: DatabaseSystem.MONGO_DB,
+		valueType: Type.String,
+		dateChecked: new Type.Date(true, true),
+		priorityType: Type.String
+	};
+	private static converter = new Converter<Value, IValueObject>(Value);
 
-	set DateChecked(dateChecked: Date) { this.dateChecked = dateChecked; }
+	get ValueType() { return ValueTypeEnum[this.object.valueType]; }
+	get DateChecked() { return this.object.dateChecked; }
+	get PriorityType() { return PriorityTypeEnum[this.object.priorityType]; }
+
+	set DateChecked(dateChecked: Date) { this.object.dateChecked = dateChecked; }
 
 	constructor(
-		private valueType: ValueTypeEnum,
-		private dateChecked: Date,
-		private priorityType: PriorityTypeEnum
+		private object: IValueObject
 	) {}
 
 	isChecked() {
-		return this.dateChecked !== null;
+		return this.DateChecked !== null;
 	}
 
 	isGreen() {
-		return this.priorityType == PriorityTypeEnum.GREEN;
+		return this.PriorityType == PriorityTypeEnum.GREEN;
 	}
 
 	isDone() {
@@ -33,19 +45,11 @@ class Value implements IEntity {
 	}
 
 	static fromObject(object: IValueObject) {
-		return new Value(
-			EntityPreparer.enum<ValueTypeEnum>(ValueTypeEnum, object.valueType),
-			EntityPreparer.dateOrNull(object.dateChecked),
-			EntityPreparer.enum<PriorityTypeEnum>(PriorityTypeEnum, object.priorityType)
-		);
+		return Value.converter.fromObject(object);
 	}
 
 	static toObject(entity: Value): IValueObject {
-		return {
-			valueType: ValueTypeEnum[entity.valueType],
-			dateChecked: entity.dateChecked,
-			priorityType: PriorityTypeEnum[entity.priorityType]
-		};
+		return Value.converter.toObject(entity);
 	}
 
 	toObject() {
