@@ -7,7 +7,7 @@
     "name": "misak113"
   },
   "dependencies": {
-    "asimplia-util": ">=0.3.14",
+    "asimplia-util": ">=0.3.15",
     "mongoose": "^3.8.8",
     "underscore": "^1.6.0",
     "moment": "^2.6.0",
