@@ -1,5 +1,4 @@
 
-import _ = require('underscore');
 import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
 import CheckItemList = require('./CheckItemList');

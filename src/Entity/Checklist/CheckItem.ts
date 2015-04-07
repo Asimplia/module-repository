@@ -1,5 +1,4 @@
 
-import _ = require('underscore');
 import ICheckItemObject = require('./ICheckItemObject');
 import ValueList = require('./ValueList');
 import Value = require('./Value');
