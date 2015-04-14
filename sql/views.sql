@@ -106,35 +106,14 @@ CREATE OR REPLACE VIEW feed.notpairedmasterproduct AS
 SELECT
 	loadlog.period AS createdat,
 	sitemap.eshopid AS eshopid,
-	CASE
-		WHEN sitemap.uri IS NOT NULL THEN sitemap.uri
-		WHEN heureka.uri IS NOT NULL THEN heureka.uri
-		WHEN zbozi.uri IS NOT NULL THEN zbozi.uri
-		WHEN ga_pageview.uri IS NOT NULL THEN ga_pageview.uri
-		WHEN ga_revenue.uri IS NOT NULL THEN ga_revenue.uri
-		WHEN product.uri IS NOT NULL THEN product.uri
-		ELSE NULL
-	END
-	AS uri,
-	CASE
-		WHEN heureka.productname IS NOT NULL THEN heureka.productname
-		WHEN zbozi.productname IS NOT NULL THEN zbozi.productname
-		WHEN product.productname IS NOT NULL THEN product.productname
-		WHEN priceapi.name IS NOT NULL THEN priceapi.name
-		ELSE NULL
-	END
-	AS productname,
-	CASE
-		WHEN heureka.ean IS NOT NULL THEN heureka.ean
-		WHEN zbozi.ean IS NOT NULL THEN zbozi.ean
-		WHEN priceapi.value IS NOT NULL THEN priceapi.value
-		ELSE NULL
-	END
-	AS ean,
+	COALESCE(sitemap.uri, heureka.uri, zbozi.uri, ga_pageview.uri, ga_revenue.uri, product.uri)	AS uri,
+	COALESCE(heureka.productname, zbozi.productname, product.productname, priceapi.name) AS productname,
+	COALESCE(heureka.ean, zbozi.ean, priceapi.value) AS ean,
 	public.last(heureka.heurekaid) AS heurekaid,
 	public.last(sitemap.sitemapid) AS sitemapid,
 	public.last(zbozi.zboziid) AS zboziid,
 	public.last(product.productid) AS productid,
+	public.last(priceapi.priceapiid) AS priceapiid,
 	public.last(ga_revenue.revenuesid) AS revenuesid,
 	public.last(ga_pageview.turnoutid) AS turnoutid
 FROM feed.sitemap
@@ -143,157 +122,38 @@ FULL OUTER JOIN feed.heureka ON heureka.loadlogid = sitemap.loadlogid AND heurek
 	sitemap.uri
 -- zbozi
 FULL OUTER JOIN feed.zbozi
-ON zbozi.loadlogid = 
-	CASE
-		WHEN sitemap.loadlogid IS NOT NULL THEN sitemap.loadlogid
-		WHEN heureka.loadlogid IS NOT NULL THEN heureka.loadlogid
-		ELSE NULL
-	END
-AND zbozi.eshopid = 
-	CASE
-		WHEN sitemap.eshopid IS NOT NULL THEN sitemap.eshopid
-		WHEN heureka.eshopid IS NOT NULL THEN heureka.eshopid
-		ELSE NULL
-	END
-AND zbozi.uri = 
-	CASE
-		WHEN sitemap.uri IS NOT NULL THEN sitemap.uri
-		WHEN heureka.uri IS NOT NULL THEN heureka.uri
-		ELSE NULL
-	END
+ON zbozi.loadlogid = COALESCE(sitemap.loadlogid, heureka.loadlogid)
+AND zbozi.eshopid = COALESCE(sitemap.eshopid, heureka.eshopid)
+AND zbozi.uri = COALESCE(sitemap.uri, heureka.uri)
 -- ga_pageview
 FULL OUTER JOIN feed.ga_pageview
-ON ga_pageview.loadid = 
-	CASE
-		WHEN sitemap.loadlogid IS NOT NULL THEN sitemap.loadlogid
-		WHEN heureka.loadlogid IS NOT NULL THEN heureka.loadlogid
-		WHEN zbozi.loadlogid IS NOT NULL THEN zbozi.loadlogid
-		ELSE NULL
-	END
-AND ga_pageview.eshopid = 
-	CASE
-		WHEN sitemap.eshopid IS NOT NULL THEN sitemap.eshopid
-		WHEN heureka.eshopid IS NOT NULL THEN heureka.eshopid
-		WHEN zbozi.eshopid IS NOT NULL THEN zbozi.eshopid
-		ELSE NULL
-	END
-AND ga_pageview.uri = 
-	CASE
-		WHEN sitemap.uri IS NOT NULL THEN sitemap.uri
-		WHEN heureka.uri IS NOT NULL THEN heureka.uri
-		WHEN zbozi.uri IS NOT NULL THEN zbozi.uri
-		ELSE NULL
-	END
+ON ga_pageview.loadid = COALESCE(sitemap.loadlogid, heureka.loadlogid, zbozi.loadlogid)
+AND ga_pageview.eshopid = COALESCE(sitemap.eshopid, heureka.eshopid, zbozi.eshopid)
+AND ga_pageview.uri = COALESCE(sitemap.uri, heureka.uri, zbozi.uri)
 -- ga_revenue
 FULL OUTER JOIN feed.ga_revenue
-ON ga_revenue.loadid =
-	CASE
-		WHEN sitemap.loadlogid IS NOT NULL THEN sitemap.loadlogid
-		WHEN heureka.loadlogid IS NOT NULL THEN heureka.loadlogid
-		WHEN zbozi.loadlogid IS NOT NULL THEN zbozi.loadlogid
-		WHEN ga_pageview.loadlogid IS NOT NULL THEN ga_pageview.loadlogid
-		ELSE NULL
-	END
-AND ga_revenue.eshopid = 
-	CASE
-		WHEN sitemap.eshopid IS NOT NULL THEN sitemap.eshopid
-		WHEN heureka.eshopid IS NOT NULL THEN heureka.eshopid
-		WHEN zbozi.eshopid IS NOT NULL THEN zbozi.eshopid
-		WHEN ga_pageview.eshopid IS NOT NULL THEN ga_pageview.eshopid
-		ELSE NULL
-	END
-AND ga_revenue.uri = 
-	CASE
-		WHEN sitemap.uri IS NOT NULL THEN sitemap.uri
-		WHEN heureka.uri IS NOT NULL THEN heureka.uri
-		WHEN zbozi.uri IS NOT NULL THEN zbozi.uri
-		WHEN ga_pageview.uri IS NOT NULL THEN ga_pageview.uri
-		ELSE NULL
-	END
+ON ga_revenue.loadid = COALESCE(sitemap.loadlogid, heureka.loadlogid, zbozi.loadlogid, ga_pageview.loadlogid)
+AND ga_revenue.eshopid = COALESCE(sitemap.eshopid, heureka.eshopid, zbozi.eshopid, ga_pageview.eshopid)
+AND ga_revenue.uri = COALESCE(sitemap.uri, heureka.uri, zbozi.uri, ga_pageview.uri)
 -- priceapi
 FULL OUTER JOIN feed.priceapi
-ON priceapi.loadid = 
-	CASE
-		WHEN sitemap.loadlogid IS NOT NULL THEN sitemap.loadlogid
-		WHEN heureka.loadlogid IS NOT NULL THEN heureka.loadlogid
-		WHEN zbozi.loadlogid IS NOT NULL THEN zbozi.loadlogid
-		WHEN ga_pageview.loadlogid IS NOT NULL THEN ga_pageview.loadlogid
-		WHEN ga_revenue.loadlogid IS NOT NULL THEN ga_revenue.loadlogid
-		ELSE NULL
-	END
-AND priceapi.eshopid = 
-	CASE
-		WHEN sitemap.eshopid IS NOT NULL THEN sitemap.eshopid
-		WHEN heureka.eshopid IS NOT NULL THEN heureka.eshopid
-		WHEN zbozi.eshopid IS NOT NULL THEN zbozi.eshopid
-		WHEN ga_pageview.eshopid IS NOT NULL THEN ga_pageview.eshopid
-		WHEN ga_revenue.eshopid IS NOT NULL THEN ga_revenue.eshopid
-		ELSE NULL
-	END
-AND priceapi.value = 
-	CASE
-		WHEN heureka.ean IS NOT NULL THEN heureka.ean
-		WHEN zbozi.ean IS NOT NULL THEN zbozi.ean
-		WHEN priceapi.value IS NOT NULL THEN priceapi.value
-		ELSE NULL
-	END
+ON priceapi.loadid = COALESCE(sitemap.loadlogid, heureka.loadlogid, zbozi.loadlogid, ga_pageview.loadlogid, ga_revenue.loadlogid)
+AND priceapi.eshopid = COALESCE(sitemap.eshopid, heureka.eshopid, zbozi.eshopid, ga_pageview.eshopid, ga_revenue.eshopid)
+AND priceapi.value = COALESCE(heureka.ean, zbozi.ean, priceapi.value)
 -- product
 FULL OUTER JOIN warehouse.product
-ON product.eshopid = 
-	CASE
-		WHEN sitemap.eshopid IS NOT NULL THEN sitemap.eshopid
-		WHEN heureka.eshopid IS NOT NULL THEN heureka.eshopid
-		WHEN zbozi.eshopid IS NOT NULL THEN zbozi.eshopid
-		WHEN ga_pageview.eshopid IS NOT NULL THEN ga_pageview.eshopid
-		WHEN ga_revenue.eshopid IS NOT NULL THEN ga_revenue.eshopid
-		WHEN priceapi.eshopid IS NOT NULL THEN priceapi.eshopid
-		ELSE NULL
-	END
-AND product.uri = 
-	CASE
-		WHEN sitemap.uri IS NOT NULL THEN sitemap.uri
-		WHEN heureka.uri IS NOT NULL THEN heureka.uri
-		WHEN zbozi.uri IS NOT NULL THEN zbozi.uri
-		WHEN ga_pageview.uri IS NOT NULL THEN ga_pageview.uri
-		WHEN ga_revenue.uri IS NOT NULL THEN ga_revenue.uri
-		ELSE NULL
-	END
+ON product.eshopid = COALESCE(sitemap.eshopid, heureka.eshopid, zbozi.eshopid, ga_pageview.eshopid, ga_revenue.eshopid, priceapi.eshopid)
+AND product.uri = COALESCE(sitemap.uri, heureka.uri, zbozi.uri, ga_pageview.uri, ga_revenue.uri)
 -- masterproduct
-LEFT JOIN feed.masterproduct ON masterproduct.uri = 
-	CASE
-		WHEN sitemap.uri IS NOT NULL THEN sitemap.uri
-		WHEN heureka.uri IS NOT NULL THEN heureka.uri
-		WHEN zbozi.uri IS NOT NULL THEN zbozi.uri
-		WHEN ga_pageview.uri IS NOT NULL THEN ga_pageview.uri
-		WHEN ga_revenue.uri IS NOT NULL THEN ga_revenue.uri
-		WHEN product.uri IS NOT NULL THEN product.uri
-		ELSE NULL
-	END
+LEFT JOIN feed.masterproduct
+ON masterproduct.uri = COALESCE(sitemap.uri, heureka.uri, zbozi.uri, ga_pageview.uri, ga_revenue.uri, product.uri)
 -- loadlog
-JOIN warehouse.eshopmatrixloads loadlog ON loadlog.loadid = 
-	CASE
-		WHEN sitemap.loadlogid IS NOT NULL THEN sitemap.loadlogid
-		WHEN heureka.loadlogid IS NOT NULL THEN heureka.loadlogid
-		WHEN zbozi.loadlogid IS NOT NULL THEN zbozi.loadlogid
-		WHEN ga_pageview.loadlogid IS NOT NULL THEN ga_pageview.loadlogid
-		WHEN ga_revenue.loadlogid IS NOT NULL THEN ga_revenue.loadlogid
-		ELSE NULL
-	END
-
+JOIN warehouse.eshopmatrixloads loadlog
+ON loadlog.loadid = COALESCE(sitemap.loadlogid, heureka.loadlogid, zbozi.loadlogid, ga_pageview.loadlogid, ga_revenue.loadlogid)
 -- Only not exists in masterproduct
 WHERE masterproduct.masterproductid IS NULL
 -- Only wit uri exists (because it's product main identifier)
-AND 
-	CASE
-		WHEN sitemap.uri IS NOT NULL THEN sitemap.uri
-		WHEN heureka.uri IS NOT NULL THEN heureka.uri
-		WHEN zbozi.uri IS NOT NULL THEN zbozi.uri
-		WHEN ga_pageview.uri IS NOT NULL THEN ga_pageview.uri
-		WHEN ga_revenue.uri IS NOT NULL THEN ga_revenue.uri
-		WHEN product.uri IS NOT NULL THEN product.uri
-		ELSE NULL
-	END
-	IS NOT NULL
+AND COALESCE(sitemap.uri, heureka.uri, zbozi.uri, ga_pageview.uri, ga_revenue.uri, product.uri) IS NOT NULL
 -- Products are only ga paths, which have self product from other feed
 AND (
 	ga_pageview.turnoutid IS NOT NULL AND (
@@ -312,30 +172,11 @@ GROUP BY
 	-- productid
 	product.productid,
 	-- uri
-	CASE
-		WHEN sitemap.uri IS NOT NULL THEN sitemap.uri
-		WHEN heureka.uri IS NOT NULL THEN heureka.uri
-		WHEN zbozi.uri IS NOT NULL THEN zbozi.uri
-		WHEN ga_pageview.uri IS NOT NULL THEN ga_pageview.uri
-		WHEN ga_revenue.uri IS NOT NULL THEN ga_revenue.uri
-		WHEN product.uri IS NOT NULL THEN product.uri
-		ELSE NULL
-	END,
+	COALESCE(sitemap.uri, heureka.uri, zbozi.uri, ga_pageview.uri, ga_revenue.uri, product.uri),
 	-- productname
-	CASE
-		WHEN heureka.productname IS NOT NULL THEN heureka.productname
-		WHEN zbozi.productname IS NOT NULL THEN zbozi.productname
-		WHEN product.productname IS NOT NULL THEN product.productname
-		WHEN priceapi.name IS NOT NULL THEN priceapi.name
-		ELSE NULL
-	END,
+	COALESCE(heureka.productname, zbozi.productname, product.productname, priceapi.name),
 	-- ean
-	CASE
-		WHEN heureka.ean IS NOT NULL THEN heureka.ean
-		WHEN zbozi.ean IS NOT NULL THEN zbozi.ean
-		WHEN priceapi.value IS NOT NULL THEN priceapi.value
-		ELSE NULL
-	END
+	COALESCE(heureka.ean, zbozi.ean, priceapi.value)
 ;
 
 
