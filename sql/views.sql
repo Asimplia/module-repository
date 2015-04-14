@@ -127,17 +127,17 @@ AND zbozi.eshopid = COALESCE(sitemap.eshopid, heureka.eshopid)
 AND zbozi.uri = COALESCE(sitemap.uri, heureka.uri)
 -- ga_pageview
 FULL OUTER JOIN feed.ga_pageview
-ON ga_pageview.loadid = COALESCE(sitemap.loadlogid, heureka.loadlogid, zbozi.loadlogid)
+ON ga_pageview.loadlogid = COALESCE(sitemap.loadlogid, heureka.loadlogid, zbozi.loadlogid)
 AND ga_pageview.eshopid = COALESCE(sitemap.eshopid, heureka.eshopid, zbozi.eshopid)
 AND ga_pageview.uri = COALESCE(sitemap.uri, heureka.uri, zbozi.uri)
 -- ga_revenue
 FULL OUTER JOIN feed.ga_revenue
-ON ga_revenue.loadid = COALESCE(sitemap.loadlogid, heureka.loadlogid, zbozi.loadlogid, ga_pageview.loadlogid)
+ON ga_revenue.loadlogid = COALESCE(sitemap.loadlogid, heureka.loadlogid, zbozi.loadlogid, ga_pageview.loadlogid)
 AND ga_revenue.eshopid = COALESCE(sitemap.eshopid, heureka.eshopid, zbozi.eshopid, ga_pageview.eshopid)
 AND ga_revenue.uri = COALESCE(sitemap.uri, heureka.uri, zbozi.uri, ga_pageview.uri)
 -- priceapi
 FULL OUTER JOIN feed.priceapi
-ON priceapi.loadid = COALESCE(sitemap.loadlogid, heureka.loadlogid, zbozi.loadlogid, ga_pageview.loadlogid, ga_revenue.loadlogid)
+ON priceapi.loadlogid = COALESCE(sitemap.loadlogid, heureka.loadlogid, zbozi.loadlogid, ga_pageview.loadlogid, ga_revenue.loadlogid)
 AND priceapi.eshopid = COALESCE(sitemap.eshopid, heureka.eshopid, zbozi.eshopid, ga_pageview.eshopid, ga_revenue.eshopid)
 AND priceapi.value = COALESCE(heureka.ean, zbozi.ean, priceapi.value)
 -- product
