@@ -139,7 +139,7 @@ AND ga_revenue.uri = COALESCE(sitemap.uri, heureka.uri, zbozi.uri, ga_pageview.u
 FULL OUTER JOIN feed.priceapi
 ON priceapi.loadlogid = COALESCE(sitemap.loadlogid, heureka.loadlogid, zbozi.loadlogid, ga_pageview.loadlogid, ga_revenue.loadlogid)
 AND priceapi.eshopid = COALESCE(sitemap.eshopid, heureka.eshopid, zbozi.eshopid, ga_pageview.eshopid, ga_revenue.eshopid)
-AND priceapi.value = COALESCE(heureka.ean, zbozi.ean, priceapi.value)
+AND priceapi.value = COALESCE(heureka.ean, zbozi.ean)
 -- product
 FULL OUTER JOIN warehouse.product
 ON product.eshopid = COALESCE(sitemap.eshopid, heureka.eshopid, zbozi.eshopid, ga_pageview.eshopid, ga_revenue.eshopid, priceapi.eshopid)
