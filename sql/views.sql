@@ -48,9 +48,14 @@ BEGIN
 	SET uri = regexp_replace(s.loc::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text)
 	WHERE s.uri IS NULL;
 
+-- TODO strip query params
 	UPDATE feed.ga_pageview p 
 	SET uri = regexp_replace(p.pagepath::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text)
 	WHERE p.uri IS NULL;
+
+	UPDATE feed.ga_revenue r 
+	SET uri = regexp_replace(r.pagepath::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text)
+	WHERE r.uri IS NULL;
 
 	UPDATE feed.heureka h 
 	SET uri = regexp_replace(h.url::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text)
@@ -338,10 +343,10 @@ GROUP BY
 
 CREATE OR REPLACE VIEW analytical.matrixmlc1 AS
     select
-	  feedload.eshopid as eshopid,
+	  heureka.eshopid as eshopid,
 	  'MLC1' as matrixtype,
 	  product.productid::bigint as productid,
-	  loadlog.loadid as loadid,
+	  heureka.loadlogid as loadid,
 	  0::real as scoreabs,
 	  0::real as scorerel,
 	  0::real as scorewei,
@@ -358,14 +363,9 @@ CREATE OR REPLACE VIEW analytical.matrixmlc1 AS
 	from feed.heureka
 	join feed.masterproduct on masterproduct.heurekaid = heureka.heurekaid
     join warehouse.product on product.productid = masterproduct.productid
-	join feed.feedload on feedload.loadid = heureka.loadid
-	join warehouse.eshopmatrixloads loadlog
-	  on feedload.eshopid = loadlog.eshopid
-	  and loadlog.period + (select datarefreshperiod from warehouse.eshopsettings where eshopid = feedload.eshopid limit 1)::interval > feedload.loaddate
-	  and loadlog.period < feedload.loaddate
 	left join analytical.matrix
 	  on matrix.matrixtype = 'MLC1'
-	  and matrix.loadid = loadlog.loadid
+	  and matrix.loadid = heureka.loadlogid
 	  and matrix.productid = product.productid
 	where matrix.matrixid is null
 	;
@@ -373,10 +373,10 @@ CREATE OR REPLACE VIEW analytical.matrixmlc1 AS
 
 CREATE OR REPLACE VIEW analytical.matrixmlc38 AS
     select
-	  feedload.eshopid as eshopid,
+	  ga_pageview.eshopid as eshopid,
 	  'MLC38' as matrixtype,
 	  product.productid::bigint as productid,
-	  loadlog.loadid as loadid,
+	  ga_pageview.loadlogid as loadid,
 	  0::real as scoreabs,
 	  0::real as scorerel,
 	  0::real as scorewei,
@@ -386,28 +386,26 @@ CREATE OR REPLACE VIEW analytical.matrixmlc38 AS
 	  1::integer as quadrant,
 	  now() as datevalid,
 		CASE
-			WHEN (s.pageviews::integer <= 10) THEN (1)
-			WHEN (s.pageviews::integer > 10) THEN (0)
+			WHEN (ga_pageview.pageviews::integer <= 10) THEN (1)
+			WHEN (ga_pageview.pageviews::integer > 10) THEN (0)
 		END as inputvaluex
-	FROM (SELECT ga_pageview.eshopid,
-		ga_pageview.loadid,
-		ga_pageview.pagepath,
-		(sum(ga_pageview.pageviews))::bigint AS pageviews,
-		(sum(ga_pageview.entrances))::bigint AS entrances,
-		ga_pageview.uri,
-                productid
-		FROM ga_pageview
-		join feed.masterproduct on masterproduct.turnoutid = ga_pageview.turnoutid
-		GROUP BY ga_pageview.loadid, ga_pageview.eshopid, ga_pageview.uri, ga_pageview.pagepath, productid) s
-    join warehouse.product on product.productid = s.productid
-	join feed.feedload on feedload.loadid = s.loadid
-	join warehouse.eshopmatrixloads loadlog
-	  on feedload.eshopid = loadlog.eshopid
-	  and loadlog.period + (select datarefreshperiod from warehouse.eshopsettings where eshopid = feedload.eshopid limit 1)::interval > feedload.loaddate
-	  and loadlog.period < feedload.loaddate
+	FROM (
+		SELECT ga_pageview.eshopid,
+			ga_pageview.loadid,
+			ga_pageview.pagepath,
+			(sum(ga_pageview.pageviews))::bigint AS pageviews,
+			(sum(ga_pageview.entrances))::bigint AS entrances,
+			ga_pageview.uri,
+	        masterproduct.productid,
+	        ga_pageview.loadlogid
+		FROM feed.ga_pageview
+		JOIN feed.masterproduct on masterproduct.turnoutid = ga_pageview.turnoutid
+		GROUP BY ga_pageview.loadid, ga_pageview.eshopid, ga_pageview.uri, ga_pageview.pagepath, masterproduct.productid, ga_pageview.loadlogid
+	) ga_pageview
+    join warehouse.product on product.productid = ga_pageview.productid
 	left join analytical.matrix
 	  on matrix.matrixtype = 'MLC38'
-	  and matrix.loadid = loadlog.loadid
+	  and matrix.loadid = ga_pageview.loadlogid
 	  and matrix.productid = product.productid
 	where matrix.matrixid is null;
 
