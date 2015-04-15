@@ -992,7 +992,7 @@ create table warehouse.product (
    eshopid              INT8                 not null,
    productname          VARCHAR(2048)        null,
    baseprice            REAL                 not null,
-   url                  VARCHAR(1000)        null,
+   uri                  VARCHAR(1000)        null,
    vat                  REAL                 not null,
    datecreated          timestamptz          null,
    datechanged          timestamptz          not null,
