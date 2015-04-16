@@ -234,4 +234,22 @@ $$ LANGUAGE plpgsql;
 
 
 -- Matrix fullfilling
-
+CREATE OR REPLACE FUNCTION analytical.update_matrices()
+RETURNS void AS $$
+DECLARE
+   matrixtype text;
+BEGIN
+	FOR matrixtype IN SELECT regexp_split_to_table(
+		'mlc1,mlc2,mlc3,mlc4,mlc5,mlc6,mlc8,mlc9,mlc10,mlc11,mlc12,mlc13,mlc14,mlc15,'
+		|| 'mlc21,mlc21,mlc22,mlc23,mlc24,mlc25,mlc26,mlc27,mlc28,mlc29,mlc30,mlc31,mlc32,mlc33,mlc34,mlc35,'
+		|| 'mlc36,mlc37,mlc38',
+		','
+	)
+	LOOP
+		EXECUTE 'INSERT INTO analytical.matrix
+		 (eshopid, matrixtype, productid, loadid, scoreabs, scorerel, scorewei, changeabs, changerel, changewei, quadrant, datevalid, inputvaluex)
+		 SELECT eshopid, matrixtype, productid, loadid, scoreabs, scorerel, scorewei, changeabs, changerel, changewei, quadrant, datevalid, inputvaluex
+		 FROM analytical.matrix' || matrixtype || '';
+	END LOOP;
+END;
+$$ LANGUAGE plpgsql;
