@@ -26,11 +26,7 @@ class List<Entity extends IEntity> extends EntityList<Entity> {
 			return this;
 		}
 		items.forEach((item: any) => {
-			try {
-				this.Entities.push(entityFactory(item));
-			} catch (e) {
-				console.warn('Entity was deleted from List becouse error happened during create entity', item, e);
-			}
+			this.Entities.push(entityFactory(item));
 		});
 		return this;
 	}
