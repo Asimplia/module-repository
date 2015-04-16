@@ -809,8 +809,8 @@ create table feed.masterproduct (
    turnoutid            INT4                 null,
    createdat            TIMESTAMPTZ          not null,
    uri                  VARCHAR(2048)        not null,
-   productname          VARCHAR(255)         not null,
-   ean                  VARCHAR(13)          not null,
+   productname          VARCHAR(255)         null,
+   ean                  VARCHAR(13)          null,
    productid            INT4                 null,
    constraint PK_MASTERPRODUCT primary key (masterproductid)
 );
@@ -988,7 +988,7 @@ create table feed.priceapioffer (
 /*==============================================================*/
 create table warehouse.product (
    productid            SERIAL not null,
-   originalid           VARCHAR(100)         not null,
+   originalid           VARCHAR(100)         null,
    eshopid              INT8                 not null,
    productname          VARCHAR(2048)        null,
    baseprice            REAL                 not null,
