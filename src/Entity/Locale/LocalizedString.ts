@@ -1,45 +1,53 @@
 ﻿
 import Language = require('./Language');
 import LanguageEnum = require('./LanguageEnum');
-import EntityPreparer = require('../EntityPreparer');
 import ILocalizedStringObject = require('./ILocalizedStringObject');
+import Util = require('asimplia-util');
+import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
+import Type = Util.ODBM.Mapping.Type;
+import Converter = Util.ODBM.Entity.Converter;
+import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = LocalizedString;
 class LocalizedString {
 
-	private en: string;
-	private cs: string;
+	static $entity: IEntityAnnotation = {
+		$dbs: DatabaseSystem.MONGO_DB,
+		cs: Type.String,
+		en: Type.String
+	};
 
-	get Cs() { return this.cs; }
-	get En() { return this.en; }
+	get Cs() { return this.object.cs; }
+	get En() { return this.object.en; }
 
-	constructor(langsObject: ILocalizedStringObject) {
-		if (!langsObject) {
-			langsObject = { en: null, cs: null };
+	constructor(private object: ILocalizedStringObject) {
+		if (!this.object) {
+			this.object = { en: null, cs: null };
 		}
-		this.en = EntityPreparer.stringOrNull(langsObject.en);
-		this.cs = EntityPreparer.stringOrNull(langsObject.cs);
 	}
 
 	translate(language: Language) {
 		switch (language.Enum) {
 			case LanguageEnum.cs:
-				return this.cs;
+				return this.object.cs;
 			case LanguageEnum.en:
-				return this.en;
+				return this.object.en;
 			default:
 				throw new Error('Not implemented Language');
 		}
 	}
 
 	contains(s: string): boolean {
-		return (this.en === null || this.en.indexOf(s) !== -1)
-			&& (this.cs === null || this.cs.indexOf(s) !== -1);
+		return (this.object.en === null || this.object.en.indexOf(s) !== -1)
+			&& (this.object.cs === null || this.object.cs.indexOf(s) !== -1);
 	}
 
 	replace(s: string, t: string): LocalizedString {
-		var en = this.en !== null ? this.en.replace(s, t) : null;
-		var cs = this.cs !== null ? this.cs.replace(s, t) : null;
+		var en = this.object.en !== null ? this.object.en.replace(s, t) : null;
+		var cs = this.object.cs !== null ? this.object.cs.replace(s, t) : null;
 		return new LocalizedString({
 			en: en, cs: cs
 		});
@@ -47,8 +55,8 @@ class LocalizedString {
 
 	toObject(): ILocalizedStringObject {
 		return {
-			cs: this.cs,
-			en: this.en
+			cs: this.object.cs,
+			en: this.object.en
 		};
 	}
 }
