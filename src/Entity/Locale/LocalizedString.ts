@@ -5,7 +5,6 @@ import ILocalizedStringObject = require('./ILocalizedStringObject');
 import Util = require('asimplia-util');
 import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
 import Type = Util.ODBM.Mapping.Type;
-import Converter = Util.ODBM.Entity.Converter;
 import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
 /* tslint:disable */
 Util;
