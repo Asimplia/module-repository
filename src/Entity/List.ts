@@ -36,7 +36,7 @@ class List<Entity extends IEntity> extends EntityList<Entity> {
 		return this;
 	}
 
-	remove(item: Entity): void {
+	removeMuttable(item: Entity): void {
 		var i = _.indexOf(this.Entities, item);
 		if (i === null) {
 			throw new Error('Item ' + item + ' not exists in List');
