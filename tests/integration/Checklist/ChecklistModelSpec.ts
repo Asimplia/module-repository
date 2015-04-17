@@ -5,11 +5,6 @@ import ChecklistLoader = Repository.Checklist.ChecklistLoader;
 import ChecklistRecorder = Repository.Checklist.ChecklistRecorder;
 import Checklist = Repository.Entity.Checklist.Checklist;
 import ChecklistList = Repository.Entity.Checklist.ChecklistList;
-import Util = require('asimplia-util');
-import DateFactory = Util.DateTime.DateFactory;
-/* tslint:disable */
-Util;
-/* tslint:enable */
 
 describe('ChecklistModel', () => {
 	var di = Repository.getDependencyInjection();
@@ -19,14 +14,13 @@ describe('ChecklistModel', () => {
 	});
 
 	describe('load recorded checklist', () => {
-		var checklistModel = di.service('Definition.Checklist.ChecklistModel');
-		var checklistRecorder = new ChecklistRecorder(checklistModel, new DateFactory);
-		var checklistLoader = new ChecklistLoader(checklistModel);
 		beforeEach((done: Function) => {
 			i.setup(done);
 		});
 
 		it('should return same instance', (done: Function) => {
+			var checklistRecorder = di.get<ChecklistRecorder>(ChecklistRecorder);
+			var checklistLoader = di.get<ChecklistLoader>(ChecklistLoader);
 			var checklist = Checklist.fromObject({
 				id: null,
 				eShopId: 1,
@@ -57,6 +51,8 @@ describe('ChecklistModel', () => {
 		});
 
 		it('should return same instance by insert or update list', (done: Function) => {
+			var checklistRecorder = di.get<ChecklistRecorder>(ChecklistRecorder);
+			var checklistLoader = di.get<ChecklistLoader>(ChecklistLoader);
 			var checklistList = new ChecklistList([
 				Checklist.fromObject({
 					id: null,
@@ -81,6 +77,7 @@ describe('ChecklistModel', () => {
 			]);
 			checklistRecorder.insertOrUpdateList(checklistList, (e: Error, checklistList?: ChecklistList) => {
 				if (e) {
+					console.error(e);
 					expect(false).toBeTruthy();
 					done();
 					return;
@@ -89,6 +86,7 @@ describe('ChecklistModel', () => {
 				expect(checklist.Id).toBe('1');
 				checklistLoader.getById(1, '1', (e: Error, checklist?: Checklist) => {
 					if (e) {
+						console.error(e);
 						expect(false).toBeTruthy();
 						done();
 						return;
@@ -100,6 +98,7 @@ describe('ChecklistModel', () => {
 				expect(checklist.Id).toBe('2');
 				checklistLoader.getById(1, '2', (e: Error, checklist?: Checklist) => {
 					if (e) {
+						console.error(e);
 						expect(false).toBeTruthy();
 						done();
 						return;

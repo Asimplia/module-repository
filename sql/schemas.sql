@@ -511,6 +511,7 @@ create table feed.feedload (
    startedat            TIMESTAMPTZ          null,
    finishedat           TIMESTAMPTZ          null,
    valid                boolean              null,
+   loadlogid            INT8                 null,
    constraint PK_FEEDLOAD primary key (loadid)
 );
 
@@ -536,6 +537,7 @@ create table feed.ga_pageview (
    pageviews            INT8                 null,
    entrances            INT8                 null,
    viewedat             Timestamptz          not null,
+   loadlogid            INT8                 null,
    constraint PK_GA_PAGEVIEW primary key (turnoutid)
 );
 
@@ -552,6 +554,7 @@ create table feed.ga_revenue (
    itemrevenue          REAL                 null,
    uri                  VARCHAR(2048)        null,
    receivedat           timestamptz          not null,
+   loadlogid            INT8                 null,
    constraint PK_GA_REVENUE primary key (revenuesid)
 );
 
@@ -675,6 +678,7 @@ create table feed.heureka (
    itemgroup_id         VARCHAR(36)          null,
    dues                 REAL                 null,
    uri                  VARCHAR(2048)        null,
+   loadlogid            INT8                 null,
    constraint PK_HEUREKA primary key (heurekaid)
 );
 
@@ -686,6 +690,7 @@ create table feed.heurekaaccessory (
    heurekaid            INT8                 not null,
    loadid               INT8                 not null,
    accessory            varchar(36)          not null,
+   loadlogid            INT8                 null,
    constraint PK_HEUREKAACCESSORY primary key (accessoryid)
 );
 
@@ -700,6 +705,7 @@ create table feed.heurekadelivery (
    deliveryid           VARCHAR(50)          not null,
    deliveryprice        REAL                 null,
    deliverypricecod     REAL                 null,
+   loadlogid            INT8                 null,
    constraint PK_HEUREKADELIVERY primary key (heurekadeliveryid)
 );
 
@@ -713,6 +719,7 @@ create table feed.heurekaparam (
    item_id              VARCHAR(36)          not null,
    paramname            VARCHAR(50)          null,
    value                VARCHAR(50)          null,
+   loadlogid            INT8                 null,
    constraint PK_HEUREKAPARAM primary key (paramid)
 );
 
@@ -801,9 +808,10 @@ create table feed.masterproduct (
    revenuesid           INT4                 null,
    turnoutid            INT4                 null,
    createdat            TIMESTAMPTZ          not null,
-   urn                  VARCHAR(2048)        not null,
-   productname          VARCHAR(255)         not null,
-   ean                  VARCHAR(13)          not null,
+   uri                  VARCHAR(2048)        not null,
+   productname          VARCHAR(255)         null,
+   ean                  VARCHAR(13)          null,
+   productid            INT4                 null,
    constraint PK_MASTERPRODUCT primary key (masterproductid)
 );
 
@@ -931,6 +939,7 @@ create table feed.priceapi (
    url                  VARCHAR(2048)        null,
    image_url            VARCHAR(2048)        null,
    description          text                 null,
+   loadlogid            INT8                 null,
    constraint PK_PRICEAPI primary key (priceapiid)
 );
 
@@ -952,6 +961,7 @@ create table feed.priceapijob (
    eshopid              INT8                 not null,
    loadid               INT8                 not null,
    job_id               VARCHAR(30)          not null,
+   loadlogid            INT8                 null,
    constraint PK_PRICEAPIJOB primary key (priceapijobid)
 );
 
@@ -978,11 +988,11 @@ create table feed.priceapioffer (
 /*==============================================================*/
 create table warehouse.product (
    productid            SERIAL not null,
-   originalid           VARCHAR(100)         not null,
+   originalid           VARCHAR(100)         null,
    eshopid              INT8                 not null,
    productname          VARCHAR(2048)        null,
    baseprice            REAL                 not null,
-   url                  VARCHAR(1000)        null,
+   uri                  VARCHAR(1000)        null,
    vat                  REAL                 not null,
    datecreated          timestamptz          null,
    datechanged          timestamptz          not null,
@@ -1117,6 +1127,7 @@ create table feed.sitemap (
    changefreq           VARCHAR(20)          null,
    priority             REAL                 null,
    uri                  VARCHAR(2048)        null,
+   loadlogid            INT8                 null,
    constraint PK_SITEMAP primary key (sitemapid)
 );
 
@@ -1208,6 +1219,8 @@ create table feed.zbozi (
    ean                  VARCHAR(13)          null,
    productno            VARCHAR(50)          null,
    productnameext       VARCHAR(255)         null,
+   uri                  VARCHAR(2048)        null,
+   loadlogid            INT8                 null,
    constraint PK_ZBOZI primary key (zboziid)
 );
 
@@ -1219,6 +1232,7 @@ create table feed.zbozi_variant (
    loadid               INT8                 not null,
    zboziid              INT8                 not null,
    variantzboziid       INT8                 not null,
+   loadlogid            INT8                 null,
    constraint PK_ZBOZI_VARIANT primary key (variantid)
 );
 
