@@ -39,6 +39,8 @@ class Checklist {
 	get DateCreated() { return this.object.dateCreated; }
 	get TotalCount() { return this.CheckItemList.count(); } // TODO total count should be whole products, not only checkItems
 
+	set CheckItemList(itemList: CheckItemList) { this.object.checkItems = itemList ? itemList.toArray(CheckItem.toObject) : null; }
+
 	constructor(
 		private object: IChecklistObject
 	) {}

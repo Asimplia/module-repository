@@ -14,6 +14,7 @@ export import IChecklistObject = require('./IChecklistObject');
 export import ICheckItemObject = require('./ICheckItemObject');
 export import IValueObject = require('./IValueObject');
 export import ICheckItemId = require('./ICheckItemId');
+export import ICheckItemFilterObject = require('./ICheckItemFilterObject');
 /* tslint:disable */
 Checklist;
 ChecklistList;

@@ -40,6 +40,10 @@ class Value {
 		return this.PriorityType == PriorityTypeEnum.GREEN;
 	}
 
+	isRed() {
+		return this.PriorityType == PriorityTypeEnum.RED;
+	}
+
 	isDone() {
 		return this.isGreen() || this.isChecked();
 	}

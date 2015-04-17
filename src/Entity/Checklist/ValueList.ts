@@ -2,6 +2,7 @@
 import List = require('../List');
 import Value = require('./Value');
 import ValueTypeEnum = require('./ValueTypeEnum');
+import ValueTypeGroupList = require('./ValueType/ValueTypeGroupList');
 
 export = ValueList;
 class ValueList extends List<Value> {
@@ -21,6 +22,12 @@ class ValueList extends List<Value> {
 	areAllDone() {
 		return this.all((value: Value) => {
 			return value.isDone();
+		});
+	}
+
+	hasRedOfValueTypeGroupList(groupList: ValueTypeGroupList) {
+		return this.any((value: Value) => {
+			return value.isRed() && groupList.getValueTypeList().containsValueTypeEnum(value.ValueType);
 		});
 	}
 
