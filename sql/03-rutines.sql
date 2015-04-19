@@ -7,13 +7,20 @@ BEGIN
 	SET uri = regexp_replace(s.loc::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text)
 	WHERE s.uri IS NULL;
 
--- TODO strip query params
 	UPDATE feed.ga_pageview p 
-	SET uri = regexp_replace(p.pagepath::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text)
+	SET uri = regexp_replace(
+		regexp_replace(p.pagepath::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text),
+		-- strip query params
+		'\?.*$'::text, ''::text
+	)
 	WHERE p.uri IS NULL;
 
 	UPDATE feed.ga_revenue r 
-	SET uri = regexp_replace(r.pagepath::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text)
+	SET uri = regexp_replace(
+		regexp_replace(r.pagepath::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text),
+		-- strip query params
+		'\?.*$'::text, ''::text
+	)
 	WHERE r.uri IS NULL;
 
 	UPDATE feed.heureka h 
