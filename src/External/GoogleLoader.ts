@@ -1,5 +1,7 @@
 
 import moment = require('moment');
+import _ = require('underscore');
+import each = require('each');
 /* tslint:disable */
 var googleapis = require('googleapis');
 /* tslint:enable */
@@ -86,6 +88,7 @@ class GoogleLoader {
 		segment: string,
 		callback: (e: Error, data?: any) => void
 	) {
+		var limitOnPage = 10000;
 		var oauth2 = this.createOAuth2();
 		oauth2.setCredentials({
 			access_token: accessToken
@@ -99,7 +102,7 @@ class GoogleLoader {
 			'start-date': moment(startDate).format('YYYY-MM-DD'),
 			'end-date': moment(endDate).format('YYYY-MM-DD'),
 			'metrics': metrics ? metrics.join(',') : '',
-			'max-results': 10000 // TODO add paging
+			'max-results': limitOnPage
 		};
 		if (dimensions) {
 			options.dimensions = dimensions.join(',');
@@ -114,20 +117,32 @@ class GoogleLoader {
 			options.segment = segment;
 		}
 
-		analytics.data.ga.get(options, (e: Error, result?: any) => {
-			if (e) {
-				callback(e);
-				return;
+		var allResult: any = null;
+		var noMoreResults = false;
+		var iterations = _.range(0, 200);
+		each(iterations)
+		.on('item', (i: number, next: (e?: Error) => void) => {
+			if (noMoreResults) {
+				return next();
 			}
-			if (!result.rows) {
-				console.warn('In key rows is not valid array response');
-				return callback(null, result);
-			}
-			if (result.rows.length == 10000) {
-				console.error('Result has more then 10000 rows, but it is not implemented yet');
-			}
-			callback(null, result);
-		});
+			options['start-index'] = i * limitOnPage + 1;
+			analytics.data.ga.get(options, (e: Error, result?: any) => {
+				if (e) return next(e);
+				if (!result.rows || result.rows.length == 0) {
+					noMoreResults = true;
+				} else {
+					if (allResult === null) {
+						allResult = result;
+					} else {
+						allResult.rows.splice.apply(allResult.rows, [allResult.rows.length, 0].concat(result.rows));
+					}
+				}
+				next(null);
+			});
+		})
+		.on('error', (e: Error) => callback(e))
+		.on('end', () => callback(null, allResult))
+		.parallel(1);
 	}
 
 	private createOAuth2() {
