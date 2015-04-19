@@ -54,11 +54,11 @@ class Checklist {
 	}
 
 	static fromObject(object: IChecklistObject) {
-		return this.converter.fromObject(object);
+		return Checklist.converter.fromObject(object);
 	}
 
 	static toObject(entity: Checklist): IChecklistObject {
-		return this.converter.toObject(entity);
+		return Checklist.converter.toObject(entity);
 	}
 
 	toObject() {
