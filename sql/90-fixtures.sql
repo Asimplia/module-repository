@@ -87,3 +87,6 @@ INSERT INTO feed."feedcolumn" ("feedcolumnid", "feedcode", "entity", "property",
 (273,	'ZBOZI',	'ZBOZI_PRODUCT',	'ean',	'STRING',	13),
 (274,	'ZBOZI',	'ZBOZI_PRODUCT',	'productNo',	'STRING',	50),
 (275,	'ZBOZI',	'ZBOZI_PRODUCT',	'productNameExt',	'STRING',	255);
+
+INSERT INTO warehouse."eshopsettings" ("settingsid", "eshopid", "datarefreshperiod", "datestart", "datechanged") VALUES
+(1,	1,	'1day',	now() - interval '7day',	now());

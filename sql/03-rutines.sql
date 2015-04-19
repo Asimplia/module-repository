@@ -9,19 +9,15 @@ BEGIN
 
 	UPDATE feed.ga_pageview p 
 	SET uri = regexp_replace(
-		regexp_replace(p.pagepath::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text),
+		-- regexp_replace(
+			regexp_replace(p.pagepath::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text),
+			-- strip hash params
+		-- 	'\#.*$'::text, ''::text
+		-- ),
 		-- strip query params
 		'\?.*$'::text, ''::text
 	)
 	WHERE p.uri IS NULL;
-
-	UPDATE feed.ga_revenue r 
-	SET uri = regexp_replace(
-		regexp_replace(r.pagepath::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text),
-		-- strip query params
-		'\?.*$'::text, ''::text
-	)
-	WHERE r.uri IS NULL;
 
 	UPDATE feed.heureka h 
 	SET uri = regexp_replace(h.url::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text)
@@ -58,7 +54,7 @@ BEGIN
 	LOOP
 		EXECUTE 'UPDATE feed.' || tablename || '
 		SET loadlogid = feedload.loadlogid
-		FROM feedload
+		FROM feed.feedload
 		WHERE feedload.loadid = ' || tablename || '.loadid
 		AND ' || tablename || '.loadlogid IS NULL';
 	END LOOP;
@@ -78,7 +74,7 @@ BEGIN
 	FROM (
 	SELECT
 		eshopid, productname, uri
-	FROM v_masterproduct
+	FROM feed.v_masterproduct
 	) as source (
 		eshopid, productname, uri
 	)
@@ -110,7 +106,7 @@ BEGIN
 			now(),
 			TRUE,
 			source.uri
-		FROM v_masterproduct source
+		FROM feed.v_masterproduct source
 		LEFT JOIN warehouse.product
 			ON product.eshopid = source.eshopid
 			AND product.uri = source.uri
@@ -153,7 +149,7 @@ BEGIN
 		priceapiid,
 		revenuesid,
 		turnoutid
-	FROM v_masterproduct
+	FROM feed.v_masterproduct
 	) as source (
 		createdat,
 		eshopid,
@@ -200,7 +196,7 @@ BEGIN
 			source.priceapiid,
 			source.revenuesid,
 			source.turnoutid
-		FROM v_masterproduct source
+		FROM feed.v_masterproduct source
 		LEFT JOIN feed.masterproduct
 			ON masterproduct.eshopid = source.eshopid
 			AND masterproduct.uri = source.uri

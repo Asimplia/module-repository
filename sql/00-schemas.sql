@@ -553,7 +553,6 @@ create table feed.ga_revenue (
    productsku           VARCHAR(100)         null,
    itemquantity         INT4                 null,
    itemrevenue          REAL                 null,
-   uri                  VARCHAR(2048)        null,
    receivedat           timestamptz          not null,
    loadlogid            INT8                 null,
    constraint PK_GA_REVENUE primary key (revenuesid)
