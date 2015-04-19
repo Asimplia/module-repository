@@ -56,7 +56,7 @@ class IntegrationPreparer {
 				return;
 			}
 			console.log('MongoDB dropped');
-			this.processSQLFile(this.pgClient, __dirname + '/../../sql/schemas.sql', () => {
+			this.processSQLFile(this.pgClient, __dirname + '/../../sql/01-schemas.sql', () => {
 				console.log('PostgreSQL dropped');
 				done();
 			});

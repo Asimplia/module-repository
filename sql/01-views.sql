@@ -6,7 +6,7 @@ CREATE OR REPLACE VIEW warehouse.eshopmatrixloads AS
     a.period
    FROM ( SELECT s.eshopid,
             t.period
-           FROM eshopsettings s,
+           FROM warehouse.eshopsettings s,
             LATERAL generate_series(s.datestart, now(), (s.datarefreshperiod)::interval) t(period)) a;
 
 

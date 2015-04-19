@@ -537,6 +537,7 @@ create table feed.ga_pageview (
    pageviews            INT8                 null,
    entrances            INT8                 null,
    viewedat             Timestamptz          not null,
+   uri                  VARCHAR(2048)        null,
    loadlogid            INT8                 null,
    constraint PK_GA_PAGEVIEW primary key (turnoutid)
 );
