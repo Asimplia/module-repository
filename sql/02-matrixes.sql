@@ -34,7 +34,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc1 AS
 		AND masterproduct.productid IS NOT NULL
 		AND heureka.heurekaid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc2 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc2 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC2' AS matrixtype,
@@ -68,7 +68,7 @@ CREATE VIEW analytical.matrixmlc2 AS
 		AND masterproduct.productid IS NOT NULL
 		AND heureka.heurekaid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc3 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc3 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC3' AS matrixtype,
@@ -102,7 +102,7 @@ CREATE VIEW analytical.matrixmlc3 AS
 		AND masterproduct.productid IS NOT NULL
 		AND heureka.heurekaid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc4 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc4 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC4' AS matrixtype,
@@ -136,7 +136,7 @@ CREATE VIEW analytical.matrixmlc4 AS
 		AND masterproduct.productid IS NOT NULL
 		AND heureka.heurekaid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc5 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc5 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC5' AS matrixtype,
@@ -170,7 +170,7 @@ CREATE VIEW analytical.matrixmlc5 AS
 		AND masterproduct.productid IS NOT NULL
 		AND heureka.heurekaid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc6 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc6 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC6' AS matrixtype,
@@ -206,7 +206,7 @@ CREATE VIEW analytical.matrixmlc6 AS
 
 -- TODO matrixmlc7 missing
 
-CREATE VIEW analytical.matrixmlc8 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc8 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC8' AS matrixtype,
@@ -240,7 +240,7 @@ CREATE VIEW analytical.matrixmlc8 AS
 		AND masterproduct.productid IS NOT NULL
 		AND heureka.heurekaid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc9 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc9 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC9' AS matrixtype,
@@ -274,7 +274,7 @@ CREATE VIEW analytical.matrixmlc9 AS
 		AND masterproduct.productid IS NOT NULL
 		AND heureka.heurekaid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc10 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc10 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC10' AS matrixtype,
@@ -308,7 +308,7 @@ CREATE VIEW analytical.matrixmlc10 AS
 		AND masterproduct.productid IS NOT NULL
 		AND heureka.heurekaid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc11 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc11 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC11' AS matrixtype,
@@ -342,7 +342,7 @@ CREATE VIEW analytical.matrixmlc11 AS
 		AND masterproduct.productid IS NOT NULL
 		AND heureka.heurekaid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc12 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc12 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC12' AS matrixtype,
@@ -376,7 +376,7 @@ CREATE VIEW analytical.matrixmlc12 AS
 		AND masterproduct.productid IS NOT NULL
 		AND heureka.heurekaid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc13 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc13 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC13' AS matrixtype,
@@ -410,7 +410,7 @@ CREATE VIEW analytical.matrixmlc13 AS
 		AND masterproduct.productid IS NOT NULL
 		AND heureka.heurekaid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc14 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc14 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC14' AS matrixtype,
@@ -444,7 +444,7 @@ CREATE VIEW analytical.matrixmlc14 AS
 		AND masterproduct.productid IS NOT NULL
 		AND heureka.heurekaid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc15 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc15 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC15' AS matrixtype,
@@ -482,7 +482,7 @@ CREATE VIEW analytical.matrixmlc15 AS
 
 
 -- zbozi feeds
-CREATE VIEW analytical.matrixmlc20 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc20 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC20' AS matrixtype,
@@ -516,7 +516,7 @@ CREATE VIEW analytical.matrixmlc20 AS
 		AND masterproduct.productid IS NOT NULL
 		AND zbozi.zboziid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc21 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc21 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC21' AS matrixtype,
@@ -550,7 +550,7 @@ CREATE VIEW analytical.matrixmlc21 AS
 		AND masterproduct.productid IS NOT NULL
 		AND zbozi.zboziid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc22 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc22 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC22' AS matrixtype,
@@ -584,7 +584,7 @@ CREATE VIEW analytical.matrixmlc22 AS
 		AND masterproduct.productid IS NOT NULL
 		AND zbozi.zboziid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc23 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc23 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC23' AS matrixtype,
@@ -618,7 +618,7 @@ CREATE VIEW analytical.matrixmlc23 AS
 		AND masterproduct.productid IS NOT NULL
 		AND zbozi.zboziid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc24 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc24 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC24' AS matrixtype,
@@ -652,7 +652,7 @@ CREATE VIEW analytical.matrixmlc24 AS
 		AND masterproduct.productid IS NOT NULL
 		AND zbozi.zboziid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc25 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc25 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC25' AS matrixtype,
@@ -686,7 +686,7 @@ CREATE VIEW analytical.matrixmlc25 AS
 		AND masterproduct.productid IS NOT NULL
 		AND zbozi.zboziid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc26 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc26 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC26' AS matrixtype,
@@ -720,7 +720,7 @@ CREATE VIEW analytical.matrixmlc26 AS
 		AND masterproduct.productid IS NOT NULL
 		AND zbozi.zboziid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc27 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc27 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC27' AS matrixtype,
@@ -754,7 +754,7 @@ CREATE VIEW analytical.matrixmlc27 AS
 		AND masterproduct.productid IS NOT NULL
 		AND zbozi.zboziid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc28 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc28 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC28' AS matrixtype,
@@ -788,7 +788,7 @@ CREATE VIEW analytical.matrixmlc28 AS
 		AND masterproduct.productid IS NOT NULL
 		AND zbozi.zboziid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc29 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc29 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC29' AS matrixtype,
@@ -822,7 +822,7 @@ CREATE VIEW analytical.matrixmlc29 AS
 		AND masterproduct.productid IS NOT NULL
 		AND zbozi.zboziid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc30 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc30 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC30' AS matrixtype,
@@ -856,7 +856,7 @@ CREATE VIEW analytical.matrixmlc30 AS
 		AND masterproduct.productid IS NOT NULL
 		AND zbozi.zboziid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc31 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc31 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC31' AS matrixtype,
@@ -890,7 +890,7 @@ CREATE VIEW analytical.matrixmlc31 AS
 		AND masterproduct.productid IS NOT NULL
 		AND zbozi.zboziid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc32 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc32 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC32' AS matrixtype,
@@ -924,7 +924,7 @@ CREATE VIEW analytical.matrixmlc32 AS
 		AND masterproduct.productid IS NOT NULL
 		AND zbozi.zboziid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc33 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc33 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC33' AS matrixtype,
@@ -958,7 +958,7 @@ CREATE VIEW analytical.matrixmlc33 AS
 		AND masterproduct.productid IS NOT NULL
 		AND zbozi.zboziid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc34 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc34 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC34' AS matrixtype,
@@ -993,7 +993,7 @@ CREATE VIEW analytical.matrixmlc34 AS
 		AND zbozi.zboziid IS NOT NULL;
 
 -- feed existing
-CREATE VIEW analytical.matrixmlc35 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc35 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC35' AS matrixtype,
@@ -1022,7 +1022,7 @@ CREATE VIEW analytical.matrixmlc35 AS
 	WHERE matrix.matrixid is NULL
 		AND masterproduct.productid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc36 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc36 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC36' AS matrixtype,
@@ -1051,7 +1051,7 @@ CREATE VIEW analytical.matrixmlc36 AS
 	WHERE matrix.matrixid is NULL
 		AND masterproduct.productid IS NOT NULL;
 
-CREATE VIEW analytical.matrixmlc37 AS
+CREATE OR REPLACE VIEW analytical.matrixmlc37 AS
 	SELECT
 		masterproduct.eshopid AS eshopid,
 		'MLC37' AS matrixtype,
