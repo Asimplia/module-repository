@@ -341,6 +341,7 @@ create table warehouse.clanguage (
 create table analytical.cmatrix (
    matrixtype           VARCHAR(10)          not null,
    description          VARCHAR(250)         not null,
+   inputvaluexthreshold REAL                 null,
    constraint PK_CMATRIX primary key (matrixtype)
 );
 

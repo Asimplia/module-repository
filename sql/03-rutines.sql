@@ -223,3 +223,19 @@ BEGIN
 	END LOOP;
 END;
 $$ LANGUAGE plpgsql;
+
+
+
+
+-- Signal fullfilling
+CREATE OR REPLACE FUNCTION analytical.update_signal()
+RETURNS void AS $$
+BEGIN
+	INSERT INTO analytical.signal
+	(matrixid, datecreated)
+	SELECT matrixid, datecreated
+	FROM analytical.v_signal
+	;
+END;
+$$ LANGUAGE plpgsql;
+
