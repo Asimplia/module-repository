@@ -33,6 +33,8 @@ class CheckItem {
 	get Label() { return new LocalizedString(this.object.label); }
 	get ValueList() { return CheckItem.converter.getList<ValueList, Value>(ValueList, Value, this.object.values); }
 
+	set ValueList(valueList: ValueList) { this.object.values = valueList.toArray(Value.toObject); }
+
 	constructor(
 		private object: ICheckItemObject
 	) {}
