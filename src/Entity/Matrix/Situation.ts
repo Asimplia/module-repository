@@ -9,6 +9,11 @@ import MatrixCustomer = require('./MatrixCustomer');
 import MatrixChecklist = require('./MatrixChecklist');
 import SectionEnum = require('../Section/SectionEnum');
 import EntityPreparer = require('../EntityPreparer');
+import Util = require('asimplia-util');
+import Exception = Util.Error.Exception;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = Situation;
 class Situation implements IEntity {
@@ -67,6 +72,9 @@ class Situation implements IEntity {
 		}
 		var customerMatrix = <MatrixCustomer> this.signalList.first().Matrix;
 		return customerMatrix.Customer.Id;
+	}
+	get OrderId(): number {
+		throw new Exception('Not implemented yet order matrixes in situation');
 	}
 
 	constructor(
