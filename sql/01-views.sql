@@ -21,11 +21,11 @@ CREATE OR REPLACE VIEW warehouse.eshopmatrixloads AS
 -- fullfilling masterproduct
 CREATE OR REPLACE VIEW feed.v_masterproduct AS
 SELECT
-	createdat,
+	public.last(createdat) AS createdat,
 	eshopid,
 	uri,
 	public.first(productname) AS productname,
-	ean,
+	public.last(ean) AS ean,
 	productid,
 	public.last(heurekaid) AS heurekaid,
 	public.last(sitemapid) AS sitemapid,
@@ -98,10 +98,8 @@ AND (
 ORDER BY loadlog.loadid, productname
 ) masterproduct
 GROUP BY
-	createdat,
 	eshopid,
 	uri,
-	ean,
 	productid
 ;
 
