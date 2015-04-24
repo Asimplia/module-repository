@@ -5,7 +5,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc1 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC1' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -19,7 +19,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc1 AS
 			ELSE 0
 		END AS inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.heureka
 		ON heureka.heurekaid = masterproduct.heurekaid
@@ -39,7 +39,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc2 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC2' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -53,7 +53,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc2 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.heureka
 		ON heureka.heurekaid = masterproduct.heurekaid
@@ -73,7 +73,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc3 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC3' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -87,7 +87,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc3 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.heureka
 		ON heureka.heurekaid = masterproduct.heurekaid
@@ -107,7 +107,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc4 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC4' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -121,7 +121,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc4 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.heureka
 		ON heureka.heurekaid = masterproduct.heurekaid
@@ -141,7 +141,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc5 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC5' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -155,7 +155,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc5 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.heureka
 		ON heureka.heurekaid = masterproduct.heurekaid
@@ -175,7 +175,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc6 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC6' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -189,7 +189,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc6 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.heureka
 		ON heureka.heurekaid = masterproduct.heurekaid
@@ -211,7 +211,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc8 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC8' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -225,7 +225,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc8 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.heureka
 		ON heureka.heurekaid = masterproduct.heurekaid
@@ -245,7 +245,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc9 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC9' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -259,7 +259,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc9 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.heureka
 		ON heureka.heurekaid = masterproduct.heurekaid
@@ -279,7 +279,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc10 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC10' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -293,7 +293,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc10 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.heureka
 		ON heureka.heurekaid = masterproduct.heurekaid
@@ -313,7 +313,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc11 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC11' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -327,7 +327,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc11 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.heureka
 		ON heureka.heurekaid = masterproduct.heurekaid
@@ -347,7 +347,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc12 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC12' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -361,7 +361,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc12 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.heureka
 		ON heureka.heurekaid = masterproduct.heurekaid
@@ -381,7 +381,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc13 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC13' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -395,7 +395,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc13 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.heureka
 		ON heureka.heurekaid = masterproduct.heurekaid
@@ -415,7 +415,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc14 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC14' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -429,7 +429,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc14 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.heureka
 		ON heureka.heurekaid = masterproduct.heurekaid
@@ -449,7 +449,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc15 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC15' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -463,7 +463,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc15 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.heureka
 		ON heureka.heurekaid = masterproduct.heurekaid
@@ -487,7 +487,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc20 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC20' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -501,7 +501,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc20 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.zbozi
 		ON zbozi.zboziid = masterproduct.zboziid
@@ -521,7 +521,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc21 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC21' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -535,7 +535,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc21 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.zbozi
 		ON zbozi.zboziid = masterproduct.zboziid
@@ -555,7 +555,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc22 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC22' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -569,7 +569,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc22 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.zbozi
 		ON zbozi.zboziid = masterproduct.zboziid
@@ -589,7 +589,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc23 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC23' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -603,7 +603,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc23 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.zbozi
 		ON zbozi.zboziid = masterproduct.zboziid
@@ -623,7 +623,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc24 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC24' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -637,7 +637,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc24 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.zbozi
 		ON zbozi.zboziid = masterproduct.zboziid
@@ -657,7 +657,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc25 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC25' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -671,7 +671,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc25 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.zbozi
 		ON zbozi.zboziid = masterproduct.zboziid
@@ -691,7 +691,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc26 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC26' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -705,7 +705,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc26 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.zbozi
 		ON zbozi.zboziid = masterproduct.zboziid
@@ -725,7 +725,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc27 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC27' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -739,7 +739,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc27 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.zbozi
 		ON zbozi.zboziid = masterproduct.zboziid
@@ -759,7 +759,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc28 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC28' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -773,7 +773,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc28 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.zbozi
 		ON zbozi.zboziid = masterproduct.zboziid
@@ -793,7 +793,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc29 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC29' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -807,7 +807,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc29 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.zbozi
 		ON zbozi.zboziid = masterproduct.zboziid
@@ -827,7 +827,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc30 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC30' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -841,7 +841,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc30 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.zbozi
 		ON zbozi.zboziid = masterproduct.zboziid
@@ -861,7 +861,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc31 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC31' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -875,7 +875,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc31 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.zbozi
 		ON zbozi.zboziid = masterproduct.zboziid
@@ -895,7 +895,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc32 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC32' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -909,7 +909,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc32 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.zbozi
 		ON zbozi.zboziid = masterproduct.zboziid
@@ -929,7 +929,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc33 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC33' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -943,7 +943,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc33 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.zbozi
 		ON zbozi.zboziid = masterproduct.zboziid
@@ -963,7 +963,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc34 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC34' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -977,7 +977,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc34 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN feed.zbozi
 		ON zbozi.zboziid = masterproduct.zboziid
@@ -998,7 +998,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc35 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC35' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -1012,7 +1012,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc35 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN analytical.matrix
 		ON matrix.matrixtype = 'MLC35'
@@ -1027,7 +1027,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc36 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC36' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -1041,7 +1041,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc36 AS
 	    ELSE 0
 	  END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN analytical.matrix
 		ON matrix.matrixtype = 'MLC36'
@@ -1056,7 +1056,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc37 AS
 		masterproduct.eshopid AS eshopid,
 		'MLC37' AS matrixtype,
 		masterproduct.productid::bigint AS productid,
-		loadlog.loadid AS loadid,
+		loadlog.loadid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -1070,7 +1070,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc37 AS
 			ELSE 0
 		END as inputvaluex
 	FROM feed.masterproduct
-	FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+	FULL OUTER JOIN warehouse.loadlog
 		ON loadlog.eshopid = masterproduct.eshopid
 	LEFT JOIN analytical.matrix
 		ON matrix.matrixtype = 'MLC37'
@@ -1087,7 +1087,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc38 AS
 		source.eshopid AS eshopid,
 		'MLC38' AS matrixtype,
 		source.productid::bigint AS productid,
-		source.loadlogid AS loadid,
+		source.loadlogid::bigint AS loadid,
 		0::real AS scoreabs,
 		0::real AS scorerel,
 		0::real AS scorewei,
@@ -1108,7 +1108,7 @@ CREATE OR REPLACE VIEW analytical.matrixmlc38 AS
 			masterproduct.productid,
 			loadlog.loadid AS loadlogid
 		FROM feed.masterproduct
-		FULL OUTER JOIN warehouse.eshopmatrixloads loadlog
+		FULL OUTER JOIN warehouse.loadlog
 			ON loadlog.eshopid = masterproduct.eshopid
 		LEFT JOIN feed.ga_pageview
 			ON ga_pageview.turnoutid = masterproduct.turnoutid

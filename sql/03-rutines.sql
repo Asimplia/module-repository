@@ -1,3 +1,14 @@
+-- fulfilling loadlog
+CREATE OR REPLACE FUNCTION warehouse.update_loadlog()
+RETURNS void AS
+$$
+	INSERT INTO warehouse.loadlog (eshopid,period)
+	SELECT a.eshopid, a.period
+	FROM warehouse.eshopmatrixloads a;
+$$ LANGUAGE sql;
+
+
+
 
 -- fulling uri by url, loc etc.-- fulling uri by url, loc etc.
 CREATE OR REPLACE FUNCTION feed.create_feeduri()
@@ -40,7 +51,7 @@ DECLARE
 BEGIN
 	UPDATE feed.feedload
 	SET loadlogid = loadlog.loadid
-	FROM warehouse.eshopmatrixloads loadlog
+	FROM warehouse.loadlog
 	WHERE feedload.eshopid = loadlog.eshopid
 		AND loadlog.period + (SELECT datarefreshperiod FROM warehouse.eshopsettings WHERE eshopid = feedload.eshopid LIMIT 1)::interval > feedload.loaddate
 		AND loadlog.period < feedload.loaddate

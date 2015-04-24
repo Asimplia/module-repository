@@ -1,13 +1,19 @@
 
 -- warehouse loadLog view
 CREATE OR REPLACE VIEW warehouse.eshopmatrixloads AS
- SELECT a.eshopid,
-    rank() OVER (PARTITION BY a.eshopid ORDER BY a.period) AS loadid,
-    a.period
-   FROM ( SELECT s.eshopid,
-            t.period
-           FROM warehouse.eshopsettings s,
-            LATERAL generate_series(s.datestart, now(), (s.datarefreshperiod)::interval) t(period)) a;
+	SELECT
+		a.eshopid,
+		(rank() OVER (PARTITION BY a.eshopid ORDER BY a.period))::INT8 AS loadid,
+		a.period
+	FROM (
+		SELECT s.eshopid, t.period
+		FROM warehouse.eshopsettings s,
+		LATERAL generate_series(s.datestart, now(), s.datarefreshperiod::interval) t(period)
+	) a
+	LEFT join warehouse.loadlog l
+		ON a.eshopid = l.eshopid
+		AND a.period = l.period
+	WHERE l.loadid is NULL;
 
 
 
@@ -75,7 +81,7 @@ AND product.uri = COALESCE(sitemap.uri, heureka.uri, zbozi.uri, ga_pageview.uri)
 LEFT JOIN feed.masterproduct
 ON masterproduct.uri = COALESCE(sitemap.uri, heureka.uri, zbozi.uri, ga_pageview.uri, product.uri)
 -- loadlog
-JOIN warehouse.eshopmatrixloads loadlog
+JOIN warehouse.loadlog
 ON loadlog.loadid = COALESCE(sitemap.loadlogid, heureka.loadlogid, zbozi.loadlogid, ga_pageview.loadlogid, ga_revenue.loadlogid)
 -- Only wit uri exists (because it's product main identifier)
 WHERE COALESCE(sitemap.uri, heureka.uri, zbozi.uri, ga_pageview.uri, product.uri) IS NOT NULL

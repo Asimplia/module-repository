@@ -96,6 +96,8 @@ drop index if exists analytical.inmatrixkeys;
 
 drop index if exists analytical.inmatrixtype;
 
+drop table if exists warehouse.loadlog CASCADE;
+
 drop table if exists analytical.matrix CASCADE;
 
 drop index if exists warehouse.inorderkeys;
@@ -797,6 +799,16 @@ create table feed.loadcontrol (
 );
 
 /*==============================================================*/
+/* Table: loadlog                                               */
+/*==============================================================*/
+create table warehouse.loadlog (
+   loadid               SERIAL not null,
+   eshopid              INT8                 not null,
+   period               Timestamptz          not null,
+   constraint PK_LOADLOG primary key (loadid)
+);
+
+/*==============================================================*/
 /* Table: masterproduct                                         */
 /*==============================================================*/
 create table feed.masterproduct (
@@ -1476,6 +1488,11 @@ alter table feed.loadcontrol
 alter table feed.loadcontrol
    add constraint FK_LOADCONT_REFERENCE_FEEDTYPE foreign key (feedtypeid)
       references  feed.feedtype (feedtypeid)
+      on delete restrict on update restrict;
+
+alter table warehouse.loadlog
+   add constraint FK_LOADLOG_REFERENCE_ESHOP foreign key (eshopid)
+      references  warehouse.eshop (eshopid)
       on delete restrict on update restrict;
 
 alter table feed.masterproduct
