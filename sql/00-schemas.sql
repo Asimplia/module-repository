@@ -505,7 +505,7 @@ create table feed.feedcolumn (
 /* Table: feedload                                              */
 /*==============================================================*/
 create table feed.feedload (
-   loadid               SERIAL               not null,
+   loadid               BIGSERIAL               not null,
    eshopid              INT8                 not null,
    feedtypeid           INT4                 null,
    loaddate             TIMESTAMPTZ          not null,
@@ -534,7 +534,7 @@ create table feed.feedtype (
 /*==============================================================*/
 create table feed.ga_pageview (
    turnoutid            serial               not null,
-   loadid               INT4                 not null,
+   loadid               INT8                 not null,
    eshopid              INT8                 not null,
    pagepath             varchar(2048)        null,
    pageviews            INT8                 null,
@@ -550,7 +550,7 @@ create table feed.ga_pageview (
 /*==============================================================*/
 create table feed.ga_revenue (
    revenuesid           serial               not null,
-   loadid               INT4                 not null,
+   loadid               INT8                 not null,
    eshopid              INT8                 not null,
    productname          VARCHAR(1000)        null,
    productsku           VARCHAR(100)         null,
@@ -802,7 +802,7 @@ create table feed.loadcontrol (
 /* Table: loadlog                                               */
 /*==============================================================*/
 create table warehouse.loadlog (
-   loadid               SERIAL not null,
+   loadid               BIGSERIAL            not null,
    eshopid              INT8                 not null,
    period               Timestamptz          not null,
    constraint PK_LOADLOG primary key (loadid)
@@ -825,7 +825,15 @@ create table feed.masterproduct (
    productname          VARCHAR(255)         null,
    ean                  VARCHAR(13)          null,
    productid            INT4                 null,
-   constraint PK_MASTERPRODUCT primary key (masterproductid)
+   constraint PK_MASTERPRODUCT primary key (masterproductid),
+   CONSTRAINT "masterproduct_productid" UNIQUE ("productid"),
+   CONSTRAINT "masterproduct_heurekaid" UNIQUE ("heurekaid"),
+   CONSTRAINT "masterproduct_sitemapid" UNIQUE ("sitemapid"),
+   CONSTRAINT "masterproduct_zboziid" UNIQUE ("zboziid"),
+   CONSTRAINT "masterproduct_priceapiid" UNIQUE ("priceapiid"),
+   CONSTRAINT "masterproduct_revenuesid" UNIQUE ("revenuesid"),
+   CONSTRAINT "masterproduct_turnoutid" UNIQUE ("turnoutid"),
+   CONSTRAINT "masterproduct_eshopid_uri" UNIQUE ("eshopid", "uri")
 );
 
 /*==============================================================*/
@@ -857,29 +865,29 @@ create table analytical.matrix (
    changevaluey         REAL                 null,
    tan                  REAL                 null,
    changetan            REAL                 null,
-   constraint PK_MATRIX primary key (matrixid)
+   constraint PK_MATRIX primary key (matrixid),
+   CONSTRAINT "inmatrixkeys" UNIQUE ("eshopid", "matrixtype", "productid", "customerid", "channelid", "orderid", "productcategoryid", "loadid"),
+   CONSTRAINT "matrix_eshopid_matrixtype_loadid_productid" UNIQUE ("eshopid", "matrixtype", "loadid", "productid"),
+   CONSTRAINT "matrix_eshopid_matrixtype_loadid_customerid" UNIQUE ("eshopid", "matrixtype", "loadid", "customerid"),
+   CONSTRAINT "matrix_eshopid_matrixtype_loadid_channelid" UNIQUE ("eshopid", "matrixtype", "loadid", "channelid"),
+   CONSTRAINT "matrix_eshopid_matrixtype_loadid_orderid" UNIQUE ("eshopid", "matrixtype", "loadid", "orderid"),
+   CONSTRAINT "matrix_eshopid_matrixtype_productid_productcategoryid" UNIQUE ("eshopid", "matrixtype", "productid", "productcategoryid")
 );
+
+CREATE INDEX "matrix_eshopid" ON analytical."matrix" ("eshopid");
+CREATE INDEX "matrix_productid" ON analytical."matrix" ("productid");
+CREATE INDEX "matrix_customerid" ON analytical."matrix" ("customerid");
+CREATE INDEX "matrix_channelid" ON analytical."matrix" ("channelid");
+CREATE INDEX "matrix_orderid" ON analytical."matrix" ("orderid");
+CREATE INDEX "matrix_productcategoryid" ON analytical."matrix" ("productcategoryid");
+CREATE INDEX "matrix_loadid" ON analytical."matrix" ("loadid");
+CREATE INDEX "matrix_eshopid_productid_customerid_channelid_orderid_productcategoryid_loadid" ON analytical."matrix" ("eshopid", "productid", "customerid", "channelid", "orderid", "productcategoryid", "loadid");
 
 /*==============================================================*/
 /* Index: inmatrixtype                                          */
 /*==============================================================*/
 create  index inmatrixtype on analytical.matrix (
 matrixtype
-);
-
-/*==============================================================*/
-/* Index: inmatrixkeys                                          */
-/*==============================================================*/
-create  index inmatrixkeys on analytical.matrix (
-matrixid,
-eshopid,
-matrixtype,
-productid,
-customerid,
-channelid,
-orderid,
-productcategoryid,
-loadid
 );
 
 /*==============================================================*/
@@ -1125,8 +1133,11 @@ create table analytical.signal (
    matrixid             INT8                 not null,
    datecreated          timestamptz          not null,
    situationid          INT8                 null,
-   constraint PK_SIGNAL primary key (signalid)
+   constraint PK_SIGNAL primary key (signalid),
+   CONSTRAINT "signal_matrixid" UNIQUE ("matrixid")
 );
+
+CREATE INDEX "signal_situationid" ON analytical."signal" ("situationid");
 
 /*==============================================================*/
 /* Table: sitemap                                               */
@@ -1155,14 +1166,28 @@ create table analytical.situation (
    channelid            INT8                 null,
    orderid              INT8                 null,
    productcategoryid    INT8                 null,
-   loadid               INT4                 null,
+   loadid               INT8                 not null,
    datecreated          timestamptz          not null,
    datesuggestionresultcreated timestamptz          null,
    datesuggestionresultprocessed timestamptz          null,
    datechecklistcreated timestamptz          null,
    datechecklistprocessed timestamptz          null,
-   constraint PK_SITUATION primary key (situationid)
+   constraint PK_SITUATION primary key (situationid),
+   CONSTRAINT "situation_eshopid_productid_customerid_channelid_orderid_productcategoryid_loadid" UNIQUE ("eshopid", "productid", "customerid", "channelid", "orderid", "productcategoryid", "loadid"),
+   CONSTRAINT "situation_eshopid_loadid_productid" UNIQUE ("eshopid", "loadid", "productid"),
+   CONSTRAINT "situation_eshopid_loadid_customerid" UNIQUE ("eshopid", "loadid", "customerid"),
+   CONSTRAINT "situation_eshopid_loadid_channelid" UNIQUE ("eshopid", "loadid", "channelid"),
+   CONSTRAINT "situation_eshopid_loadid_orderid" UNIQUE ("eshopid", "loadid", "orderid"),
+   CONSTRAINT "situation_eshopid_productid_productcategoryid" UNIQUE ("eshopid", "productid", "productcategoryid")
 );
+
+CREATE INDEX "situation_eshopid" ON analytical."situation" ("eshopid");
+CREATE INDEX "situation_productid" ON analytical."situation" ("productid");
+CREATE INDEX "situation_customerid" ON analytical."situation" ("customerid");
+CREATE INDEX "situation_channelid" ON analytical."situation" ("channelid");
+CREATE INDEX "situation_orderid" ON analytical."situation" ("orderid");
+CREATE INDEX "situation_productcategoryid" ON analytical."situation" ("productcategoryid");
+CREATE INDEX "situation_loadid" ON analytical."situation" ("loadid");
 
 /*==============================================================*/
 /* Table: stockkeepingunit                                      */
@@ -1554,7 +1579,8 @@ alter table analytical.matrix
 
 alter table analytical.matrix
    add constraint FK_MATRIX_REFERENCE_ORDER foreign key (orderid)
-      references  warehouse."order" (orderid);
+      references  warehouse."order" (orderid)
+      on delete restrict on update restrict;
 
 alter table analytical.matrix
    add constraint FK_MATRIX_REFERENCE_CMATRIX foreign key (matrixtype)
@@ -1702,7 +1728,7 @@ alter table analytical.signal
 alter table analytical.signal
    add constraint FK_SIGNAL_REFERENCE_SITUATIO foreign key (situationid)
       references  analytical.situation (situationid)
-      on delete restrict on update restrict;
+      ON DELETE SET NULL ON UPDATE SET NULL;
 
 alter table analytical.situation
    add constraint FK_SITUATIO_REFERENCE_PRODUCTC foreign key (productcategoryid)
@@ -1833,3 +1859,18 @@ alter table feed.zbozi_variant
    add constraint FK_ZBOZI_VA_REFERENCE_FEEDLOAD foreign key (loadid)
       references  feed.feedload (loadid)
       on delete restrict on update restrict;
+
+ALTER TABLE analytical.matrix
+   ADD FOREIGN KEY ("eshopid") REFERENCES warehouse."eshop" ("eshopid") ON DELETE RESTRICT ON UPDATE RESTRICT,
+   ADD FOREIGN KEY ("loadid") REFERENCES warehouse."loadlog" ("loadid") ON DELETE RESTRICT ON UPDATE restrict;
+
+ALTER TABLE analytical."matrix"
+   ADD FOREIGN KEY ("eshopid", "productid", "customerid", "channelid", "orderid", "productcategoryid", "loadid")
+   REFERENCES "situation" ("eshopid", "productid", "customerid", "channelid", "orderid", "productcategoryid", "loadid")
+   ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE analytical.signal
+   ADD FOREIGN KEY ("situationid") REFERENCES "situation" ("situationid") ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE feed."masterproduct"
+   ADD FOREIGN KEY ("productid") REFERENCES warehouse."product" ("productid") ON DELETE RESTRICT ON UPDATE RESTRICT;
