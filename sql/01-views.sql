@@ -176,13 +176,14 @@ JOIN analytical.matrix
 	ON matrix.matrixid = signal.matrixid
 LEFT JOIN analytical.situation
 	ON matrix.eshopid = situation.eshopid
-	AND matrix.productid = situation.productid
-	AND matrix.customerid = situation.customerid
-	AND matrix.channelid = situation.channelid
-	AND matrix.orderid = situation.orderid
-	AND matrix.productcategoryid = situation.productcategoryid
+	AND (situation.productid IS NULL OR matrix.productid = situation.productid)
+	AND (situation.customerid IS NULL OR matrix.customerid = situation.customerid)
+	AND (situation.channelid IS NULL OR matrix.channelid = situation.channelid)
+	AND (situation.orderid IS NULL OR matrix.orderid = situation.orderid)
+	AND (situation.productcategoryid IS NULL OR matrix.productcategoryid = situation.productcategoryid)
 	AND matrix.loadid = situation.loadid
 WHERE situation.situationid IS NULL
+	AND signal.signalid IS NOT NULL
 GROUP BY
 	matrix.eshopid,
 	matrix.productid,

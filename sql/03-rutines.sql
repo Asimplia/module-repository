@@ -284,6 +284,24 @@ BEGIN
 		datecreated
 	FROM analytical.v_situation
 	;
+
+	UPDATE signal
+	SET situationid = source.situationid
+	FROM (
+		SELECT situation.situationid, matrix.matrixid
+		FROM situation
+		JOIN analytical.matrix
+			ON matrix.eshopid = situation.eshopid
+			AND (matrix.productid = situation.productid OR situation.productid IS NULL)
+			AND (matrix.customerid = situation.customerid OR situation.customerid IS NULL)
+			AND (matrix.channelid = situation.channelid OR situation.channelid IS NULL)
+			AND (matrix.orderid = situation.orderid OR situation.orderid IS NULL)
+			AND (matrix.productcategoryid = situation.productcategoryid OR situation.productcategoryid IS NULL)
+			AND matrix.loadid = situation.loadid
+	) AS source (situationid, matrixid)
+	WHERE source.matrixid = signal.matrixid
+		AND signal.situationid IS NULL
+	;
 END;
 $$ LANGUAGE plpgsql;
 
