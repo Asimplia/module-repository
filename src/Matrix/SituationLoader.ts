@@ -111,11 +111,21 @@ class SituationLoader {
 		return Situation.TABLE_NAME + ' '
 			+ ' JOIN ' + Signal.TABLE_NAME + ' USING (' + Signal.COLUMN_SITUATION_ID + ') '
 			+ ' JOIN ' + Matrix.TABLE_NAME + ' USING (' + Signal.COLUMN_MATRIX_ID + ') '
-			+ ' LEFT JOIN ' + Product.TABLE_NAME + ' USING (' + Product.COLUMN_PRODUCT_ID + ', ' + Product.COLUMN_E_SHOP_ID + ') '
-			+ ' LEFT JOIN ' + Customer.TABLE_NAME + ' USING (' + Customer.COLUMN_CUSTOMER_ID + ', ' + Customer.COLUMN_E_SHOP_ID + ') '
-			+ ' LEFT JOIN ' + Channel.TABLE_NAME + ' USING (' + Channel.COLUMN_CHANNEL_ID + ', ' + Channel.COLUMN_E_SHOP_ID + ') '
-			+ ' LEFT JOIN ' + Category.TABLE_NAME + ' USING (' + Category.COLUMN_CATEGORY_ID + ', ' + Category.COLUMN_E_SHOP_ID + ') '
-			+ ' LEFT JOIN ' + EShop.TABLE_NAME + ' USING (' + EShop.COLUMN_E_SHOP_ID + ') ';
+			+ ' LEFT JOIN ' + Product.TABLE_NAME
+			+ ' ON ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_PRODUCT_ID + ' = ' + Product.TABLE_NAME + '.' + Product.COLUMN_PRODUCT_ID
+			+ ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = ' + Product.TABLE_NAME + '.' + Product.COLUMN_E_SHOP_ID
+			+ ' LEFT JOIN ' + Customer.TABLE_NAME
+			+ ' ON ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CUSTOMER_ID + ' = ' + Customer.TABLE_NAME + '.' + Customer.COLUMN_CUSTOMER_ID
+			+ ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = ' + Customer.TABLE_NAME + '.' + Customer.COLUMN_E_SHOP_ID
+			+ ' LEFT JOIN ' + Channel.TABLE_NAME
+			+ ' ON ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CHANNEL_ID + ' = ' + Channel.TABLE_NAME + '.' + Channel.COLUMN_CHANNEL_ID
+			+ ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = ' + Channel.TABLE_NAME + '.' + Channel.COLUMN_E_SHOP_ID
+			+ ' LEFT JOIN ' + Category.TABLE_NAME
+			+ ' ON ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_CATEGORY_ID + ' = ' + Category.TABLE_NAME + '.' + Category.COLUMN_CATEGORY_ID
+			+ ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = ' + Category.TABLE_NAME + '.' + Category.COLUMN_E_SHOP_ID
+			+ ' LEFT JOIN ' + EShop.TABLE_NAME
+			+ ' ON ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = ' + EShop.TABLE_NAME + '.' + EShop.COLUMN_E_SHOP_ID
+			;
 	}
 
 }
