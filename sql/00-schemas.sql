@@ -1149,11 +1149,18 @@ create table feed.sitemap (
 /*==============================================================*/
 create table analytical.situation (
    situationid          SERIAL not null,
+   eshopid              INT8                 null,
+   productid            INT8                 null,
+   customerid           INT8                 null,
+   channelid            INT8                 null,
+   orderid              INT8                 null,
+   productcategoryid    INT8                 null,
+   loadid               INT4                 null,
    datecreated          timestamptz          not null,
    datesuggestionresultcreated timestamptz          null,
    datesuggestionresultprocessed timestamptz          null,
-   datechecklistcreated timestamptz NULL,
-   datechecklistprocessed timestamptz NULL,
+   datechecklistcreated timestamptz          null,
+   datechecklistprocessed timestamptz          null,
    constraint PK_SITUATION primary key (situationid)
 );
 
@@ -1695,6 +1702,41 @@ alter table analytical.signal
 alter table analytical.signal
    add constraint FK_SIGNAL_REFERENCE_SITUATIO foreign key (situationid)
       references  analytical.situation (situationid)
+      on delete restrict on update restrict;
+
+alter table analytical.situation
+   add constraint FK_SITUATIO_REFERENCE_PRODUCTC foreign key (productcategoryid)
+      references  warehouse.productcategory (productcategoryid)
+      on delete restrict on update restrict;
+
+alter table analytical.situation
+   add constraint FK_SITUATIO_REFERENCE_ESHOP foreign key (eshopid)
+      references  warehouse.eshop (eshopid)
+      on delete restrict on update restrict;
+
+alter table analytical.situation
+   add constraint FK_SITUATIO_REFERENCE_CUSTOMER foreign key (customerid)
+      references  warehouse.customer (customerid)
+      on delete restrict on update restrict;
+
+alter table analytical.situation
+   add constraint FK_SITUATIO_REFERENCE_PRODUCT foreign key (productid)
+      references  warehouse.product (productid)
+      on delete restrict on update restrict;
+
+alter table analytical.situation
+   add constraint FK_SITUATIO_REFERENCE_ORDER foreign key (orderid)
+      references  warehouse."order" (orderid)
+      on delete restrict on update restrict;
+
+alter table analytical.situation
+   add constraint FK_SITUATIO_REFERENCE_CHANNEL foreign key (channelid, eshopid)
+      references  warehouse.channel (channelid, eshopid)
+      on delete restrict on update restrict;
+
+alter table analytical.situation
+   add constraint FK_SITUATIO_REFERENCE_LOADLOG foreign key (loadid)
+      references  warehouse.loadlog (loadid)
       on delete restrict on update restrict;
 
 alter table feed.sitemap

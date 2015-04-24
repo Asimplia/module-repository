@@ -242,3 +242,48 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
+
+
+-- Situation signal fullfilling
+CREATE OR REPLACE FUNCTION analytical.update_situation_signal()
+RETURNS void AS $$
+BEGIN
+	INSERT INTO analytical.signal
+	(matrixid, datecreated)
+	SELECT matrixid, datecreated
+	FROM analytical.v_situation_signal
+	;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Situation fullfilling
+CREATE OR REPLACE FUNCTION analytical.update_situation()
+RETURNS void AS $$
+BEGIN
+	INSERT INTO analytical.situation
+	(
+		eshopid,
+		productid,
+		customerid,
+		channelid,
+		orderid,
+		productcategoryid,
+		loadid,
+		datecreated
+	)
+	SELECT
+		eshopid,
+		productid,
+		customerid,
+		channelid,
+		orderid,
+		productcategoryid,
+		loadid,
+		datecreated
+	FROM analytical.v_situation
+	;
+END;
+$$ LANGUAGE plpgsql;
+
