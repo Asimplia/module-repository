@@ -23,3 +23,54 @@ CREATE AGGREGATE public.last (
         basetype = anyelement,
         stype    = anyelement
 );
+
+
+
+
+create or replace function public.replace_url(v_text TEXT,  v_param_whitelist TEXT[], v_hash_param_whitelist  TEXT[], dontClean boolean, dontCleanHash boolean)
+  returnS TEXT AS
+$$
+--v_param_whitelist
+--v_hash_param_whitelist
+Declare
+output text;
+param TEXT;
+cnt int;
+BEGIN
+  output = regexp_replace(v_text::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text);
+  output = regexp_replace(output::text, '([\#\?\&]+[0-9a-zA-Z\+\%@\/\[\];=_-]+)*'::text, ''::text, 'g');
+
+  cnt = 0;
+  if array_length(v_param_whitelist,1) > 0 then
+    FOREACH param IN ARRAY v_param_whitelist
+    LOOP
+      if cnt = 0 then
+        output = output || '?' || (regexp_matches(v_text::text,'[\?\&]+('||param||'[=]?[0-9a-zA-Z\+\%@\/\[\];=_-]+)+[#]?'))[1];
+      else
+        output = output || '&' || (regexp_matches(v_text::text,'[\?\&]+('||param||'[=]?[0-9a-zA-Z\+\%@\/\[\];=_-]+)+[#]?'))[1];
+      end if;
+      cnt = cnt + 1;
+    END LOOP;
+  end IF;
+
+  cnt = 0;
+  if array_length(v_hash_param_whitelist,1) > 0 then
+    FOREACH param IN ARRAY v_hash_param_whitelist
+    LOOP
+      if cnt = 0 then
+        output = output || '#' || (regexp_matches(v_text::text,'(\#|\#.*\&)+('||param||'[0-9a-zA-Z\+\%@\/\[\];=_-]+)+'))[2];
+      else
+        output = output || '&' || (regexp_matches(v_text::text,'(\#|\#.*\&)+('||param||'[0-9a-zA-Z\+\%@\/\[\];=_-]+)+'))[2];
+      end if;
+      cnt = cnt + 1;
+    END LOOP;
+  end IF;
+
+  if dontCleanHash then
+    output = output || '#' || (regexp_matches(v_text::text,'(\#[0-9a-zA-Z\+\%\&@\/\[\];=_-]+)+'))[1];
+  end if;
+
+  REturn output;
+END;
+$$
+LANguage plpgsql;

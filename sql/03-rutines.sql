@@ -14,28 +14,20 @@ $$ LANGUAGE sql;
 CREATE OR REPLACE FUNCTION feed.create_feeduri()
 RETURNS void AS $$
 BEGIN
-	UPDATE feed.sitemap s 
-	SET uri = regexp_replace(s.loc::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text)
+	UPDATE feed.sitemap s
+	SET uri = public.replace_url(s.loc::text, '{}'::text[], '{}'::text[], FALSE, FALSE)
 	WHERE s.uri IS NULL;
 
-	UPDATE feed.ga_pageview p 
-	SET uri = regexp_replace(
-		-- regexp_replace(
-			regexp_replace(p.pagepath::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text),
-			-- strip hash params
-		-- 	'\#.*$'::text, ''::text
-		-- ),
-		-- strip query params
-		'\?.*$'::text, ''::text
-	)
+	UPDATE feed.ga_pageview p
+	SET uri = public.replace_url(p.pagepath::text, '{}'::text[], '{}'::text[], FALSE, FALSE)
 	WHERE p.uri IS NULL;
 
-	UPDATE feed.heureka h 
-	SET uri = regexp_replace(h.url::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text)
+	UPDATE feed.heureka h
+	SET uri = public.replace_url(h.url::text, '{}'::text[], '{}'::text[], FALSE, FALSE)
 	WHERE h.uri IS NULL;
 
-	UPDATE feed.zbozi z 
-	SET uri = regexp_replace(z.url::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text)
+	UPDATE feed.zbozi z
+	SET uri = public.replace_url(z.url::text, '{}'::text[], '{}'::text[], FALSE, FALSE)
 	WHERE z.uri IS NULL;
 END;
 $$ LANGUAGE plpgsql;
