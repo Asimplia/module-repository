@@ -1,11 +1,13 @@
 
 import ILocalizedStringObject = require('../Locale/ILocalizedStringObject');
 import IValueObject = require('./IValueObject');
-import ICheckItemId = require('./ICheckItemId');
+import ISituationPrimary = require('./ISituationPrimary');
 
 export = ICheckItemObject;
 interface ICheckItemObject {
+	id: string;
 	label: ILocalizedStringObject;
 	values: IValueObject[];
-	checkItemId: ICheckItemId;
+	checklistId: string;
+	situationPrimary: ISituationPrimary;
 }

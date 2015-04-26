@@ -2,7 +2,7 @@
 import Util = require('asimplia-util');
 import List = Util.ODBM.Entity.List;
 import CheckItem = require('./CheckItem');
-import ICheckItemId = require('./ICheckItemId');
+import ISituationPrimary = require('./ISituationPrimary');
 /* tslint:disable */
 Util;
 /* tslint:enable */
@@ -26,9 +26,9 @@ class CheckItemList extends List<CheckItem> {
 		});
 	}
 
-	getById(id: ICheckItemId) {
+	getBySituationPrimary(situationPrimary: ISituationPrimary) {
 		return this.findOneOnly((checkItem: CheckItem) => {
-			return checkItem.isIdEqual(id);
+			return checkItem.isSituationPrimaryEqual(situationPrimary);
 		});
 	}
 }

@@ -38,6 +38,9 @@ class Situation implements IEntity {
 	set DateChecklistCreated(value: Date) { this.dateChecklistCreated = value; }
 	get DateChecklistProcessed() { return this.dateChecklistProcessed; }
 	set DateChecklistProcessed(value: Date) { this.dateChecklistProcessed = value; }
+	get LoadId() {
+		return this.signalList.first().Matrix.LoadId;
+	}
 	get EShopId() {
 		return this.signalList.first().Matrix.EShopId;
 	}

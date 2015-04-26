@@ -1,8 +1,6 @@
 
 import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
-import CheckItemList = require('./CheckItemList');
-import CheckItem = require('./CheckItem');
 import IChecklistObject = require('./IChecklistObject');
 import LocalizedString = require('../Locale/LocalizedString');
 import Util = require('asimplia-util');
@@ -27,19 +25,17 @@ class Checklist {
 			cs: new Type.String(2048, true),
 			en: new Type.String(2048, true)
 		},
-		checkItems: new Type.Array(CheckItem.$entity),
-		dateResolved: new Type.Date(true, true)
+		dateResolved: new Type.Date(true, true),
+		totalCount: new Type.Integer(4, true),
+		doneIndex: new Type.Float(8, true)
 	};
 	private static converter = new Converter<Checklist, IChecklistObject>(Checklist);
 
 	get Id() { return this.object.id; }
 	get Section() { return SectionEnum[this.object.section]; }
 	get Name() { return new LocalizedString(this.object.name); }
-	get CheckItemList() { return Checklist.converter.getList<CheckItemList, CheckItem>(CheckItemList, CheckItem, this.object.checkItems); }
 	get DateCreated() { return this.object.dateCreated; }
-	get TotalCount() { return this.CheckItemList.count(); } // TODO total count should be whole products, not only checkItems
-
-	set CheckItemList(itemList: CheckItemList) { this.object.checkItems = itemList ? itemList.toArray(CheckItem.toObject) : null; }
+	get TotalCount() { return this.object.totalCount; }
 
 	constructor(
 		private object: IChecklistObject
@@ -50,7 +46,7 @@ class Checklist {
 	}
 
 	getDoneIndex() {
-		return Math.round(this.CheckItemList.getCountDone() / this.CheckItemList.count());
+		return this.object.doneIndex;
 	}
 
 	static fromObject(object: IChecklistObject) {

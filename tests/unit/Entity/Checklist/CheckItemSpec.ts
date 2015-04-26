@@ -10,13 +10,17 @@ describe('Entity.Checklist.CheckItem', () => {
 	describe('fromObject', () => {
 		it('should return instance with valueType enum like integer', () => {
 			var checkItem = CheckItem.fromObject({
+				id: null,
 				label: { cs: 'Produkt peněženka', en: 'Product wallet' },
 				values: [{
 					valueType: 'EAN',
 					dateChecked: null,
 					priorityType: 'GREEN'
 				}],
-				checkItemId: {
+				checklistId: '1',
+				situationPrimary: {
+					eShopId: 1,
+					loadId: 1,
 					productId: 1
 				}
 			});

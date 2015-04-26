@@ -11,7 +11,7 @@ class ChecklistList extends List<Checklist> {
 
 	areAllDone() {
 		return this.all((checklist: Checklist) => {
-			return checklist.CheckItemList.areAllDone();
+			return checklist.getDoneIndex() == 1;
 		});
 	}
 }

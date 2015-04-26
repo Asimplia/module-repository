@@ -103,6 +103,7 @@ var services: { [name: string]: any } = {
 				__dirname + '/../Entity',
 				__dirname + '/../Feed',
 				__dirname + '/../Site',
+				__dirname + '/../Checklist',
 			]
 		]
 	},

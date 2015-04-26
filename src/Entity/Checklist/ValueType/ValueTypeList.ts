@@ -15,4 +15,10 @@ class ValueTypeList extends List<ValueType> {
 			return valueType.Type == valueTypeEnum;
 		});
 	}
+
+	getValueTypeEnumValues() {
+		return this.map((valueType: ValueType) => {
+			return ValueTypeEnum[valueType.Type];
+		}).toArray();
+	}
 }

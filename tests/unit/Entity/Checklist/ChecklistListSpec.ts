@@ -25,39 +25,7 @@ describe('Entity.Checklist.ChecklistList', () => {
 					mainImage: {
 						id: '1'
 					},
-					checkItems: [
-						{
-							label: {
-								cs: 'Wtf',
-								en: 'Wtf'
-							},
-							values: [
-								{
-									valueType: 'TRAFIC',
-									dateChecked: null,
-									priorityType: 'GREEN'
-								},
-								{
-									valueType: 'TRAFIC',
-									dateChecked: new Date(),
-									priorityType: 'RED'
-								},
-							],
-							checkItemId: {
-								productId: 1
-							}
-						},
-						{
-							label: {
-								cs: 'Wtf',
-								en: 'Wtf'
-							},
-							values: [],
-							checkItemId: {
-								productId: 2
-							}
-						},
-					]
+					doneIndex: 1
 				}),
 			]);
 			expect(checklistList.areAllDone()).toBeTruthy();

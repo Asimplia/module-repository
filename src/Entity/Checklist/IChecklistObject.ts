@@ -1,5 +1,4 @@
 
-import ICheckItemObject = require('./ICheckItemObject');
 import ILocalizedStringObject = require('../Locale/ILocalizedStringObject');
 
 export = IChecklistObject;
@@ -9,6 +8,7 @@ interface IChecklistObject {
 	dateCreated: Date;
 	section: string;
 	name: ILocalizedStringObject;
-	checkItems: ICheckItemObject[];
 	dateResolved: Date;
+	totalCount?: number;
+	doneIndex?: number;
 }
