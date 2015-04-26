@@ -21,4 +21,10 @@ class ValueTypeList extends List<ValueType> {
 			return ValueTypeEnum[valueType.Type];
 		}).toArray();
 	}
+
+	getValueTypeEnums() {
+		return this.map((valueType: ValueType) => {
+			return valueType.Type;
+		}).toArray();
+	}
 }

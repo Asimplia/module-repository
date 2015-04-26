@@ -1,4 +1,5 @@
 
+import _ = require('underscore');
 import List = require('../List');
 import Value = require('./Value');
 import ValueTypeEnum = require('./ValueTypeEnum');
@@ -29,6 +30,12 @@ class ValueList extends List<Value> {
 		return this.any((value: Value) => {
 			return value.isRed() && groupList.getValueTypeList().containsValueTypeEnum(value.ValueType);
 		});
+	}
+
+	getListByValueTypeEnums(typeEnums: ValueTypeEnum[]) {
+		return new ValueList(this.filter((value: Value) => {
+			return _.contains(typeEnums, value.ValueType);
+		}).toArray());
 	}
 
 	getByType(valueType: ValueTypeEnum) {
