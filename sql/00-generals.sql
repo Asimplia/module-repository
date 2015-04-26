@@ -27,7 +27,7 @@ CREATE AGGREGATE public.last (
 
 
 
-create or replace function public.replace_url(v_text TEXT,  v_param_whitelist TEXT[], v_hash_param_whitelist  TEXT[], dontClean boolean, dontCleanHash boolean)
+create or replace function public.replace_url(v_text TEXT,  v_param_whitelist TEXT[], v_hash_param_whitelist  TEXT[], dontClean boolean, dontCleanHash boolean) 
   returnS TEXT AS
 $$
 --v_param_whitelist
