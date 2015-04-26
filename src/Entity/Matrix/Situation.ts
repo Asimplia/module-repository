@@ -10,7 +10,6 @@ import MatrixChecklist = require('./MatrixChecklist');
 import SectionEnum = require('../Section/SectionEnum');
 import EntityPreparer = require('../EntityPreparer');
 import Util = require('asimplia-util');
-import Exception = Util.Error.Exception;
 /* tslint:disable */
 Util;
 /* tslint:enable */
