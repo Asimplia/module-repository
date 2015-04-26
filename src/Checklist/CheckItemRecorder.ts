@@ -1,12 +1,9 @@
 
 import mongoose = require('mongoose');
 import CheckItem = require('../Entity/Checklist/CheckItem');
-import Checklist = require('../Entity/Checklist/Checklist');
 import ICheckItemObject = require('../Entity/Checklist/ICheckItemObject');
 import CheckItemList = require('../Entity/Checklist/CheckItemList');
 import ValueTypeEnum = require('../Entity/Checklist/ValueTypeEnum');
-import ISituationPrimary = require('../Entity/Checklist/ISituationPrimary');
-import CheckItemLoader = require('./CheckItemLoader');
 import Util = require('asimplia-util');
 import DateFactory = Util.DateTime.DateFactory;
 import Manager = Util.ODBM.Repository.MongoDB.Manager;
@@ -21,12 +18,10 @@ class CheckItemRecorder {
 	static $inject = [
 		'connection.mongoose',
 		DateFactory,
-		CheckItemLoader,
 	];
 	constructor(
 		private connection: mongoose.Mongoose,
 		private dateFactory: DateFactory,
-		private checkItemLoader: CheckItemLoader,
 		private manager: Manager<CheckItem, ICheckItemObject, CheckItemList>
 			= new Manager<CheckItem, ICheckItemObject, CheckItemList>(
 				CheckItem, CheckItemList, connection
@@ -62,34 +57,24 @@ class CheckItemRecorder {
 	}
 
 	checkItem(
-		checklist: Checklist,
-		situationPrimary: ISituationPrimary,
+		checkItem: CheckItem,
 		valueType: ValueTypeEnum,
 		callback: (e: Error, checkItem?: CheckItem) => void
 	) {
-		this.checkItemLoader.getById(checklist, situationPrimary, (e: Error, checkItem?: CheckItem) => {
-			if (e) return callback(e);
-			if (!checkItem) return callback(new Error('CheckItem ' + situationPrimary + ' not found'));
-			var value = checkItem.ValueList.getByType(valueType);
-			if (!value) return callback(new Error('Value ' + valueType + ' not found'));
-			value.DateChecked = this.dateFactory.now();
-			this.update(checkItem, callback);
-		});
+		var value = checkItem.ValueList.getByType(valueType);
+		if (!value) return callback(new Error('Value ' + valueType + ' not found'));
+		value.DateChecked = this.dateFactory.now();
+		this.update(checkItem, callback);
 	}
 
 	uncheckItem(
-		checklist: Checklist,
-		situationPrimary: ISituationPrimary,
+		checkItem: CheckItem,
 		valueType: ValueTypeEnum,
 		callback: (e: Error, checkItem?: CheckItem) => void
 	) {
-		this.checkItemLoader.getById(checklist, situationPrimary, (e: Error, checkItem?: CheckItem) => {
-			if (e) return callback(e);
-			if (!checkItem) return callback(new Error('CheckItem ' + situationPrimary + ' not found'));
-			var value = checkItem.ValueList.getByType(valueType);
-			if (!value) return callback(new Error('Value ' + valueType + ' not found'));
-			value.DateChecked = null;
-			this.update(checkItem, callback);
-		});
+		var value = checkItem.ValueList.getByType(valueType);
+		if (!value) return callback(new Error('Value ' + valueType + ' not found'));
+		value.DateChecked = null;
+		this.update(checkItem, callback);
 	}
 }

@@ -19,6 +19,7 @@ class CheckItemFilter {
 		eShopId: new Type.Integer(8, true),
 		updatedAt: new Type.Date(true, true),
 		categoryId: new Type.Integer(4, true),
+		checklistId: new Type.String(50, true),
 		valueTypeGroups: new Type.Array(ValueTypeGroup.$entity, true),
 		limit: new Type.Integer(4, true),
 		offset: new Type.Integer(4, true)
@@ -31,11 +32,13 @@ class CheckItemFilter {
 		);
 	}
 	get CategoryId() { return this.object.categoryId; }
+	get ChecklistId() { return this.object.checklistId; }
 	get Limit() { return this.object.limit; }
 	get Offset() { return this.object.offset; }
 
 	set ValueTypeGroupList(list: ValueTypeGroupList) { this.object.valueTypeGroups = list ? list.toArray(ValueTypeGroup.toObject) : null; }
 	set CategoryId(categoryId: number) { this.object.categoryId = categoryId; }
+	set ChecklistId(checklistId: string) { this.object.checklistId = checklistId; }
 	set Limit(limit: number) { this.object.limit = limit; }
 	set Offset(offset: number) { this.object.offset = offset; }
 

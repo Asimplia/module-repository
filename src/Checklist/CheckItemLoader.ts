@@ -4,7 +4,6 @@ import mongoose = require('mongoose');
 import Checklist = require('../Entity/Checklist/Checklist');
 import CheckItem = require('../Entity/Checklist/CheckItem');
 import ICheckItemObject = require('../Entity/Checklist/ICheckItemObject');
-import ISituationPrimary = require('../Entity/Checklist/ISituationPrimary');
 import CheckItemFilter = require('../Entity/Checklist/CheckItemFilter');
 import CheckItemList = require('../Entity/Checklist/CheckItemList');
 import Util = require('asimplia-util');
@@ -28,10 +27,10 @@ class CheckItemLoader {
 			)
 	) {}
 
-	getById(checklist: Checklist, situationPrimary: ISituationPrimary, callback: (e: Error, entity?: CheckItem) => void) {
+	getById(eShopId: number, checkItemId: string, callback: (e: Error, entity?: CheckItem) => void) {
 		var conditions = {
-			checklistId: checklist.Id,
-			situationPrimary: situationPrimary
+			'situationPrimary.eShopId': eShopId,
+			id: checkItemId
 		};
 		this.manager.Model.findOne(conditions, (e: Error, doc: mongoose.Document) => {
 			if (e) return callback(e);
@@ -40,12 +39,19 @@ class CheckItemLoader {
 		});
 	}
 
-	getList(checklist: Checklist, filter: CheckItemFilter, callback: (e: Error, checklistList?: CheckItemList) => void) {
+	getList(eShopId: number, filter: CheckItemFilter, callback: (e: Error, checklistList?: CheckItemList) => void) {
 		var conditions = {
-			checklistId: checklist.Id
+			'situationPrimary.eShopId': eShopId
 		};
 		conditions = this.getConditionsByFilter(filter, conditions);
-		this.manager.Model.find(conditions, (e: Error, docs: mongoose.Document[]) => {
+		var query = this.manager.Model.find(conditions);
+		if (filter.Limit) {
+			query.limit(filter.Limit);
+		}
+		if (filter.Offset) {
+			query.skip(filter.Offset);
+		}
+		query.exec((e: Error, docs: mongoose.Document[]) => {
 			if (e) return callback(e);
 			callback(null, this.manager.Converter.getList(
 				CheckItemList,
