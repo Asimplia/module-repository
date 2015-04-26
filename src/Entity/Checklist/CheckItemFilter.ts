@@ -19,7 +19,9 @@ class CheckItemFilter {
 		eShopId: new Type.Integer(8, true),
 		updatedAt: new Type.Date(true, true),
 		categoryId: new Type.Integer(4, true),
-		valueTypeGroups: new Type.Array(ValueTypeGroup.$entity, true)
+		valueTypeGroups: new Type.Array(ValueTypeGroup.$entity, true),
+		limit: new Type.Integer(4, true),
+		offset: new Type.Integer(4, true)
 	};
 	private static converter = new Converter<CheckItemFilter, ICheckItemFilterObject>(CheckItemFilter);
 
@@ -29,9 +31,13 @@ class CheckItemFilter {
 		);
 	}
 	get CategoryId() { return this.object.categoryId; }
+	get Limit() { return this.object.limit; }
+	get Offset() { return this.object.offset; }
 
 	set ValueTypeGroupList(list: ValueTypeGroupList) { this.object.valueTypeGroups = list ? list.toArray(ValueTypeGroup.toObject) : null; }
 	set CategoryId(categoryId: number) { this.object.categoryId = categoryId; }
+	set Limit(limit: number) { this.object.limit = limit; }
+	set Offset(offset: number) { this.object.offset = offset; }
 
 	constructor(
 		private object: ICheckItemFilterObject = {}

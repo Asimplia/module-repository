@@ -86,9 +86,16 @@ class ChecklistLoader {
 	}
 
 	private filterCheckItems(checklist: Checklist, checkItemFilter: CheckItemFilter) {
-		checklist.CheckItemList = new CheckItemList(checklist.CheckItemList.filter((checkItem: CheckItem) => {
+		var checkItemList = checklist.CheckItemList.filter((checkItem: CheckItem) => {
 			return this.filterCheckItem(checkItem, checkItemFilter);
-		}).toArray());
+		});
+		if (checkItemFilter.Offset) {
+			checkItemList = checkItemList.restList(checkItemFilter.Offset);
+		}
+		if (checkItemFilter.Limit) {
+			checkItemList = checkItemList.firstList(checkItemFilter.Limit);
+		}
+		checklist.CheckItemList = new CheckItemList(checkItemList.toArray());
 		return checklist;
 	}
 

@@ -7,4 +7,6 @@ interface ICheckItemFilterObject {
 	updatedAt?: Date;
 	categoryId?: number;
 	valueTypeGroups?: IValueTypeGroupObject[];
+	limit?: number;
+	offset?: number;
 }
