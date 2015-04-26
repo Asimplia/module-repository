@@ -10,4 +10,5 @@ interface ICheckItemFilterObject {
 	valueTypeGroups?: IValueTypeGroupObject[];
 	limit?: number;
 	offset?: number;
+	orderBy?: { type: string; direction: number; }[];
 }

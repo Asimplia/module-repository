@@ -1,13 +1,14 @@
 
 import _ = require('underscore');
 import mongoose = require('mongoose');
-import Checklist = require('../Entity/Checklist/Checklist');
+import CheckItemOrderBy = require('../Entity/Checklist/CheckItem/CheckItemOrderBy');
 import CheckItem = require('../Entity/Checklist/CheckItem');
 import ICheckItemObject = require('../Entity/Checklist/ICheckItemObject');
 import CheckItemFilter = require('../Entity/Checklist/CheckItemFilter');
 import CheckItemList = require('../Entity/Checklist/CheckItemList');
 import Util = require('asimplia-util');
 import Manager = Util.ODBM.Repository.MongoDB.Manager;
+import Exception = Util.Error.Exception;
 /* tslint:disable */
 Util;
 /* tslint:enable */
@@ -51,6 +52,13 @@ class CheckItemLoader {
 		if (filter.Offset) {
 			query.skip(filter.Offset);
 		}
+		if (filter.OrderBy) {
+			filter.OrderBy.forEach((orderBy: { type: CheckItemOrderBy; direction: number; }) => {
+				var sortOption = {};
+				sortOption[this.getOrderByKey(orderBy.type)] = orderBy.direction;
+				query.sort(sortOption);
+			});
+		}
 		query.exec((e: Error, docs: mongoose.Document[]) => {
 			if (e) return callback(e);
 			callback(null, this.manager.Converter.getList(
@@ -59,6 +67,14 @@ class CheckItemLoader {
 				_.map(docs, (doc: mongoose.Document) => doc.toObject())
 			));
 		});
+	}
+
+	private getOrderByKey(type: CheckItemOrderBy) {
+		switch (type) {
+			case CheckItemOrderBy.ID: return 'id';
+			case CheckItemOrderBy.VALUE_COUNT: return 'values.length';
+			default: throw new Exception('Not implemented checkItem order by ' + CheckItemOrderBy[type]);
+		}
 	}
 
 	private getConditionsByFilter(filter: CheckItemFilter, conditions: any = {}) {
