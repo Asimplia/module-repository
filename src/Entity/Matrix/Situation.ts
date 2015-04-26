@@ -74,7 +74,8 @@ class Situation implements IEntity {
 		return customerMatrix.Customer.Id;
 	}
 	get OrderId(): number {
-		throw new Exception('Not implemented yet order matrixes in situation');
+		return null;
+		// TODO throw new Exception('Not implemented yet order matrixes in situation');
 	}
 
 	constructor(
