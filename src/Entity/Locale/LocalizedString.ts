@@ -15,8 +15,8 @@ class LocalizedString {
 
 	static $entity: IEntityAnnotation = {
 		$dbs: DatabaseSystem.MONGO_DB,
-		cs: Type.String,
-		en: Type.String
+		cs: new Type.String(2048, true),
+		en: new Type.String(2048, true)
 	};
 
 	get Cs() { return this.object.cs; }

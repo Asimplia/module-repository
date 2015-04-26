@@ -19,8 +19,8 @@ class CheckItem {
 	static $entity: IEntityAnnotation = {
 		$dbs: DatabaseSystem.MONGO_DB,
 		label: {
-			cs: new Type.String(2048),
-			en: new Type.String(2048)
+			cs: new Type.String(2048, true),
+			en: new Type.String(2048, true)
 		},
 		values: new Type.Array(Value.$entity),
 		checkItemId: {

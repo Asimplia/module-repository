@@ -24,8 +24,8 @@ class Checklist {
 		dateCreated: Type.Date,
 		section: Type.String,
 		name: {
-			cs: new Type.String(2048),
-			en: new Type.String(2048)
+			cs: new Type.String(2048, true),
+			en: new Type.String(2048, true)
 		},
 		checkItems: new Type.Array(CheckItem.$entity),
 		dateResolved: new Type.Date(true, true)
