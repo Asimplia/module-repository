@@ -837,6 +837,21 @@ create table feed.masterproduct (
 );
 
 /*==============================================================*/
+/* Table: eshopfeedsettings                                     */
+/*==============================================================*/
+create table feed.eshopfeedsettings (
+   id                   SERIAL not null,
+   eshopid              INT8                 null,
+   paramwhitelist       text[]               null,
+   hashparamwhitelist   text[]               null,
+   dontcleanparams      boolean              null,
+   dontcleanhashparams  boolean              null,
+   validfrom            timestamptz          not null,
+   validto              timestamptz          not null,
+   constraint PK_ESHOPFEEDSETTINGS primary key (id)
+);
+
+/*==============================================================*/
 /* Table: matrix                                                */
 /*==============================================================*/
 create table analytical.matrix (
@@ -1858,6 +1873,11 @@ alter table feed.zbozi_variant
 alter table feed.zbozi_variant
    add constraint FK_ZBOZI_VA_REFERENCE_FEEDLOAD foreign key (loadid)
       references  feed.feedload (loadid)
+      on delete restrict on update restrict;
+
+alter table feed.eshopfeedsettings
+   add constraint FK_ESHOPFEE_REFERENCE_ESHOP foreign key (eshopid)
+      references  warehouse.eshop (eshopid)
       on delete restrict on update restrict;
 
 ALTER TABLE analytical.matrix
