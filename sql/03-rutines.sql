@@ -45,13 +45,20 @@ BEGIN
 	SET loadlogid = loadlog.loadid
 	FROM warehouse.loadlog
 	WHERE feedload.eshopid = loadlog.eshopid
-		AND loadlog.period + (SELECT datarefreshperiod FROM warehouse.eshopsettings WHERE eshopid = feedload.eshopid LIMIT 1)::interval > feedload.loaddate
+		AND COALESCE((
+			SELECT nextloadlog.period
+			FROM warehouse.loadlog nextloadlog
+			WHERE loadlog.eshopid = nextloadlog.eshopid
+				AND loadlog.period < nextloadlog.period
+			ORDER BY nextloadlog.period
+			LIMIT 1
+		) > feedload.loaddate, TRUE)
 		AND loadlog.period < feedload.loaddate
 	AND feedload.loadlogid IS NULL
 	;
 
 	FOR tablename IN SELECT regexp_split_to_table(
-		'ga_pageview,ga_revenue,heureka,heurekaaccessory,heurekadelivery,heurekaparam,priceapi,priceapijob,sitemap,zbozi,zbozi_variant',
+		'ga_pageview,ga_revenue,heureka,heurekaaccessory,heurekadelivery,heurekaparam,priceapi,priceapijob,sitemap,zbozi,zbozi_variant,valuefailure',
 		','
 	)
 	LOOP
@@ -285,11 +292,11 @@ BEGIN
 	FROM analytical.v_situation
 	;
 
-	UPDATE signal
+	UPDATE analytical.signal
 	SET situationid = source.situationid
 	FROM (
 		SELECT situation.situationid, matrix.matrixid
-		FROM situation
+		FROM analytical.situation
 		JOIN analytical.matrix
 			ON matrix.eshopid = situation.eshopid
 			AND (matrix.productid = situation.productid OR situation.productid IS NULL)

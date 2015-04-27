@@ -10,10 +10,13 @@ CREATE OR REPLACE VIEW warehouse.eshopmatrixloads AS
 		FROM warehouse.eshopsettings s,
 		LATERAL generate_series(s.datestart, now(), s.datarefreshperiod::interval) t(period)
 	) a
-	LEFT join warehouse.loadlog l
-		ON a.eshopid = l.eshopid
-		AND a.period = l.period
-	WHERE l.loadid is NULL;
+	WHERE a.period > (
+			SELECT l.period
+			FROM warehouse.loadlog l
+			WHERE a.eshopid = l.eshopid
+			ORDER BY l.period DESC
+			LIMIT 1
+		);
 
 
 

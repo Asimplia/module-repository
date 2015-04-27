@@ -1248,6 +1248,7 @@ create table feed.valuefailure (
    formervalue          text                 not null,
    lengthfailedat       timestamptz          null,
    datatypefailedat     timestamptz          null,
+   loadlogid            INT8                 null,
    constraint PK_VALUEFAILURE primary key (valuefailureid)
 );
 
