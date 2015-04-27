@@ -1555,12 +1555,12 @@ alter table feed.masterproduct
 alter table feed.masterproduct
    add constraint FK_MASTERPR_REFERENCE_GA_REVEN foreign key (revenuesid)
       references  feed.ga_revenue (revenuesid)
-      on delete restrict on update restrict;
+      on delete SET NULL on update SET NULL;
 
 alter table feed.masterproduct
    add constraint FK_MASTERPR_REFERENCE_GA_PAGEV foreign key (turnoutid)
       references  feed.ga_pageview (turnoutid)
-      on delete restrict on update restrict;
+      on delete SET NULL on update SET NULL;
 
 alter table analytical.matrix
    add constraint FK_MATRIX_REFERENCE_PRODUCT foreign key (productid)
