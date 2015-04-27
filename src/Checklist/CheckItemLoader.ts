@@ -83,6 +83,9 @@ class CheckItemLoader {
 				$in: filter.ValueTypeGroupList.getValueTypeList().getValueTypeEnumValues()
 			};
 		}
+		if (filter.ChecklistId) {
+			conditions.checklistId = filter.ChecklistId;
+		}
 		return conditions;
 	}
 }
