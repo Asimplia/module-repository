@@ -25,6 +25,7 @@ class ValueType {
 	get Name() { return new LocalizedString(this.object.name); }
 	get Message() { return new LocalizedString(this.object.message); }
 	get Type(): ValueTypeEnum { return ValueTypeEnum[this.object.type]; }
+	get TypeValue(): string { return this.object.type; }
 
 	constructor(
 		type: ValueTypeEnum,
