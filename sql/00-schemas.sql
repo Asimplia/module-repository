@@ -92,8 +92,6 @@ drop table if exists feed.loadcontrol CASCADE;
 
 drop table if exists feed.masterproduct CASCADE;
 
-drop index if exists analytical.inmatrixkeys;
-
 drop index if exists analytical.inmatrixtype;
 
 drop table if exists warehouse.loadlog CASCADE;
@@ -1887,11 +1885,11 @@ ALTER TABLE analytical.matrix
 
 ALTER TABLE analytical."matrix"
    ADD FOREIGN KEY ("eshopid", "productid", "customerid", "channelid", "orderid", "productcategoryid", "loadid")
-   REFERENCES "situation" ("eshopid", "productid", "customerid", "channelid", "orderid", "productcategoryid", "loadid")
+   REFERENCES analytical."situation" ("eshopid", "productid", "customerid", "channelid", "orderid", "productcategoryid", "loadid")
    ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 ALTER TABLE analytical.signal
-   ADD FOREIGN KEY ("situationid") REFERENCES "situation" ("situationid") ON DELETE RESTRICT ON UPDATE RESTRICT;
+   ADD FOREIGN KEY ("situationid") REFERENCES analytical."situation" ("situationid") ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE feed."masterproduct"
    ADD FOREIGN KEY ("productid") REFERENCES warehouse."product" ("productid") ON DELETE RESTRICT ON UPDATE RESTRICT;
