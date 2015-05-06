@@ -25,7 +25,9 @@ describe('Entity.Checklist.ChecklistList', () => {
 					mainImage: {
 						id: '1'
 					},
-					doneIndex: 1
+					statistics: {
+						doneIndex: 1
+					}
 				}),
 			]);
 			expect(checklistList.areAllDone()).toBeTruthy();

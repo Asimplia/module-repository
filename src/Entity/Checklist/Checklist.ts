@@ -3,6 +3,7 @@ import SectionEnum = require('../Section/SectionEnum');
 import SectionFactory = require('../Section/SectionFactory');
 import IChecklistObject = require('./IChecklistObject');
 import LocalizedString = require('../Locale/LocalizedString');
+import IStatistics = require('./IStatistics');
 import Util = require('asimplia-util');
 import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
 import Type = Util.ODBM.Mapping.Type;
@@ -26,8 +27,14 @@ class Checklist {
 			en: new Type.String(2048, true)
 		},
 		dateResolved: new Type.Date(true, true),
-		totalCount: new Type.Integer(4, true),
-		doneIndex: new Type.Float(8, true)
+		statistics: {
+			$nullable: true,
+			doneIndex: new Type.Float(8, true),
+			totalCost: new Type.Integer(4, true),
+			categoryText: new Type.String(2048, true),
+			totalCount: new Type.Integer(4, true),
+			valueNames: new Type.Array(new Type.String(), true)
+		}
 	};
 	private static converter = new Converter<Checklist, IChecklistObject>(Checklist);
 
@@ -35,9 +42,11 @@ class Checklist {
 	get Section() { return SectionEnum[this.object.section]; }
 	get Name() { return new LocalizedString(this.object.name); }
 	get DateCreated() { return this.object.dateCreated; }
-	get TotalCount() { return this.object.totalCount; }
+	get TotalCount() { return this.object.statistics ? this.object.statistics.totalCount : null; }
+	get Statistics(): IStatistics { return this.object.statistics; }
 
 	set Name(name: LocalizedString) { this.object.name = name.toObject(); }
+	set Statistics(statistics: IStatistics) { this.object.statistics = statistics; }
 
 	constructor(
 		private object: IChecklistObject
@@ -48,7 +57,7 @@ class Checklist {
 	}
 
 	getDoneIndex() {
-		return this.object.doneIndex;
+		return this.object.statistics ? this.object.statistics.doneIndex : null;
 	}
 
 	static fromObject(object: IChecklistObject) {

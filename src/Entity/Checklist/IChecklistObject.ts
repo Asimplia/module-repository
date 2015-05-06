@@ -1,5 +1,6 @@
 
 import ILocalizedStringObject = require('../Locale/ILocalizedStringObject');
+import IStatistics = require('./IStatistics');
 
 export = IChecklistObject;
 interface IChecklistObject {
@@ -9,6 +10,5 @@ interface IChecklistObject {
 	section: string;
 	name: ILocalizedStringObject;
 	dateResolved: Date;
-	totalCount?: number;
-	doneIndex?: number;
+	statistics?: IStatistics;
 }

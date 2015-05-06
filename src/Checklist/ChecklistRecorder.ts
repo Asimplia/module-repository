@@ -5,6 +5,7 @@ import IChecklistObject = require('../Entity/Checklist/IChecklistObject');
 import ChecklistList = require('../Entity/Checklist/ChecklistList');
 import LocalizedString = require('../Entity/Locale/LocalizedString');
 import SectionEnum = require('../Entity/Section/SectionEnum');
+import IStatistics = require('../Entity/Checklist/IStatistics');
 import Util = require('asimplia-util');
 import DateFactory = Util.DateTime.DateFactory;
 import Manager = Util.ODBM.Repository.MongoDB.Manager;
@@ -65,6 +66,11 @@ class ChecklistRecorder {
 
 	updateName(checklist: Checklist, name: LocalizedString, callback: (e: Error, checklist?: Checklist) => void) {
 		checklist.Name = name;
+		this.update(checklist, callback);
+	}
+
+	updateStatistics(checklist: Checklist, statistics: IStatistics, callback: (e: Error, checklist?: Checklist) => void) {
+		checklist.Statistics = statistics;
 		this.update(checklist, callback);
 	}
 }
