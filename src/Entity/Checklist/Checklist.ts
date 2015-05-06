@@ -37,6 +37,8 @@ class Checklist {
 	get DateCreated() { return this.object.dateCreated; }
 	get TotalCount() { return this.object.totalCount; }
 
+	set Name(name: LocalizedString) { this.object.name = name.toObject(); }
+
 	constructor(
 		private object: IChecklistObject
 	) {}

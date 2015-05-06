@@ -62,4 +62,9 @@ class ChecklistRecorder {
 		});
 		this.insert(checklist, callback);
 	}
+
+	updateName(checklist: Checklist, name: LocalizedString, callback: (e: Error, checklist?: Checklist) => void) {
+		checklist.Name = name;
+		this.update(checklist, callback);
+	}
 }

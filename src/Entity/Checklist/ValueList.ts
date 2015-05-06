@@ -26,6 +26,10 @@ class ValueList extends List<Value> {
 		});
 	}
 
+	getCountRed() {
+		return this.filter((value: Value) => value.isRed()).count();
+	}
+
 	hasRedOfValueTypeGroupList(groupList: ValueTypeGroupList) {
 		return this.any((value: Value) => {
 			return value.isRed() && groupList.getValueTypeList().containsValueTypeEnum(value.ValueType);

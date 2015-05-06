@@ -5,11 +5,26 @@ export = PlaceholderProductLoader;
 class PlaceholderProductLoader {
 
 	static $inject = [
-		'connection.neo4j'
+		'connection.neo4j',
+		'connection.postgres',
 	];
 	constructor(
-		private db: any
+		private db: any,
+		private connection: any
 	) {}
+
+	getTotalProductCost(productIds: number[], callback: (e: Error, totalCost?: number) => void) {
+		var placeholders = _.map(_.range(1, productIds.length + 1), (i: number) => '$' + i);
+		var sql = 'SELECT sum(COALESCE(heureka.price_vat * ga_revenue.itemquantity, heureka.price_vat, 0)) AS total_cost \
+				FROM feed.masterproduct \
+				LEFT JOIN feed.heureka ON heureka.heurekaid = masterproduct.heurekaid \
+				LEFT JOIN feed.ga_revenue ON ga_revenue.revenuesid = masterproduct.revenuesid \
+				WHERE masterproduct.productid IN (' + placeholders.join(', ') + ')';
+		this.connection.query(sql, productIds, (e: Error, result: any) => {
+			if (e) return callback(e);
+			callback(null, result.rows.length ? result.rows[0].total_cost : 0);
+		});
+	}
 
 	getName(productId: number, callback: (e: Error, productName?: string) => void): void {
 		this.db.query('MATCH (a:PRODUCT) WHERE (a.productId = {productId} ) RETURN a.name', {

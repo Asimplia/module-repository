@@ -31,4 +31,21 @@ class CheckItemList extends List<CheckItem> {
 			return checkItem.isSituationPrimaryEqual(situationPrimary);
 		});
 	}
+
+	getProductIds() {
+		return this.filter((checkItem: CheckItem) => {
+			return checkItem.SituationPrimary.productId != null;
+		}).map((checkItem: CheckItem) => {
+			return checkItem.SituationPrimary.productId;
+		}).toArray();
+	}
+
+	getCountRedProductIdPairs() {
+		return this.map((item: CheckItem) => {
+			return {
+				productId: item.SituationPrimary.productId,
+				count: item.ValueList.getCountRed()
+			};
+		}).toArray();
+	}
 }
