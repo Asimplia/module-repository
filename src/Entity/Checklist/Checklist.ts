@@ -31,7 +31,7 @@ class Checklist {
 			$nullable: true,
 			doneIndex: new Type.Float(8, true),
 			totalCost: new Type.Integer(4, true),
-			categoryText: new Type.String(2048, true),
+			worstCategory: new Type.String(2048, true),
 			totalCount: new Type.Integer(4, true),
 			valueNames: new Type.Array(new Type.String(), true)
 		}

@@ -15,7 +15,11 @@ describe('Entity.Checklist.CheckItem', () => {
 				values: [{
 					valueType: 'EAN',
 					dateChecked: null,
-					priorityType: 'GREEN'
+					priorityType: 'GREEN',
+					label: {
+						cs: 'any',
+						en: 'what'
+					}
 				}],
 				checklistId: '1',
 				situationPrimary: {

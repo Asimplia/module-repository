@@ -3,7 +3,7 @@ export = IStatistics;
 interface IStatistics {
 	doneIndex?: number;
 	totalCost?: number;
-	categoryText?: string;
+	worstCategory?: string;
 	totalCount?: number;
 	valueNames?: string[];
 }

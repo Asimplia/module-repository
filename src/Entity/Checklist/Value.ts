@@ -7,6 +7,7 @@ import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
 import Type = Util.ODBM.Mapping.Type;
 import Converter = Util.ODBM.Entity.Converter;
 import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
+import LocalizedString = require('../Locale/LocalizedString');
 /* tslint:disable */
 Util;
 /* tslint:enable */
@@ -18,13 +19,15 @@ class Value {
 		$dbs: DatabaseSystem.MONGO_DB,
 		valueType: Type.String,
 		dateChecked: new Type.Date(true, true),
-		priorityType: Type.String
+		priorityType: Type.String,
+		label: LocalizedString.$entity
 	};
 	private static converter = new Converter<Value, IValueObject>(Value);
 
 	get ValueType() { return ValueTypeEnum[this.object.valueType]; }
 	get DateChecked() { return this.object.dateChecked; }
 	get PriorityType() { return PriorityTypeEnum[this.object.priorityType]; }
+	get Label() { return new LocalizedString(this.object.label); }
 
 	set DateChecked(dateChecked: Date) { this.object.dateChecked = dateChecked; }
 

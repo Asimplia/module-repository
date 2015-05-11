@@ -12,7 +12,11 @@ describe('Entity.Checklist.Value', () => {
 			var value = Value.fromObject({
 				valueType: 'EAN',
 				dateChecked: null,
-				priorityType: 'GREEN'
+				priorityType: 'GREEN',
+				label: {
+					cs: 'any',
+					en: 'what'
+				}
 			});
 			expect(value.toObject().valueType).toBe('EAN');
 			switch (value.ValueType) {
