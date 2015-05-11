@@ -19,8 +19,8 @@ BEGIN
 	from (Select eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams
         from feed.eshopfeedsettings s
         where 1=1
-        and s.validfrom <= current_date
-        and s.validto > current_date)
+        and s.validfrom <= now()
+        and s.validto > now())
           as se(eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams)
 	WHERE s.uri IS NULL
 	and se.eshopid = s.eshopid;
@@ -30,8 +30,8 @@ BEGIN
 	from (Select eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams
         from feed.eshopfeedsettings s
         where 1=1
-        and s.validfrom <= current_date
-        and s.validto > current_date)
+        and s.validfrom <= now()
+        and s.validto > now())
           as se(eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams)
 	WHERE p.uri IS NULL
 	and p.eshopid = se.eshopid;
@@ -41,8 +41,8 @@ BEGIN
 	from (Select eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams
         from feed.eshopfeedsettings s
         where 1=1
-        and s.validfrom <= current_date
-        and s.validto > current_date)
+        and s.validfrom <= now()
+        and s.validto > now())
           as se(eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams)
 	WHERE h.uri IS NULL
 	and h.eshopid = se.eshopid;
@@ -53,8 +53,8 @@ BEGIN
 	from (Select eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams
         from feed.eshopfeedsettings s
         where 1=1
-        and s.validfrom <= current_date
-        and s.validto > current_date)
+        and s.validfrom <= now()
+        and s.validto > now())
           as se(eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams)
 	WHERE z.uri IS NULL
 	and z.eshopid = se.eshopid;
