@@ -146,6 +146,8 @@ drop table if exists feed.zbozi CASCADE;
 
 drop table if exists feed.zbozi_variant CASCADE;
 
+DROP TABLE if exists feed.heurekacategories CASCADE;
+
 drop schema if exists analytical CASCADE;
 
 drop schema if exists feed CASCADE;
@@ -1293,6 +1295,14 @@ create table feed.zbozi_variant (
    variantzboziid       INT8                 not null,
    loadlogid            INT8                 null,
    constraint PK_ZBOZI_VARIANT primary key (variantid)
+);
+
+CREATE TABLE feed.heurekacategories
+(
+  id bigint,
+  parent_id bigint,
+  cat_name character varying(1000),
+  cat_full_name character varying(1000)
 );
 
 alter table warehouse.address
