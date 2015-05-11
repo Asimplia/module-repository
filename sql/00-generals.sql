@@ -27,12 +27,18 @@ CREATE AGGREGATE public.last (
 
 
 
-create or replace function public.replace_url(v_text TEXT,  v_param_whitelist TEXT[], v_hash_param_whitelist  TEXT[], dontClean boolean, dontCleanHash boolean) 
-  returnS TEXT AS
-$$
+-- Function: replace_url(text, text[], text[], boolean, boolean)
+CREATE OR REPLACE FUNCTION public.replace_url(
+    v_text text,
+    v_param_whitelist text[],
+    v_hash_param_whitelist text[],
+    dontclean boolean,
+    dontcleanhash boolean)
+  RETURNS text AS
+$BODY$
 --v_param_whitelist
 --v_hash_param_whitelist
-Declare
+Declare 
 output text;
 param TEXT;
 cnt int;
@@ -58,19 +64,23 @@ BEGIN
     FOREACH param IN ARRAY v_hash_param_whitelist
     LOOP
       if cnt = 0 then
-        output = output || '#' || (regexp_matches(v_text::text,'(\#|\#.*\&)+('||param||'[0-9a-zA-Z\+\%@\/\[\];=_-]+)+'))[2];
+        output = output || '#' || (regexp_matches(v_text::text,'(\#|\#.*\&)+('||param||'[0-9a-zA-Z\+\%@\/\[\];=_-]*)+'))[2];
       else
-        output = output || '&' || (regexp_matches(v_text::text,'(\#|\#.*\&)+('||param||'[0-9a-zA-Z\+\%@\/\[\];=_-]+)+'))[2];
+        output = output || '&' || (regexp_matches(v_text::text,'(\#|\#.*\&)+('||param||'[0-9a-zA-Z\+\%@\/\[\];=_-]*)+'))[2];
       end if;
       cnt = cnt + 1;
     END LOOP;
   end IF;
 
+  if dontClean then
+    output = output || '?' || (regexp_matches(v_text::text,'(\?[0-9a-zA-Z\+\%\&@\/\[\];=_-]*)+'))[1];
+  end if;
+
   if dontCleanHash then
-    output = output || '#' || (regexp_matches(v_text::text,'(\#[0-9a-zA-Z\+\%\&@\/\[\];=_-]+)+'))[1];
+    output = output || '#' || (regexp_matches(v_text::text,'(\#[0-9a-zA-Z\+\%\&@\/\[\];=_-]*)+'))[1];
   end if;
 
   REturn output;
 END;
-$$
-LANguage plpgsql;
+$BODY$
+  LANGUAGE plpgsql;
