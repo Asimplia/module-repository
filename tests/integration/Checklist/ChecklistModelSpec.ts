@@ -29,7 +29,8 @@ describe('ChecklistModel', () => {
 				name: { cs: 'a', en: 'b' },
 				checkItems: [],
 				mainImage: { id: '1' },
-				dateResolved: null
+				dateResolved: null,
+				statistics: {}
 			});
 			checklistRecorder.insertOrUpdate(checklist, (e: Error, checklist?: Checklist) => {
 				if (e) {
@@ -62,7 +63,8 @@ describe('ChecklistModel', () => {
 					name: { cs: 'a', en: 'b' },
 					checkItems: [],
 					mainImage: { id: '1' },
-					dateResolved: null
+					dateResolved: null,
+					statistics: {}
 				}),
 				Checklist.fromObject({
 					id: null,
@@ -72,7 +74,8 @@ describe('ChecklistModel', () => {
 					name: { cs: 'c', en: 'b' },
 					checkItems: [],
 					mainImage: { id: '1' },
-					dateResolved: null
+					dateResolved: null,
+					statistics: {}
 				})
 			]);
 			checklistRecorder.insertOrUpdateList(checklistList, (e: Error, checklistList?: ChecklistList) => {
