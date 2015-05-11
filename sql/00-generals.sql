@@ -72,12 +72,12 @@ BEGIN
     END LOOP;
   end IF;
 
-  if dontClean then
-    output = output || '?' || (regexp_matches(v_text::text,'(\?[0-9a-zA-Z\+\%\&@\/\[\];=_-]*)+'))[1];
+  if dontClean AND v_text::text LIKE '%?%' then
+    output = output || (regexp_matches(v_text::text,'(\?[0-9a-zA-Z\+\%\&@\/\[\];=_-]*)+'))[1];
   end if;
 
-  if dontCleanHash then
-    output = output || '#' || (regexp_matches(v_text::text,'(\#[0-9a-zA-Z\+\%\&@\/\[\];=_-]*)+'))[1];
+  if dontCleanHash AND v_text::text LIKE '%#%' then
+    output = output || (regexp_matches(v_text::text,'(\#[0-9a-zA-Z\+\%\&@\/\[\];=_-]*)+'))[1];
   end if;
 
   REturn output;
