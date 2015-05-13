@@ -61,7 +61,7 @@ class User implements IEntity {
 			companyId: e.companyId,
 			email: e.email,
 			phoneNumber: e.phoneNumber,
-			activeLanguage: e.activeLanguage ? LanguageEnum[e.activeLanguage] : null
+			activeLanguage: e.activeLanguage !== null ? LanguageEnum[e.activeLanguage] : null
 		};
 	}
 
