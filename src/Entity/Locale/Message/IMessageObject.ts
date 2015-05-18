@@ -6,4 +6,8 @@ interface IMessageObject {
 	source: string;
 	lastChangedAt: Date;
 	text: ILocalizedStringObject;
+	missingCount?: {
+		cs: number;
+		en: number;
+	}
 }

@@ -3,6 +3,7 @@ import mongoose = require('mongoose');
 import Message = require('../../Entity/Locale/Message/Message');
 import IMessageObject = require('../../Entity/Locale/Message/IMessageObject');
 import MessageList = require('../../Entity/Locale/Message/MessageList');
+import LanguageEnum = require('../../Entity/Locale/LanguageEnum');
 import Util = require('asimplia-util');
 import DateFactory = Util.DateTime.DateFactory;
 import Manager = Util.ODBM.Repository.MongoDB.Manager;
@@ -53,5 +54,26 @@ class MessageRecorder {
 		callback: (e: Error, messageList?: MessageList) => void
 	) {
 		this.manager.insertList(messageList, callback);
+	}
+
+	incrementMissing(message: Message, languageEnum: LanguageEnum, callback: (e: Error, message?: Message) => void) {
+		message.MissingCount[LanguageEnum[languageEnum]]++;
+		this.update(message, callback);
+	}
+
+	createMessage(source: string, callback: (e: Error, message?: Message) => void) {
+		var message = this.manager.Converter.fromObject({
+			source: source,
+			lastChangedAt: this.dateFactory.now(),
+			text: {
+				cs: null,
+				en: source
+			},
+			missingCount: {
+				cs: 0,
+				en: 0
+			}
+		});
+		this.insert(message, callback);
 	}
 }
