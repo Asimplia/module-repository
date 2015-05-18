@@ -9,6 +9,7 @@ export import Currency = require('./Currency');
 export import CurrencyEnum = require('./CurrencyEnum');
 export import TerritoryEnum = require('./TerritoryEnum');
 export import Locale = require('./Locale');
+export import Message = require('./Message/index');
 export import ILocalizedStringObject = require('./ILocalizedStringObject');
 /* tslint:disable */
 LocalizedString;
@@ -21,3 +22,4 @@ Currency;
 CurrencyEnum;
 TerritoryEnum;
 Locale;
+Message;
