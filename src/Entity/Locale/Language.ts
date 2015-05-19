@@ -5,6 +5,7 @@ export = Language;
 class Language {
 
 	get Enum() { return this.language; }
+	get EnumValue() { return LanguageEnum[this.language]; }
 
 	constructor(
 		private language: LanguageEnum

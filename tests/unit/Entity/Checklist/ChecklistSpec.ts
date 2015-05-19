@@ -17,7 +17,8 @@ describe('Entity.Checklist.Checklist', () => {
 				name: { cs: 'a', en: 'b' },
 				checkItems: [],
 				mainImage: { id: '1' },
-				dateResolved: null
+				dateResolved: null,
+				statistics: {}
 			});
 			expect(checklist.Section).toBe(2);
 			expect(checklist.Id).toBe('1');

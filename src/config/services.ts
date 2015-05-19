@@ -104,6 +104,7 @@ var services: { [name: string]: any } = {
 				__dirname + '/../Feed',
 				__dirname + '/../Site',
 				__dirname + '/../Checklist',
+				__dirname + '/../Locale',
 			]
 		]
 	},

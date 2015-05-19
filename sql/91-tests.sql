@@ -23,5 +23,17 @@ RETURNS TABLE( passing boolean, description varchar) AS $$
 	SELECT public.replace_url('http://www.foo.com/blah_blah/blah_blah/', '{"kacer","zaba","a"}', '{"kacer","zaba"}', FALSE, FALSE)
 		= '/blah_blah/blah_blah/' AS passing,
 		'No stripping without input params' AS description
+	UNION
+	SELECT public.replace_url('http://www.foo.com/blah_blah/blah_blah/#any=what', '{}', '{}', FALSE, TRUE)
+		= '/blah_blah/blah_blah/#any=what' AS passing,
+		'Keep all hash params as input uri in output' AS description
+	UNION
+	SELECT public.replace_url('http://www.foo.com/blah_blah/blah_blah/?any=what', '{}', '{}', TRUE, FALSE)
+		= '/blah_blah/blah_blah/?any=what' AS passing,
+		'Keep all query params as input uri in output' AS description
+	UNION
+	SELECT public.replace_url('http://www.foo.com/blah_blah/blah_blah/?what#any', '{}', '{}', TRUE, TRUE)
+		= '/blah_blah/blah_blah/?what#any' AS passing,
+		'Keep all query & hash params as input uri in output' AS description
 	;
 $$ LANGUAGE sql;

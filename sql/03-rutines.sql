@@ -15,20 +15,50 @@ CREATE OR REPLACE FUNCTION feed.create_feeduri()
 RETURNS void AS $$
 BEGIN
 	UPDATE feed.sitemap s
-	SET uri = public.replace_url(s.loc::text, '{}'::text[], '{}'::text[], FALSE, FALSE)
-	WHERE s.uri IS NULL;
+	SET uri = public.replace_url(s.loc::text, se.paramwhitelist, se.hashparamwhitelist, se.dontcleanparams, se.dontcleanhashparams)
+	from (Select eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams
+        from feed.eshopfeedsettings s
+        where 1=1
+        and s.validfrom <= now()
+        and s.validto > now())
+          as se(eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams)
+	WHERE s.uri IS NULL
+	and se.eshopid = s.eshopid;
 
 	UPDATE feed.ga_pageview p
-	SET uri = public.replace_url(p.pagepath::text, '{}'::text[], '{}'::text[], FALSE, FALSE)
-	WHERE p.uri IS NULL;
+	SET uri = public.replace_url(p.pagepath::text, se.paramwhitelist, se.hashparamwhitelist, se.dontcleanparams, se.dontcleanhashparams)
+	from (Select eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams
+        from feed.eshopfeedsettings s
+        where 1=1
+        and s.validfrom <= now()
+        and s.validto > now())
+          as se(eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams)
+	WHERE p.uri IS NULL
+	and p.eshopid = se.eshopid;
 
 	UPDATE feed.heureka h
-	SET uri = public.replace_url(h.url::text, '{}'::text[], '{}'::text[], FALSE, FALSE)
-	WHERE h.uri IS NULL;
+	SET uri = public.replace_url(h.url::text, se.paramwhitelist, se.hashparamwhitelist, se.dontcleanparams, se.dontcleanhashparams)
+	from (Select eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams
+        from feed.eshopfeedsettings s
+        where 1=1
+        and s.validfrom <= now()
+        and s.validto > now())
+          as se(eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams)
+	WHERE h.uri IS NULL
+	and h.eshopid = se.eshopid;
+
 
 	UPDATE feed.zbozi z
-	SET uri = public.replace_url(z.url::text, '{}'::text[], '{}'::text[], FALSE, FALSE)
-	WHERE z.uri IS NULL;
+	SET uri = public.replace_url(z.url::text, se.paramwhitelist, se.hashparamwhitelist, se.dontcleanparams, se.dontcleanhashparams)
+	from (Select eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams
+        from feed.eshopfeedsettings s
+        where 1=1
+        and s.validfrom <= now()
+        and s.validto > now())
+          as se(eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams)
+	WHERE z.uri IS NULL
+	and z.eshopid = se.eshopid;
+
 END;
 $$ LANGUAGE plpgsql;
 

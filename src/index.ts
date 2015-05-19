@@ -16,6 +16,7 @@ export import External = require('./External/index');
 export import Site = require('./Site/index');
 export import Checklist = require('./Checklist/index');
 export import Feed = require('./Feed/index');
+export import Locale = require('./Locale/index');
 export import IntegrationPreparer = require('../tests/IntegrationPreparer');
 /* tslint:disable */
 Util;
