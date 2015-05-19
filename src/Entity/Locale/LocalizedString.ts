@@ -21,6 +21,8 @@ class LocalizedString {
 
 	get Cs() { return this.object.cs; }
 	get En() { return this.object.en; }
+	set Cs(cs: string) { this.object.cs = cs; }
+	set En(en: string) { this.object.en = en; }
 
 	constructor(private object: ILocalizedStringObject) {
 		if (!this.object) {
