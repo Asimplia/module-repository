@@ -28,32 +28,14 @@ class MessageRecorder {
 			)
 	) {}
 
-	insertOrUpdateList(
-		messageList: MessageList,
-		callback: (e: Error, messageList?: MessageList) => void
-	) {
-		this.manager.insertOrUpdateList(messageList, callback);
-	}
-
-	insertOrUpdate(
-		message: Message, callback: (e: Error, message?: Message) => void
-	) {
-		this.manager.insertOrUpdate(message, callback);
-	}
-
 	update(message: Message, callback: (e: Error, message?: Message) => void) {
+		message.LastChangedAt = this.dateFactory.now();
 		this.manager.update(message, callback);
 	}
 
-	insert(message: Message, callback: (e: Error, message?: Message) => void) {
+	private insert(message: Message, callback: (e: Error, message?: Message) => void) {
+		message.LastChangedAt = this.dateFactory.now();
 		this.manager.insert(message, callback);
-	}
-
-	insertList(
-		messageList: MessageList,
-		callback: (e: Error, messageList?: MessageList) => void
-	) {
-		this.manager.insertList(messageList, callback);
 	}
 
 	incrementMissing(message: Message, languageEnum: LanguageEnum, callback: (e: Error, message?: Message) => void) {

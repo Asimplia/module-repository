@@ -32,6 +32,7 @@ class Message {
 	get Text() { return new LocalizedString(this.object.text); }
 	get MissingCount() { return this.object.missingCount; }
 	set MissingCount(missingCount: any) { this.object.missingCount = missingCount; }
+	set LastChangedAt(lastChangedAt: Date) { this.object.lastChangedAt = lastChangedAt; }
 
 	constructor(
 		private object: IMessageObject
