@@ -29,12 +29,10 @@ class MessageRecorder {
 	) {}
 
 	update(message: Message, callback: (e: Error, message?: Message) => void) {
-		message.LastChangedAt = this.dateFactory.now();
 		this.manager.update(message, callback);
 	}
 
 	private insert(message: Message, callback: (e: Error, message?: Message) => void) {
-		message.LastChangedAt = this.dateFactory.now();
 		this.manager.insert(message, callback);
 	}
 
