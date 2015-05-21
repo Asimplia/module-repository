@@ -42,7 +42,7 @@ class CheckItem {
 	get Label() { return new LocalizedString(this.object.label); }
 	get ValueList() { return CheckItem.converter.getList<ValueList, Value>(ValueList, Value, this.object.values); }
 	get ChecklistId() { return this.object.checklistId; }
-	get Image() { return Image.fromObject(this.object.image); }
+	get Image() { return this.object.image ? Image.fromObject(this.object.image) : null; }
 
 	set ValueList(valueList: ValueList) { this.object.values = valueList.toArray(Value.toObject); }
 	set Checklist(checklist: Checklist) { this.object.checklistId = checklist.Id; }

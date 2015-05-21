@@ -25,6 +25,7 @@ class Image implements IEntity {
 	) {}
 
 	get Id() { return this.object.id; }
+	get Url() { return this.object.url; }
 
 	static fromObject(object: IImageObject) {
 		return Image.converter.fromObject(object);
