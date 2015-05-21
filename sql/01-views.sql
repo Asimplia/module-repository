@@ -35,7 +35,8 @@ SELECT
 	public.last(zboziid) AS zboziid,
 	public.last(priceapiid) AS priceapiid,
 	public.last(revenuesid) AS revenuesid,
-	public.last(turnoutid) AS turnoutid
+	public.last(turnoutid) AS turnoutid,
+	public.last(imageurl) AS imageurl
 FROM (
 SELECT
 	loadlog.period AS createdat,
@@ -49,7 +50,8 @@ SELECT
 	zbozi.zboziid AS zboziid,
 	priceapi.priceapiid AS priceapiid,
 	ga_revenue.revenuesid AS revenuesid,
-	ga_pageview.turnoutid AS turnoutid
+	ga_pageview.turnoutid AS turnoutid,
+	COALESCE(heureka.imgurl, zbozi.imgurl, heureka.imgurl_alternative, priceapi.image_url) AS imageurl
 FROM feed.sitemap
 -- heureka
 FULL OUTER JOIN feed.heureka

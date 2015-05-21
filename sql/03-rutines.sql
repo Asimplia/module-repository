@@ -132,7 +132,8 @@ BEGIN
 		flaginshop,
 		inshopfrom,
 		useinmatrices,
-		uri
+		uri,
+		imageurl
 	)
 	(
 		SELECT
@@ -145,7 +146,8 @@ BEGIN
 			TRUE,
 			now(),
 			TRUE,
-			source.uri
+			source.uri,
+			source.imageurl
 		FROM feed.v_masterproduct source
 		LEFT JOIN warehouse.product
 			ON product.eshopid = source.eshopid
