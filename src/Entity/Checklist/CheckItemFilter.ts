@@ -57,6 +57,7 @@ class CheckItemFilter {
 	set Offset(offset: number) { this.object.offset = offset; }
 	set OrderByValuesCount(direction: number) { this.addOrderBy(CheckItemOrderBy.VALUE_COUNT, direction); }
 	set OrderById(direction: number) { this.addOrderBy(CheckItemOrderBy.ID, direction); }
+	set OrderByRank(direction: number) { this.addOrderBy(CheckItemOrderBy.RANK, direction); }
 
 	constructor(
 		private object: ICheckItemFilterObject = {}

@@ -12,4 +12,5 @@ interface ICheckItemObject {
 	checklistId: string;
 	situationPrimary: ISituationPrimary;
 	image: IImageObject;
+	rank: number;
 }

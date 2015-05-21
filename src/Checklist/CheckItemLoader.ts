@@ -73,6 +73,7 @@ class CheckItemLoader {
 		switch (type) {
 			case CheckItemOrderBy.ID: return 'id';
 			case CheckItemOrderBy.VALUE_COUNT: return 'values.length';
+			case CheckItemOrderBy.RANK: return 'rank';
 			default: throw new Exception('Not implemented checkItem order by ' + CheckItemOrderBy[type]);
 		}
 	}

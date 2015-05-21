@@ -27,6 +27,7 @@ class CheckItem {
 			en: new Type.String(2048, true)
 		},
 		values: new Type.Array(Value.$entity),
+		rank: new Type.Float(4, true),
 		checklistId: Type.String,
 		situationPrimary: {
 			eShopId: Type.Integer,
@@ -46,6 +47,7 @@ class CheckItem {
 
 	set ValueList(valueList: ValueList) { this.object.values = valueList.toArray(Value.toObject); }
 	set Checklist(checklist: Checklist) { this.object.checklistId = checklist.Id; }
+	set Rank(rank: number) { this.object.rank = rank; }
 
 	constructor(
 		private object: ICheckItemObject

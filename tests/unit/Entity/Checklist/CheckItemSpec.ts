@@ -27,7 +27,8 @@ describe('Entity.Checklist.CheckItem', () => {
 					loadId: 1,
 					productId: 1
 				},
-				image: null
+				image: null,
+				rank: 1
 			});
 			expect(checkItem.Label.Cs).toBe('Produkt peněženka');
 			expect(checkItem.Label.En).toBe('Product wallet');
