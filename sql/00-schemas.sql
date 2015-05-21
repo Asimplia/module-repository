@@ -1035,6 +1035,7 @@ create table warehouse.product (
    flaginshop           BOOL                 not null,
    inshopfrom           timestamptz          null,
    useinmatrices        BOOL                 not null,
+   imageurl             VARCHAR(2048)        null,
    constraint PK_PRODUCT primary key (productid),
    constraint AK_KEY_2_PRODUCT unique (originalid, eshopid)
 );
