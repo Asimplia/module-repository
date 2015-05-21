@@ -1,4 +1,4 @@
-ALTER TABLE "product"
+ALTER TABLE warehouse."product"
 ADD "imageurl" character varying(2048) NULL;
 
 
