@@ -2,6 +2,7 @@
 import ILocalizedStringObject = require('../Locale/ILocalizedStringObject');
 import IValueObject = require('./IValueObject');
 import ISituationPrimary = require('./ISituationPrimary');
+import IImageObject = require('../Image/IImageObject');
 
 export = ICheckItemObject;
 interface ICheckItemObject {
@@ -10,4 +11,5 @@ interface ICheckItemObject {
 	values: IValueObject[];
 	checklistId: string;
 	situationPrimary: ISituationPrimary;
+	image: IImageObject;
 }

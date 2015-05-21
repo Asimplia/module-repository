@@ -1,10 +1,12 @@
 
+import _ = require('underscore');
 import ICheckItemObject = require('./ICheckItemObject');
 import ValueList = require('./ValueList');
 import Checklist = require('./Checklist');
 import Value = require('./Value');
 import LocalizedString = require('../Locale/LocalizedString');
 import ISituationPrimary = require('./ISituationPrimary');
+import Image = require('../Image/Image');
 import Util = require('asimplia-util');
 import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
 import Type = Util.ODBM.Mapping.Type;
@@ -30,7 +32,8 @@ class CheckItem {
 			eShopId: Type.Integer,
 			loadId: Type.Integer,
 			productId: Type.Integer
-		}
+		},
+		image: _.extend({ $nullable: true }, Image.$entity)
 	};
 	private static converter = new Converter<CheckItem, ICheckItemObject>(CheckItem);
 
@@ -39,6 +42,7 @@ class CheckItem {
 	get Label() { return new LocalizedString(this.object.label); }
 	get ValueList() { return CheckItem.converter.getList<ValueList, Value>(ValueList, Value, this.object.values); }
 	get ChecklistId() { return this.object.checklistId; }
+	get Image() { return Image.fromObject(this.object.image); }
 
 	set ValueList(valueList: ValueList) { this.object.values = valueList.toArray(Value.toObject); }
 	set Checklist(checklist: Checklist) { this.object.checklistId = checklist.Id; }
