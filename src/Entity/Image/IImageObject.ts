@@ -1,5 +1,6 @@
 
 export = IImageObject;
 interface IImageObject {
-	id?: string;
+	id: string;
+	url: string;
 }

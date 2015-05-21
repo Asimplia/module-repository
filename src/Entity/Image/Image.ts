@@ -1,27 +1,37 @@
 
 import IEntity = require('../IEntity');
-import EntityPreparer = require('../EntityPreparer');
 import IImageObject = require('./IImageObject');
+import Util = require('asimplia-util');
+import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
+import Type = Util.ODBM.Mapping.Type;
+import Converter = Util.ODBM.Entity.Converter;
+import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = Image;
 class Image implements IEntity {
 
+	static $entity: IEntityAnnotation = {
+		$dbs: DatabaseSystem.MONGO_DB,
+		id: new Type.Id(Type.String),
+		url: new Type.String(2048, true)
+	};
+	private static converter = new Converter<Image, IImageObject>(Image);
+
 	constructor(
-		private id: string
+		private object: IImageObject
 	) {}
 
-	get Id() { return this.id; }
+	get Id() { return this.object.id; }
 
 	static fromObject(object: IImageObject) {
-		return new Image(
-			EntityPreparer.id(object.id)
-		);
+		return Image.converter.fromObject(object);
 	}
 
 	static toObject(entity: Image): IImageObject {
-		return {
-			id: entity.id
-		};
+		return Image.converter.toObject(entity);
 	}
 
 	toObject() {
