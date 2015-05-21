@@ -14,7 +14,6 @@ class IntegrationPreparer {
 	private connected = false;
 	private mongoose: any;
 	private pgClient: any;
-	private neo4jConnection: any;
 
 	static $inject = [
 		'ConnectionDispatcher'
@@ -32,16 +31,12 @@ class IntegrationPreparer {
 		try {
 			var mongoDsn = process.env.MONGODB_DSN_TEST || 'mongodb://localhost:27017/farfalia_test';
 			var postgreDsn = process.env.POSTGRES_DSN_TEST || 'postgres://postgres@localhost:5432/farfalia_test';
-			var neo4jDsn = process.env.NEO4J_DSN_TEST || 'http://localhost:7474';
-			this.connectionDispatcher.connectNeo4j(neo4jDsn, (connection: any) => { // TODO set dsn as contructor arg
-				this.neo4jConnection = connection;
-				this.connectionDispatcher.connectMongoDB(mongoDsn, (mongoose: any) => { // TODO set dsn as contructor arg
-					this.mongoose = mongoose;
-					this.connectionDispatcher.connectPostgres(postgreDsn, (client: any) => { // TODO set dsn as contructor arg
-						this.pgClient = client;
-						this.connected = true;
-						done();
-					});
+			this.connectionDispatcher.connectMongoDB(mongoDsn, (mongoose: any) => { // TODO set dsn as contructor arg
+				this.mongoose = mongoose;
+				this.connectionDispatcher.connectPostgres(postgreDsn, (client: any) => { // TODO set dsn as contructor arg
+					this.pgClient = client;
+					this.connected = true;
+					done();
 				});
 			});
 		} catch (e) {
