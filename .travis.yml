@@ -4,6 +4,7 @@ node_js:
   - "0.10"
 services:
   - mongodb
+  - neo4j
 addons:
   postgresql: "9.3"
 before_script:
