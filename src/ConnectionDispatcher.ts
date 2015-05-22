@@ -76,7 +76,7 @@ class ConnectionDispatcher {
 		setInterval(() => {
 			this.pgClient.query('SELECT 1;', (e: Error) => {
 				if (e) {
-					console.error('Error happened during keep alive Postgres connection');
+					console.error('Error happened during keep alive Postgres connection', e);
 				}
 			});
 		}, 3000);
