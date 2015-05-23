@@ -1,15 +1,14 @@
 
 import IEntity = require('../IEntity');
-import List = require('../List');
 import Signal = require('./Signal');
 import MatrixProduct = require('./MatrixProduct');
-import MatrixCategory = require('./MatrixCategory');
-import MatrixChannel = require('./MatrixChannel');
-import MatrixCustomer = require('./MatrixCustomer');
-import MatrixChecklist = require('./MatrixChecklist');
 import SectionEnum = require('../Section/SectionEnum');
-import EntityPreparer = require('../EntityPreparer');
+import ISituationObject = require('./ISituationObject');
 import Util = require('asimplia-util');
+import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
+import Converter = Util.ODBM.Entity.Converter;
+import DatabaseSystem = Util.ODBM.Repository.DatabaseSystem;
+import Type = Util.ODBM.Mapping.Type;
 /* tslint:disable */
 Util;
 /* tslint:enable */
@@ -17,123 +16,82 @@ Util;
 export = Situation;
 class Situation implements IEntity {
 
-	public static TABLE_NAME = 'analytical.situation';
-	public static COLUMN_SITUATION_ID = 'situationid';
-	public static COLUMN_DATE_CREATED = 'datecreated';
-	public static COLUMN_DATE_SUGGESTION_RESULT_CREATED = 'datesuggestionresultcreated';
-	public static COLUMN_DATE_SUGGESTION_RESULT_PROCESSED = 'datesuggestionresultprocessed';
-	public static COLUMN_DATE_CHECKLIST_CREATED = 'datechecklistcreated';
-	public static COLUMN_DATE_CHECKLIST_PROCESSED = 'datechecklistprocessed';
+	static $entity: IEntityAnnotation = {
+		$dbs: DatabaseSystem.POSTGRE_SQL,
+		$name: 'analytical.situation',
+		id: { $type: new Type.Id(new Type.Integer(4)), $name: 'situationid' },
+		eShopId: { $type: new Type.Integer, $name: 'eshopid' },
+		productId: { $type: new Type.Integer(8, true), $name: 'productid' },
+		customerId: { $type: new Type.Integer(8, true), $name: 'customerid' },
+		channelId: { $type: new Type.Integer(8, true), $name: 'channelid' },
+		orderId: { $type: new Type.Integer(8, true), $name: 'orderid' },
+		categoryId: { $type: new Type.Integer(8, true), $name: 'productcategoryid' },
+		loadLogId: { $type: new Type.Integer(8, true), $name: 'loadid' },
+		dateCreated: { $type: new Type.Date(), $name: 'datecreated' },
+		dateSuggestionResultCreated: { $type: new Type.Date(true, true), $name: 'datesuggestionresultcreated' },
+		dateSuggestionResultProcessed: { $type: new Type.Date(true, true), $name: 'datesuggestionresultprocessed' },
+		dateChecklistCreated: { $type: new Type.Date(true, true), $name: 'datechecklistcreated' },
+		dateChecklistProcessed: { $type: new Type.Date(true, true), $name: 'datechecklistprocessed' }
+	};
+	private static converter = new Converter<Situation, ISituationObject>(Situation);
 
-	get Id(): number { return this.id; }
-	set Id(id: number) { this.id = id; }
-	get DateCreated() { return this.dateCreated; }
-	get SignalList() { return this.signalList; }
-	get DateSuggestionResultCreated() { return this.dateSuggestionResultCreated; }
-	set DateSuggestionResultCreated(value: Date) { this.dateSuggestionResultCreated = value; }
-	get DateSuggestionResultProcessed() { return this.dateSuggestionResultProcessed; }
-	set DateSuggestionResultProcessed(value: Date) { this.dateSuggestionResultProcessed = value; }
-	get DateChecklistCreated() { return this.dateChecklistCreated; }
-	set DateChecklistCreated(value: Date) { this.dateChecklistCreated = value; }
-	get DateChecklistProcessed() { return this.dateChecklistProcessed; }
-	set DateChecklistProcessed(value: Date) { this.dateChecklistProcessed = value; }
+	get Id(): number { return this.object.id; }
+	set Id(id: number) { this.object.id = id; }
+	get DateCreated() { return this.object.dateCreated; }
+	get DateSuggestionResultCreated() { return this.object.dateSuggestionResultCreated; }
+	set DateSuggestionResultCreated(value: Date) { this.object.dateSuggestionResultCreated = value; }
+	get DateSuggestionResultProcessed() { return this.object.dateSuggestionResultProcessed; }
+	set DateSuggestionResultProcessed(value: Date) { this.object.dateSuggestionResultProcessed = value; }
+	get DateChecklistCreated() { return this.object.dateChecklistCreated; }
+	set DateChecklistCreated(value: Date) { this.object.dateChecklistCreated = value; }
+	get DateChecklistProcessed() { return this.object.dateChecklistProcessed; }
+	set DateChecklistProcessed(value: Date) { this.object.dateChecklistProcessed = value; }
 	get LoadId() {
-		return this.signalList.first().Matrix.LoadId;
+		return this.object.loadLogId;
 	}
 	get EShopId() {
-		return this.signalList.first().Matrix.EShopId;
+		return this.object.eShopId;
 	}
 	get ProductId() {
-		if (this.signalList.first().Matrix instanceof MatrixProduct) {
-			var productMatrix = <MatrixProduct> this.signalList.first().Matrix;
-			return productMatrix.Product.Id;
-		}
-		if (this.signalList.first().Matrix instanceof MatrixChecklist) {
-			var checklistMatrix = <MatrixChecklist> this.signalList.first().Matrix;
-			return checklistMatrix.Product.Id;
-		}
-		return null;
+		return this.object.productId;
 	}
 	get CategoryId() {
-		if (!(this.signalList.first().Matrix instanceof MatrixCategory)) {
-			return null;
-		}
-		var categoryMatrix = <MatrixCategory> this.signalList.first().Matrix;
-		return categoryMatrix.Category.Id;
+		return this.object.categoryId;
 	}
 	get ChannelId() {
-		if (!(this.signalList.first().Matrix instanceof MatrixChannel)) {
-			return null;
-		}
-		var channelMatrix = <MatrixChannel> this.signalList.first().Matrix;
-		return channelMatrix.Channel.Id;
+		return this.object.channelId;
 	}
 	get CustomerId() {
-		if (!(this.signalList.first().Matrix instanceof MatrixCustomer)) {
-			return null;
-		}
-		var customerMatrix = <MatrixCustomer> this.signalList.first().Matrix;
-		return customerMatrix.Customer.Id;
+		return this.object.customerId;
 	}
 	get OrderId(): number {
-		return null;
-		// TODO throw new Exception('Not implemented yet order matrixes in situation');
+		return this.object.orderId;
 	}
 
 	constructor(
-		private id: number,
-		private signalList: List<Signal>,
-		private dateCreated: Date,
-		private dateSuggestionResultCreated: Date,
-		private dateSuggestionResultProcessed: Date,
-		private dateChecklistCreated: Date,
-		private dateChecklistProcessed: Date
-	) {	}
+		private object: ISituationObject
+	) {}
 
 	static toObject(entity: Situation) {
-		return {
-			id: entity.id,
-			dateCreated: entity.dateCreated,
-			dateSuggestionResultCreated: entity.dateSuggestionResultCreated,
-			dateSuggestionResultProcessed: entity.dateSuggestionResultProcessed,
-			dateChecklistCreated: entity.dateChecklistCreated,
-			dateChecklistProcessed: entity.dateChecklistProcessed,
-			signals: entity.signalList.toArray(Signal.toObject)
-		};
+		return Situation.converter.toObject(entity);
 	}
 
 	toObject() {
 		return Situation.toObject(this);
 	}
 
-	static fromRow(r: any) {
-		return new Situation(
-			EntityPreparer.intOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_SITUATION_ID]),
-			new List<Signal>(),
-			EntityPreparer.date(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_CREATED]),
-			EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_CREATED]),
-			EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_SUGGESTION_RESULT_PROCESSED]),
-			EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_CHECKLIST_CREATED]),
-			EntityPreparer.dateOrNull(r[Situation.TABLE_NAME + '.' + Situation.COLUMN_DATE_CHECKLIST_PROCESSED])
-		);
+	static fromRow(row: any) {
+		return Situation.converter.fromRow(row);
 	}
 
 	static fromObject(object: any) {
-		return new Situation(
-			EntityPreparer.intOrNull(object.id),
-			new List<Signal>(),
-			EntityPreparer.date(object.dateCreated),
-			EntityPreparer.dateOrNull(object.dateSuggestionResultCreated),
-			EntityPreparer.dateOrNull(object.dateSuggestionResultProcessed),
-			EntityPreparer.dateOrNull(object.dateChecklistCreated),
-			EntityPreparer.dateOrNull(object.dateChecklistProcessed)
-		);
+		return Situation.fromObject(object);
 	}
 
-	getMatrixProductBySection(section: SectionEnum) {
+	/* getMatrixProductBySection(section: SectionEnum) {
 		var signal = this.signalList.find((signal: Signal) => {
 			return signal.Matrix.Section == section;
 		});
 		return signal ? <MatrixProduct> signal.Matrix : null;
-	}
+	}*/
 }

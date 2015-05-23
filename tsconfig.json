@@ -224,6 +224,7 @@
         "./src/Entity/Locale/index.ts",
         "./src/Entity/Matrix/ColumnEnum.ts",
         "./src/Entity/Matrix/ColumnFactory.ts",
+        "./src/Entity/Matrix/ISituationObject.ts",
         "./src/Entity/Matrix/Matrix.ts",
         "./src/Entity/Matrix/MatrixCategory.ts",
         "./src/Entity/Matrix/MatrixChannel.ts",
