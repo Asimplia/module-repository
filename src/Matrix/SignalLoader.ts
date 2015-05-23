@@ -10,6 +10,7 @@ import Category = require('../Entity/EShop/Category');
 import EntityPreparer = require('../Entity/EntityPreparer');
 import LoadLog = require('../Entity/Load/LoadLog');
 import SqlExecutor = require('../Util/SqlExecutor');
+import _ = require('underscore');
 
 export = SignalLoader;
 class SignalLoader {
@@ -23,6 +24,25 @@ class SignalLoader {
 		private connection: any
 	) {
 		this.sqlExecutor = new SqlExecutor(connection, Signal, Signal.COLUMN_SIGNAL_ID, 'id');
+	}
+
+	getListBySituationIds(situationIds: number[], callback: (e: Error, signalList?: List<Signal>) => void) {
+		var i = 1;
+		var placeholders = _.map(situationIds, (situationId: number) => '$' + (i++));
+		var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom()
+			+ ' WHERE ' + Signal.TABLE_NAME + '.' + Signal.COLUMN_SIGNAL_ID + ' IN (' + placeholders + ')';
+		this.connection.query(sql, situationIds, (e: Error, result: any) => {
+			if (e) {
+				callback(e);
+				return;
+			}
+			var list = new List<Signal>();
+			result.rows.forEach((row: any) => {
+				var signal = Signal.fromRow(row);
+				list.push(signal);
+			});
+			callback(null, list);
+		});
 	}
 
 	getListByEShopId(eShopId: number, callback: (e: Error, signalList?: List<Signal>) => void) {
