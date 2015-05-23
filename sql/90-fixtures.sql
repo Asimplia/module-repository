@@ -93,7 +93,7 @@ INSERT INTO warehouse."eshopsettings" ("settingsid", "eshopid", "datarefreshperi
 (1,	1,	'1day',	now() - interval '7day',	now());
 
 INSERT INTO feed."eshopfeedsettings" ("id", "eshopid", "paramwhitelist", "hashparamwhitelist", "dontcleanparams", "dontcleanhashparams", "validfrom", "validto") VALUES
-(1,	2,	NULL,	NULL,	'f',	't',	'2015-05-11 16:11:55.72852+00',	'2050-01-02 00:00:00+00');
+(1,	1,	NULL,	NULL,	'f',	't',	'2015-05-11 16:11:55.72852+00',	'2050-01-02 00:00:00+00');
 
 INSERT INTO feed."heurekacategories" ("id", "parent_id", "cat_name", "cat_full_name") VALUES
 (971,	NULL,	'Auto-moto',	NULL),
