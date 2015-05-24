@@ -27,6 +27,9 @@ class SignalLoader {
 	}
 
 	getListBySituationIds(situationIds: number[], callback: (e: Error, signalList?: List<Signal>) => void) {
+		if (situationIds.length == 0) {
+			return callback(null, new List<Signal>([]));
+		}
 		var i = 1;
 		var placeholders = _.map(situationIds, (situationId: number) => '$' + (i++));
 		var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom()
