@@ -15,7 +15,7 @@ class Image implements IEntity {
 
 	static $entity: IEntityAnnotation = {
 		$dbs: DatabaseSystem.MONGO_DB,
-		id: new Type.Id(Type.String),
+		id: new Type.Id(Type.String, true),
 		url: new Type.String(2048, true)
 	};
 	private static converter = new Converter<Image, IImageObject>(Image);
