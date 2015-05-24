@@ -1,8 +1,5 @@
 
 import IEntity = require('../IEntity');
-import Signal = require('./Signal');
-import MatrixProduct = require('./MatrixProduct');
-import SectionEnum = require('../Section/SectionEnum');
 import ISituationObject = require('./ISituationObject');
 import Util = require('asimplia-util');
 import IEntityAnnotation = Util.ODBM.Entity.Annotation.IEntityAnnotation;
