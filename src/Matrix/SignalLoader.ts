@@ -33,7 +33,7 @@ class SignalLoader {
 		var i = 1;
 		var placeholders = _.map(situationIds, (situationId: number) => '$' + (i++));
 		var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom()
-			+ ' WHERE ' + Signal.TABLE_NAME + '.' + Signal.COLUMN_SIGNAL_ID + ' IN (' + placeholders + ')';
+			+ ' WHERE ' + Signal.TABLE_NAME + '.' + Signal.COLUMN_SITUATION_ID + ' IN (' + placeholders + ')';
 		this.connection.query(sql, situationIds, (e: Error, result: any) => {
 			if (e) {
 				callback(e);
