@@ -38,7 +38,17 @@ INSERT INTO "cmatrix" ("matrixtype", "description", "inputvaluexthreshold") VALU
 ('MLC35',	'',	'0.5'),
 ('MLC36',	'',	'0.5'),
 ('MLC37',	'',	'0.5'),
-('MLC38',	'',	'0.5');
+('MLC38',	'',	'0.5'),
+('MLC38',	'',	'0.5'),
+('MLC39',	'',	'0.5'),
+('MLC40',	'',	'0.5'),
+('MLC41',	'',	'0.5'),
+('MLC42',	'',	'0.5'),
+('MLC43',	'',	'0.5'),
+('MLC44',	'',	'0.5'),
+('MLC45',	'',	'0.5'),
+('MLC46',	'',	'0.5'),
+('MLC47',	'',	'0.5');
 
 INSERT INTO feed."feedcolumn" ("feedcolumnid", "feedcode", "entity", "property", "datatype", "maxlength") VALUES
 (229,	'SITEMAP',	'SITEMAP',	'lastMod',	'DATE',	NULL),
