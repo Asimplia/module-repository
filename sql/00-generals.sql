@@ -28,13 +28,13 @@ CREATE AGGREGATE public.last (
 
 
 -- Function: replace_url(text, text[], text[], boolean, boolean)
-CREATE OR REPLACE FUNCTION public.replace_url(
-    v_text text,
-    v_param_whitelist text[],
-    v_hash_param_whitelist text[],
-    dontclean boolean,
-    dontcleanhash boolean)
-  RETURNS text AS
+CREATE OR REPLACE FUNCTION replace_url(
+v_text text,
+v_param_whitelist text[],
+v_hash_param_whitelist text[],
+dontclean boolean,
+dontcleanhash boolean)
+RETURNS text AS
 $BODY$
 --v_param_whitelist
 --v_hash_param_whitelist
@@ -43,11 +43,12 @@ output text;
 param TEXT;
 cnt int;
 BEGIN
-  output = regexp_replace(v_text::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text);
-  output = regexp_replace(output::text, '([\#\?\&]+[0-9a-zA-Z\+\%@\/\[\];=_-]+)*'::text, ''::text, 'g');
+output = regexp_replace(v_text::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/'::text, '/'::text);
+output = regexp_replace(output::text, '([\#\?\&]+[0-9a-zA-ZáčďéěíňóřšťůúýžÁČĎÉĚÍŇÓŘŠŤŮÚÝŽ\+\.\%@\/\[\];=_-]+)*'::text, ''::text, 'g');
 
-  cnt = 0;
-  if array_length(v_param_whitelist,1) > 0 then
+cnt = 0;
+if array_length(v_param_wh
+itelist,1) > 0 then
     FOREACH param IN ARRAY v_param_whitelist
     LOOP
       if cnt = 0 then
@@ -64,23 +65,24 @@ BEGIN
     FOREACH param IN ARRAY v_hash_param_whitelist
     LOOP
       if cnt = 0 then
-        output = output || '#' || (regexp_matches(v_text::text,'(\#|\#.*\&)+('||param||'[0-9a-zA-Z\+\%@\/\[\];=_-]*)+'))[2];
+        output = output || '#' || (regexp_matches(v_text::text,'(\#|\#.*\&)+('||param||'[0-9a-zA-ZáčďéěíňóřšťůúýžÁČĎÉĚÍŇÓŘŠŤŮÚÝŽ\.\+\%@\/\[\];=_-]*)+'))[2];
       else
-        output = output || '&' || (regexp_matches(v_text::text,'(\#|\#.*\&)+('||param||'[0-9a-zA-Z\+\%@\/\[\];=_-]*)+'))[2];
+        output = output || '&' || (regexp_matches(v_text::text,'(\#|\#.*\&)+('||param||'[0-9a-zA-ZáčďéěíňóřšťůúýžÁČĎÉĚÍŇÓŘŠŤŮÚÝŽ\.\+\%@\/\[\];=_-]*)+'))[2];
       end if;
       cnt = cnt + 1;
     END LOOP;
   end IF;
 
   if dontClean AND v_text::text LIKE '%?%' then
-    output = output || (regexp_matches(v_text::text,'(\?[0-9a-zA-Z\+\%\&@\/\[\];=_-]*)+'))[1];
+    output = output || (regexp_matches(v_text::text,'(\?[0-9a-zA-ZáčďéěíňóřšťůúýžÁČĎÉĚÍŇÓŘŠŤŮÚÝŽ\.\+\%\&@\/\[\];=_-]*)+'))[1];
   end if;
 
   if dontCleanHash AND v_text::text LIKE '%#%' then
-    output = output || (regexp_matches(v_text::text,'(\#[0-9a-zA-Z\+\%\&@\/\[\];=_-]*)+'))[1];
+    output = output || (regexp_matches(v_text::text,'(\#[0-9a-zA-ZáčďéěíňóřšťůúýžÁČĎÉĚÍŇÓŘŠŤŮÚÝŽ\.\+\%\&@\/\[\];=_-]*)+'))[1];
   end if;
 
   REturn output;
 END;
 $BODY$
-  LANGUAGE plpgsql;
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
