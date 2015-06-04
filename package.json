@@ -7,7 +7,7 @@
     "name": "misak113"
   },
   "dependencies": {
-    "asimplia-util": ">=0.3.31",
+    "asimplia-util": ">=0.3.32",
     "each": "^0.4.9",
     "googleapis": "~1.0.19",
     "moment": "^2.6.0",

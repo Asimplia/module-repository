@@ -2,6 +2,7 @@
 import Q = require('q');
 import List = require('../Entity/List');
 import LoadLog = require('../Entity/Load/LoadLog');
+import LoadLogList = require('../Entity/Load/LoadLogList');
 import EntityPreparer = require('../Entity/EntityPreparer');
 import SqlExecutor = require('../Util/SqlExecutor');
 
@@ -29,21 +30,23 @@ class LoadLogLoader {
 			});
 	}
 
-	getChecklistUnprocessedList(callback?: (e: Error, list?: List<LoadLog>) => void) {
+	getChecklistUnprocessedList(callback?: (e: Error, list?: LoadLogList) => void) {
 		var deferred = Q.defer();
 		this.connection.query(
-			'SELECT ' + EntityPreparer.getColumnsAsPrefixedAlias(LoadLog).join(', ') + ' FROM ' + LoadLog.TABLE_NAME
-			+ ' WHERE ' + LoadLog.COLUMN_CHECKLIST_PROCESSED_AT + ' IS NULL',
+			'SELECT ' + EntityPreparer.getColumnsAsPrefixedAlias(LoadLog).join(', ')
+			+ ' FROM ' + LoadLog.TABLE_NAME + ' '
+			+ ' WHERE ' + LoadLog.COLUMN_CHECKLIST_PROCESSED_AT + ' IS NULL '
+			+ ' AND ' + LoadLog.COLUMN_CHECKLIST_FAILED_AT + ' IS NULL ',
 			[],
 			(e: Error, result: any) => {
 				this.createListByResult(e, result, (e: Error, list?: List<LoadLog>) => {
 					if (e) return deferred.reject(e);
-					deferred.resolve(list);
+					deferred.resolve(new LoadLogList(list.toArray()));
 				});
 			});
 		if (callback) {
 			deferred.promise
-			.then((list: List<LoadLog>) => callback(null, list), (e: Error) => callback(e));
+			.then((list: LoadLogList) => callback(null, list), (e: Error) => callback(e));
 		}
 		return deferred.promise;
 	}
