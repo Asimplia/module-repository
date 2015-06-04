@@ -4,12 +4,12 @@ import _ = require('underscore');
 export = PlaceholderCategoryLoader;
 class PlaceholderCategoryLoader {
 
+	private db: any;
+
 	static $inject = [
-		'connection.neo4j',
 		'connection.postgres',
 	];
 	constructor(
-		private db: any,
 		private connection: any
 	) {}
 
