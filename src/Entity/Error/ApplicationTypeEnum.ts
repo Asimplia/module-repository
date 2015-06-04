@@ -11,5 +11,6 @@ enum ApplicationTypeEnum {
 	ANALYTICS,
 	SYNC,
 	CHECKLIST,
-	ERROR
+	ERROR,
+	PROCESS
 }
