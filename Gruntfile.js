@@ -23,7 +23,6 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('default', [
 		'clean:build',
-		'shell:link_module:asimplia-util',
 		'tsd:link:build',
 		'tsd:reinstall',
 		'wait:typings',
