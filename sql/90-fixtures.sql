@@ -5,7 +5,7 @@ INSERT INTO warehouse."ccountry" ("countryidiso", "countrynameen") VALUES
 INSERT INTO warehouse."eshop" ("eshopid", "countryidiso", "companyid", "eshopurl", "eshopname", "datecreated") VALUES
 (1,	'CZ',	NULL,	'http://my.farfalia.com/',	'Farfalia',	'2015-03-25 21:02:03.098183+01');
 
-INSERT INTO "cmatrix" ("matrixtype", "description", "inputvaluexthreshold") VALUES
+INSERT INTO analytical."cmatrix" ("matrixtype", "description", "inputvaluexthreshold") VALUES
 ('MLC1',	'',	'0.5'),
 ('MLC2',	'',	'0.5'),
 ('MLC3',	'',	'0.5'),
@@ -38,7 +38,6 @@ INSERT INTO "cmatrix" ("matrixtype", "description", "inputvaluexthreshold") VALU
 ('MLC35',	'',	'0.5'),
 ('MLC36',	'',	'0.5'),
 ('MLC37',	'',	'0.5'),
-('MLC38',	'',	'0.5'),
 ('MLC38',	'',	'0.5'),
 ('MLC39',	'',	'0.5'),
 ('MLC40',	'',	'0.5'),
