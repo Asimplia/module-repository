@@ -1,4 +1,5 @@
 
+import Q = require('q');
 import List = require('../Entity/List');
 import LoadLog = require('../Entity/Load/LoadLog');
 import EntityPreparer = require('../Entity/EntityPreparer');
@@ -26,6 +27,25 @@ class LoadLogLoader {
 			(e: Error, result: any) => {
 				this.createListByResult(e, result, callback);
 			});
+	}
+
+	getChecklistUnprocessedList(callback?: (e: Error, list?: List<LoadLog>) => void) {
+		var deferred = Q.defer();
+		this.connection.query(
+			'SELECT ' + EntityPreparer.getColumnsAsPrefixedAlias(LoadLog).join(', ') + ' FROM ' + LoadLog.TABLE_NAME
+			+ ' WHERE ' + LoadLog.COLUMN_CHECKLIST_PROCESSED_AT + ' IS NULL',
+			[],
+			(e: Error, result: any) => {
+				this.createListByResult(e, result, (e: Error, list?: List<LoadLog>) => {
+					if (e) return deferred.reject(e);
+					deferred.resolve(list);
+				});
+			});
+		if (callback) {
+			deferred.promise
+			.then((list: List<LoadLog>) => callback(null, list), (e: Error) => callback(e));
+		}
+		return deferred.promise;
 	}
 
 	getListLoadedFrom(loadedDateFrom: Date, callback: (e: Error, loadLogList: List<LoadLog>) => void) {

@@ -805,6 +805,7 @@ create table warehouse.loadlog (
    loadid               BIGSERIAL            not null,
    eshopid              INT8                 not null,
    period               Timestamptz          not null,
+   checklistprocessedat Timestamptz          null,
    constraint PK_LOADLOG primary key (loadid)
 );
 
