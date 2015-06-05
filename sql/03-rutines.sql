@@ -5,6 +5,7 @@ $$
 	INSERT INTO warehouse.loadlog (eshopid,period)
 	SELECT a.eshopid, a.period
 	FROM warehouse.eshopmatrixloads a;
+	NOTIFY "warehouse.update_loadlog.done";
 $$ LANGUAGE sql;
 
 
@@ -59,6 +60,7 @@ BEGIN
 	WHERE z.uri IS NULL
 	and z.eshopid = se.eshopid;
 
+	NOTIFY "feed.create_feeduri.done";
 END;
 $$ LANGUAGE plpgsql;
 
@@ -98,6 +100,7 @@ BEGIN
 		WHERE feedload.loadid = ' || tablename || '.loadid
 		AND ' || tablename || '.loadlogid IS NULL';
 	END LOOP;
+	NOTIFY "feed.create_loadlogid.done";
 END;
 $$ LANGUAGE plpgsql;
 
@@ -154,6 +157,7 @@ BEGIN
 			AND product.uri = source.uri
 		WHERE product.productid IS NULL
 	);
+	NOTIFY "feed.update_product.done";
 END;
 $$ LANGUAGE plpgsql;
 
@@ -244,6 +248,7 @@ BEGIN
 			AND masterproduct.uri = source.uri
 		WHERE masterproduct.masterproductid IS NULL
 	);
+	NOTIFY "feed.update_masterproduct.done";
 END;
 $$ LANGUAGE plpgsql;
 
@@ -262,7 +267,9 @@ BEGIN
 		 (eshopid, matrixtype, productid, loadid, scoreabs, scorerel, scorewei, changeabs, changerel, changewei, quadrant, datevalid, inputvaluex)
 		 SELECT eshopid, matrixtype, productid, loadid, scoreabs, scorerel, scorewei, changeabs, changerel, changewei, quadrant, datevalid, inputvaluex
 		 FROM analytical.matrix' || matrixtype || '';
+		NOTIFY "analytical.update_matrices.tick";
 	END LOOP;
+	NOTIFY "analytical.update_matrices.done";
 END;
 $$ LANGUAGE plpgsql;
 
@@ -278,6 +285,7 @@ BEGIN
 	SELECT matrixid, datecreated
 	FROM analytical.v_signal
 	;
+	NOTIFY "analytical.update_signal.done";
 END;
 $$ LANGUAGE plpgsql;
 
@@ -293,6 +301,7 @@ BEGIN
 	SELECT matrixid, datecreated
 	FROM analytical.v_situation_signal
 	;
+	NOTIFY "analytical.update_situation_signal.done";
 END;
 $$ LANGUAGE plpgsql;
 
@@ -341,6 +350,7 @@ BEGIN
 	WHERE source.matrixid = signal.matrixid
 		AND signal.situationid IS NULL
 	;
+	NOTIFY "analytical.update_situation.done";
 END;
 $$ LANGUAGE plpgsql;
 
