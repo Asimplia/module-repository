@@ -3,6 +3,7 @@ import Util = require('asimplia-util');
 import DependencyInjection = Util.DI.DependencyInjection;
 import mongoose = require('mongoose');
 import each = require('each');
+import Q = require('q');
 /* tslint:disable */
 var pg = require('pg');
 var neo4j = require('neo4j');
@@ -60,7 +61,7 @@ class ConnectionDispatcher {
 				throw e;
 			}
 			this.pgClient = client;
-			this.di.addService('connection.postgres', this.pgClient);
+			this.di.addService('connection.postgres', this.createPostgresService(this.pgClient));
 			console.info('Connected Postgres to ' + connectionString);
 			this.connectionListeners.forEach((callback: (client: any) => void) => {
 				callback(this.pgClient);
@@ -157,5 +158,20 @@ class ConnectionDispatcher {
 	/** @deprecated Use DI $inject */
 	getMongooseConnection(callback: (mongoose: mongoose.Mongoose) => void) {
 		callback(this.mongooseConnection);
+	}
+
+	private createPostgresService(pgClient: any) {
+		var service: any = function () {
+			var deferred = Q.defer();
+			pg.pools.getOrCreate().acquire((e: Error, pgClient: any) => {
+				if (e) return deferred.reject(e);
+				deferred.resolve(pgClient);
+			});
+			return deferred.promise;
+		};
+		service.query = (...args: any[]) => pgClient.query.apply(pgClient, args);
+		service.on = (...args: any[]) => pgClient.on.apply(pgClient, args);
+		service.removeListener = (...args: any[]) => pgClient.removeListener.apply(pgClient, args);
+		return service;
 	}
 }
