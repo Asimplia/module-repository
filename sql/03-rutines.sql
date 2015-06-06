@@ -2,6 +2,7 @@
 CREATE OR REPLACE FUNCTION warehouse.update_loadlog()
 RETURNS void AS
 $$
+	NOTIFY "warehouse.update_loadlog.start";
 	INSERT INTO warehouse.loadlog (eshopid,period)
 	SELECT a.eshopid, a.period
 	FROM warehouse.eshopmatrixloads a;
@@ -15,6 +16,7 @@ $$ LANGUAGE sql;
 CREATE OR REPLACE FUNCTION feed.create_feeduri()
 RETURNS void AS $$
 BEGIN
+	NOTIFY "feed.create_feeduri.start";
 	UPDATE feed.sitemap s
 	SET uri = public.replace_url(s.loc::text, se.paramwhitelist, se.hashparamwhitelist, se.dontcleanparams, se.dontcleanhashparams)
 	from (Select eshopid, paramwhitelist, hashparamwhitelist, dontcleanparams, dontcleanhashparams
@@ -73,6 +75,7 @@ RETURNS void AS $$
 DECLARE
    tablename text;
 BEGIN
+	NOTIFY "feed.create_loadlogid.start";
 	UPDATE feed.feedload
 	SET loadlogid = loadlog.loadid
 	FROM warehouse.loadlog
@@ -99,6 +102,7 @@ BEGIN
 		FROM feed.feedload
 		WHERE feedload.loadid = ' || tablename || '.loadid
 		AND ' || tablename || '.loadlogid IS NULL';
+		NOTIFY "feed.create_loadlogid.tick";
 	END LOOP;
 	NOTIFY "feed.create_loadlogid.done";
 END;
@@ -111,6 +115,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION feed.update_product()
 RETURNS void AS $$
 BEGIN
+	NOTIFY "feed.update_product.start";
 	UPDATE warehouse.product
 	SET productname = source.productname,
 		datechanged = now()
@@ -123,6 +128,7 @@ BEGIN
 	)
 	WHERE product.eshopid = source.eshopid
 		AND product.uri = source.uri;
+	NOTIFY "feed.update_product.tick";
 
 	INSERT INTO warehouse.product
 	(
@@ -168,6 +174,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION feed.update_masterproduct()
 RETURNS void AS $$
 BEGIN
+	NOTIFY "feed.update_masterproduct.start";
 	UPDATE feed.masterproduct
 	SET createdat = source.createdat,
 		eshopid = source.eshopid,
@@ -212,6 +219,7 @@ BEGIN
 	)
 	WHERE masterproduct.eshopid = source.eshopid
 		AND masterproduct.uri = source.uri;
+	NOTIFY "feed.update_masterproduct.tick";
 
 	INSERT INTO feed.masterproduct
 	(
@@ -261,6 +269,7 @@ RETURNS void AS $$
 DECLARE
    matrixtype text;
 BEGIN
+	NOTIFY "analytical.update_matrices.start";
 	FOR matrixtype IN SELECT cmatrix.matrixtype AS matrixtype FROM analytical.cmatrix
 	LOOP
 		EXECUTE 'INSERT INTO analytical.matrix
@@ -280,6 +289,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION analytical.update_signal()
 RETURNS void AS $$
 BEGIN
+	NOTIFY "analytical.update_signal.start";
 	INSERT INTO analytical.signal
 	(matrixid, datecreated)
 	SELECT matrixid, datecreated
@@ -296,6 +306,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION analytical.update_situation_signal()
 RETURNS void AS $$
 BEGIN
+	NOTIFY "analytical.update_situation_signal.start";
 	INSERT INTO analytical.signal
 	(matrixid, datecreated)
 	SELECT matrixid, datecreated
@@ -310,6 +321,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION analytical.update_situation()
 RETURNS void AS $$
 BEGIN
+	NOTIFY "analytical.update_situation.start";
 	INSERT INTO analytical.situation
 	(
 		eshopid,
@@ -332,6 +344,7 @@ BEGIN
 		datecreated
 	FROM analytical.v_situation
 	;
+	NOTIFY "analytical.update_situation.tick";
 
 	UPDATE analytical.signal
 	SET situationid = source.situationid
