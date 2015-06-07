@@ -1,24 +1,24 @@
 
-DROP VIEW "matrixmlc14";
-DROP VIEW "matrixmlc33";
-DROP VIEW "v_masterproduct";
+DROP VIEW analytical."matrixmlc14";
+DROP VIEW analytical."matrixmlc33";
+DROP VIEW feed."v_masterproduct";
 
-ALTER TABLE "heureka"
+ALTER TABLE feed."heureka"
 ALTER "ean" TYPE character varying(14),
 ALTER "ean" DROP DEFAULT,
 ALTER "ean" DROP NOT NULL;
 
-ALTER TABLE "masterproduct"
+ALTER TABLE feed."masterproduct"
 ALTER "ean" TYPE character varying(14),
 ALTER "ean" DROP DEFAULT,
 ALTER "ean" DROP NOT NULL;
 
-ALTER TABLE "productpreference"
+ALTER TABLE feed."productpreference"
 ALTER "ean" TYPE character varying(14),
 ALTER "ean" DROP DEFAULT,
 ALTER "ean" DROP NOT NULL;
 
-ALTER TABLE "zbozi"
+ALTER TABLE feed."zbozi"
 ALTER "ean" TYPE character varying(14),
 ALTER "ean" DROP DEFAULT,
 ALTER "ean" DROP NOT NULL;
