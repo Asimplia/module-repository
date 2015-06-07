@@ -32,6 +32,7 @@ class User implements IEntity {
 	set Email(value: string) { this.email = value; }
 	set PhoneNumber(value: string) { this.phoneNumber = value; }
 	set ActiveLanguage(value: LanguageEnum) { this.activeLanguage = value; }
+	get ActiveLanguage() { return this.activeLanguage; }
 
 	constructor(
 		private id: number,
