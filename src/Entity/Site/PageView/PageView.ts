@@ -17,7 +17,7 @@ class PageView {
 		id: { $name: 'turnoutid', $type: new Type.Id(new Type.Integer(4)) },
 		feedLoadId: { $name: 'loadid', $type: new Type.Integer(4) },
 		eShopId: { $name: 'eshopid', $type: new Type.Integer() },
-		pagePath: { $name: 'pagepath', $type: new Type.String(2048, true) },
+		pagePath: { $name: 'pagepath', $type: new Type.String(4096, true) },
 		pageViews: { $name: 'pageviews', $type: new Type.Integer(8, true) },
 		entrances: { $name: 'entrances', $type: new Type.Integer(8, true) },
 		viewedAt: { $name: 'viewedat', $type: new Type.Date() }
