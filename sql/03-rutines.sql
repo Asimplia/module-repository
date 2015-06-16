@@ -1,6 +1,20 @@
 -- getting masterproduct
 CREATE OR REPLACE FUNCTION feed.get_masterproduct(loadlogid INT8)
-RETURNS void AS
+RETURNS table (
+	createdat timestamptz,
+	eshopid bigint,
+	uri varchar(2048),
+	productname varchar(2048),
+	ean varchar(14),
+	productid integer,
+	heurekaid integer,
+	sitemapid integer,
+	zboziid integer,
+	priceapiid integer,
+	revenuesid integer,
+	turnoutid integer,
+	imageurl VARCHAR(2048)
+) AS
 $$
 	WITH loadlog as
 	(

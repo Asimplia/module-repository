@@ -47,8 +47,7 @@ output = regexp_replace(v_text::text, '^(https?://)?.*\.?.{1,40}\.[a-z]{1,15}/':
 output = regexp_replace(output::text, '([\#\?\&]+[0-9a-zA-ZáčďéěíňóřšťůúýžÁČĎÉĚÍŇÓŘŠŤŮÚÝŽ\+\.\%@\/\[\];=_-]+)*'::text, ''::text, 'g');
 
 cnt = 0;
-if array_length(v_param_wh
-itelist,1) > 0 then
+if array_length(v_param_whitelist,1) > 0 then
     FOREACH param IN ARRAY v_param_whitelist
     LOOP
       if cnt = 0 then
