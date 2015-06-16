@@ -13,7 +13,7 @@
     "moment": "^2.6.0",
     "mongoose": "~3.8.29",
     "neo4j": "~1.1.0",
-    "pg": "^4.3.0",
+    "pg": "^4.4.0",
     "q": "^1.4.1",
     "traceback": "git+https://github.com/misak113/traceback.git",
     "underscore": "^1.6.0",
