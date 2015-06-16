@@ -5,12 +5,16 @@ import Product = require('../Entity/EShop/Product');
 import Customer = require('../Entity/EShop/Customer');
 import Channel = require('../Entity/EShop/Channel');
 import EShop = require('../Entity/EShop/EShop');
-import List = require('../Entity/List');
+import Util = require('asimplia-util');
+import List = Util.ODBM.Entity.List;
 import Category = require('../Entity/EShop/Category');
+import OldList = require('../Entity/List');
 import EntityPreparer = require('../Entity/EntityPreparer');
 import LoadLog = require('../Entity/Load/LoadLog');
 import SqlExecutor = require('../Util/SqlExecutor');
-import _ = require('underscore');
+/* tslint:disable */
+Util;
+/* tslint:enable */
 
 export = SignalLoader;
 class SignalLoader {
@@ -30,25 +34,34 @@ class SignalLoader {
 		if (situationIds.length == 0) {
 			return callback(null, new List<Signal>([]));
 		}
-		var i = 1;
-		var placeholders = _.map(situationIds, (situationId: number) => '$' + (i++));
-		var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom()
-			+ ' WHERE ' + Signal.TABLE_NAME + '.' + Signal.COLUMN_SITUATION_ID + ' IN (' + placeholders + ')';
-		this.connection.query(sql, situationIds, (e: Error, result: any) => {
-			if (e) {
-				callback(e);
-				return;
-			}
-			var list = new List<Signal>();
-			result.rows.forEach((row: any) => {
-				var signal = Signal.fromRow(row);
-				list.push(signal);
+		var signals = [];
+		var situationIdList = new List<number>(situationIds);
+		var situationIdListBatcheList = new List<List<number>>(situationIdList.chunk(1000));
+		situationIdListBatcheList
+		.createEach()
+		.on('item', (situationIdList: List<number>, next: Function) => {
+			var i = 1;
+			var placeholders = situationIdList.map((situationId: number) => '$' + (i++)).toArray();
+			var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom()
+				+ ' WHERE ' + Signal.TABLE_NAME + '.' + Signal.COLUMN_SITUATION_ID + ' IN (' + placeholders + ')';
+			this.connection.query(sql, situationIdList.toArray(), (e: Error, result: any) => {
+				if (e) return next(e);
+				result.rows.forEach((row: any) => {
+					var signal = Signal.fromRow(row);
+					signals.push(signal);
+				});
+				console.info(
+					'Got ' + signals.length + ' signals with next ' + result.rows.length + '. '
+					+ 'Total situations is ' + situationIds.length
+				);
+				next(null);
 			});
-			callback(null, list);
-		});
+		})
+		.on('error', (e: Error) => callback(e))
+		.on('end', () => callback(null, new List<Signal>(signals)));
 	}
 
-	getListByEShopId(eShopId: number, callback: (e: Error, signalList?: List<Signal>) => void) {
+	getListByEShopId(eShopId: number, callback: (e: Error, signalList?: OldList<Signal>) => void) {
 		var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom()
 			+ ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1';
 		this.connection.query(sql, [
@@ -58,7 +71,7 @@ class SignalLoader {
 				callback(e);
 				return;
 			}
-			var list = new List<Signal>();
+			var list = new OldList<Signal>();
 			result.rows.forEach((row: any) => {
 				var signal = Signal.fromRow(row);
 				list.push(signal);
@@ -67,7 +80,7 @@ class SignalLoader {
 		});
 	}
 
-	getListWithoutSituation(eShopId: number, loadId: number, callback: (e: Error, signalList?: List<Signal>) => void) {
+	getListWithoutSituation(eShopId: number, loadId: number, callback: (e: Error, signalList?: OldList<Signal>) => void) {
 		var sql = 'SELECT ' + this.getSelect() + ' FROM ' + this.getFrom()
 			+ ' WHERE ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_E_SHOP_ID + ' = $1 '
 			+ ' AND ' + Matrix.TABLE_NAME + '.' + Matrix.COLUMN_LOAD_ID + ' = $2 '
@@ -80,7 +93,7 @@ class SignalLoader {
 				callback(e);
 				return;
 			}
-			var list = new List<Signal>();
+			var list = new OldList<Signal>();
 			result.rows.forEach((row: any) => {
 				var signal = Signal.fromRow(row);
 				list.push(signal);
@@ -95,7 +108,7 @@ class SignalLoader {
 		limit: number,
 		offset: number,
 		filter: { productIds?: number[]; customerIds?: number[]; channelIds?: number[] },
-		callback: (e: Error, recordList?: List<Signal>) => void
+		callback: (e: Error, recordList?: OldList<Signal>) => void
 	) {
 		var filterWhere = '';
 		if (filter.productIds && filter.productIds.length > 0) {
@@ -120,7 +133,7 @@ class SignalLoader {
 				callback(e);
 				return;
 			}
-			var list = new List<Signal>();
+			var list = new OldList<Signal>();
 			result.rows.forEach((row: any) => {
 				var signal = Signal.fromRow(row);
 				list.push(signal);
