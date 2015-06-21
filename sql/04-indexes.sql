@@ -121,6 +121,37 @@ create index basketproduct_skuid_idx on warehouse.basketproduct (skuid);
 create index eshopfeedsettings_eshopid_idx on feed.eshopfeedsettings (eshopid);
 create index productcategoryrelation_productid_idx on warehouse.productcategoryrelation (productid);
 create index ga_revenue_eshopid_idx on feed.ga_revenue (eshopid);
+create index matrix_productid_matrixtype_eshopid_productcategoryid_idx on analytical.matrix (productid,matrixtype,eshopid,productcategoryid);
+create index situation_productcategoryid_productid_eshopid_idx on analytical.situation (productcategoryid,productid,eshopid);
+create index matrix_matrixtype_eshopid_channelid_loadid_idx on analytical.matrix (matrixtype,eshopid,channelid,loadid);
+create index heurekaparam_loadlogid_idx on feed.heurekaparam (loadlogid);
+create index ga_revenue_loadlogid_idx on feed.ga_revenue (loadlogid);
+create index productcategory_eshopid_originalid_idx on warehouse.productcategory (eshopid,originalid);
+create index situation_loadid_eshopid_customerid_idx on analytical.situation (loadid,eshopid,customerid);
+create index valuefailure_loadlogid_idx on feed.valuefailure (loadlogid);
+create index heurekaaccessory_loadlogid_idx on feed.heurekaaccessory (loadlogid);
+create index situation_orderid_eshopid_productid_customerid_channelid_productcategoryid_loadid_idx on analytical.situation (orderid,eshopid,productid,customerid,channelid,productcategoryid,loadid);
+create index zbozi_variant_loadlogid_idx on feed.zbozi_variant (loadlogid);
+create index matrix_orderid_eshopid_channelid_productcategoryid_loadid_customerid_matrixtype_productid_idx on analytical.matrix (orderid,eshopid,channelid,productcategoryid,loadid,customerid,matrixtype,productid);
+create index sitemap_loadlogid_idx on feed.sitemap (loadlogid);
+create index matrix_eshopid_channelid_idx on analytical.matrix (eshopid,channelid);
+create index situation_loadid_eshopid_channelid_idx on analytical.situation (loadid,eshopid,channelid);
+create index basketproductdiscountrel_skuid_basketid_discountid_basketproductid_idx on warehouse.basketproductdiscountrel (skuid,basketid,discountid,basketproductid);
+create index zbozi_loadlogid_idx on feed.zbozi (loadlogid);
+create index priceapijob_loadlogid_idx on feed.priceapijob (loadlogid);
+create index matrix_eshopid_productid_loadid_matrixtype_idx on analytical.matrix (eshopid,productid,loadid,matrixtype);
+create index situation_productid_loadid_eshopid_idx on analytical.situation (productid,loadid,eshopid);
+create index masterproduct_uri_eshopid_idx on feed.masterproduct (uri,eshopid);
+create index heureka_loadlogid_idx on feed.heureka (loadlogid);
+create index heurekadelivery_loadlogid_idx on feed.heurekadelivery (loadlogid);
+create index basketproductdiscountrel_basketid_skuid_idx on warehouse.basketproductdiscountrel (basketid,skuid);
+create index ga_pageview_loadlogid_idx on feed.ga_pageview (loadlogid);
+create index feedload_loadlogid_idx on feed.feedload (loadlogid);
+create index matrix_orderid_eshopid_matrixtype_loadid_idx on analytical.matrix (orderid,eshopid,matrixtype,loadid);
+create index priceapi_loadlogid_idx on feed.priceapi (loadlogid);
+create index eshoplocalization_eshopid_languageidiso_idx on warehouse.eshoplocalization (eshopid,languageidiso);
+create index matrix_loadid_matrixtype_customerid_eshopid_idx on analytical.matrix (loadid,matrixtype,customerid,eshopid);
+create index attribute_eshopid_originalid_idx on warehouse.attribute (eshopid,originalid);
 
 select 'create index ' || relname || '_' ||
 array_to_string(column_name_list, '_') || '_idx on ' || conrelid ||

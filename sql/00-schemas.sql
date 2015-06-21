@@ -545,6 +545,7 @@ create table feed.ga_pageview (
    constraint PK_GA_PAGEVIEW primary key (turnoutid)
 );
 create index ga_pageview_viewedat_idx on feed.ga_pageview (viewedat);
+CREATE INDEX "ga_pageview_uri" ON feed."ga_pageview" ("uri");
 
 /*==============================================================*/
 /* Table: ga_revenue                                            */
@@ -562,6 +563,7 @@ create table feed.ga_revenue (
    constraint PK_GA_REVENUE primary key (revenuesid)
 );
 create index ga_revenue_receivedat_idx on feed.ga_revenue (receivedat);
+CREATE INDEX "ga_revenue_productname" ON feed."ga_revenue" ("productname");
 
 /*==============================================================*/
 /* Table: googleanalytics                                       */
@@ -686,6 +688,8 @@ create table feed.heureka (
    loadlogid            INT8                 null,
    constraint PK_HEUREKA primary key (heurekaid)
 );
+CREATE INDEX "heureka_uri" ON feed."heureka" ("uri");
+CREATE INDEX "heureka_productname" ON feed."heureka" ("productname");
 
 /*==============================================================*/
 /* Table: heurekaaccessory                                      */
@@ -840,6 +844,10 @@ create table feed.masterproduct (
    CONSTRAINT "masterproduct_eshopid_uri" UNIQUE ("eshopid", "uri")
 );
 
+CREATE INDEX "masterproduct_uri" ON feed."masterproduct" ("uri");
+CREATE INDEX "masterproduct_productname" ON feed."masterproduct" ("productname");
+CREATE INDEX "masterproduct_ean" ON feed."masterproduct" ("ean");
+
 /*==============================================================*/
 /* Table: eshopfeedsettings                                     */
 /*==============================================================*/
@@ -982,6 +990,8 @@ create table feed.priceapi (
    loadlogid            INT8                 null,
    constraint PK_PRICEAPI primary key (priceapiid)
 );
+CREATE INDEX "priceapi_name" ON feed."priceapi" ("name");
+CREATE INDEX "priceapi_url" ON feed."priceapi" ("url");
 
 /*==============================================================*/
 /* Table: priceapigtin                                          */
@@ -1174,6 +1184,7 @@ create table feed.sitemap (
    loadlogid            INT8                 null,
    constraint PK_SITEMAP primary key (sitemapid)
 );
+CREATE INDEX "sitemap_uri" ON feed."sitemap" ("uri");
 
 /*==============================================================*/
 /* Table: situation                                             */
@@ -1256,6 +1267,7 @@ create table feed.valuefailure (
    loadlogid            INT8                 null,
    constraint PK_VALUEFAILURE primary key (valuefailureid)
 );
+CREATE INDEX "valuefailure_loadid" ON feed."valuefailure" ("loadid");
 
 /*==============================================================*/
 /* Table: zbozi                                                 */
@@ -1289,6 +1301,8 @@ create table feed.zbozi (
    loadlogid            INT8                 null,
    constraint PK_ZBOZI primary key (zboziid)
 );
+CREATE INDEX "zbozi_uri" ON feed."zbozi" ("uri");
+CREATE INDEX "zbozi_productname" ON feed."zbozi" ("productname");
 
 /*==============================================================*/
 /* Table: zbozi_variant                                         */
@@ -1309,6 +1323,14 @@ CREATE TABLE feed.heurekacategories
   cat_name character varying(1000),
   cat_full_name character varying(1000)
 );
+
+ALTER TABLE feed."heurekacategories"
+ADD CONSTRAINT "heurekacategories_id" PRIMARY KEY ("id");
+
+CREATE INDEX "heurekacategories_parent_id" ON feed."heurekacategories" ("parent_id");
+
+ALTER TABLE feed."heurekacategories"
+ADD FOREIGN KEY ("parent_id") REFERENCES feed."heurekacategories" ("id") ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 alter table warehouse.address
    add constraint FK_ADDRESS_REFERENCE_CUSTOMER foreign key (customerid)
@@ -1449,6 +1471,11 @@ alter table feed.feedload
 alter table feed.feedload
    add constraint FK_FEEDLOAD_REFERENCE_ESHOP foreign key (eshopid)
       references  warehouse.eshop (eshopid)
+      on delete restrict on update restrict;
+
+alter table feed.feedload
+   add constraint FK_FEEDLOAD_REFERENCE_LOADLOG foreign key (loadlogid)
+      references  warehouse.loadlog (loadid)
       on delete restrict on update restrict;
 
 alter table feed.ga_pageview
@@ -1892,6 +1919,66 @@ alter table feed.zbozi_variant
 alter table feed.eshopfeedsettings
    add constraint FK_ESHOPFEE_REFERENCE_ESHOP foreign key (eshopid)
       references  warehouse.eshop (eshopid)
+      on delete restrict on update restrict;
+
+alter table feed.ga_pageview
+   add constraint FK_PAGEVIEW_REFERENCE_LOADLOG foreign key (loadlogid)
+      references  warehouse.loadlog (loadid)
+      on delete restrict on update restrict;
+
+alter table feed.ga_revenue
+   add constraint FK_REVENUE_REFERENCE_LOADLOG foreign key (loadlogid)
+      references  warehouse.loadlog (loadid)
+      on delete restrict on update restrict;
+
+alter table feed.heureka
+   add constraint FK_HEUREKA_REFERENCE_LOADLOG foreign key (loadlogid)
+      references  warehouse.loadlog (loadid)
+      on delete restrict on update restrict;
+
+alter table feed.heurekaaccessory
+   add constraint FK_HEUREKAACCESSORY_REFERENCE_LOADLOG foreign key (loadlogid)
+      references  warehouse.loadlog (loadid)
+      on delete restrict on update restrict;
+
+alter table feed.heurekadelivery
+   add constraint FK_heurekadelivery_REFERENCE_LOADLOG foreign key (loadlogid)
+      references  warehouse.loadlog (loadid)
+      on delete restrict on update restrict;
+
+alter table feed.heurekaparam
+   add constraint FK_heurekaparam_REFERENCE_LOADLOG foreign key (loadlogid)
+      references  warehouse.loadlog (loadid)
+      on delete restrict on update restrict;
+
+alter table feed.priceapi
+   add constraint FK_priceapi_REFERENCE_LOADLOG foreign key (loadlogid)
+      references  warehouse.loadlog (loadid)
+      on delete restrict on update restrict;
+
+alter table feed.priceapijob
+   add constraint FK_priceapijob_REFERENCE_LOADLOG foreign key (loadlogid)
+      references  warehouse.loadlog (loadid)
+      on delete restrict on update restrict;
+
+alter table feed.sitemap
+   add constraint FK_sitemap_REFERENCE_LOADLOG foreign key (loadlogid)
+      references  warehouse.loadlog (loadid)
+      on delete restrict on update restrict;
+
+alter table feed.valuefailure
+   add constraint FK_valuefailure_REFERENCE_LOADLOG foreign key (loadlogid)
+      references  warehouse.loadlog (loadid)
+      on delete restrict on update restrict;
+
+alter table feed.zbozi
+   add constraint FK_zbozi_REFERENCE_LOADLOG foreign key (loadlogid)
+      references  warehouse.loadlog (loadid)
+      on delete restrict on update restrict;
+
+alter table feed.zbozi_variant
+   add constraint FK_zbozi_variant_REFERENCE_LOADLOG foreign key (loadlogid)
+      references  warehouse.loadlog (loadid)
       on delete restrict on update restrict;
 
 ALTER TABLE analytical.matrix
