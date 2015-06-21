@@ -57,7 +57,7 @@ class EShop implements IEntity {
 	}
 
 	removeServiceConnection(serviceType: ServiceTypeEnum) {
-		this.serviceConnectionList.remove(this.getServiceConnection(serviceType));
+		this.serviceConnectionList.removeMuttable(this.getServiceConnection(serviceType));
 	}
 
 	getServiceConnection(serviceType: ServiceTypeEnum) {

@@ -536,7 +536,7 @@ create table feed.ga_pageview (
    turnoutid            serial               not null,
    loadid               INT8                 not null,
    eshopid              INT8                 not null,
-   pagepath             varchar(2048)        null,
+   pagepath             varchar(4096)        null,
    pageviews            INT8                 null,
    entrances            INT8                 null,
    viewedat             Timestamptz          not null,
