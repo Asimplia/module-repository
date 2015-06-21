@@ -31,6 +31,7 @@ class RevenueRecorder {
 
 	removeByReceivedAtBetween(eShopId: number, dateFrom: Date, dateTo: Date, callback: (e: Error) => void): void {
 		var conditions = {
+			eShopId: eShopId,
 			receivedAt: {
 				$gte: dateFrom,
 				$lte: dateTo

@@ -544,6 +544,7 @@ create table feed.ga_pageview (
    loadlogid            INT8                 null,
    constraint PK_GA_PAGEVIEW primary key (turnoutid)
 );
+create index ga_pageview_viewedat_idx on feed.ga_pageview (viewedat);
 
 /*==============================================================*/
 /* Table: ga_revenue                                            */
@@ -560,6 +561,7 @@ create table feed.ga_revenue (
    loadlogid            INT8                 null,
    constraint PK_GA_REVENUE primary key (revenuesid)
 );
+create index ga_revenue_receivedat_idx on feed.ga_revenue (receivedat);
 
 /*==============================================================*/
 /* Table: googleanalytics                                       */

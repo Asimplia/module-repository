@@ -31,6 +31,7 @@ class PageViewRecorder {
 
 	removeByViewedAtBetween(eShopId: number, dateFrom: Date, dateTo: Date, callback: (e: Error) => void): void {
 		var conditions = {
+			eShopId: eShopId,
 			viewedAt: {
 				$gte: dateFrom,
 				$lte: dateTo
