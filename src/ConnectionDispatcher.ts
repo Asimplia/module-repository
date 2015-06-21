@@ -3,6 +3,7 @@ import Util = require('asimplia-util');
 import DependencyInjection = Util.DI.DependencyInjection;
 import mongoose = require('mongoose');
 import each = require('each');
+import PostgreClient = Util.Postgre.PostgreClient;
 /* tslint:disable */
 var pg = require('pg');
 var neo4j = require('neo4j');
@@ -60,7 +61,7 @@ class ConnectionDispatcher {
 				throw e;
 			}
 			this.pgClient = client;
-			this.di.addService('connection.postgres', this.pgClient);
+			this.di.addService('connection.postgres', new PostgreClient(this.pgClient));
 			console.info('Connected Postgres to ' + connectionString);
 			this.connectionListeners.forEach((callback: (client: any) => void) => {
 				callback(this.pgClient);
