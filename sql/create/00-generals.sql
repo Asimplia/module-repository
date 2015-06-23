@@ -5,6 +5,7 @@ RETURNS anyelement LANGUAGE sql IMMUTABLE STRICT AS $$
 $$;
  
 -- And then wrap an aggregate around it
+DROP AGGREGATE public.first(anyelement);
 CREATE AGGREGATE public.first (
         sfunc    = public.first_agg,
         basetype = anyelement,
@@ -18,6 +19,7 @@ RETURNS anyelement LANGUAGE sql IMMUTABLE STRICT AS $$
 $$;
  
 -- And then wrap an aggregate around it
+DROP AGGREGATE public.last(anyelement);
 CREATE AGGREGATE public.last (
         sfunc    = public.last_agg,
         basetype = anyelement,

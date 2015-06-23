@@ -153,6 +153,7 @@ create index eshoplocalization_eshopid_languageidiso_idx on warehouse.eshoplocal
 create index matrix_loadid_matrixtype_customerid_eshopid_idx on analytical.matrix (loadid,matrixtype,customerid,eshopid);
 create index attribute_eshopid_originalid_idx on warehouse.attribute (eshopid,originalid);
 
+/*
 select 'create index ' || relname || '_' ||
 array_to_string(column_name_list, '_') || '_idx on ' || conrelid ||
 ' (' || array_to_string(column_name_list, ',') || ');'
@@ -180,3 +181,4 @@ join pg_class on pg_class.oid = candidate_index.conrelid
 left join pg_index on pg_index.indrelid = conrelid
                       and indkey::text = array_to_string(column_list, ' ')
 where indexrelid is null;
+*/
