@@ -1,23 +1,16 @@
-
 -- warehouse loadLog view
+DROP VIEW warehouse.eshopmatrixloads;
 CREATE OR REPLACE VIEW warehouse.eshopmatrixloads AS
-	SELECT
-		a.eshopid,
-		(rank() OVER (PARTITION BY a.eshopid ORDER BY a.period))::INT8 AS loadid,
-		a.period
-	FROM (
-		SELECT s.eshopid, t.period
-		FROM warehouse.eshopsettings s,
-		LATERAL generate_series(s.datestart, now(), s.datarefreshperiod::interval) t(period)
-	) a
-	WHERE a.period > (
-			SELECT l.period
-			FROM warehouse.loadlog l
-			WHERE a.eshopid = l.eshopid
-			ORDER BY l.period DESC
-			LIMIT 1
-		);
-
+	SELECT NULL AS loadid, eshopid, now() AS period
+	FROM warehouse.eshopsettings
+	WHERE COALESCE((
+		SELECT loadlog.period
+		FROM warehouse.loadlog
+		WHERE loadlog.eshopid = eshopsettings.eshopid
+		AND loadlog.checklistfailedat IS NULL
+		ORDER BY loadlog.period DESC
+		LIMIT 1
+	) + datarefreshperiod::interval, now()) <= now();
 
 
 
