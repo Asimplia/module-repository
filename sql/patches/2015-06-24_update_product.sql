@@ -67,6 +67,20 @@ BEGIN
 	WHERE product.eshopid = source.eshopid
 		AND product.uri = source.uri;
 
+	NOTIFY "feed.update_product.tick";
+	UPDATE feed.masterproduct
+	SET productid = product.productid
+	FROM (
+		SELECT
+			productid, eshopid, uri
+		FROM warehouse.product
+		WHERE product.eshopid = v_eshopid
+	) as product (
+		productid, eshopid, uri
+	)
+	WHERE product.eshopid = masterproduct.eshopid
+		AND product.uri = masterproduct.uri;
+
 	NOTIFY "feed.update_product.done";
 END;
 $$ LANGUAGE plpgsql;
