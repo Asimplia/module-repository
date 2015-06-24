@@ -99,7 +99,28 @@ CREATE OR REPLACE FUNCTION feed.update_masterproduct_ga_pageview(
 	v_loadid INT8
 ) RETURNS void AS $BODY$
 BEGIN
+	UPDATE feed.masterproduct mp
+	SET turnoutid = sub.turnoutid
+	FROM (
+		SELECT turnoutid, eshopid, uri
+		FROM feed.ga_pageview
+		WHERE ga_pageview.loadlogid = v_loadid
+	) sub
+	WHERE sub.eshopid = mp.eshopid
+	AND sub.uri = mp.uri;
 
+	INSERT INTO feed.masterproduct (
+		turnoutid, eshopid, createdat, uri
+	)
+	SELECT public.last(ga_pageview.turnoutid), ga_pageview.eshopid, current_timestamp, ga_pageview.uri
+	FROM feed.ga_pageview
+	LEFT JOIN feed.masterproduct mp
+		ON ga_pageview.eshopid = mp.eshopid
+		AND ga_pageview.uri = mp.uri
+		AND ga_pageview.uri IS NOT NULL
+	WHERE ga_pageview.loadlogid = v_loadid
+		AND mp.masterproductid IS NULL
+	GROUP BY ga_pageview.eshopid, ga_pageview.uri;
 END;
 $BODY$ LANGUAGE plpgsql;
 
@@ -110,7 +131,35 @@ CREATE OR REPLACE FUNCTION feed.update_masterproduct_ga_revenue(
 	v_loadid INT8
 ) RETURNS void AS $BODY$
 BEGIN
+	UPDATE feed.masterproduct mp
+	SET revenuesid = sub.revenuesid,
+		productname = COALESCE(mp.productname, sub.productname)
+	FROM (
+		SELECT revenuesid, eshopid, productsku, productname
+		FROM feed.ga_revenue
+		WHERE ga_revenue.loadlogid = v_loadid
+	) sub
+	LEFT JOIN feed.heureka
+		ON heureka.item_id = sub.productsku
+		AND heureka.eshopid = sub.eshopid
+	WHERE sub.eshopid = mp.eshopid
+		AND (sub.productname = mp.productname OR heureka.heurekaid IS NOT NULL);
 
+	-- if inserting, then will miss uri which is NOT NULL
+	INSERT INTO feed.masterproduct (
+		revenuesid, eshopid, createdat, productname
+	)
+	SELECT public.last(ga_revenue.revenuesid), ga_revenue.eshopid, current_timestamp, ga_revenue.productname
+	FROM feed.ga_revenue
+	LEFT JOIN feed.heureka
+		ON heureka.item_id = ga_revenue.productsku
+		AND heureka.eshopid = ga_revenue.eshopid
+	LEFT JOIN feed.masterproduct mp
+		ON ga_revenue.eshopid = mp.eshopid
+		AND (ga_revenue.productname = mp.productname OR heureka.heurekaid IS NOT NULL)
+	WHERE ga_revenue.loadlogid = v_loadid
+		AND mp.masterproductid IS NULL
+	GROUP BY ga_revenue.eshopid, ga_revenue.productname, ga_revenue.productsku;
 END;
 $BODY$ LANGUAGE plpgsql;
 
