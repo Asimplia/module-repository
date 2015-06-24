@@ -321,19 +321,24 @@ BEGIN
 		WHERE heureka.loadlogid = v_loadid
 	) sub
 	WHERE sub.eshopid = mp.eshopid
-	AND sub.uri = mp.uri;
+		AND sub.uri = mp.uri;
 
 	INSERT INTO feed.masterproduct (
-		heurekaid, eshopid, createdat, uri
+		heurekaid, eshopid, createdat, uri, productname
 	)
-	SELECT public.last(heureka.heurekaid), heureka.eshopid, current_timestamp, heureka.uri
+	SELECT
+		public.last(heureka.heurekaid),
+		heureka.eshopid,
+		current_timestamp,
+		heureka.uri,
+		COALESCE(public.last(heureka.productname), public.last(heureka.product))
 	FROM feed.heureka
 	LEFT JOIN feed.masterproduct mp
 		ON heureka.eshopid = mp.eshopid
 		AND heureka.uri = mp.uri
-		AND heureka.uri IS NOT NULL
 	WHERE heureka.loadlogid = v_loadid
 		AND mp.masterproductid IS NULL
+		AND heureka.uri IS NOT NULL
 	GROUP BY heureka.eshopid, heureka.uri;
 END;
 $BODY$ LANGUAGE plpgsql;
@@ -354,19 +359,24 @@ BEGIN
 		WHERE zbozi.loadlogid = v_loadid
 	) sub
 	WHERE sub.eshopid = mp.eshopid
-	AND sub.uri = mp.uri;
+		AND sub.uri = mp.uri;
 
 	INSERT INTO feed.masterproduct (
-		zboziid, eshopid, createdat, uri
+		zboziid, eshopid, createdat, uri, productname
 	)
-	SELECT public.last(zbozi.zboziid), zbozi.eshopid, current_timestamp, zbozi.uri
+	SELECT
+		public.last(zbozi.zboziid),
+		zbozi.eshopid,
+		current_timestamp,
+		zbozi.uri,
+		COALESCE(public.last(zbozi.productname), public.last(zbozi.product))
 	FROM feed.zbozi
 	LEFT JOIN feed.masterproduct mp
 		ON zbozi.eshopid = mp.eshopid
 		AND zbozi.uri = mp.uri
-		AND zbozi.uri IS NOT NULL
 	WHERE zbozi.loadlogid = v_loadid
 		AND mp.masterproductid IS NULL
+		AND zbozi.uri IS NOT NULL
 	GROUP BY zbozi.eshopid, zbozi.uri;
 END;
 $BODY$ LANGUAGE plpgsql;
@@ -479,6 +489,7 @@ BEGIN
 	NOTIFY "feed.update_masterproduct.done";
 END;
 $$ LANGUAGE plpgsql;
+
 
 
 
