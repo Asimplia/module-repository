@@ -411,6 +411,30 @@ $$ LANGUAGE plpgsql;
 
 
 
+-- Matrix fullfilling
+CREATE OR REPLACE FUNCTION analytical.update_matrices(
+	v_loadlogid BIGINT
+)
+RETURNS void AS $$
+DECLARE
+   matrixtype text;
+BEGIN
+	NOTIFY "analytical.update_matrices.start";
+	FOR matrixtype IN SELECT cmatrix.matrixtype AS matrixtype FROM analytical.cmatrix
+	LOOP
+		EXECUTE 'INSERT INTO analytical.matrix
+		 (eshopid, matrixtype, productid, loadid, quadrant, datevalid, inputvaluex)
+		 SELECT eshopid, matrixtype, productid, ' || v_loadlogid || ', quadrant, datevalid, inputvaluex
+		 FROM analytical.get_matrix' || matrixtype || '(' || v_loadlogid || ')';
+		NOTIFY "analytical.update_matrices.tick";
+	END LOOP;
+	NOTIFY "analytical.update_matrices.done";
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
 -- Signal fullfilling
 CREATE OR REPLACE FUNCTION analytical.update_signal(
 	v_loadlogid BIGINT
