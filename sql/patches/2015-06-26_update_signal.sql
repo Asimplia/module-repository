@@ -1,3 +1,4 @@
+DROP VIEW analytical.v_signal;
 DROP FUNCTION analytical.update_signal();
 
 -- Signal fullfilling
