@@ -297,7 +297,7 @@ $BODY$ LANGUAGE plpgsql;
 
 
 CREATE OR replace FUNCTION feed.update_masterproduct(
-    v_loadlogid BIGINT
+	v_loadlogid BIGINT
 ) returns void AS $$
 BEGIN
 	NOTIFY "feed.update_masterproduct.start";
@@ -412,14 +412,27 @@ $$ LANGUAGE plpgsql;
 
 
 -- Signal fullfilling
-CREATE OR REPLACE FUNCTION analytical.update_signal()
+CREATE OR REPLACE FUNCTION analytical.update_signal(
+	v_loadlogid BIGINT
+)
 RETURNS void AS $$
 BEGIN
 	NOTIFY "analytical.update_signal.start";
 	INSERT INTO analytical.signal
 	(matrixid, datecreated)
-	SELECT matrixid, datecreated
-	FROM analytical.v_signal
+	SELECT matrix.matrixid AS matrixid, now() AS datecreated
+	FROM (
+		SELECT matrix.matrixid, matrix.matrixtype, matrix.inputvaluex
+		FROM analytical.matrix
+		WHERE matrix.loadid = v_loadlogid
+	) matrix
+	JOIN analytical.cmatrix
+		ON cmatrix.matrixtype = matrix.matrixtype
+	LEFT JOIN analytical.signal
+		ON signal.matrixid = matrix.matrixid
+	WHERE signal.signalid IS NULL
+		AND cmatrix.inputvaluexthreshold IS NOT NULL
+		AND matrix.inputvaluex >= cmatrix.inputvaluexthreshold
 	;
 	NOTIFY "analytical.update_signal.done";
 END;

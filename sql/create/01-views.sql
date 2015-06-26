@@ -14,19 +14,6 @@ CREATE OR REPLACE VIEW warehouse.eshopmatrixloads AS
 
 
 
--- fullfilling signal
-CREATE OR REPLACE VIEW analytical.v_signal AS
-SELECT matrix.matrixid AS matrixid, now() AS datecreated
-FROM analytical.matrix
-JOIN analytical.cmatrix ON cmatrix.matrixtype = matrix.matrixtype
-LEFT JOIN analytical.signal ON signal.matrixid = matrix.matrixid
-WHERE signal.signalid IS NULL
-	AND cmatrix.inputvaluexthreshold IS NOT NULL
-	AND matrix.inputvaluex >= cmatrix.inputvaluexthreshold
-;
-
-
-
 
 -- fullfilling situation signals
 CREATE OR REPLACE VIEW analytical.v_situation_signal AS
