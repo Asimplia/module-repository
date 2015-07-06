@@ -145,15 +145,23 @@ BEGIN
 	SET revenuesid = sub.revenuesid,
 		productname = COALESCE(mp.productname, sub.productname)
 	FROM (
-		SELECT revenuesid, eshopid, productsku, productname
+		SELECT revenuesid,
+			ga_revenue.eshopid,
+			ga_revenue.productsku,
+			ga_revenue.productname,
+			heureka.heurekaid
 		FROM feed.ga_revenue
+		LEFT JOIN feed.heureka
+			ON heureka.item_id = ga_revenue.productsku
+			AND heureka.eshopid = ga_revenue.eshopid
+			AND heureka.loadlogid = ga_revenue.loadlogid
 		WHERE ga_revenue.loadlogid = v_loadid
 	) sub
-	LEFT JOIN feed.heureka
-		ON heureka.item_id = sub.productsku
-		AND heureka.eshopid = sub.eshopid
 	WHERE sub.eshopid = mp.eshopid
-		AND (sub.productname = mp.productname OR heureka.heurekaid IS NOT NULL);
+		AND (
+			sub.productname = mp.productname
+			OR sub.heurekaid IS NOT NULL AND sub.heurekaid = mp.heurekaid
+		);
 
 	-- if inserting, then will miss uri which is NOT NULL
 	INSERT INTO feed.masterproduct (
