@@ -1,5 +1,4 @@
 -- warehouse loadLog view
-DROP VIEW warehouse.eshopmatrixloads;
 CREATE OR REPLACE VIEW warehouse.eshopmatrixloads AS
 	SELECT NULL AS loadid, eshopid, now() AS period
 	FROM warehouse.eshopsettings
