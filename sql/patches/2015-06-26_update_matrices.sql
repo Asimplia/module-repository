@@ -42,7 +42,7 @@ DROP VIEW analytical.matrixmlc45;
 DROP VIEW analytical.matrixmlc46;
 DROP VIEW analytical.matrixmlc47;
 
-ALTER TABLE "matrix"
+ALTER TABLE analytical."matrix"
 ALTER "scoreabs" TYPE real,
 ALTER "scoreabs" DROP DEFAULT,
 ALTER "scoreabs" DROP NOT NULL,
