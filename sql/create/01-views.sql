@@ -9,7 +9,8 @@ CREATE OR REPLACE VIEW warehouse.eshopmatrixloads AS
 		AND loadlog.checklistfailedat IS NULL
 		ORDER BY loadlog.period DESC
 		LIMIT 1
-	) + datarefreshperiod::interval, now()) <= now();
+	) + datarefreshperiod::interval, now()) <= now()
+		AND eshopsettings.datestart < now();
 
 
 
