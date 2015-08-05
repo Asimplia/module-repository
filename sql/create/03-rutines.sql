@@ -273,7 +273,7 @@ BEGIN
 		);
 
 	-- if inserting, then will miss uri which is NOT NULL
-	INSERT INTO feed.masterproduct (
+	/* INSERT INTO feed.masterproduct (
 		revenuesid, eshopid, createdat, productname
 	)
 	SELECT public.last(ga_revenue.revenuesid), ga_revenue.eshopid, current_timestamp, ga_revenue.productname
@@ -286,7 +286,7 @@ BEGIN
 		AND (ga_revenue.productname = mp.productname OR heureka.heurekaid IS NOT NULL)
 	WHERE ga_revenue.loadlogid = v_loadid
 		AND mp.masterproductid IS NULL
-	GROUP BY ga_revenue.eshopid, ga_revenue.productname, ga_revenue.productsku;
+	GROUP BY ga_revenue.eshopid, ga_revenue.productname, ga_revenue.productsku; */
 END;
 $BODY$ LANGUAGE plpgsql;
 
