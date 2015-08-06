@@ -868,7 +868,7 @@ create table feed.eshopfeedsettings (
 /*==============================================================*/
 create table analytical.matrix (
    matrixid             SERIAL not null,
-   eshopid              INT8                 null,
+   eshopid              INT8                 not null,
    matrixtype           VARCHAR(10)          not null,
    productid            INT8                 null,
    customerid           INT8                 null,
