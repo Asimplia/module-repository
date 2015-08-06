@@ -42,7 +42,7 @@
   "scripts": {
     "prepublish": "./node_modules/.bin/grunt prepublish",
     "test": "./node_modules/.bin/grunt test",
-    "postgresql:schema:create": "cat ./sql/create/* > /tmp/postgresql.schema.create.sql | sudo -u postgres /usr/bin/env PGOPTIONS='--client-min-messages=error' psql --quiet farfalia < /tmp/postgresql.schema.create.sql"
+    "postgresql:schema:create": "cat ./sql/create/* > /tmp/postgresql.schema.create.sql && sudo -u postgres /usr/bin/env PGOPTIONS='--client-min-messages=error' psql --quiet farfalia < /tmp/postgresql.schema.create.sql"
   },
   "typescript": {
     "definitions": [
