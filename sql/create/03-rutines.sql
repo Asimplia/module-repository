@@ -250,6 +250,8 @@ CREATE OR REPLACE FUNCTION feed.update_masterproduct_ga_revenue(
 	v_loadid INT8
 ) RETURNS void AS $BODY$
 BEGIN
+-- Commented because there are throwing of error duplicating ga_revenue.revenuesid in masterproduct
+/*
 	UPDATE feed.masterproduct mp
 	SET revenuesid = sub.revenuesid,
 		productname = COALESCE(mp.productname, sub.productname)
@@ -271,7 +273,7 @@ BEGIN
 			sub.productname = mp.productname
 			OR sub.heurekaid IS NOT NULL AND sub.heurekaid = mp.heurekaid
 		);
-
+*/
 	-- if inserting, then will miss uri which is NOT NULL
 	/* INSERT INTO feed.masterproduct (
 		revenuesid, eshopid, createdat, productname
