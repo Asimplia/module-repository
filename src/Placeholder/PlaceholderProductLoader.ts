@@ -185,4 +185,48 @@ class PlaceholderProductLoader {
 		});
 	}
 
+	getPageviews(productId: number, callback: (e: Error, pageviews?: number) => void): void {
+		var sql = 'SELECT ga_pageview.pageviews AS pageviews \
+			FROM feed.masterproduct \
+			JOIN feed.ga_pageview ON masterproduct.turnoutid = ga_pageview.turnoutid \
+			WHERE masterproduct.productid = $1';
+		this.connection.query(sql, [productId], (e: Error, result: any) => {
+			if (e) return callback(e);
+			callback(null, result.rows.length ? result.rows[0].pageviews : 0);
+		});
+	}
+
+	getEntrances(productId: number, callback: (e: Error, pageviews?: number) => void): void {
+		var sql = 'SELECT ga_pageview.entrances AS entrances \
+			FROM feed.masterproduct \
+			JOIN feed.ga_pageview ON masterproduct.turnoutid = ga_pageview.turnoutid \
+			WHERE masterproduct.productid = $1';
+		this.connection.query(sql, [productId], (e: Error, result: any) => {
+			if (e) return callback(e);
+			callback(null, result.rows.length ? result.rows[0].entrances : 0);
+		});
+	}
+
+	getRevenueQuantity(productId: number, callback: (e: Error, pageviews?: number) => void): void {
+		var sql = 'SELECT ga_revenue.itemquantity AS pageviews \
+			FROM feed.masterproduct \
+			JOIN feed.ga_revenue ON masterproduct.revenuesid = ga_revenue.revenuesid \
+			WHERE masterproduct.productid = $1';
+		this.connection.query(sql, [productId], (e: Error, result: any) => {
+			if (e) return callback(e);
+			callback(null, result.rows.length ? result.rows[0].pageviews : 0);
+		});
+	}
+
+	getRevenues(productId: number, callback: (e: Error, pageviews?: number) => void): void {
+		var sql = 'SELECT ga_revenue.itemrevenue AS itemrevenue \
+			FROM feed.masterproduct \
+			JOIN feed.ga_revenue ON masterproduct.revenuesid = ga_revenue.revenuesid \
+			WHERE masterproduct.productid = $1';
+		this.connection.query(sql, [productId], (e: Error, result: any) => {
+			if (e) return callback(e);
+			callback(null, result.rows.length ? result.rows[0].itemrevenue : 0);
+		});
+	}
+
 }
